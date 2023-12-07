@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/8a607955-f386-4392-91ea-0e2cca742b0e)
+![Alt text](image.png)
 
 ## API Documentation
 
@@ -284,49 +284,73 @@ Returns the details of a client specified by their id.
     - Content-Type: application/json
   - Body:
 
-    ```json
-    {
-      "first_name": "Jane",
-      "last_name": "Doe",
-      "guardian_email": "janesparents@aa.io",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36",
-      "DailyCharts": [
+        ```json
         {
-          "id": 1,
-          "created_at": "2023-12-6",
-          "Intervals": [
+          "id": 2,
+          "first_name": "Jane",
+          "last_name": "Doe",
+          "guardian_email": "janesparents@aa.io",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "DailyCharts": [
             {
-              "id": 3,
-              "start_interval": "9:00 AM",
-              "end_interval": "9:30 AM",
-              "interval_notes": "Client completed task with no prompts needed.",
-              "interval_tags": ["Completed Independently, No Task Refusal"],
-              "interval_rating": 3 // 1 to 3, 3 being the best
+              "id": 1,
+              "created_at": "2023-12-6",
+              "Intervals": [
+                {
+                  "id": 3,
+                  "start_interval": "9:00 AM",
+                  "end_interval": "9:30 AM",
+                  "interval_notes": "Client completed task with no prompts needed.",
+                  "interval_tags": ["Completed Independently, No Task Refusal"],
+                  "interval_rating": 3 // 1 to 3, 3 being the best
+                },
+                {
+                  "id": 4,
+                  "start_interval": "9:30 AM",
+                  "end_interval": "10:00 AM",
+                  "interval_notes": "Task refusal for 23 minutes of the interval. Reading assignment",
+                  "interval_tags": ["Task Refusal, Non-Preferred Task, Tantrum"],
+                  "interval_rating": 1 // 1 to 3, 3 being the best
+                }
+              ]
             },
+          ],
+          "DiscreetTrials":[
             {
-              "id": 4,
-              "start_interval": "9:30 AM",
-              "end_interval": "10:00 AM",
-              "interval_notes": "Task refusal for 23 minutes of the interval.",
-              "interval_tags": ["Task Refusal, Non-Preferred Task"],
-              "interval_rating": 1 // 1 to 3, 3 being the best
-            }
-          ]
-        }, 
-        {
-          "id": 2
-        }
-      ],
-      "Owner": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith"
-      }
+               "id": 5,
+               "client_id":2,
+               "Trials":[
+               {
+                  "id":10,
+                  "trial_type":"Color ID",
+                  "trial_count": 5,
+                  "trial_score": 3,
+                  "trial_notes": "Identified color red 3 out of 5 times in a field of 3 colors",
+               },
+               {
+                  "id":11,
+                  "trial_type":"Sequence Numbers 1 - 10",
+                  "trial_count": 3,
+                  "trial_score": 2,
+                  "trial_notes": "Completed successfully 2 times, out of order on 3rd attempt",
+               }
+            ]
+         }
+
+    ],
+    "Therapist": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Smith"
     }
+    }
+
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+    ```
+
+- Error response: Couldn't find a client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -335,34 +359,28 @@ Returns the details of a client specified by their id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-### Create a Spot
+### Create a Client
 
-Creates and returns a new spot.
+Creates and returns a new Client.
 
 - Require Authentication: true
 - Request
 
   - Method: POST
-  - URL: / spots
+  - URL: /my-clients
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
+      "first_name": "Jimmy",
+      "last_name": "Doe",
+      "guardian_email": "jimmydoesparents@aa.io"
     }
     ```
 
@@ -375,17 +393,10 @@ Creates and returns a new spot.
 
     ```json
     {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
+      "id": 5,
+      "first_name": "Jimmy",
+      "last_name": "Doe",
+      "guardian_email": "jimmydoesparents@aa.io",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36"
     }
@@ -402,93 +413,32 @@ Creates and returns a new spot.
     {
       "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
       "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
+        "first_name": "First name is required",
+        "last_name": "Last name is required",
+        "guardian_email": "Email is required"
       }
     }
     ```
 
-### Add an Image to a Spot based on the Spot's id
+### Edit a Client
 
-Create and return a new image for a spot specified by id.
-
-- Require Authentication: true
-- Require proper authorization: Spot must belong to the current user
-- Request
-
-  - Method: POST
-  - URL: / spots / :spotId / spot-images
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-- Error response: Couldn't find a Spot with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Edit a Spot
-
-Updates and returns an existing spot.
+Updates and returns an existing Client.
 
 - Require Authentication: true
-- Require proper authorization: Spot must belong to the current user
+- Require proper authorization: Client must belong to the current user
 - Request
 
   - Method: PUT
-  - URL: / spots / :spotId
+  - URL: /my-clients/< int:cliend_id >
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
+      "first_name": "Jimmy",
+      "last_name": "Doe",
+      "guardian_email": "jimmydoesparents@aa.io"
     }
     ```
 
@@ -501,19 +451,12 @@ Updates and returns an existing spot.
 
     ```json
     {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
+      "id": 5,
+      "first_name": "Jimmy",
+      "last_name": "Doe",
+      "guardian_email": "jimmydoesparents@aa.io",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
+      "updatedAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -528,20 +471,14 @@ Updates and returns an existing spot.
     {
       "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
       "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
+        "first_name": "First name is required",
+        "last_name": "Last name is required",
+        "guardian_email": "Email is required"
       }
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -550,20 +487,20 @@ Updates and returns an existing spot.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-### Delete a Spot
+### Delete a Client
 
-Deletes an existing spot.
+Deletes an existing Client.
 
 - Require Authentication: true
-- Require proper authorization: Spot must belong to the current user
+- Require proper authorization: Client must belong to the current user
 - Request
 
   - Method: DELETE
-  - URL: / spots / :spotId
+  - URL: /my-clients/< int :client_id >
   - Body: none
 
 - Successful Response
@@ -579,7 +516,7 @@ Deletes an existing spot.
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -588,10 +525,12 @@ Deletes an existing spot.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ## REVIEWS
 
 ### Get all Reviews of the Current User
@@ -618,8 +557,8 @@ Returns all the reviews written by the current user.
         {
           "id": 1,
           "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
+          "ClientId": 1,
+          "review": "This was an awesome Client!",
           "stars": 5,
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36",
@@ -628,7 +567,7 @@ Returns all the reviews written by the current user.
             "firstName": "John",
             "lastName": "Smith"
           },
-          "Spot": {
+          "Client": {
             "id": 1,
             "ownerId": 1,
             "address": "123 Disney Lane",
@@ -652,15 +591,15 @@ Returns all the reviews written by the current user.
     }
     ```
 
-### Get all Reviews by a Spot's id
+### Get all Reviews by a Client's id
 
-Returns all the reviews that belong to a spot specified by id.
+Returns all the reviews that belong to a Client specified by id.
 
 - Require Authentication: false
 - Request
 
   - Method: GET
-  - URL: / spots / :spotId / reviews
+  - URL: / Clients / :ClientId / reviews
   - Body: none
 
 - Successful Response
@@ -676,8 +615,8 @@ Returns all the reviews that belong to a spot specified by id.
         {
           "id": 1,
           "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
+          "ClientId": 1,
+          "review": "This was an awesome Client!",
           "stars": 5,
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36",
@@ -697,7 +636,7 @@ Returns all the reviews that belong to a spot specified by id.
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -706,26 +645,26 @@ Returns all the reviews that belong to a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-### Create a Review for a Spot based on the Spot's id
+### Create a Review for a Client based on the Client's id
 
-Create and return a new review for a spot specified by id.
+Create and return a new review for a Client specified by id.
 
 - Require Authentication: true
 - Request
 
   - Method: POST
-  - URL: / spots / :spotId / reviews
+  - URL: / Clients / :ClientId / reviews
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome Client!",
       "stars": 5
     }
     ```
@@ -741,8 +680,8 @@ Create and return a new review for a spot specified by id.
     {
       "id": 1,
       "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
+      "ClientId": 1,
+      "review": "This was an awesome Client!",
       "stars": 5,
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36"
@@ -766,7 +705,7 @@ Create and return a new review for a spot specified by id.
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -775,11 +714,11 @@ Create and return a new review for a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-- Error response: Review from the current user already exists for the Spot
+- Error response: Review from the current user already exists for the Client
 
   - Status Code: 500
   - Headers:
@@ -788,7 +727,7 @@ Create and return a new review for a spot specified by id.
 
     ```json
     {
-      "message": "User already has a review for this spot"
+      "message": "User already has a review for this Client"
     }
     ```
 
@@ -869,7 +808,7 @@ Update and return an existing review.
 
     ```json
     {
-      "review": "This was an awesome spot!",
+      "review": "This was an awesome Client!",
       "stars": 5
     }
     ```
@@ -885,8 +824,8 @@ Update and return an existing review.
     {
       "id": 1,
       "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
+      "ClientId": 1,
+      "review": "This was an awesome Client!",
       "stars": 5,
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-20 10:06:40"
@@ -986,8 +925,8 @@ Return all the bookings that the current user has made.
       "Bookings": [
         {
           "id": 1,
-          "spotId": 1,
-          "Spot": {
+          "ClientId": 1,
+          "Client": {
             "id": 1,
             "ownerId": 1,
             "address": "123 Disney Lane",
@@ -1010,18 +949,18 @@ Return all the bookings that the current user has made.
     }
     ```
 
-### Get all Bookings for a Spot based on the Spot's id
+### Get all Bookings for a Client based on the Client's id
 
-Return all the bookings for a spot specified by id.
+Return all the bookings for a Client specified by id.
 
 - Require Authentication: true
 - Request
 
   - Method: GET
-  - URL: / spots / :spotId / bookings
+  - URL: / Clients / :ClientId / bookings
   - Body: none
 
-- Successful Response: If you ARE NOT the owner of the spot.
+- Successful Response: If you ARE NOT the owner of the Client.
 
   - Status Code: 200
   - Headers:
@@ -1032,7 +971,7 @@ Return all the bookings for a spot specified by id.
     {
       "Bookings": [
         {
-          "spotId": 1,
+          "ClientId": 1,
           "startDate": "2021-11-19",
           "endDate": "2021-11-20"
         }
@@ -1040,7 +979,7 @@ Return all the bookings for a spot specified by id.
     }
     ```
 
-- Successful Response: If you ARE the owner of the spot.
+- Successful Response: If you ARE the owner of the Client.
 
   - Status Code: 200
   - Headers:
@@ -1057,7 +996,7 @@ Return all the bookings for a spot specified by id.
             "lastName": "Smith"
           },
           "id": 1,
-          "spotId": 1,
+          "ClientId": 1,
           "userId": 2,
           "startDate": "2021-11-19",
           "endDate": "2021-11-20",
@@ -1068,7 +1007,7 @@ Return all the bookings for a spot specified by id.
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -1077,20 +1016,20 @@ Return all the bookings for a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-### Create a Booking from a Spot based on the Spot's id
+### Create a Booking from a Client based on the Client's id
 
-Create and return a new booking from a spot specified by id.
+Create and return a new booking from a Client specified by id.
 
 - Require Authentication: true
-- Require proper authorization: Spot must NOT belong to the current user
+- Require proper authorization: Client must NOT belong to the current user
 - Request
 
   - Method: POST
-  - URL: / spots / :spotId / bookings
+  - URL: / Clients / :ClientId / bookings
   - Body:
 
     ```json
@@ -1110,7 +1049,7 @@ Create and return a new booking from a spot specified by id.
     ```json
     {
       "id": 1,
-      "spotId": 1,
+      "ClientId": 1,
       "userId": 2,
       "startDate": "2021-11-19",
       "endDate": "2021-11-20",
@@ -1135,7 +1074,7 @@ Create and return a new booking from a spot specified by id.
     }
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+- Error response: Couldn't find a Client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -1144,7 +1083,7 @@ Create and return a new booking from a spot specified by id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
@@ -1157,7 +1096,7 @@ Create and return a new booking from a spot specified by id.
 
     ```json
     {
-      "message": "Sorry, this spot is already booked for the specified dates",
+      "message": "Sorry, this Client is already booked for the specified dates",
       "errors": {
         "startDate": "Start date conflicts with an existing booking",
         "endDate": "End date conflicts with an existing booking"
@@ -1196,7 +1135,7 @@ Update and return an existing booking.
     ```json
     {
       "id": 1,
-      "spotId": 1,
+      "ClientId": 1,
       "userId": 2,
       "startDate": "2021-11-19",
       "endDate": "2021-11-20",
@@ -1256,7 +1195,7 @@ Update and return an existing booking.
 
     ```json
     {
-      "message": "Sorry, this spot is already booked for the specified dates",
+      "message": "Sorry, this Client is already booked for the specified dates",
       "errors": {
         "startDate": "Start date conflicts with an existing booking",
         "endDate": "End date conflicts with an existing booking"
@@ -1270,7 +1209,7 @@ Delete an existing booking.
 
 - Require Authentication: true
 - Require proper authorization: Booking must belong to the current user or the
-  Spot must belong to the current user
+  Client must belong to the current user
 - Request
 
   - Method: DELETE
@@ -1318,16 +1257,16 @@ Delete an existing booking.
 
 ## IMAGES
 
-### Delete a Spot Image
+### Delete a Client Image
 
-Delete an existing image for a Spot.
+Delete an existing image for a Client.
 
 - Require Authentication: true
-- Require proper authorization: Spot must belong to the current user
+- Require proper authorization: Client must belong to the current user
 - Request
 
   - Method: DELETE
-  - URL: / spots / :spotId / spot-images / :imageId
+  - URL: / Clients / :ClientId / Client-images / :imageId
   - Body: none
 
 - Successful Response
@@ -1343,7 +1282,7 @@ Delete an existing image for a Spot.
     }
     ```
 
-- Error response: Couldn't find a Spot Image with the specified id
+- Error response: Couldn't find a Client Image with the specified id
 
   - Status Code: 404
   - Headers:
@@ -1352,7 +1291,7 @@ Delete an existing image for a Spot.
 
     ```json
     {
-      "message": "Spot Image couldn't be found"
+      "message": "Client Image couldn't be found"
     }
     ```
 
@@ -1394,15 +1333,15 @@ Delete an existing image for a Review.
     }
     ```
 
-## Add Query Filters to Get All Spots
+## Add Query Filters to Get All Clients
 
-Return spots filtered by query parameters.
+Return Clients filtered by query parameters.
 
 - Require Authentication: false
 - Request
 
   - Method: GET
-  - URL: / spots
+  - URL: / Clients
   - Query Parameters
     - page: integer, minimum: 1, maximum: 10, default: 1
     - size: integer, minimum: 1, maximum: 20, default: 20
@@ -1423,7 +1362,7 @@ Return spots filtered by query parameters.
 
     ```json
     {
-      "Spots": [
+      "Clients": [
         {
           "id": 1,
           "ownerId": 1,
