@@ -284,50 +284,72 @@ Returns the details of a client specified by their id.
     - Content-Type: application/json
   - Body:
 
-    ```json
-    {
-      "id": 2,
-      "first_name": "Jane",
-      "last_name": "Doe",
-      "guardian_email": "janesparents@aa.io",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36",
-      "DailyCharts": [
+        ```json
         {
-          "id": 1,
-          "created_at": "2023-12-6",
-          "Intervals": [
+          "id": 2,
+          "first_name": "Jane",
+          "last_name": "Doe",
+          "guardian_email": "janesparents@aa.io",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "DailyCharts": [
             {
-              "id": 3,
-              "start_interval": "9:00 AM",
-              "end_interval": "9:30 AM",
-              "interval_notes": "Client completed task with no prompts needed.",
-              "interval_tags": ["Completed Independently, No Task Refusal"],
-              "interval_rating": 3 // 1 to 3, 3 being the best
+              "id": 1,
+              "created_at": "2023-12-6",
+              "Intervals": [
+                {
+                  "id": 3,
+                  "start_interval": "9:00 AM",
+                  "end_interval": "9:30 AM",
+                  "interval_notes": "Client completed task with no prompts needed.",
+                  "interval_tags": ["Completed Independently, No Task Refusal"],
+                  "interval_rating": 3 // 1 to 3, 3 being the best
+                },
+                {
+                  "id": 4,
+                  "start_interval": "9:30 AM",
+                  "end_interval": "10:00 AM",
+                  "interval_notes": "Task refusal for 23 minutes of the interval. Reading assignment",
+                  "interval_tags": ["Task Refusal, Non-Preferred Task, Tantrum"],
+                  "interval_rating": 1 // 1 to 3, 3 being the best
+                }
+              ]
             },
+          ],
+          "DiscreetTrials":[
             {
-              "id": 4,
-              "start_interval": "9:30 AM",
-              "end_interval": "10:00 AM",
-              "interval_notes": "Task refusal for 23 minutes of the interval. Reading assignment",
-              "interval_tags": ["Task Refusal, Non-Preferred Task, Tantrum"],
-              "interval_rating": 1 // 1 to 3, 3 being the best
-            }
-          ]
-        },
-        {
-          "id": 2
-        }
+               "id": 5,
+               "client_id":2,
+               "Trials":[
+               {
+                  "id":10,
+                  "trial_type":"Color ID",
+                  "trial_count": 5,
+                  "trial_score": 3,
+                  "trial_notes": "Identified color red 3 out of 5 times in a field of 3 colors",
+               },
+               {
+                  "id":11,
+                  "trial_type":"Sequence Numbers 1 - 10",
+                  "trial_count": 3,
+                  "trial_score": 2,
+                  "trial_notes": "Completed successfully 2 times, out of order on 3rd attempt",
+               }
+            ]
+         }
       ],
-      "Owner": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith"
-      }
-    }
+            "Therapist": {
+               "id": 1,
+               "first_name": "John",
+               "last_name": "Smith"
+            }
+         }
+
     ```
 
-- Error response: Couldn't find a Spot with the specified id
+    ```
+
+- Error response: Couldn't find a client with the specified id
 
   - Status Code: 404
   - Headers:
@@ -336,11 +358,11 @@ Returns the details of a client specified by their id.
 
     ```json
     {
-      "message": "Spot couldn't be found"
+      "message": "Client couldn't be found"
     }
     ```
 
-### Create a Spot
+### Create a Client
 
 Creates and returns a new spot.
 
@@ -348,7 +370,7 @@ Creates and returns a new spot.
 - Request
 
   - Method: POST
-  - URL: / spots
+  - URL: /my-clients
   - Headers:
     - Content-Type: application/json
   - Body:
