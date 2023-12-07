@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/8a607955-f386-4392-91ea-0e2cca742b0e)
+![Alt text](image.png)
 
 ## API Documentation
 
@@ -286,6 +286,7 @@ Returns the details of a client specified by their id.
 
     ```json
     {
+      "id": 2,
       "first_name": "Jane",
       "last_name": "Doe",
       "guardian_email": "janesparents@aa.io",
@@ -308,12 +309,12 @@ Returns the details of a client specified by their id.
               "id": 4,
               "start_interval": "9:30 AM",
               "end_interval": "10:00 AM",
-              "interval_notes": "Task refusal for 23 minutes of the interval.",
-              "interval_tags": ["Task Refusal, Non-Preferred Task"],
+              "interval_notes": "Task refusal for 23 minutes of the interval. Reading assignment",
+              "interval_tags": ["Task Refusal, Non-Preferred Task, Tantrum"],
               "interval_rating": 1 // 1 to 3, 3 being the best
             }
           ]
-        }, 
+        },
         {
           "id": 2
         }
