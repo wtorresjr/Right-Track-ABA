@@ -9,7 +9,7 @@ class Client(db.Model, UserMixin):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
 
     first_name = db.Column(db.String(30), nullable=False)
 
@@ -25,6 +25,7 @@ class Client(db.Model, UserMixin):
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     therapist = db.relationship('Therapist', back_populates='clients')
+    daily_charts = db.relationship('Daily_Chart', back_populates='client')
 
     def to_dict(self):
         return {

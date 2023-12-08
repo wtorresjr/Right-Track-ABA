@@ -1,6 +1,7 @@
 from flask.cli import AppGroup
 from .therapists import seed_therapists, undo_therapists
 from .clients import seed_clients, undo_clients
+from .daily_charts import seed_daily_charts, undo_daily_charts
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,8 +20,10 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_therapists()
         undo_clients()
+        undo_daily_charts
     seed_therapists()
     seed_clients()
+    seed_daily_charts
     # Add other seed functions here
 
 
@@ -29,4 +32,5 @@ def seed():
 def undo():
     undo_therapists()
     undo_clients()
+    undo_daily_charts
     # Add other undo functions here
