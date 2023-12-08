@@ -7,7 +7,8 @@ import "./SignupForm.css";
 function SignupFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -16,17 +17,25 @@ function SignupFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!first_name.length) {
+      return setErrors({ firstName: "First name is required." });
+    }
+    if (!last_name.length) {
+      return setErrors({ lastName: "Last name is required." });
+    }
+
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
-          "Confirm Password field must be the same as the Password field",
+          "Confirm Password field must be the same as the Password field.",
       });
     }
 
     const serverResponse = await dispatch(
       thunkSignup({
         email,
-        username,
+        first_name,
+        last_name,
         password,
       })
     );
@@ -54,15 +63,23 @@ function SignupFormModal() {
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
-          Username
+          First Name
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            value={first_name}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.firstName && <p>{errors.firstName}</p>}
+        <label>
+          Last Name
+          <input
+            type="text"
+            value={last_name}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+        {errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
           <input
