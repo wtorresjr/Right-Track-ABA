@@ -4,9 +4,11 @@ from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
 def seed_daily_charts():
+
     chart1 = Daily_Chart(client_id=1)
 
     db.session.add(chart1)
+
     db.session.commit()
 
 
