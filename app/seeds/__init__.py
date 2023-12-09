@@ -4,7 +4,6 @@ from .clients import seed_clients, undo_clients
 from .intervals import seed_intervals, undo_intervals
 from .daily_charts import seed_daily_charts, undo_daily_charts
 from .discreet_trials import seed_discreet_trials, undo_discreet_trials
-from .trials import seed_trials, undo_trials
 
 from app.models.db import db, environment, SCHEMA
 
@@ -22,13 +21,11 @@ def seed():
         undo_daily_charts()
         undo_intervals()
         undo_discreet_trials()
-        # undo_trials()
     seed_therapists()
     seed_clients()
     seed_daily_charts()
     seed_intervals()
     seed_discreet_trials()
-    # seed_trials()
     # Add other seed functions here
 
 
@@ -40,5 +37,4 @@ def undo():
     undo_daily_charts()
     undo_intervals()
     undo_discreet_trials()
-    # undo_trials()
     # Add other undo functions here
