@@ -1,10 +1,12 @@
 from app.models import db, Discreet_Trial, environment, SCHEMA
 from sqlalchemy.sql import text
+from datetime import date
+
 
 
 # Adds a demo user, you can add other users here if you want
 def seed_discreet_trials():
-    dt_1 = Discreet_Trial(client_id=1)
+    dt_1 = Discreet_Trial(trial_date=date(2023,12,8),client_id=1)
 
     db.session.add(dt_1)
     db.session.commit()

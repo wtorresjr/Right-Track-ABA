@@ -3,4 +3,5 @@ from .therapist import Therapist
 from .client import Client
 from .daily_chart import Daily_Chart
 from .interval import Interval
+from .discreet_trial import Discreet_Trial
 from .db import environment, SCHEMA
