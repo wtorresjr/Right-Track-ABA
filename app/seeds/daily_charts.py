@@ -8,7 +8,12 @@ from random import randint
 def seed_daily_charts():
     for client in range(1, 26):
         for _ in range(5):
-            chart = Daily_Chart(client_id=client)
+            chart = Daily_Chart(
+                client_id=client,
+                chart_date=fake.data_between(
+                    start_date=(2023, 12, 1), end_date=(2024, 1, 30)
+                ),
+            )
             db.session.add(chart)
     db.session.commit()
 

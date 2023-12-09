@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, date
 
 
 class Daily_Chart(db.Model, UserMixin):
@@ -13,6 +13,7 @@ class Daily_Chart(db.Model, UserMixin):
     client_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("clients.id")), nullable=False
     )
+    chart_date = db.Column(db.Date, nullable=False)
     
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
