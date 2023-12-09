@@ -48,7 +48,7 @@ def seed_discreet_trials():
             trial_date=fake.date_between(
                 start_date=date(2023, 12, 1), end_date=date(2024, 2, 6)
             ),
-            client_id=randint(1, 26),
+            client_id=randint(1, 25),
             program_name=prog_name,
             program_notes=f"Indentifying {prog_note_txt[1]} in a field of {count_of_field}",
         )
