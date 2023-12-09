@@ -36,7 +36,7 @@ def seed_intervals():
         interval_notes=fake.text(),
         interval_tags=json.dumps(["Hitting", "Food Refusal"]),
         # interval_tags=["Hitting", "Food Refusal"],
-        interval_rating=4,
+        interval_rating=4, 
         chart_id=1,
     )
 
