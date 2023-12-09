@@ -22,13 +22,13 @@ def seed():
         undo_daily_charts()
         undo_intervals()
         undo_discreet_trials()
-        undo_trials()
+        # undo_trials()
     seed_therapists()
     seed_clients()
     seed_daily_charts()
     seed_intervals()
     seed_discreet_trials()
-    seed_trials()
+    # seed_trials()
     # Add other seed functions here
 
 
@@ -40,5 +40,5 @@ def undo():
     undo_daily_charts()
     undo_intervals()
     undo_discreet_trials()
-    undo_trials()
+    # undo_trials()
     # Add other undo functions here
