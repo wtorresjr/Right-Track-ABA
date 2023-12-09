@@ -5,21 +5,37 @@ from random import randint, choice
 from datetime import date
 
 
-program_names = ["Indentifying Colors", "Identifying Numbers", "Identifying Shapes"]
+program_names = [
+    "Indentifying Colors",
+    "Identifying Numbers",
+    "Identifying Shapes",
+    "Sequencing Numbers",
+    "Sorting Sizes",
+]
 field_count = [3, 4, 5]
-
+color_choices = [
+    "Red",
+    "Green",
+    "Blue",
+    "Yellow",
+    "Orange",
+    "White",
+    "Black",
+    "Purple",
+    "Pink",
+]
+shape_choices = [
+    "Square",
+    "Triangle",
+    "Circle",
+    "Oval",
+    "Heart",
+    "Rectangle",
+    "Diamond",
+    "Half Circle",
+]
 
 # Adds a demo user, you can add other users here if you want
-def seed_trials():
-    trial1 = Trial(
-        dt_id=1,
-        client_id=1,
-        trial_target="Red",
-        trial_count=5,
-        trial_score=3,
-        trial_notes=fake.paragraph(nb_sentences=3, ext_word_list=["Test"]),
-    )
-    db.session.add(trial1)
 
 
 def seed_discreet_trials():
@@ -38,6 +54,27 @@ def seed_discreet_trials():
         )
 
         db.session.add(dt_1)
+
+        def seed_trials():
+            trial_target = ""
+            if prog_note_txt[1] == "Colors":
+                trial_target = choice(color_choices)
+            if prog_note_txt[1] == "Shapes":
+                trial_target = choice(shape_choices)
+            if prog_note_txt[1] == "Numbers":
+                trial_target = randint(1, 10)
+            if prog_note_txt[1] == "Sizes":
+                trial_target = choice(["Smaller", "Same", "Bigger"])
+
+            trial1 = Trial(
+                dt_id=1,
+                client_id=dt_1.client_id,
+                trial_target=trial_target,
+                trial_count=3,
+                trial_score=randint(1, 3),
+                trial_notes=fake.paragraph(nb_sentences=3),
+            )
+            db.session.add(trial1)
 
         seed_trials()
 

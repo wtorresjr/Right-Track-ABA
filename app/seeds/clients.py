@@ -1,6 +1,7 @@
 from app.models import db, Client, environment, SCHEMA
 from app.models.db import fake
 from sqlalchemy.sql import text
+from random import randint
 
 
 def seed_clients():
@@ -9,7 +10,7 @@ def seed_clients():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             guardian_email=fake.email(),
-            therapist_id=1,
+            therapist_id=randint(1, 6),
         )
         db.session.add(client)
 

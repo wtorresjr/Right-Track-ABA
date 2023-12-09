@@ -41,9 +41,7 @@ def seed_intervals():
         start_time = datetime(2023, 1, 1, 9, 15)
         for _ in range(randint(3, 9)):
             interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
-            interval_rating = (
-                1 if len(interval_tags) > 2 else (2 if len(interval_tags) == 2 else 3)
-            )
+            interval_rating = 1 if len(interval_tags) > 0 else choice([2, 3])
 
             interval1 = Interval(
                 start_interval=start_time.time(),
