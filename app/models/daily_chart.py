@@ -13,9 +13,8 @@ class Daily_Chart(db.Model, UserMixin):
     client_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("clients.id")), nullable=False
     )
-    chart_date = db.Column(db.Date, nullable=False)
-    
-    
+    chart_date = db.Column(db.String, nullable=False)
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
