@@ -1,14 +1,25 @@
 from app.models import db, Therapist, environment, SCHEMA
+from app.models.db import fake
 from sqlalchemy.sql import text
 
 
 # Adds a demo user, you can add other users here if you want
 def seed_therapists():
-    demo = Therapist(
-        first_name="Demo", last_name="User", email="demo@aa.io", password="password"
+    demouser = Therapist(
+        first_name="Demo",
+        last_name="User",
+        email="demo@demo.com",
+        password="password",
     )
-
-    db.session.add(demo)
+    db.session.add(demouser)
+    for _ in range(5):
+        demo = Therapist(
+            first_name=fake.first_name(),
+            last_name=fake.last_name(),
+            email=fake.email(),
+            password="password",
+        )
+        db.session.add(demo)
     db.session.commit()
 
 
