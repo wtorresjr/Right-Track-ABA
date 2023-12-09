@@ -17,6 +17,8 @@ class Daily_Chart(db.Model, UserMixin):
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     client = db.relationship('Client', back_populates='daily_charts')
+    intervals = db.relationship('Interval', back_populates='chart')
+
 
     def to_dict(self):
         return {
