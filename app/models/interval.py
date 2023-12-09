@@ -14,6 +14,7 @@ class Interval(db.Model, UserMixin):
     end_interval = db.Column(db.Time, nullable=False)
     interval_notes = db.Column(db.String(300))
     interval_tags = db.Column(db.String())
+    # interval_tags = db.Column(db.ARRAY(db.String))
     interval_rating = db.Column(db.Integer, nullable=False)
     chart_id = db.Column(
         db.Integer,
