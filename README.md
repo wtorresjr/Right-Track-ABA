@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/2927c961-1d9e-4005-ba07-c7151311bfc5)
+![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/8bb02afe-567f-4688-8ef1-82a711d0ba6c)
 
 ## API Documentation
 
