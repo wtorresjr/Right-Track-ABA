@@ -1,15 +1,15 @@
 from app.models import db, Client, environment, SCHEMA
+from app.models.db import fake
 from sqlalchemy.sql import text
 
 
-# Adds a demo user, you can add other users here if you want
+
 def seed_clients():
-    client1 = Client(first_name='Johnny', last_name='Doe',
-                     guardian_email='johnnydoe@gmail.com', therapist_id=1)
+    for _ in range(25):
+        client = Client(first_name=fake.first_name(), last_name=fake.last_name(), guardian_email=fake.email(), therapist_id=1)
+        db.session.add(client)
 
-    db.session.add(client1)
     db.session.commit()
-
 
 def undo_clients():
     if environment == "production":
