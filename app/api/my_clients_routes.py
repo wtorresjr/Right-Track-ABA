@@ -81,9 +81,6 @@ def create_new_client():
 
         return jsonify(new_client.to_dict()), 201
 
-    except KeyError as e:
-        return jsonify({"error": f"Missing required field: {e.args[0]}"})
-
     except Exception as e:
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
 
@@ -113,7 +110,6 @@ def edit_a_client(client_id):
 
         return client_to_edit.to_dict()
 
-        
         # if new_edit_data.get("first_name"):
         #     client_to_edit["first_name"] == new_edit_data.get("first_name")
         # if new_edit_data.get("guardian_email"):
