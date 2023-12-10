@@ -1,8 +1,32 @@
-from app.models import db, Client, Daily_Chart, environment, SCHEMA
+from app.models import db, Client, Daily_Chart, Interval, environment, SCHEMA
 from app.models.db import fake
 from sqlalchemy.sql import text
-from datetime import date
-from random import randint
+from datetime import date, timedelta, datetime
+from random import randint, choice
+import json
+
+behaviors = [
+    "Tantrums",
+    "Throwing",
+    "Self-Injurious Behiavior",
+    "Biting",
+    "Aggression",
+    "Crying",
+    "Vocal Stereotypy",
+    "Property Destruction",
+    "Kicking",
+    "Spitting",
+    "Non-Compliance",
+    "Elopement",
+    "Task Refusal",
+    "Outbursts",
+    "Mouthing",
+    "Negative Statements",
+    "Inappropriate Language",
+    "Hitting",
+    "PICA",
+    "Food Refusal",
+]
 
 
 def seed_clients():
@@ -18,18 +42,48 @@ def seed_clients():
 
         new_client = client.to_dict()
 
-        def seed_daily_charts():
-            for _ in range(randint(5, 9)):
-                chart = Daily_Chart(
-                    client_id=client_idx,
-                    chart_date=fake.date_between(
-                        start_date=date(2023, 12, 1), end_date=date(2024, 1, 30)
-                    ),
-                    therapist_id=new_client["therapist_id"],
-                )
-                db.session.add(chart)
+        # def seed_daily_charts():
+        for _ in range(randint(5, 9)):
+            chart = Daily_Chart(
+                client_id=client_idx,
+                chart_date=fake.date_between(
+                    start_date=date(2023, 12, 1), end_date=date(2024, 1, 30)
+                ),
+                therapist_id=new_client["therapist_id"],
+            )
+            db.session.add(chart)
+            db.session.commit()
+            new_chart = chart.to_dict()
 
-        seed_daily_charts()
+            # def seed_intervals():
+            start_time = datetime(2023, 1, 1, 9, 15)
+            for _ in range(randint(3, 9)):
+                interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
+                interval_rating = 1 if len(interval_tags) > 0 else choice([2, 3])
+
+                interval1 = Interval(
+                    start_interval=start_time.time(),
+                    end_interval=(start_time + timedelta(minutes=15)).time(),
+                    interval_notes=fake.text(),
+                    interval_tags=json.dumps(interval_tags),
+                    interval_rating=interval_rating,
+                    therapist_id=new_client["therapist_id"],
+                    chart_id=new_chart["id"],
+                )
+                db.session.add(interval1)
+                db.session.commit()
+
+                start_time += timedelta(minutes=randint(15, 30))
+                if start_time.minute == 45:
+                    start_time += timedelta(minutes=15)
+                elif start_time.minute == 60:
+                    start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
+
+                # seed_intervals()
+
+    db.session.commit()
+
+    # seed_daily_charts()
 
 
 def undo_clients():
@@ -38,8 +92,12 @@ def undo_clients():
         db.session.execute(
             f"TRUNCATE table {SCHEMA}.daily_charts RESTART IDENTITY CASCADE;"
         )
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.intervals RESTART IDENTITY CASCADE;"
+        )
     else:
         db.session.execute(text("DELETE FROM clients"))
         db.session.execute(text("DELETE FROM daily_charts"))
+        db.session.execute(text("DELETE FROM intervals"))
 
     db.session.commit()

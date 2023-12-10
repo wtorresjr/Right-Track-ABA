@@ -21,6 +21,7 @@ class Interval(db.Model, UserMixin):
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
         nullable=False,
     )
+    therapist_id = db.Column(db.Integer, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
