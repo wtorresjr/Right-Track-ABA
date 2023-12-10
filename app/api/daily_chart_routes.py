@@ -77,3 +77,5 @@ def add_new_client():
     db.session.commit()
     
     return jsonify({"Req data": new_chart.to_dict()})
+
+
