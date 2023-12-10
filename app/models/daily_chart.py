@@ -13,6 +13,7 @@ class Daily_Chart(db.Model, UserMixin):
     client_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("clients.id")), nullable=False
     )
+    therapist_id = db.Column(db.Integer, nullable=False)
     chart_date = db.Column(db.String, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -24,9 +25,11 @@ class Daily_Chart(db.Model, UserMixin):
     intervals = db.relationship(
         "Interval", back_populates="chart", cascade="all,delete-orphan"
     )
+    # therapist = db.relationship("Therapist", back_populates="daily_charts")
 
     def to_dict(self):
         return {
             "id": self.id,
             "client_id": self.client_id,
+            "therapist_id": self.therapist_id,
         }

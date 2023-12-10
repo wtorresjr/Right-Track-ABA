@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_required
 from app.models import db
 from app.models import Client
 
