@@ -21,7 +21,9 @@ class Daily_Chart(db.Model, UserMixin):
     )
 
     client = db.relationship("Client", back_populates="daily_charts")
-    intervals = db.relationship("Interval", back_populates="chart")
+    intervals = db.relationship(
+        "Interval", back_populates="chart", cascade="all,delete-orphan"
+    )
 
     def to_dict(self):
         return {
