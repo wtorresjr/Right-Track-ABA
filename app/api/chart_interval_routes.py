@@ -20,8 +20,20 @@ def get_interval_by_id(interval_id):
     the_interval = found_interval.to_dict()
 
     if the_interval["therapist_id"] == current_user.id:
-        return jsonify({"Interval": found_interval.to_dict()})
+        return jsonify({"Interval": found_interval.to_dict()}), 200
 
-    return jsonify(
-        {"message": f"Interval ID {interval_id} does not belong to therapist's chart"}
+    return (
+        jsonify(
+            {
+                "message": f"Interval ID {interval_id} does not belong to therapist's chart"
+            }
+        ),
+        403,
     )
+    
+#Edit an interval by ID
+
+@chart_interval_bp.route('/<int:interval_id>',methods=['PUT'])
+@login_required
+def edit_interval_by_id(interval_id):
+    pass
