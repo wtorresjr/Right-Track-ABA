@@ -36,6 +36,9 @@ def get_client_by_id(client_id):
         return jsonify({"message": "Forbidden"})
 
 
+# Delete a client by client_id
+
+
 @my_clients.route("/<int:client_id>", methods=["DELETE"])
 @login_required
 def delete_client_by_id(client_id):
@@ -55,3 +58,27 @@ def delete_client_by_id(client_id):
             jsonify({"message": "Forbidden client does not belong to logged in user"}),
             403,
         )
+
+
+# Create new client
+
+
+@my_clients.route("/", methods=["POST"])
+@login_required
+def create_new_client():
+    client_data = request.get_json()
+
+    try:
+        new_client = Client(
+            first_name=client_data.get("first_name"),
+            last_name=client_data.get("last_name"),
+            guardian_email=client_data.get("guardian_email"),
+            therapist_id=current_user.id,
+        )
+        db.session.add(new_client)
+        db.session.commit()
+        return jsonify({"New Client Created": new_client.to_dict()}), 201
+    except KeyError as e:
+        return jsonify({"error": f"Missing required field: {e.args[0]}"})
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
