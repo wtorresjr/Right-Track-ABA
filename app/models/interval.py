@@ -21,6 +21,7 @@ class Interval(db.Model, UserMixin):
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
         nullable=False,
     )
+    therapist_id = db.Column(db.Integer, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
@@ -32,8 +33,9 @@ class Interval(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "start_interval": self.start_interval,
-            "end_interval": self.end_interval,
+            "start_interval": self.start_interval.strftime("%H:%M"),
+            "end_interval": self.end_interval.strftime("%H:%M"),
+            "interval_tags": self.interval_tags,
             "interval_notes": self.interval_notes,
             "interval_rating": self.interval_rating,
             "chart_id": self.chart_id,
