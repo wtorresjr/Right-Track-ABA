@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Daily_Chart, Client
+from app.models import Daily_Chart, Client, Interval
 
 
 daily_charts_bp = Blueprint("my-daily-charts", __name__)
@@ -27,6 +27,10 @@ def get_all_charts():
 def get_chart_by_id(chart_id):
     chart_found = Daily_Chart.query.get(chart_id)
 
+    all_chart_intervals = Interval.query.filter_by(chart_id=chart_id).all()
+
+    intervals = [interval.to_dict() for interval in all_chart_intervals]
+
     if not chart_found:
         return jsonify({"message": "No chart found by that ID"}), 404
 
@@ -43,7 +47,7 @@ def get_chart_by_id(chart_id):
             )
 
         if request.method == "GET":
-            return jsonify({"Chart": chart_found.to_dict()}), 200
+            return jsonify({"Chart": intervals}), 200
 
         if request.method == "PUT":
             user_edit_data = request.get_json()
@@ -68,14 +72,12 @@ def add_new_client():
     new_chart_data = request.get_json()
 
     new_chart = Daily_Chart(
-        chart_date=new_chart_data['chart_date'],
-        client_id=new_chart_data['client_id'],
-        therapist_id=current_user.id
+        chart_date=new_chart_data["chart_date"],
+        client_id=new_chart_data["client_id"],
+        therapist_id=current_user.id,
     )
-    
+
     db.session.add(new_chart)
     db.session.commit()
-    
+
     return jsonify({"Req data": new_chart.to_dict()})
-
-
