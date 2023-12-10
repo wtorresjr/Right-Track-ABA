@@ -32,8 +32,8 @@ class Interval(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "start_interval": self.start_interval,
-            "end_interval": self.end_interval,
+            "start_interval": self.start_interval.strftime("%H:%M"),
+            "end_interval": self.end_interval.strftime("%H:%M"),
             "interval_notes": self.interval_notes,
             "interval_rating": self.interval_rating,
             "chart_id": self.chart_id,
