@@ -63,3 +63,29 @@ def edit_interval_by_id(interval_id):
         ),
         403,
     )
+
+
+@chart_interval_bp.route("/<int:interval_id>", methods=["DELETE"])
+@login_required
+def delete_interval_by_id(interval_id):
+    interval_to_delete = Interval.query.get(interval_id)
+
+    if not interval_to_delete:
+        return (
+            jsonify({"message": f"Interval {interval_to_delete} could not be found"}),
+            404,
+        )
+
+    found_interval = interval_to_delete.to_dict()
+
+    if found_interval["therapist_id"] == current_user.id:
+        db.session.delete(interval_to_delete)
+        db.session.commit()
+        return (
+            jsonify({"Success": f"Interval {interval_id} was deleted."}),
+            403,
+        )
+    return (
+        jsonify({"message": f"Interval {interval_id} does not belong to therapist."}),
+        403,
+    )
