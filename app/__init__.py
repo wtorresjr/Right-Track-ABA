@@ -33,7 +33,7 @@ app.register_blueprint(user_routes, url_prefix="/api/therapists")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(my_clients, url_prefix="/api/my-clients/")
 app.register_blueprint(daily_charts_bp, url_prefix="/api/my-daily-charts")
-app.register_blueprint(chart_interval_bp, url_prefix="/api/my-daily-charts/new-interval")
+app.register_blueprint(chart_interval_bp, url_prefix="/api/interval/")
 db.init_app(app)
 Migrate(app, db)
 
