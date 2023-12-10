@@ -30,10 +30,36 @@ def get_interval_by_id(interval_id):
         ),
         403,
     )
-    
-#Edit an interval by ID
 
-@chart_interval_bp.route('/<int:interval_id>',methods=['PUT'])
+
+# Edit an interval by ID
+
+
+@chart_interval_bp.route("/<int:interval_id>", methods=["PUT"])
 @login_required
 def edit_interval_by_id(interval_id):
-    pass
+    interval_to_edit = Interval.query.get(interval_id)
+
+    if not interval_to_edit:
+        return jsonify({"message": f"Interval ID {interval_id} not found"}), 404
+
+    found_interval = interval_to_edit.to_dict()
+
+    if found_interval["therapist_id"] == current_user.id:
+        user_edit_data = request.get_json()
+
+        for [key, item] in user_edit_data.items():
+            setattr(interval_to_edit, key, item)
+
+        db.session.commit()
+
+        return jsonify({"Edited_Interval": interval_to_edit.to_dict()}), 200
+
+    return (
+        jsonify(
+            {
+                "message": f"Forbidden, interval {interval_id} does not belong to therapist.`"
+            }
+        ),
+        403,
+    )
