@@ -34,6 +34,7 @@ class Interval(db.Model, UserMixin):
             "id": self.id,
             "start_interval": self.start_interval.strftime("%H:%M"),
             "end_interval": self.end_interval.strftime("%H:%M"),
+            "interval_tags": self.interval_tags,
             "interval_notes": self.interval_notes,
             "interval_rating": self.interval_rating,
             "chart_id": self.chart_id,
