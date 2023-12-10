@@ -1,7 +1,6 @@
 from flask.cli import AppGroup
 from .therapists import seed_therapists, undo_therapists
 from .clients import seed_clients, undo_clients
-from .intervals import seed_intervals, undo_intervals
 # from .daily_charts import seed_daily_charts, undo_daily_charts
 from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 
@@ -19,12 +18,12 @@ def seed():
         undo_therapists()
         undo_clients()
         # undo_daily_charts()
-        undo_intervals()
+        # undo_intervals()
         undo_discreet_trials()
     seed_therapists()
     seed_clients()
     # seed_daily_charts()
-    seed_intervals()
+    # seed_intervals()
     seed_discreet_trials()
     # Add other seed functions here
 
@@ -35,6 +34,6 @@ def undo():
     undo_therapists()
     undo_clients()
     # undo_daily_charts()
-    undo_intervals()
+    # undo_intervals()
     undo_discreet_trials()
     # Add other undo functions here
