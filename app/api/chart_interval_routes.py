@@ -10,5 +10,9 @@ chart_interval_bp = Blueprint("interval", __name__)
 @login_required
 def add_new_interval(chart_id):
     all_intervals = Interval.query.filter_by(chart_id=chart_id).all()
+
+    if not all_intervals:
+        return jsonify({"message": f"No intervals by Chart ID {chart_id}"})
+    
     intervals = [interval.to_dict() for interval in all_intervals]
     return jsonify({"Chart_Intervals": intervals})
