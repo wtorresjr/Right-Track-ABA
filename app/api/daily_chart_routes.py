@@ -7,6 +7,7 @@ from app.models import Daily_Chart
 daily_charts_bp = Blueprint("my-daily-charts", __name__)
 
 
+# Get all therapist charts
 @daily_charts_bp.route("/", methods=["GET"])
 @login_required
 def get_all_charts():
@@ -16,3 +17,24 @@ def get_all_charts():
         return jsonify({"message": "No charts found"}), 404
 
     return jsonify({"Therapist_Charts": chart_list})
+
+
+# Get chart by ID
+
+
+@daily_charts_bp.route("/<int:chart_id>", methods=["GET"])
+@login_required
+def get_chart_by_id(chart_id):
+    chart_found = Daily_Chart.query.get(chart_id)
+    if not chart_found:
+        return jsonify({"message": "No chart found by that ID"}), 404
+
+    chart_found = chart_found.to_dict()
+
+    if chart_found["therapist_id"] == current_user.id:
+        return jsonify({"Chart": chart_found}), 200
+    else:
+        return (
+            jsonify({"message": "Forbidden, therapist did not create this chart"}),
+            403,
+        )
