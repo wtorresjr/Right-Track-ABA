@@ -19,20 +19,31 @@ def get_all_charts():
     return jsonify({"Therapist_Charts": chart_list})
 
 
-# Get chart by ID
+# Get chart by ID, Also Delete Chart By Id
 
 
-@daily_charts_bp.route("/<int:chart_id>", methods=["GET"])
+@daily_charts_bp.route("/<int:chart_id>", methods=["GET", "DELETE"])
 @login_required
 def get_chart_by_id(chart_id):
     chart_found = Daily_Chart.query.get(chart_id)
+
     if not chart_found:
         return jsonify({"message": "No chart found by that ID"}), 404
 
-    chart_found = chart_found.to_dict()
+    chart_data = chart_found.to_dict()
 
-    if chart_found["therapist_id"] == current_user.id:
-        return jsonify({"Chart": chart_found}), 200
+    if chart_data["therapist_id"] == current_user.id:
+        if request.method == "DELETE":
+            db.session.delete(chart_found)
+            db.session.commit()
+            return (
+                jsonify({"message": f"Successfully deleted chart ID {chart_id}"}),
+                200,
+            )
+
+        if request.method == "GET":
+            return jsonify({"Chart": chart_found}), 200
+
     else:
         return (
             jsonify({"message": "Forbidden, therapist did not create this chart"}),
