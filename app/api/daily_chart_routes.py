@@ -60,3 +60,20 @@ def get_chart_by_id(chart_id):
             jsonify({"message": "Forbidden, therapist did not create this chart"}),
             403,
         )
+
+
+@daily_charts_bp.route("/", methods=["POST"])
+@login_required
+def add_new_client():
+    new_chart_data = request.get_json()
+
+    new_chart = Daily_Chart(
+        chart_date=new_chart_data['chart_date'],
+        client_id=new_chart_data['client_id'],
+        therapist_id=current_user.id
+    )
+    
+    db.session.add(new_chart)
+    db.session.commit()
+    
+    return jsonify({"Req data": new_chart.to_dict()})
