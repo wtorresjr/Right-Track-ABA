@@ -32,4 +32,5 @@ class Daily_Chart(db.Model, UserMixin):
             "id": self.id,
             "client_id": self.client_id,
             "therapist_id": self.therapist_id,
+            "chart_date": self.chart_date,
         }
