@@ -19,7 +19,7 @@ def get_all_charts():
     return jsonify({"Therapist_Charts": chart_list})
 
 
-# Get chart by ID, Also Delete Chart By Id
+# GET, READ, UPDATE A Chart by ID
 
 
 @daily_charts_bp.route("/<int:chart_id>", methods=["GET", "DELETE", "PUT"])
@@ -36,6 +36,7 @@ def get_chart_by_id(chart_id):
         if request.method == "DELETE":
             db.session.delete(chart_found)
             db.session.commit()
+
             return (
                 jsonify({"message": f"Successfully deleted chart ID {chart_id}"}),
                 200,
@@ -46,11 +47,12 @@ def get_chart_by_id(chart_id):
 
         if request.method == "PUT":
             user_edit_data = request.get_json()
-            # return user_edit_data["chart_date"]
+
             for [key, item] in user_edit_data.items():
                 setattr(chart_found, key, item)
 
             db.session.commit()
+
             return jsonify({"Edited_Chart": chart_found.to_dict()})
 
     else:
