@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Daily_Chart
+from app.models import Daily_Chart, Client
 
 
 daily_charts_bp = Blueprint("my-daily-charts", __name__)
@@ -22,7 +22,7 @@ def get_all_charts():
 # Get chart by ID, Also Delete Chart By Id
 
 
-@daily_charts_bp.route("/<int:chart_id>", methods=["GET", "DELETE"])
+@daily_charts_bp.route("/<int:chart_id>", methods=["GET", "DELETE", "PUT"])
 @login_required
 def get_chart_by_id(chart_id):
     chart_found = Daily_Chart.query.get(chart_id)
@@ -42,7 +42,16 @@ def get_chart_by_id(chart_id):
             )
 
         if request.method == "GET":
-            return jsonify({"Chart": chart_found}), 200
+            return jsonify({"Chart": chart_found.to_dict()}), 200
+
+        if request.method == "PUT":
+            user_edit_data = request.get_json()
+            # return user_edit_data["chart_date"]
+            for [key, item] in user_edit_data.items():
+                setattr(chart_found, key, item)
+
+            db.session.commit()
+            return jsonify({"Edited_Chart": chart_found.to_dict()})
 
     else:
         return (
