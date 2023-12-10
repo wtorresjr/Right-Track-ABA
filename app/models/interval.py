@@ -38,5 +38,6 @@ class Interval(db.Model, UserMixin):
             "interval_tags": self.interval_tags,
             "interval_notes": self.interval_notes,
             "interval_rating": self.interval_rating,
+            "therapist_id": self.therapist_id,
             "chart_id": self.chart_id,
         }

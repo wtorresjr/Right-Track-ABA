@@ -6,6 +6,9 @@ from app.models import Daily_Chart, Client, Interval
 chart_interval_bp = Blueprint("interval", __name__)
 
 
+# Get interval by id
+
+
 @chart_interval_bp.route("/<int:interval_id>", methods=["GET"])
 @login_required
 def get_interval_by_id(interval_id):
@@ -14,4 +17,11 @@ def get_interval_by_id(interval_id):
     if not found_interval:
         return jsonify({"message": f"No interval by ID {interval_id} found."}), 404
 
-    return jsonify({"Interval": found_interval.to_dict()})
+    the_interval = found_interval.to_dict()
+
+    if the_interval["therapist_id"] == current_user.id:
+        return jsonify({"Interval": found_interval.to_dict()})
+
+    return jsonify(
+        {"message": f"Interval ID {interval_id} does not belong to therapist's chart"}
+    )
