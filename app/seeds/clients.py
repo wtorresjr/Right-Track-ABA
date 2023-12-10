@@ -10,7 +10,7 @@ def seed_clients():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             guardian_email=fake.email(),
-            therapist_id=randint(1, 6),
+            therapist_id=randint(1, 3),
         )
         db.session.add(client)
 
