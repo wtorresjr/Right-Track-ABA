@@ -75,10 +75,20 @@ def create_new_client():
             guardian_email=client_data.get("guardian_email"),
             therapist_id=current_user.id,
         )
+
         db.session.add(new_client)
         db.session.commit()
-        return jsonify({"New Client Created": new_client.to_dict()}), 201
+
+        return jsonify(new_client.to_dict()), 201
+
     except KeyError as e:
         return jsonify({"error": f"Missing required field: {e.args[0]}"})
+
     except Exception as e:
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
+
+
+@my_clients.route("/<int:client_id>", methods=["PUT"])
+@login_required
+def edit_a_client(client_id):
+    pass
