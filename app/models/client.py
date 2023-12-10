@@ -16,16 +16,22 @@ class Client(db.Model, UserMixin):
     therapist_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id")), nullable=False
     )
-    
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
 
     therapist = db.relationship("Therapist", back_populates="clients")
-    daily_charts = db.relationship("Daily_Chart", back_populates="client")
-    discreet_trials = db.relationship("Discreet_Trial", back_populates="client")
-    trials = db.relationship("Trial", back_populates="client")
+    daily_charts = db.relationship(
+        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
+    )
+    discreet_trials = db.relationship(
+        "Discreet_Trial", back_populates="client", cascade="all,delete-orphan"
+    )
+    trials = db.relationship(
+        "Trial", back_populates="client", cascade="all,delete-orphan"
+    )
 
     def to_dict(self):
         return {
