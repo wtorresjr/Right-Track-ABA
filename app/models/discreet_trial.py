@@ -34,6 +34,7 @@ class Discreet_Trial(db.Model, UserMixin):
             "id": self.id,
             "trial_date": self.trial_date,
             "client_id": self.client_id,
+            "therapist_id": self.therapist_id,
             "program_name": self.program_name,
             "program_notes": self.program_notes,
         }
