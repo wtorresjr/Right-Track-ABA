@@ -89,3 +89,11 @@ def delete_interval_by_id(interval_id):
         jsonify({"message": f"Interval {interval_id} does not belong to therapist."}),
         403,
     )
+
+
+@chart_interval_bp.route("/", methods=["POST"])
+@login_required
+def create_new_interval():
+    user_input_data = request.get_json()
+
+    return jsonify({"Route Reach": user_input_data})
