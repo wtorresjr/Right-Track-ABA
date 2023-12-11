@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
 from app.models import Daily_Chart, Client, Interval
+from datetime import time, datetime
 
 chart_interval_bp = Blueprint("interval", __name__)
 
@@ -65,6 +66,9 @@ def edit_interval_by_id(interval_id):
     )
 
 
+# Delete interval by ID
+
+
 @chart_interval_bp.route("/<int:interval_id>", methods=["DELETE"])
 @login_required
 def delete_interval_by_id(interval_id):
@@ -89,3 +93,32 @@ def delete_interval_by_id(interval_id):
         jsonify({"message": f"Interval {interval_id} does not belong to therapist."}),
         403,
     )
+
+
+# Create interval by ID
+
+
+@chart_interval_bp.route("/", methods=["POST"])
+@login_required
+def create_new_interval():
+    user_input_data = request.get_json()
+
+    start_time_str = user_input_data["start_interval"]
+    end_time_str = user_input_data["end_interval"]
+    start_interval = time.fromisoformat(start_time_str)
+    end_interval = time.fromisoformat(end_time_str)
+
+    new_interval = Interval(
+        therapist_id=current_user.id,
+        chart_id=user_input_data["chart_id"],
+        start_interval=start_interval,
+        end_interval=end_interval,
+        interval_notes=user_input_data["interval_notes"],
+        interval_rating=user_input_data["interval_rating"],
+        interval_tags=user_input_data["interval_tags"],
+    )
+
+    db.session.add(new_interval)
+    db.session.commit()
+
+    return jsonify({"New_Interval_Created": new_interval.to_dict()})
