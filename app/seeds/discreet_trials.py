@@ -3,43 +3,19 @@ from app.models.db import fake
 from sqlalchemy.sql import text
 from random import randint, choice
 from datetime import date
-
-
-program_names = [
-    "Indentifying Colors",
-    "Identifying Numbers",
-    "Identifying Shapes",
-    "Sequencing Numbers",
-    "Sorting Sizes",
-]
-field_count = [3, 4, 5]
-color_choices = [
-    "Red",
-    "Green",
-    "Blue",
-    "Yellow",
-    "Orange",
-    "White",
-    "Black",
-    "Purple",
-    "Pink",
-]
-shape_choices = [
-    "Square",
-    "Triangle",
-    "Circle",
-    "Oval",
-    "Heart",
-    "Rectangle",
-    "Diamond",
-    "Half Circle",
-]
+from .seeder_helper_arrays import (
+    behaviors,
+    program_names,
+    field_count,
+    color_choices,
+    shape_choices,
+)
 
 # Adds a demo user, you can add other users here if you want
 
 
-def seed_discreet_trials():
-    for dt in range(400):
+def seed_discreet_trials(client_data):
+    for dt in range(randint(4,10)):
         prog_name = choice(program_names)
         prog_note_txt = prog_name.split(" ")
         count_of_field = choice(field_count)
@@ -48,7 +24,8 @@ def seed_discreet_trials():
             trial_date=fake.date_between(
                 start_date=date(2023, 12, 1), end_date=date(2024, 2, 6)
             ),
-            client_id=randint(1, 31),
+            client_id=client_data['id'],
+            therapist_id=client_data['therapist_id']
             program_name=prog_name,
             program_notes=f"Indentifying {prog_note_txt[1]} in a field of {count_of_field}",
         )
