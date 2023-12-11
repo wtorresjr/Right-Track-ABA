@@ -47,7 +47,7 @@ def get_chart_by_id(chart_id):
             )
 
         if request.method == "GET":
-            return jsonify({"Chart": intervals}), 200
+            return jsonify({"Chart_Intervals": intervals}), 200
 
         if request.method == "PUT":
             user_edit_data = request.get_json()
