@@ -3,7 +3,7 @@ from .therapists import seed_therapists, undo_therapists
 from .clients import seed_clients, undo_clients
 
 # from .daily_charts import seed_daily_charts, undo_daily_charts
-from .discreet_trials import seed_discreet_trials, undo_discreet_trials
+# from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 
 from app.models.db import db, environment, SCHEMA
 
@@ -18,10 +18,8 @@ def seed():
     if environment == "production":
         undo_therapists()
         undo_clients()
-        undo_discreet_trials()
     seed_therapists()
     seed_clients()
-    seed_discreet_trials()
     # Add other seed functions here
 
 
@@ -30,5 +28,4 @@ def seed():
 def undo():
     undo_therapists()
     undo_clients()
-    undo_discreet_trials()
     # Add other undo functions here
