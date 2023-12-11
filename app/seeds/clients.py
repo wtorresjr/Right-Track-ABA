@@ -3,11 +3,15 @@ from app.models.db import fake
 from sqlalchemy.sql import text
 from datetime import date, timedelta, datetime
 from random import randint, choice
-from .seeder_helper_arrays import behaviors, program_names, field_count, color_choices,shape_choices
+from .seeder_helper_arrays import (
+    behaviors,
+    program_names,
+    field_count,
+    color_choices,
+    shape_choices,
+)
+from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 import json
-
-
-
 
 
 def seed_clients():
@@ -23,6 +27,8 @@ def seed_clients():
 
         new_client = client.to_dict()
 
+        seed_discreet_trials(new_client)
+        
         # def seed_daily_charts():
         for _ in range(randint(5, 9)):
             chart = Daily_Chart(
@@ -44,7 +50,7 @@ def seed_clients():
 
                 interval1 = Interval(
                     start_interval=start_time.time(),
-                    end_interval=(start_time + timedelta(minutes=15)).time(), 
+                    end_interval=(start_time + timedelta(minutes=15)).time(),
                     interval_notes=fake.text(),
                     interval_tags=json.dumps(interval_tags),
                     interval_rating=interval_rating,
@@ -60,7 +66,6 @@ def seed_clients():
                 elif start_time.minute == 60:
                     start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
 
-                # seed_intervals()
 
     db.session.commit()
 
@@ -80,5 +85,6 @@ def undo_clients():
         db.session.execute(text("DELETE FROM clients"))
         db.session.execute(text("DELETE FROM daily_charts"))
         db.session.execute(text("DELETE FROM intervals"))
+        undo_discreet_trials()
 
     db.session.commit()
