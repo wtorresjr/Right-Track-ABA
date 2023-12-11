@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7abf330c4960
+Revision ID: 72c7e6891111
 Revises: 
-Create Date: 2023-12-10 15:08:29.290499
+Create Date: 2023-12-11 17:19:16.405057
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7abf330c4960'
+revision = '72c7e6891111'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,6 +48,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
+    sa.ForeignKeyConstraint(['therapist_id'], ['therapists.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('discreet_trials',
@@ -56,9 +57,11 @@ def upgrade():
     sa.Column('client_id', sa.Integer(), nullable=False),
     sa.Column('program_name', sa.String(length=50), nullable=False),
     sa.Column('program_notes', sa.String(length=300), nullable=True),
+    sa.Column('therapist_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
+    sa.ForeignKeyConstraint(['therapist_id'], ['therapists.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('intervals',
