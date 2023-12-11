@@ -108,4 +108,4 @@ def get_chart_by_client_id(client_id):
         for chart in found_client_charts
     ]
 
-    return client_charts
+    return client_charts[0]
