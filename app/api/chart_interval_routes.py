@@ -66,6 +66,9 @@ def edit_interval_by_id(interval_id):
     )
 
 
+# Delete interval by ID
+
+
 @chart_interval_bp.route("/<int:interval_id>", methods=["DELETE"])
 @login_required
 def delete_interval_by_id(interval_id):
@@ -92,17 +95,30 @@ def delete_interval_by_id(interval_id):
     )
 
 
+# Create interval by ID
+
+
 @chart_interval_bp.route("/", methods=["POST"])
 @login_required
 def create_new_interval():
     user_input_data = request.get_json()
 
+    start_time_str = user_input_data["start_interval"]
+    end_time_str = user_input_data["end_interval"]
+    start_interval = time.fromisoformat(start_time_str)
+    end_interval = time.fromisoformat(end_time_str)
 
-    new_interval = (
-        start_interval="hour=9,minutes=15".time(),
-        end_interval="hour=10,minutes=15".time(),
-        interval_notes=user_input_data['interval_notes'],
-        
-        
+    new_interval = Interval(
+        therapist_id=current_user.id,
+        chart_id=user_input_data["chart_id"],
+        start_interval=start_interval,
+        end_interval=end_interval,
+        interval_notes=user_input_data["interval_notes"],
+        interval_rating=user_input_data["interval_rating"],
+        interval_tags=user_input_data["interval_tags"],
     )
-    return jsonify({"Route Reach": user_input_data})
+
+    db.session.add(new_interval)
+    db.session.commit()
+
+    return jsonify({"New_Interval_Created": new_interval.to_dict()})
