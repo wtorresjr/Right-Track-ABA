@@ -22,7 +22,8 @@ class Therapist(db.Model, UserMixin):
     )
 
     clients = db.relationship("Client", back_populates="therapist")
-    
+    discreet_trials = db.relationship("Discreet_Trial", back_populates="therapist")
+    daily_charts = db.relationship("Daily_Chart", back_populates="therapist")
 
     @property
     def password(self):

@@ -16,6 +16,9 @@ class Discreet_Trial(db.Model, UserMixin):
     )
     program_name = db.Column(db.String(50), nullable=False)
     program_notes = db.Column(db.String(300))
+    therapist_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id")), nullable=False
+    )
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
@@ -24,6 +27,7 @@ class Discreet_Trial(db.Model, UserMixin):
 
     client = db.relationship("Client", back_populates="discreet_trials")
     trials = db.relationship("Trial", back_populates="discreet_trials")
+    therapist = db.relationship("Therapist", back_populates="discreet_trials")
 
     def to_dict(self):
         return {

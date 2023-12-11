@@ -3,30 +3,11 @@ from app.models.db import fake
 from sqlalchemy.sql import text
 from datetime import date, timedelta, datetime
 from random import randint, choice
+from .seeder_helper_arrays import behaviors, program_names, field_count, color_choices,shape_choices
 import json
 
-behaviors = [
-    "Tantrums",
-    "Throwing",
-    "Self-Injurious Behiavior",
-    "Biting",
-    "Aggression",
-    "Crying",
-    "Vocal Stereotypy",
-    "Property Destruction",
-    "Kicking",
-    "Spitting",
-    "Non-Compliance",
-    "Elopement",
-    "Task Refusal",
-    "Outbursts",
-    "Mouthing",
-    "Negative Statements",
-    "Inappropriate Language",
-    "Hitting",
-    "PICA",
-    "Food Refusal",
-]
+
+
 
 
 def seed_clients():
@@ -63,7 +44,7 @@ def seed_clients():
 
                 interval1 = Interval(
                     start_interval=start_time.time(),
-                    end_interval=(start_time + timedelta(minutes=15)).time(),
+                    end_interval=(start_time + timedelta(minutes=15)).time(), 
                     interval_notes=fake.text(),
                     interval_tags=json.dumps(interval_tags),
                     interval_rating=interval_rating,
