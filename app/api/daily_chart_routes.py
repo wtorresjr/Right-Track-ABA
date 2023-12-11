@@ -81,3 +81,31 @@ def add_new_client():
     db.session.commit()
 
     return jsonify({"Req data": new_chart.to_dict()})
+
+
+@daily_charts_bp.route("/client/<int:client_id>", methods=["GET"])
+@login_required
+def get_chart_by_client_id(client_id):
+    found_client_charts = Daily_Chart.query.filter_by(
+        client_id=client_id, therapist_id=current_user.id
+    ).all()
+
+    if not found_client_charts:
+        return (
+            jsonify(
+                {
+                    "message": f"Client {client_id} may not exist or is not registered to logged in therapist."
+                }
+            ),
+            404,
+        )
+
+    client_charts = [
+        {
+            "chart": chart.to_dict(),
+            "intervals": [interval.to_dict() for interval in chart.intervals],
+        }
+        for chart in found_client_charts
+    ]
+
+    return client_charts
