@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
 from app.models import Daily_Chart, Client, Interval
+from datetime import time, datetime
 
 chart_interval_bp = Blueprint("interval", __name__)
 
@@ -96,4 +97,12 @@ def delete_interval_by_id(interval_id):
 def create_new_interval():
     user_input_data = request.get_json()
 
+
+    new_interval = (
+        start_interval="hour=9,minutes=15".time(),
+        end_interval="hour=10,minutes=15".time(),
+        interval_notes=user_input_data['interval_notes'],
+        
+        
+    )
     return jsonify({"Route Reach": user_input_data})
