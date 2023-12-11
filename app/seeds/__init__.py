@@ -18,10 +18,8 @@ def seed():
     if environment == "production":
         undo_therapists()
         undo_clients()
-        # undo_discreet_trials()
     seed_therapists()
     seed_clients()
-    # seed_discreet_trials()
     # Add other seed functions here
 
 
@@ -30,5 +28,4 @@ def seed():
 def undo():
     undo_therapists()
     undo_clients()
-    # undo_discreet_trials()
     # Add other undo functions here

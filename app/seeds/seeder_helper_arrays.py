@@ -29,7 +29,7 @@ program_names = [
     "Sorting Sizes",
 ]
 
-field_count = [3, 4, 5]
+field_count = [2, 3, 4, 5]
 
 color_choices = [
     "Red",
