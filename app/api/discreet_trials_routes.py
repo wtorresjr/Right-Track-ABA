@@ -91,3 +91,9 @@ def delete_dt_by_id(dt_id):
         return jsonify({"Success": f"Deleted Discreet Trial {dt_id}"})
 
     return jsonify({"message": f"{dt_id} does not belong to current user."}), 403
+
+
+@discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["PUT"])
+@login_required
+def edit_dt_by_id(dt_id):
+    return jsonify({"Route":f"Route Reached"})
