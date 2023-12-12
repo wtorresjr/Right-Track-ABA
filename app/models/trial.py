@@ -38,6 +38,7 @@ class Trial(db.Model, UserMixin):
         return {
             "id": self.id,
             "client_id": self.client_id,
+            "dt_id": self.dt_id,
             "trial_target": self.trial_target,
             "trial_count": self.trial_count,
             "trial_score": self.trial_score,
