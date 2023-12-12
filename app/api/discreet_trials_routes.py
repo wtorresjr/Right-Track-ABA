@@ -69,3 +69,25 @@ def get_dt_trials_by_dt_id(dt_id):
         return jsonify(dt_details)
     else:
         return jsonify({"message": f"Trial does not belong to current user."})
+
+
+# Delete trial by ID
+
+
+@discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["DELETE"])
+@login_required
+def delete_dt_by_id(dt_id):
+    dt_to_delete = Discreet_Trial.query.get(dt_id)
+    if not dt_to_delete:
+        return (
+            jsonify({"message": f"Discreet trial bye {dt_id} could not be found."}),
+            404,
+        )
+    dt_found = dt_to_delete.to_dict()
+
+    if dt_found["therapist_id"] == current_user.id:
+        db.session.delete(dt_to_delete)
+        db.session.commit()
+        return jsonify({"Success": f"Deleted Discreet Trial {dt_id}"})
+
+    return jsonify({"message": f"{dt_id} does not belong to current user."}), 403
