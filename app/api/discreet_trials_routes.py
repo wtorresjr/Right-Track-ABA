@@ -23,7 +23,7 @@ def get_all_discreet_trials():
 
     therapist_dts = [dt.to_dict() for dt in found_discreet_trials]
 
-    return jsonify({"Discreet_Trials": therapist_dts})
+    return jsonify({"Discreet_Trials": therapist_dts}), 200
 
 
 # Get all therapist created discreet trials by client ID
@@ -37,15 +37,21 @@ def get_dt_by_client_id(client_id):
     ).all()
 
     if not found_client_dts:
-        return jsonify(
-            {
-                "message": "Either client does not exist or does not belong to logged in user."
-            }
+        return (
+            jsonify(
+                {
+                    "message": "Either client does not exist or does not belong to logged in user."
+                }
+            ),
+            404,
         )
 
     client_dts = [dt.to_dict() for dt in found_client_dts]
 
-    return jsonify({"Client_DTs": client_dts})
+    return jsonify({"Client_DTs": client_dts}), 200
+
+
+# Get discreet trial and trials by DT ID
 
 
 @discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["GET"])
@@ -56,9 +62,49 @@ def get_dt_trials_by_dt_id(dt_id):
     if not dt_found:
         return jsonify({"message": f"Discreet trial {dt_id} could not be found."}), 404
 
-    dt_details = {
-        "Discreet_Trial": dt_found.to_dict(),
-        "Trials": [trial.to_dict() for trial in dt_found.trials],
-    }
+    dt_data = dt_found.to_dict()
 
-    return jsonify(dt_details)
+    if dt_data["therapist_id"] == current_user.id:
+        dt_details = {
+            "Discreet_Trial": dt_found.to_dict(),
+            "Trials": [trial.to_dict() for trial in dt_found.trials],
+        }
+        return jsonify(dt_details), 200
+    else:
+        return jsonify({"message": f"Trial does not belong to current user."}), 403
+
+
+# Delete trial by ID
+
+
+@discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["DELETE"])
+@login_required
+def delete_dt_by_id(dt_id):
+    dt_to_delete = Discreet_Trial.query.get(dt_id)
+    if not dt_to_delete:
+        return (
+            jsonify({"message": f"Discreet trial bye {dt_id} could not be found."}),
+            404,
+        )
+    dt_found = dt_to_delete.to_dict()
+
+    if dt_found["therapist_id"] == current_user.id:
+        db.session.delete(dt_to_delete)
+        db.session.commit()
+        return jsonify({"Success": f"Deleted Discreet Trial {dt_id}"}), 201
+
+    return jsonify({"message": f"{dt_id} does not belong to current user."}), 403
+
+
+# Edit a discreet trial by ID
+
+
+@discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["PUT"])
+@login_required
+def edit_dt_by_id(dt_id):
+    dt_to_edit = Discreet_Trial.query.filter_by(therapist_id=current_user.id).all()
+
+    if not dt_to_edit:
+        return jsonify({"message": f"Record {dt_id} could not be found"}), 404
+
+    return jsonify({"Route": dt_to_edit.to_dict()}), 200
