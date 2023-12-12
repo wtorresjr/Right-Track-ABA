@@ -102,9 +102,24 @@ def delete_dt_by_id(dt_id):
 @discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["PUT"])
 @login_required
 def edit_dt_by_id(dt_id):
-    dt_to_edit = Discreet_Trial.query.filter_by(therapist_id=current_user.id).all()
+    dt_to_edit = Discreet_Trial.query.get(dt_id)
 
     if not dt_to_edit:
-        return jsonify({"message": f"Record {dt_id} could not be found"}), 404
+        return jsonify({"message": f"ID {dt_id} could not be found"}), 404
 
-    return jsonify({"Route": dt_to_edit.to_dict()}), 200
+    dt_found = dt_to_edit.to_dict()
+
+    if dt_found["therapist_id"] == current_user.id:
+        user_edit_data = request.get_json()
+
+        trial_date = datetime.strptime(user_edit_data["trial_date"], "%Y,%m,%d").date()
+
+        user_edit_data["trial_date"] = trial_date
+
+        for [key, item] in user_edit_data.items():
+            setattr(dt_to_edit, key, item)
+
+        db.session.commit()
+        return jsonify(dt_to_edit.to_dict()), 200
+
+    return jsonify({"message": f"ID {dt_id} does not belong to current user."})
