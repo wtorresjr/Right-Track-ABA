@@ -129,11 +129,14 @@ def edit_dt_by_id(dt_id):
 @login_required
 def create_new_dt():
     user_input = request.get_json()
-
     trial_date = datetime.strptime(user_input["trial_date"], "%Y,%m,%d").date()
-
     user_input["trial_date"] = trial_date
-    
-    
 
-    return jsonify(user_input), 201
+    new_dt = Discreet_Trial(
+        **user_input,
+        therapist_id=current_user.id,
+    )
+    db.session.add(new_dt)
+    db.session.commit()
+
+    return jsonify({"New_Discreet_Trial": new_dt.to_dict()}), 201
