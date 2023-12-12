@@ -2,6 +2,7 @@
 
 ## Database Schema Design
 
+
 ![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/42aff82c-892c-4954-b07c-0738d6c18277)
 
 ## API Documentation
@@ -530,7 +531,7 @@ Deletes an existing Client.
     ```
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 ## REVIEWS
 
 ### Get all Reviews of the Current User
