@@ -15,7 +15,8 @@ from .seeder_helper_arrays import (
 
 
 def seed_discreet_trials(client_data):
-    for dt in range(randint(4,10)):
+    num_of_trials = randint(4, 10)
+    for dt in range(num_of_trials):
         prog_name = choice(program_names)
         prog_note_txt = prog_name.split(" ")
         count_of_field = choice(field_count)
@@ -24,13 +25,16 @@ def seed_discreet_trials(client_data):
             trial_date=fake.date_between(
                 start_date=date(2023, 12, 1), end_date=date(2024, 2, 6)
             ),
-            client_id=client_data['id'],
-            therapist_id=client_data['therapist_id'],
+            client_id=client_data["id"],
+            therapist_id=client_data["therapist_id"],
             program_name=prog_name,
             program_notes=f"Indentifying {prog_note_txt[1]} in a field of {count_of_field}",
         )
 
         db.session.add(dt_1)
+        db.session.commit()
+
+        new_dt = dt_1.to_dict()
 
         def seed_trials():
             trial_target = ""
@@ -44,8 +48,8 @@ def seed_discreet_trials(client_data):
                 trial_target = choice(["Smaller", "Same", "Bigger"])
 
             trial1 = Trial(
-                dt_id=1,
-                client_id=dt_1.client_id,
+                dt_id=new_dt["id"],
+                client_id=new_dt["client_id"],
                 trial_target=trial_target,
                 trial_count=3,
                 trial_score=randint(1, 3),
@@ -53,9 +57,10 @@ def seed_discreet_trials(client_data):
             )
             db.session.add(trial1)
 
-        seed_trials()
+        for _ in range(randint(1, 4)):
+            seed_trials()
 
-    db.session.commit()
+        db.session.commit()
 
 
 def undo_discreet_trials():
