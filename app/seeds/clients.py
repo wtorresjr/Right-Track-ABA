@@ -28,7 +28,7 @@ def seed_clients():
         new_client = client.to_dict()
 
         seed_discreet_trials(new_client)
-        
+
         # def seed_daily_charts():
         for _ in range(randint(5, 9)):
             chart = Daily_Chart(
@@ -48,11 +48,15 @@ def seed_clients():
                 interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
                 interval_rating = 1 if len(interval_tags) > 0 else choice([2, 3])
 
+                int_tags = {}
+                for behavior in interval_tags:
+                    int_tags[behavior] = randint(1, 9)
+
                 interval1 = Interval(
                     start_interval=start_time.time(),
                     end_interval=(start_time + timedelta(minutes=15)).time(),
                     interval_notes=fake.text(),
-                    interval_tags=json.dumps(interval_tags),
+                    interval_tags=int_tags,
                     interval_rating=interval_rating,
                     therapist_id=new_client["therapist_id"],
                     chart_id=new_chart["id"],
@@ -65,7 +69,6 @@ def seed_clients():
                     start_time += timedelta(minutes=15)
                 elif start_time.minute == 60:
                     start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
-
 
     db.session.commit()
 
