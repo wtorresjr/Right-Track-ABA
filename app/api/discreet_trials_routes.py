@@ -48,6 +48,9 @@ def get_dt_by_client_id(client_id):
     return jsonify({"Client_DTs": client_dts})
 
 
+# Get discreet trial and trials by DT ID
+
+
 @discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["GET"])
 @login_required
 def get_dt_trials_by_dt_id(dt_id):
@@ -56,9 +59,13 @@ def get_dt_trials_by_dt_id(dt_id):
     if not dt_found:
         return jsonify({"message": f"Discreet trial {dt_id} could not be found."}), 404
 
-    dt_details = {
-        "Discreet_Trial": dt_found.to_dict(),
-        "Trials": [trial.to_dict() for trial in dt_found.trials],
-    }
+    dt_data = dt_found.to_dict()
 
-    return jsonify(dt_details)
+    if dt_data["therapist_id"] == current_user.id:
+        dt_details = {
+            "Discreet_Trial": dt_found.to_dict(),
+            "Trials": [trial.to_dict() for trial in dt_found.trials],
+        }
+        return jsonify(dt_details)
+    else:
+        return jsonify({"message": f"Trial does not belong to current user."})
