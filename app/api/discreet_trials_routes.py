@@ -96,4 +96,9 @@ def delete_dt_by_id(dt_id):
 @discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["PUT"])
 @login_required
 def edit_dt_by_id(dt_id):
-    return jsonify({"Route":f"Route Reached"})
+    dt_to_edit = Discreet_Trial.query.filter_by(therapist_id=current_user.id).all()
+
+    if not dt_to_edit:
+        return jsonify({"message": f"Record {dt_id} could not be found"}), 404
+
+    return jsonify({"Route": dt_to_edit.to_dict()})
