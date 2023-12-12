@@ -8,7 +8,7 @@ from datetime import time, datetime
 trials_bp = Blueprint("my-trials", __name__)
 
 
-@trials_bp.route("/<int:dt_id>", methods=["GET"])
+@trials_bp.route("/<int:trial_id>", methods=["GET"])
 @login_required
-def get_trials_by_dt(dt_id):
+def get_trials_by_dt(trial_id):
     return jsonify({"Success": "Route Reached"}), 200
