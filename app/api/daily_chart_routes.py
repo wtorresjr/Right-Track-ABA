@@ -102,8 +102,8 @@ def get_chart_by_client_id(client_id):
 
     client_charts = [
         {
-            "chart": chart.to_dict(),
-            "intervals": [interval.to_dict() for interval in chart.intervals],
+            "Chart": chart.to_dict(),
+            "Intervals": [interval.to_dict() for interval in chart.intervals],
         }
         for chart in found_client_charts
     ]

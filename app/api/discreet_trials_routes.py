@@ -51,9 +51,14 @@ def get_dt_by_client_id(client_id):
 @discreet_trials_bp.route("/dt-id/<int:dt_id>", methods=["GET"])
 @login_required
 def get_dt_trials_by_dt_id(dt_id):
-    dt_detail_found = Discreet_Trial.query.get(dt_id)
+    dt_found = Discreet_Trial.query.get(dt_id)
 
-    if not dt_detail_found:
+    if not dt_found:
         return jsonify({"message": f"Discreet trial {dt_id} could not be found."}), 404
 
-    return jsonify(dt_detail_found.to_dict())
+    dt_details = {
+        "Discreet_Trial": dt_found.to_dict(),
+        "Trials": [trial.to_dict() for trial in dt_found.trials],
+    }
+
+    return jsonify(dt_details)
