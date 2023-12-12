@@ -123,3 +123,17 @@ def edit_dt_by_id(dt_id):
         return jsonify(dt_to_edit.to_dict()), 200
 
     return jsonify({"message": f"ID {dt_id} does not belong to current user."})
+
+
+@discreet_trials_bp.route("/", methods=["POST"])
+@login_required
+def create_new_dt():
+    user_input = request.get_json()
+
+    trial_date = datetime.strptime(user_input["trial_date"], "%Y,%m,%d").date()
+
+    user_input["trial_date"] = trial_date
+    
+    
+
+    return jsonify(user_input), 201
