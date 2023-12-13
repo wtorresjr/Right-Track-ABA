@@ -20,6 +20,9 @@ class Trial(db.Model, UserMixin):
     client_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("clients.id")), nullable=False
     )
+    therapist_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id"))
+    )
 
     trial_target = db.Column(db.String(100), nullable=False)
     trial_count = db.Column(db.Integer, nullable=False)
@@ -33,6 +36,7 @@ class Trial(db.Model, UserMixin):
 
     client = db.relationship("Client", back_populates="trials")
     discreet_trials = db.relationship("Discreet_Trial", back_populates="trials")
+    therapist = db.relationship("Therapist", back_populates="trials")
 
     def to_dict(self):
         return {
