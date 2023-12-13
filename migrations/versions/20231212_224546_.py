@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 72c7e6891111
+Revision ID: ef2c0d26f889
 Revises: 
-Create Date: 2023-12-11 17:19:16.405057
+Create Date: 2023-12-12 22:45:46.257642
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '72c7e6891111'
+revision = 'ef2c0d26f889'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -69,7 +69,7 @@ def upgrade():
     sa.Column('start_interval', sa.Time(), nullable=False),
     sa.Column('end_interval', sa.Time(), nullable=False),
     sa.Column('interval_notes', sa.String(length=300), nullable=True),
-    sa.Column('interval_tags', sa.String(), nullable=True),
+    sa.Column('interval_tags', sa.JSON(), nullable=True),
     sa.Column('interval_rating', sa.Integer(), nullable=False),
     sa.Column('chart_id', sa.Integer(), nullable=False),
     sa.Column('therapist_id', sa.Integer(), nullable=False),
@@ -82,6 +82,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('dt_id', sa.Integer(), nullable=False),
     sa.Column('client_id', sa.Integer(), nullable=False),
+    sa.Column('therapist_id', sa.Integer(), nullable=True),
     sa.Column('trial_target', sa.String(length=100), nullable=False),
     sa.Column('trial_count', sa.Integer(), nullable=False),
     sa.Column('trial_score', sa.Integer(), nullable=False),
@@ -90,6 +91,7 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
     sa.ForeignKeyConstraint(['dt_id'], ['discreet_trials.id'], ),
+    sa.ForeignKeyConstraint(['therapist_id'], ['therapists.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
