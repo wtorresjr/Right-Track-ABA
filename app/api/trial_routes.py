@@ -41,6 +41,7 @@ def get_trials_by_dt(trial_id):
     trial = found_trial.to_dict()
 
     if trial["therapist_id"] == current_user.id:
+        
         if request.method == "GET":
             return jsonify(found_trial.to_dict()), 200
 
