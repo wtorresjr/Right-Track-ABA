@@ -8,7 +8,7 @@ from datetime import time, datetime
 trials_bp = Blueprint("my-trials", __name__)
 
 
-@trials_bp.route("/<int:trial_id>", methods=["GET", "DELETE"])
+@trials_bp.route("/<int:trial_id>", methods=["GET", "DELETE", "PUT"])
 @login_required
 def get_trials_by_dt(trial_id):
     found_trial = Trial.query.get(trial_id)
@@ -26,6 +26,16 @@ def get_trials_by_dt(trial_id):
             db.session.delete(found_trial)
             db.session.commit()
             return jsonify({"Success": f"Deleted trial {trial_id}"}), 200
+
+        if request.method == "PUT":
+            edit_data = request.get_json()
+
+            for [key, item] in edit_data.items():
+                setattr(found_trial, key, item)
+
+            db.session.commit()
+
+            return jsonify({"Edited_Trial": found_trial.to_dict()})
 
     return (
         jsonify({"message": f"Trial {trial_id} does not belong to current user."}),
