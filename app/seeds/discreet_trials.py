@@ -50,6 +50,7 @@ def seed_discreet_trials(client_data):
             trial1 = Trial(
                 dt_id=new_dt["id"],
                 client_id=new_dt["client_id"],
+                therapist_id=new_dt["therapist_id"],
                 trial_target=trial_target,
                 trial_count=3,
                 trial_score=randint(1, 3),
