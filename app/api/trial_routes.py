@@ -8,6 +8,23 @@ from datetime import time, datetime
 trials_bp = Blueprint("my-trials", __name__)
 
 
+@trials_bp.route("/", methods=["POST"])
+@login_required
+def create_new_trial():
+    user_input_data = request.get_json()
+
+    new_trial = Trial(
+        **user_input_data,
+        therapist_id=current_user.id,
+    )
+
+    db.session.add(new_trial)
+    db.session.commit()
+
+    return jsonify({"New_Trial": new_trial.to_dict()})
+    # return jsonify({"New_Trial": user_input_data})
+
+
 @trials_bp.route("/<int:trial_id>", methods=["GET", "DELETE", "PUT"])
 @login_required
 def get_trials_by_dt(trial_id):

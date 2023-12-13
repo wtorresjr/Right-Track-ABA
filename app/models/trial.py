@@ -21,7 +21,7 @@ class Trial(db.Model, UserMixin):
         db.Integer, db.ForeignKey(add_prefix_for_prod("clients.id")), nullable=False
     )
     therapist_id = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id"))
+        db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id")), nullable=False
     )
 
     trial_target = db.Column(db.String(100), nullable=False)
