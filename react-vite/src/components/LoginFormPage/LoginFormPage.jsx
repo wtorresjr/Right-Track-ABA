@@ -32,11 +32,15 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="loginFormModal">
       {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
+        errors.map((message) => (
+          <p key={message} className="errorsPtag">
+            {message}
+          </p>
+        ))}
+      <form onSubmit={handleSubmit} className="loginForm">
+        <h1>Right Track ABA</h1>
         <label>
           Email
           <input
@@ -46,7 +50,7 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="errorsPtag">{errors.email}</p>}
         <label>
           Password
           <input
@@ -56,10 +60,10 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="errorsPtag">{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 
