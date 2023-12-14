@@ -33,7 +33,6 @@ function LoginFormPage() {
 
   return (
     <>
-      <h1>Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => (
           <p key={message} className="errorsPtag">
@@ -41,6 +40,7 @@ function LoginFormPage() {
           </p>
         ))}
       <form onSubmit={handleSubmit} className="loginForm">
+        <h1>Right Track ABA</h1>
         <label>
           Email
           <input
