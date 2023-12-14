@@ -12,7 +12,7 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser) return <Navigate to="/home" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +41,6 @@ function LoginFormPage() {
         ))}
       <div className="formContain">
         <form onSubmit={handleSubmit} className="loginForm">
-          {/* <h1>Right Track ABA</h1> */}
           <img className="logo-image-login" src="../right-track-aba-logo.png" />
           <label>
             Email

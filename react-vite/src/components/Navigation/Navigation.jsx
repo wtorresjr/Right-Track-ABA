@@ -8,7 +8,7 @@ function Navigation() {
   return (
     <>
       {sessionUser && (
-        <ul>
+        <>
           <NavLink to="/">
             <img
               className="logo-image"
@@ -18,7 +18,7 @@ function Navigation() {
           </NavLink>
 
           <ProfileButton />
-        </ul>
+        </>
       )}
     </>
   );
