@@ -1,0 +1,41 @@
+.loginFormModal {
+  padding: 50px;
+}
+
+.loginForm {
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+input {
+  padding: 10px;
+  margin: 10px 0 0 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid grey;
+  font-size: 18px;
+}
+
+label {
+  width: 100%;
+  padding: 10px;
+  font-weight: bolder;
+  font-size: 18px;
+  text-align: right;
+}
+
+.loginFormModal button {
+  padding: 10px;
+  margin: 30px 0 0 0;
+  width: 100%;
+  font-weight: bolder;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
