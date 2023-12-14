@@ -1,0 +1,22 @@
+.loginForm {
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+input {
+  padding: 8px;
+  margin: 10px 0 0 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+label {
+  width: 50%;
+}
+
+.loginForm button {
+  padding: 10px;
+  margin: 10px 0 0 0;
+  width: 50%;
+}
