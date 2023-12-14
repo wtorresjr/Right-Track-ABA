@@ -9,9 +9,7 @@ function Navigation() {
         <NavLink to="/">Home</NavLink>
       </li>
 
-      <li>
-        <ProfileButton />
-      </li>
+      {/* <ProfileButton /> */}
     </ul>
   );
 }
