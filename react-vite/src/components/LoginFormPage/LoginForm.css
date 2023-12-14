@@ -55,7 +55,7 @@ label {
 }
 
 body {
-  background-image: url("../public/asd-puzzle.jpg");
+  background-image: url("../asd-puzzle.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
