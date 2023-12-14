@@ -1,3 +1,12 @@
 .profile-dropdown {
   position: absolute;
+  background-color: white;
+  padding: 10px;
+  list-style: none;
+  border-radius: 0 10px;
+  box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.253);
+}
+
+.hamburger-menu {
+  width: auto;
 }
