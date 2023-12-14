@@ -41,7 +41,8 @@ function LoginFormPage() {
         ))}
       <div className="formContain">
         <form onSubmit={handleSubmit} className="loginForm">
-          <h1>Right Track ABA</h1>
+          {/* <h1>Right Track ABA</h1> */}
+          <img className="logo-image-login" src="../right-track-aba-logo.png" />
           <label>
             Email
             <input

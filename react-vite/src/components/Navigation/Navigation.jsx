@@ -5,9 +5,9 @@ import "./Navigation.css";
 function Navigation() {
   return (
     <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+      <NavLink to="/">
+        <img className="logo-image" src="../right-track-aba-logo.png" />
+      </NavLink>
 
       {/* <ProfileButton /> */}
     </ul>

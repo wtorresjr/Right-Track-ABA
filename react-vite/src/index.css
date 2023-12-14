@@ -24,3 +24,12 @@ label {
   text-align: center;
   border-radius: 8px;
 }
+
+.logo-image {
+  min-width: 20%;
+  max-width: 25%;
+}
+
+.logo-image-login {
+  width: 100%;
+}
