@@ -35,7 +35,11 @@ function LoginFormPage() {
     <>
       <h1>Log In</h1>
       {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
+        errors.map((message) => (
+          <p key={message} className="errorsPtag">
+            {message}
+          </p>
+        ))}
       <form onSubmit={handleSubmit} className="loginForm">
         <label>
           Email
@@ -46,7 +50,7 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="errorsPtag">{errors.email}</p>}
         <label>
           Password
           <input
@@ -56,7 +60,7 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="errorsPtag">{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
     </>
