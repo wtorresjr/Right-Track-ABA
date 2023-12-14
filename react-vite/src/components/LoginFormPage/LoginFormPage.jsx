@@ -32,7 +32,7 @@ function LoginFormPage() {
   };
 
   return (
-    <>
+    <div className="loginFormModal">
       {errors.length > 0 &&
         errors.map((message) => (
           <p key={message} className="errorsPtag">
@@ -63,7 +63,7 @@ function LoginFormPage() {
         {errors.password && <p className="errorsPtag">{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 
