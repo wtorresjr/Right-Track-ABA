@@ -36,7 +36,7 @@ function LoginFormPage() {
       <h1>Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="loginForm">
         <label>
           Email
           <input
