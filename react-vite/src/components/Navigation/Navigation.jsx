@@ -9,7 +9,7 @@ function Navigation() {
         <img className="logo-image" src="../right-track-aba-logo.png" />
       </NavLink>
 
-      {/* <ProfileButton /> */}
+      <ProfileButton />
     </ul>
   );
 }
