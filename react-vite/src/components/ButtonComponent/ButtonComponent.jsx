@@ -1,9 +1,11 @@
-const ButtonComponent = () => {
+import "./button-component.css";
+
+const ButtonComponent = ({ btnText, btnStyle }) => {
   return (
-    <>
-      <h2>Button</h2>
-    </>
+    <div className="button-comp-container" id={btnStyle}>
+      <h2>{btnText}</h2>
+    </div>
   );
 };
 
-export default ButtonComponent
+export default ButtonComponent;
