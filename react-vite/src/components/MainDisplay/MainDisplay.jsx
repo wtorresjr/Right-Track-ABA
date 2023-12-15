@@ -4,11 +4,26 @@ import "./main-display.css";
 const MainDisplay = () => {
   return (
     <div className="mainDisplayContain">
-      <h1>Main Display</h1>
-      <ButtonComponent btnText={"Manage Clients"} btnStyle={"manageClient"} />
-      <ButtonComponent btnText={"View Reports"} btnStyle={"viewReports"} />
-      <ButtonComponent btnText={"Daily Charts"} btnStyle={"dailyCharts"} />
-      <ButtonComponent btnText={"Discreet Trials"} btnStyle={"dtTrials"} />
+      <ButtonComponent
+        btnText={"Manage Clients"}
+        btnStyle={"manageClient"}
+        btnClass={"button-comp-container btnHover"}
+      />
+      <ButtonComponent
+        btnText={"View Reports"}
+        btnStyle={"viewReports"}
+        btnClass={"button-comp-container btnHover"}
+      />
+      <ButtonComponent
+        btnText={"Daily Charts"}
+        btnStyle={"dailyCharts"}
+        btnClass={"button-comp-container btnHover"}
+      />
+      <ButtonComponent
+        btnText={"Discreet Trials"}
+        btnStyle={"dtTrials"}
+        btnClass={"button-comp-container btnHover"}
+      />
     </div>
   );
 };

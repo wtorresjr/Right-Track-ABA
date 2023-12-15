@@ -1,8 +1,8 @@
 import "./button-component.css";
 
-const ButtonComponent = ({ btnText, btnStyle }) => {
+const ButtonComponent = ({ btnText, btnStyle, btnClass }) => {
   return (
-    <div className="button-comp-container" id={btnStyle}>
+    <div className={btnClass} id={btnStyle}>
       <h2>{btnText}</h2>
     </div>
   );

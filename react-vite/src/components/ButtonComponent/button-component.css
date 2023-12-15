@@ -1,10 +1,12 @@
 .button-comp-container {
-  /* border: 1px solid black; */
+  border: 1px solid rgb(184, 184, 184);
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px 10px;
   margin: 10px 0;
   cursor: pointer;
+  width: calc(50% - 10px);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.192);
 }
 
 #manageClient {
@@ -25,4 +27,8 @@
 #dailyCharts {
   background-color: #c2440e;
   color: white;
+}
+
+.btnHover:hover {
+  background-color: black !important;
 }
