@@ -2,16 +2,27 @@
   border: 1px solid rgb(184, 184, 184);
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 10px 10px;
+  padding: 0px 10px;
   margin: 10px 0;
   cursor: pointer;
   width: calc(50% - 10px);
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.192);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+/* .button-comp-container i {
+} */
 
 #manageClient {
   background-color: #fdbd3a;
   color: white;
+  /* background-image: url("./manage-client-bg-img.jpg");
+  background-position-x: -30px;
+  background-position-y: -100px; */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
 }
 
 #viewReports {
