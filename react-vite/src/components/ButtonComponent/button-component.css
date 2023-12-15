@@ -1,0 +1,28 @@
+.button-comp-container {
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+#manageClient {
+  background-color: #fdbd3a;
+  color: white;
+}
+
+#viewReports {
+  background-color: #5fb4fe;
+  color: white;
+}
+
+#dtTrials {
+  background-color: #005411;
+  color: white;
+}
+
+#dailyCharts {
+  background-color: #c2440e;
+  color: white;
+}
