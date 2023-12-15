@@ -3,6 +3,7 @@ import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from "../components/SignupFormPage";
 import Layout from "./Layout";
 import MainDisplay from "../components/MainDisplay";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +15,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <MainDisplay />,
+        element: (
+          <PrivateRoute>
+            <MainDisplay />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "signup",
