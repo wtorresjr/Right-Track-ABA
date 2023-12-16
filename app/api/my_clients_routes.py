@@ -33,7 +33,7 @@ def get_client_by_id(client_id):
         return jsonify(found_client)
 
     else:
-        return jsonify({"message": "Forbidden"})
+        return jsonify({"message": "Forbidden, client is not registered to you."})
 
 
 # Delete a client by client_id

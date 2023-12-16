@@ -21,11 +21,16 @@ export const getClientByIDThunk = (client_id) => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       dispatch(get_by_id(data));
+      return { ok: true, payload: data };
+    } else {
+      const errorData = await response.json();
+      return { ok: false, payload: errorData };
     }
   } catch (errors) {
-    return errors;
+    return { ok: false, payload: { message: 'Error fetching client data' } };
   }
 };
+
 
 export const getClientsThunk = () => async (dispatch) => {
   try {
@@ -33,9 +38,10 @@ export const getClientsThunk = () => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       dispatch(get_clients(data));
+      return { ok: true, data };
     }
   } catch (errors) {
-    return errors;
+    return { ok: false };
   }
 };
 
