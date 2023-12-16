@@ -35,16 +35,18 @@
 }
 
 li {
-  padding: 10px;
   border-bottom: 1px solid rgb(199, 199, 199);
-  cursor: pointer;
-  font-weight: 500;
+  padding: 10px 0;
 }
 
-/* li:hover {
-  font-weight: bolder;
+.navLinks {
+  padding: 10px 0;
   cursor: pointer;
-} */
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navLink
 
 li:last-child {
   border-bottom: none;
