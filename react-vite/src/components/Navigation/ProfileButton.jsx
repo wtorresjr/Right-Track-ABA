@@ -52,22 +52,38 @@ function ProfileButton() {
                 Hi {user.first_name} {user.last_name},
               </p>
               <li>
-                <NavLink to="/manage-clients" className="navLinks">
+                <NavLink
+                  to="/manage-clients"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
                   Manage Clients
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/view-reports" className="navLinks">
+                <NavLink
+                  to="/view-reports"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
                   View Reports
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/daily-charts" className="navLinks">
+                <NavLink
+                  to="/daily-charts"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
                   Daily Charts
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/discreet-trials" className="navLinks">
+                <NavLink
+                  to="/discreet-trials"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
                   Discreet Trials
                 </NavLink>
               </li>
