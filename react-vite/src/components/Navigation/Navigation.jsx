@@ -16,7 +16,6 @@ function Navigation() {
               alt="Logo"
             />
           </NavLink>
-
           <ProfileButton />
         </div>
       )}
