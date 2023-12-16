@@ -7,7 +7,7 @@ const ClientInfo = ({ client }) => {
   const navigate = useNavigate();
   const handleClick = (client_id, action) => {
     if (action === "view") {
-      console.log(client_id, action);
+      navigate(`/client/${client_id}`);
     }
     if (action === "edit") {
       console.log(client_id, action);
