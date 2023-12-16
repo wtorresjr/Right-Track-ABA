@@ -1,12 +1,48 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .profile-dropdown {
   position: absolute;
   background-color: white;
   padding: 10px;
   list-style: none;
-  border-radius: 0 10px;
+  border-radius: 10px 0px;
   box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.253);
+  margin: 50px 0 0 0;
+  text-align: right;
 }
 
 .hamburger-menu {
   width: auto;
+  display: flex;
+  justify-content: right;
+}
+
+.logoutBtn {
+  background-color: rgb(199, 0, 0);
+  width: 100%;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: bolder;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.438);
+  cursor: pointer;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid rgb(199, 199, 199);
+}
+
+li:hover {
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+li:last-child {
+  border-bottom: none;
 }

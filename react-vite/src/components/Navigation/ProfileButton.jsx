@@ -12,7 +12,7 @@ function ProfileButton() {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -47,9 +47,17 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                Hi {user.first_name} {user.last_name},
+              </li>
+              <li>Manage Clients</li>
+              <li>View Reports</li>
+              <li>Daily Charts</li>
+              <li>Discreet Trials</li>
+              <li>
+                <button onClick={logout} className="logoutBtn">
+                  Log Out
+                </button>
               </li>
             </>
           ) : (

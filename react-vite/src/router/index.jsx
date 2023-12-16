@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
         path: "/home",
         element: (
           <PrivateRoute>
-            <MainDisplay />,
+            <MainDisplay />
           </PrivateRoute>
         ),
       },
