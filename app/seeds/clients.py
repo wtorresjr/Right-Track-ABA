@@ -20,8 +20,13 @@ def seed_clients():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             guardian_email=fake.email(),
+            dob=fake.date_between(
+                start_date=date(2016, 1, 1), end_date=date(2019, 6, 30)
+            ),
+            client_notes=fake.paragraph(nb_sentences=5),
             therapist_id=randint(1, 3),
         )
+
         db.session.add(client)
         db.session.commit()
 
