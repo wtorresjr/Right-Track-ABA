@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0a14a7b86637
+Revision ID: 7a9d898c0bb7
 Revises: 
-Create Date: 2023-12-13 00:10:57.760633
+Create Date: 2023-12-16 03:30:16.707737
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0a14a7b86637'
+revision = '7a9d898c0bb7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,6 +34,7 @@ def upgrade():
     sa.Column('first_name', sa.String(length=30), nullable=False),
     sa.Column('last_name', sa.String(length=35), nullable=False),
     sa.Column('guardian_email', sa.String(length=255), nullable=False),
+    sa.Column('dob', sa.Date(), nullable=False),
     sa.Column('therapist_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -82,7 +83,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('dt_id', sa.Integer(), nullable=False),
     sa.Column('client_id', sa.Integer(), nullable=False),
-    sa.Column('therapist_id', sa.Integer(), nullable=True),
+    sa.Column('therapist_id', sa.Integer(), nullable=False),
     sa.Column('trial_target', sa.String(length=100), nullable=False),
     sa.Column('trial_count', sa.Integer(), nullable=False),
     sa.Column('trial_score', sa.Integer(), nullable=False),
