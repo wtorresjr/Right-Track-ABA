@@ -41,8 +41,8 @@ function ProfileButton() {
 
   return (
     <div className="hamburger-menu">
-      <button onClick={toggleMenu}>
-        <i className="fa-solid fa-bars fa-shake fa-lg"></i>
+      <button onClick={toggleMenu} id="burger">
+        <i className="fa-solid fa-bars fa-lg"></i>
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
