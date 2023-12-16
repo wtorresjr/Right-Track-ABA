@@ -14,6 +14,7 @@ class Client(db.Model, UserMixin):
     last_name = db.Column(db.String(35), nullable=False)
     guardian_email = db.Column(db.String(255), nullable=False)
     dob = db.Column(db.Date(), nullable=False)
+    client_notes = db.Column(db.Text())
     therapist_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id")), nullable=False
     )
@@ -39,7 +40,8 @@ class Client(db.Model, UserMixin):
             "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "dob": self.dob,
+            "dob": self.dob.strftime("%Y-%b-%d"),
+            "client_notes": self.client_notes,
             "guardian_email": self.guardian_email,
             "therapist_id": self.therapist_id,
         }
