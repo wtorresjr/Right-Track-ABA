@@ -1,7 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import "./manage-clients.css";
+import { useDispatch } from "react-redux";
+
 const ClientInfo = ({ client }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClick = (client_id, action) => {
-    console.log(client_id, action);
+    if (action === "view") {
+      console.log(client_id, action);
+    }
+    if (action === "edit") {
+      console.log(client_id, action);
+    }
+    if (action === "delete") {
+      console.log(client_id, action);
+    }
   };
   return (
     <div className="clientInfoContain" key={client?.id}>
@@ -26,7 +39,7 @@ const ClientInfo = ({ client }) => {
       <div className="btnsContain">
         <button
           id="viewBtn"
-          onClick={(e) => {
+          onClick={() => {
             handleClick(client.id, "view");
           }}
         >
@@ -34,7 +47,7 @@ const ClientInfo = ({ client }) => {
         </button>
         <button
           id="editBtn"
-          onClick={(e) => {
+          onClick={() => {
             handleClick(client.id, "edit");
           }}
         >
@@ -42,7 +55,7 @@ const ClientInfo = ({ client }) => {
         </button>
         <button
           id="delBtn"
-          onClick={(e) => {
+          onClick={() => {
             handleClick(client.id, "delete");
           }}
         >
