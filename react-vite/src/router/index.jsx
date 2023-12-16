@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/client",
+        path: "/client/:client_id",
         element: (
           <PrivateRoute>
             <ClientDetails />
