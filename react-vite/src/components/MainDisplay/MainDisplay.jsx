@@ -1,5 +1,5 @@
-import ButtonComponent from "../ButtonComponent";
-import { NavLink } from "react-router-dom";
+// import ButtonComponent from "../ButtonComponent";
+// import { NavLink } from "react-router-dom";
 import "./main-display.css";
 
 const MainDisplay = () => {
