@@ -1,8 +1,8 @@
 import "./manage-clients.css";
 const ClientInfo = ({ client }) => {
   return (
-    <div className="clientInfoContain">
-      <div className="clientData" key={client?.id}>
+    <div className="clientInfoContain" key={client?.id}>
+      <div className="clientData">
         <div>
           <label>First Name:</label>
           {client?.first_name}
