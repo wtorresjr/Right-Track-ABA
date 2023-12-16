@@ -17,7 +17,6 @@ const ManageClients = () => {
       {clients &&
         clients?.map((client) => {
           return <ClientInfo client={client} />;
-          // return <p key={client?.id}>{client?.first_name}</p>;
         })}
     </div>
   );
