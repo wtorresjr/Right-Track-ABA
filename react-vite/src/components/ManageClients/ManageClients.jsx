@@ -4,7 +4,7 @@ import { getClientsThunk } from "../../redux/clients";
 import ClientInfo from "./ClientInfo";
 
 const ManageClients = () => {
-  const clients = useSelector((state) => state.clients?.clients?.Clients);
+  const clients = useSelector((state) => state?.clients?.clients?.Clients);
   const dispatch = useDispatch();
 
   useEffect(() => {

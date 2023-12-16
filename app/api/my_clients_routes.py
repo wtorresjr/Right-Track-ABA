@@ -30,7 +30,7 @@ def get_client_by_id(client_id):
     found_client = found_client.to_dict()
 
     if found_client["therapist_id"] == current_user.id:
-        return jsonify({"Client": found_client})
+        return jsonify(found_client)
 
     else:
         return jsonify({"message": "Forbidden"})
@@ -85,7 +85,7 @@ def create_new_client():
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
 
 
-#Edit client
+# Edit client
 
 
 @my_clients.route("/<int:client_id>", methods=["PUT"])
