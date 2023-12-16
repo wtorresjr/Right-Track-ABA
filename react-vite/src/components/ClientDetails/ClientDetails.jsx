@@ -10,10 +10,10 @@ const ClientDetails = () => {
   const [message, setMessage] = useState("Loading...");
   const { client_id } = useParams();
   const client = useSelector((state) => state?.clients?.client_by_id);
-  const sessionUser = useSelector((state) => state?.session?.user);
 
   useEffect(() => {
     setLoaded(false);
+    let data = "";
     const getData = async () => {
       if (client_id) {
         try {
@@ -33,6 +33,10 @@ const ClientDetails = () => {
     };
     getData();
   }, [client_id, dispatch, message]);
+
+  const handleClick = () => {
+    console.log("HandleClicked");
+  };
 
   return (
     <>

@@ -1,10 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./manage-clients.css";
-import { useDispatch } from "react-redux";
-import ClientDetails from "../ClientDetails";
 
 const ClientInfo = ({ client }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = (client_id, action) => {
     if (action === "view") {
