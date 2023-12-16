@@ -1,5 +1,8 @@
 import "./manage-clients.css";
 const ClientInfo = ({ client }) => {
+  const handleClick = (client_id, action) => {
+    console.log(client_id, action);
+  };
   return (
     <div className="clientInfoContain" key={client?.id}>
       <div className="clientData">
@@ -19,15 +22,32 @@ const ClientInfo = ({ client }) => {
           <label>DOB:</label>
           {client?.dob}
         </div>
-        {/* <div>
-          <label>Notes:</label>
-          {client?.client_notes}
-        </div> */}
       </div>
       <div className="btnsContain">
-        <button id="viewBtn">View Data</button>
-        <button id="editBtn">Edit</button>
-        <button id="delBtn">Delete</button>
+        <button
+          id="viewBtn"
+          onClick={(e) => {
+            handleClick(client.id, "view");
+          }}
+        >
+          View Data
+        </button>
+        <button
+          id="editBtn"
+          onClick={(e) => {
+            handleClick(client.id, "edit");
+          }}
+        >
+          Edit
+        </button>
+        <button
+          id="delBtn"
+          onClick={(e) => {
+            handleClick(client.id, "delete");
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

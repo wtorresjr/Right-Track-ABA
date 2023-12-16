@@ -13,7 +13,14 @@ const ManageClients = () => {
 
   return (
     <div className="mainDisplayContain">
-      <h1>Manage Clients</h1>
+      <div className="manageClientsHeader">
+        <h1>Manage Clients</h1>
+        <input
+          type="text"
+          placeholder="Search For A Client"
+          onClick={(e) => alert("Feature coming soon!")}
+        />
+      </div>
       {clients &&
         clients?.map((client) => {
           return <ClientInfo key={client.id} client={client} />;
