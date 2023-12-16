@@ -1,0 +1,29 @@
+#clientDetails {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.clientDetailsContain {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+#clientDetails h1 {
+  width: 100%;
+  border-bottom: 1px solid rgb(150, 150, 150);
+  padding: 0 0 10px 0;
+}
+
+.clientDetailsContain div {
+  padding: 5px 0;
+}
+
+label {
+  color: orange;
+  padding: 0px 10px 0 0;
+}
+
+.btnsContain {
+  width: 30%;
+}
