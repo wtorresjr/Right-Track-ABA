@@ -1,0 +1,41 @@
+.clientInfoContain {
+  background-color: rgba(0, 0, 0, 0.417);
+  display: flex;
+  padding: 20px 20px;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.clientData {
+  width: 70%;
+  padding: 2px 10px;
+  color: rgb(255, 255, 255);
+}
+.btnsContain {
+  width: 30%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.btnsContain button {
+  height: 50%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bolder;
+  font-size: 16px;
+  border: none;
+  margin: 5px 0;
+}
+
+#editBtn {
+  background-color: rgb(255, 221, 158);
+}
+
+#delBtn {
+  background-color: rgb(212, 0, 0);
+}
+
+button:hover {
+  background-color: rgb(0, 0, 0) !important;
+  color: white;
+}
