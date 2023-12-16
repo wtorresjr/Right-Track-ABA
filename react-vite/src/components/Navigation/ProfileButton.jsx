@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -12,7 +13,7 @@ function ProfileButton() {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -47,9 +48,49 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.email}</li>
+              <p>
+                Hi {user.first_name} {user.last_name},
+              </p>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <NavLink
+                  to="/manage-clients"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
+                  Manage Clients
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/view-reports"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
+                  View Reports
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/daily-charts"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
+                  Daily Charts
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/discreet-trials"
+                  className="navLinks"
+                  onClick={closeMenu}
+                >
+                  Discreet Trials
+                </NavLink>
+              </li>
+              <li>
+                <button onClick={logout} className="logoutBtn">
+                  Log Out
+                </button>
               </li>
             </>
           ) : (

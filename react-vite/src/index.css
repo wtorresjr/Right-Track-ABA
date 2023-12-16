@@ -12,6 +12,17 @@ body {
   background-image: url("../asd-puzzle.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: auto;
+}
+body::-webkit-scrollbar {
+  width: 0;
+}
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 h1 {
@@ -33,10 +44,23 @@ label {
 }
 
 .logo-image {
-  min-width: 20%;
-  max-width: 25%;
+  min-width: 25%;
+  max-width: 50%;
 }
 
 .logo-image-login {
   width: 100%;
+}
+
+.mainDisplayContain {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  box-sizing: border-box;
+  margin: 20px 0 0 0;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 20px;
+  color: white;
 }

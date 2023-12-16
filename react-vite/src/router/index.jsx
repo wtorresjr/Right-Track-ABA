@@ -4,6 +4,7 @@ import SignupFormPage from "../components/SignupFormPage";
 import Layout from "./Layout";
 import MainDisplay from "../components/MainDisplay";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import ManageClients from "../components/ManageClients/ManageClients";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +18,15 @@ export const router = createBrowserRouter([
         path: "/home",
         element: (
           <PrivateRoute>
-            <MainDisplay />,
+            <MainDisplay />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/manage-clients",
+        element: (
+          <PrivateRoute>
+            <ManageClients />
           </PrivateRoute>
         ),
       },
