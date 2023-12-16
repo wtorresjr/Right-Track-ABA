@@ -31,17 +31,20 @@
   font-weight: bolder;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.438);
   cursor: pointer;
+  margin: 10px 0 0 0;
 }
 
 li {
   padding: 10px;
   border-bottom: 1px solid rgb(199, 199, 199);
+  cursor: pointer;
+  font-weight: 500;
 }
 
-li:hover {
+/* li:hover {
   font-weight: bolder;
   cursor: pointer;
-}
+} */
 
 li:last-child {
   border-bottom: none;
