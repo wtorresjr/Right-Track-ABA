@@ -47,9 +47,9 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>
+              <p>
                 Hi {user.first_name} {user.last_name},
-              </li>
+              </p>
               <li>Manage Clients</li>
               <li>View Reports</li>
               <li>Daily Charts</li>
