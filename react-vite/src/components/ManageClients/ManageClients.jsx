@@ -18,7 +18,7 @@ const ManageClients = () => {
         <input
           type="text"
           placeholder="Search For A Client"
-          onClick={(e) => alert("Feature coming soon!")}
+          onClick={() => alert("Feature coming soon!")}
         />
       </div>
       {clients &&
