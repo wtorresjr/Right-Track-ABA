@@ -3,13 +3,22 @@ const ClientInfo = ({ client }) => {
   return (
     <div className="clientInfoContain">
       <div className="clientData" key={client?.id}>
-        <div>First Name: {client?.first_name}</div>
-        <div>Last Name: {client?.last_name}</div>
-        <div>Guardian Email: {client?.guardian_email}</div>
+        <div>
+          <label>First Name:</label>
+          {client?.first_name}
+        </div>
+        <div>
+          <label>Last Name:</label>
+          {client?.last_name}
+        </div>
+        <div>
+          <label>Guardian Email:</label>
+          {client?.guardian_email}
+        </div>
       </div>
       <div className="btnsContain">
-        <button>Edit</button>
-        <button>Delete</button>
+        <button id="editBtn">Edit</button>
+        <button id="delBtn">Delete</button>
       </div>
     </div>
   );
