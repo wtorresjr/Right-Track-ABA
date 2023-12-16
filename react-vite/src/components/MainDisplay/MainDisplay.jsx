@@ -1,11 +1,11 @@
-// import ButtonComponent from "../ButtonComponent";
+import ButtonComponent from "../ButtonComponent";
 // import { NavLink } from "react-router-dom";
 import "./main-display.css";
 
 const MainDisplay = () => {
   return (
-    <div className="mainDisplayContain">
-      {/* <ButtonComponent
+    <div className="mainDisplayContain" id="menuItems">
+      <ButtonComponent
         btnText={"Manage Clients"}
         btnStyle={"manageClient"}
         btnClass={"button-comp-container btnHover"}
@@ -32,7 +32,7 @@ const MainDisplay = () => {
         btnClass={"button-comp-container btnHover"}
         faAwesomeStyle={"fa-solid fa-list-check fa-2xl"}
         urlProp={"/discreet-trials"}
-      /> */}
+      />
     </div>
   );
 };
