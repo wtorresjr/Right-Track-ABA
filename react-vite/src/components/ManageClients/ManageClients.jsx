@@ -16,7 +16,7 @@ const ManageClients = () => {
       <h1>Manage Clients</h1>
       {clients &&
         clients?.map((client) => {
-          return <ClientInfo client={client} />;
+          return <ClientInfo key={client.id} client={client} />;
         })}
     </div>
   );
