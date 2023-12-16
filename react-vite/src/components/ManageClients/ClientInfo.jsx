@@ -15,6 +15,10 @@ const ClientInfo = ({ client }) => {
           <label>Guardian Email:</label>
           {client?.guardian_email}
         </div>
+        <div>
+          <label>DOB:</label>
+          {client?.dob}
+        </div>
       </div>
       <div className="btnsContain">
         <button id="editBtn">Edit</button>
