@@ -19,8 +19,13 @@ const ClientInfo = ({ client }) => {
           <label>DOB:</label>
           {client?.dob}
         </div>
+        {/* <div>
+          <label>Notes:</label>
+          {client?.client_notes}
+        </div> */}
       </div>
       <div className="btnsContain">
+        <button id="viewBtn">View Data</button>
         <button id="editBtn">Edit</button>
         <button id="delBtn">Delete</button>
       </div>

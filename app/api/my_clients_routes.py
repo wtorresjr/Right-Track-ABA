@@ -85,6 +85,9 @@ def create_new_client():
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
 
 
+#Edit client
+
+
 @my_clients.route("/<int:client_id>", methods=["PUT"])
 @login_required
 def edit_a_client(client_id):
@@ -109,14 +112,6 @@ def edit_a_client(client_id):
         db.session.commit()
 
         return client_to_edit.to_dict()
-
-        # if new_edit_data.get("first_name"):
-        #     client_to_edit["first_name"] == new_edit_data.get("first_name")
-        # if new_edit_data.get("guardian_email"):
-        #     client_to_edit["guardian_email"] == new_edit_data.get("guardian_email")
-        # if new_edit_data.get("therapist_id"):
-        #     client_to_edit["therapist_id"] == new_edit_data.get("therapist_id")
-        # db.session.
 
     except Exception as e:
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"})

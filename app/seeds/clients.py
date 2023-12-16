@@ -23,6 +23,7 @@ def seed_clients():
             dob=fake.date_between(
                 start_date=date(2016, 1, 1), end_date=date(2019, 6, 30)
             ),
+            client_notes=fake.paragraph(nb_sentences=5),
             therapist_id=randint(1, 3),
         )
 
