@@ -22,6 +22,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/manage-clients",
+        element: (
+          <PrivateRoute>
+            <MainDisplay />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "signup",
         element: <SignupFormPage />,
       },

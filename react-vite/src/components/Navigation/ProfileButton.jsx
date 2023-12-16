@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -50,10 +51,26 @@ function ProfileButton() {
               <p>
                 Hi {user.first_name} {user.last_name},
               </p>
-              <li>Manage Clients</li>
-              <li>View Reports</li>
-              <li>Daily Charts</li>
-              <li>Discreet Trials</li>
+              <li>
+                <NavLink to="/manage-clients" className="navLinks">
+                  Manage Clients
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/view-reports" className="navLinks">
+                  View Reports
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/daily-charts" className="navLinks">
+                  Daily Charts
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/discreet-trials" className="navLinks">
+                  Discreet Trials
+                </NavLink>
+              </li>
               <li>
                 <button onClick={logout} className="logoutBtn">
                   Log Out
