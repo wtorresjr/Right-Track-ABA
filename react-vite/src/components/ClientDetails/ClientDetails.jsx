@@ -47,15 +47,15 @@ const ClientDetails = () => {
           </h1>
           <div className="clientDetailsContain">
             <div>
-              <label>Guardian Email:</label>
+              <label className="detailsLabels">Guardian Email:</label>
               {client?.guardian_email}
             </div>
             <div>
-              <label>DOB:</label>
+              <label className="detailsLabels">DOB:</label>
               {client?.dob}
             </div>
             <div>
-              <label>Notes:</label>
+              <label className="detailsLabels">Notes:</label>
               {client?.client_notes}
             </div>
           </div>
