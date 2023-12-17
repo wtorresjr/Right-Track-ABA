@@ -14,7 +14,7 @@ class Client(db.Model, UserMixin):
     last_name = db.Column(db.String(35), nullable=False)
     guardian_email = db.Column(db.String(255), nullable=False)
     dob = db.Column(db.Date(), nullable=False)
-    client_notes = db.Column(db.Text())
+    client_notes = db.Column(db.Text)
     therapist_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("therapists.id")), nullable=False
     )
