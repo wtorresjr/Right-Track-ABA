@@ -20,9 +20,9 @@
   padding: 5px 0;
 }
 
-label {
+.detailsLabels {
+  padding: 0 10px 0 0;
   color: orange;
-  padding: 0px 10px 0 0;
 }
 
 .btnsContain {
