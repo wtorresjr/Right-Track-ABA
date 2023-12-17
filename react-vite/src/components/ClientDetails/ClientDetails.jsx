@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./client-details.css";
+import DailyCharts from "../DailyCharts";
+import DiscreetTrials from "../DiscreetTrials";
 
 const ClientDetails = () => {
   const dispatch = useDispatch();
@@ -66,7 +68,7 @@ const ClientDetails = () => {
                 handleClick(client.id, "edit");
               }}
             >
-              Edit
+              Edit Client Data
             </button>
             <button
               id="delBtn"
@@ -74,9 +76,11 @@ const ClientDetails = () => {
                 handleClick(client.id, "delete");
               }}
             >
-              Delete
+              Delete Client
             </button>
           </div>
+          <DailyCharts />
+          <DiscreetTrials />
         </div>
       ) : (
         <h2
