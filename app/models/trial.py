@@ -27,7 +27,7 @@ class Trial(db.Model, UserMixin):
     trial_target = db.Column(db.String(100), nullable=False)
     trial_count = db.Column(db.Integer, nullable=False)
     trial_score = db.Column(db.Integer, nullable=False)
-    trial_notes = db.Column(db.String(300), nullable=False)
+    trial_notes = db.Column(db.Text)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
