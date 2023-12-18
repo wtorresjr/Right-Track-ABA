@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import "./daily-chart.css";
 const DailyCharts = ({ clientCharts }) => {
   let dayColorRating;
-  let textColor;
   return (
     <>
       <h1>Daily Performance Charts</h1>
