@@ -6,16 +6,17 @@ const CreateClient = () => {
   const [guardianEmail, setGuardianEmail] = useState();
   const [dob, setDob] = useState();
   const [clientNotes, setClientNotes] = useState();
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    newClient = {
-      first_name:firstName,
+    const newClient = {
+      first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
       dob: dob,
       client_notes: clientNotes,
     };
 
+    console.log(newClient, "<-----New Client");
   };
 
   return (

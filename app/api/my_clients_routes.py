@@ -4,6 +4,7 @@ from app.models import db
 from app.models import Client, Daily_Chart
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
+from datetime import date
 
 my_clients = Blueprint("my-clients", __name__)
 
@@ -107,10 +108,15 @@ def create_new_client():
     client_data = request.get_json()
 
     try:
+        # Date of birth split date then
+        dob = client_data.get("dob").split("-")
+
         new_client = Client(
             first_name=client_data.get("first_name"),
             last_name=client_data.get("last_name"),
             guardian_email=client_data.get("guardian_email"),
+            client_notes=client_data.get("client_notes"),
+            dob=date(int(dob[0]), int(dob[1]), int(dob[2])),
             therapist_id=current_user.id,
         )
 
