@@ -29,6 +29,15 @@
 }
 
 .btnsContain {
-  width: 30%;
-  height: 110px;
+  width: 50%;
+  /* height: 110px; */
+  display: flex;
+  flex-flow: row;
+  gap: 10px;
+}
+
+.btnsContain button {
+  width: 33%;
+  height: 100%;
+  border-radius: 9px;
 }
