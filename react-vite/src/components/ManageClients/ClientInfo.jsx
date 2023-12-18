@@ -18,19 +18,19 @@ const ClientInfo = ({ client }) => {
     <div className="clientInfoContain" key={client?.id}>
       <div className="clientData">
         <div>
-          <label>First Name:</label>
+          <label className="detailsLabels">First Name:</label>
           {client?.first_name}
         </div>
         <div>
-          <label>Last Name:</label>
+          <label className="detailsLabels">Last Name:</label>
           {client?.last_name}
         </div>
         <div>
-          <label>Guardian Email:</label>
+          <label className="detailsLabels">Guardian Email:</label>
           {client?.guardian_email}
         </div>
         <div>
-          <label>DOB:</label>
+          <label className="detailsLabels">DOB:</label>
           {client?.dob}
         </div>
       </div>
