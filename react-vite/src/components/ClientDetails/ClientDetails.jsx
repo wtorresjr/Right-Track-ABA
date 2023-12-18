@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./client-details.css";
 import DailyCharts from "../DailyCharts";
@@ -46,7 +46,11 @@ const ClientDetails = () => {
         <div className="mainDisplayContain" id="clientDetails">
           <h1>
             {client?.last_name}, {client?.first_name}
+            <NavLink to="/manage-clients" className="navLinkStyle">
+              Back To Manage Clients
+            </NavLink>
           </h1>
+
           <div className="clientDetailsContain">
             <div>
               <label className="detailsLabels">Guardian Email:</label>
@@ -79,8 +83,8 @@ const ClientDetails = () => {
               Delete Client
             </button>
           </div>
-          <DailyCharts />
-          <DiscreetTrials />
+          <DailyCharts clientCharts={client} />
+          <DiscreetTrials clientDT={client} />
         </div>
       ) : (
         <h2

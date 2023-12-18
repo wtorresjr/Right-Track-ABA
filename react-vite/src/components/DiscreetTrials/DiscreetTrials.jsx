@@ -1,4 +1,4 @@
-const DiscreetTrials = () => {
+const DiscreetTrials = ({ clientDT }) => {
   return (
     <>
       <h1>Discreet Trials</h1>
