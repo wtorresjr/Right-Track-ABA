@@ -10,9 +10,10 @@ const DailyCharts = ({ clientCharts }) => {
             <div key={dc?.id} className="clientDCdata">
               <NavLink to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
                 <div className="dcButtons">
-                  <div>{dc?.chart_date}</div>
-                  {/* <div>{dc["Intervals"]}</div> */}
-                  View Chart
+                  <p>{dc?.chart_date}</p>
+                  <div>Days Rating: {dc?.avgForChart}</div>
+                  <div>Total Intervals: {dc?.interval_count}</div>
+                  <p>View Chart</p>
                 </div>
               </NavLink>
             </div>
