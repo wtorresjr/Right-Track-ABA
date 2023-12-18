@@ -1,12 +1,13 @@
 import { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import ClientInfo from "./ClientInfo";
+import CreateClient from "../CreateClientPage/CreateClientPage";
+import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
 
 const ManageClients = () => {
-  const navigate = useNavigate();
+  const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
   const dispatch = useDispatch();
 
@@ -14,11 +15,15 @@ const ManageClients = () => {
     dispatch(getClientsThunk());
   }, [dispatch]);
 
+  const openCreateClientModal = () => {
+    setModalContent(<CreateClient />);
+  };
+
   return (
     <div className="mainDisplayContain">
       <div className="manageClientsHeader">
         <h1>Manage Clients</h1>
-        <button id="addNewClientBtn" onClick={() => navigate("/create-client")}>
+        <button id="addNewClientBtn" onClick={openCreateClientModal}>
           Add New Client
         </button>
         <input
@@ -34,4 +39,5 @@ const ManageClients = () => {
     </div>
   );
 };
+
 export default ManageClients;
