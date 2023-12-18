@@ -36,12 +36,12 @@ const ClientInfo = ({ client }) => {
       </div>
       <div className="btnsContain">
         <button
-          id="viewBtn"
+          id="delBtn"
           onClick={() => {
-            handleClick(client.id, "view");
+            handleClick(client.id, "delete");
           }}
         >
-          View Data
+          Delete
         </button>
         <button
           id="editBtn"
@@ -52,12 +52,12 @@ const ClientInfo = ({ client }) => {
           Edit
         </button>
         <button
-          id="delBtn"
+          id="viewBtn"
           onClick={() => {
-            handleClick(client.id, "delete");
+            handleClick(client.id, "view");
           }}
         >
-          Delete
+          View Data
         </button>
       </div>
     </div>
