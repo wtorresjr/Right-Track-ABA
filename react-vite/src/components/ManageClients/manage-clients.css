@@ -10,7 +10,7 @@
 
 .manageClientsHeader {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -52,6 +52,16 @@
 #delBtn {
   background-color: #881600;
   color: white;
+}
+
+#addNewClientBtn {
+  width: 50%;
+  height: 60px;
+  background-color: orange;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bolder;
+  border-radius: 10px;
 }
 
 button:hover {
