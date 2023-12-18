@@ -1,0 +1,17 @@
+.clientDCdata {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.dcButtons {
+  border: 1px solid rgb(113, 113, 113);
+  padding: 10px;
+  border-radius: 8px;
+  background-color: black;
+  text-align: center;
+}
+
+.navLinkStyleDC {
+  color: white;
+  text-decoration: none;
+}

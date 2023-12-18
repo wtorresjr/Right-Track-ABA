@@ -27,10 +27,15 @@ def get_client_by_id(client_id):
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
 
-    found_client = found_client.to_dict()
+    valid_client = found_client.to_dict()
 
-    if found_client["therapist_id"] == current_user.id:
-        return jsonify(found_client)
+    if valid_client["therapist_id"] == current_user.id:
+        daily_charts = [dc.to_dict() for dc in found_client.daily_charts]
+        discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
+        valid_client["Daily_Charts"] = daily_charts
+        valid_client["Discreet_Trials"] = discreet_trials
+
+        return jsonify(valid_client)
 
     else:
         return jsonify({"message": "Forbidden, client is not registered to you."})
