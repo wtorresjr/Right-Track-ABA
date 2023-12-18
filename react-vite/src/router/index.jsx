@@ -6,6 +6,7 @@ import MainDisplay from "../components/MainDisplay";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import ManageClients from "../components/ManageClients/ManageClients";
 import ClientDetails from "../components/ClientDetails";
+import CreateClient from "../components/CreateClientPage";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ClientDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/create-client",
+        element: (
+          <PrivateRoute>
+            <CreateClient />
           </PrivateRoute>
         ),
       },
