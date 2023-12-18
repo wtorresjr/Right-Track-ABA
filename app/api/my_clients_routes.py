@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client
+from app.models import Client, Daily_Chart
+from sqlalchemy.orm import joinedload
+from sqlalchemy import func
 
 my_clients = Blueprint("my-clients", __name__)
 
@@ -22,7 +24,13 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
-    found_client = Client.query.get(client_id)
+    # found_client = Client.query.get(client_id)
+
+    found_client = (
+        Client.query.filter_by(id=client_id)
+        .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
+        .first()
+    )
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
@@ -30,9 +38,34 @@ def get_client_by_id(client_id):
     valid_client = found_client.to_dict()
 
     if valid_client["therapist_id"] == current_user.id:
-        daily_charts = [dc.to_dict() for dc in found_client.daily_charts]
+        daily_charts = []
+
+        for dc in found_client.daily_charts:
+            total_rating = 0
+            chart_dict = dc.to_dict()
+            chart_dict["intervals"] = [interval.to_dict() for interval in dc.intervals]
+            chart_dict["interval_count"] = len(chart_dict["intervals"])
+
+            total_rating = sum(
+                interval["interval_rating"]
+                for interval in chart_dict["intervals"]
+                if "interval_rating" in interval
+            )
+            chart_dict["total_rating"] = total_rating
+
+            if chart_dict["interval_count"] > 0:
+                avg_rating = total_rating / chart_dict["interval_count"]
+            else:
+                avg_rating = 0
+
+            chart_dict["avgForChart"] = round(avg_rating, 2)
+
+            daily_charts.append(chart_dict)
+
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
-        valid_client["Daily_Charts"] = daily_charts
+        valid_client["Daily_Charts"] = sorted(
+            daily_charts, key=lambda x: x["chart_date"]
+        )
         valid_client["Discreet_Trials"] = discreet_trials
 
         return jsonify(valid_client)
