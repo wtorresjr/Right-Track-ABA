@@ -63,7 +63,9 @@ def get_client_by_id(client_id):
             daily_charts.append(chart_dict)
 
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
-        valid_client["Daily_Charts"] = daily_charts
+        valid_client["Daily_Charts"] = sorted(
+            daily_charts, key=lambda x: x["chart_date"]
+        )
         valid_client["Discreet_Trials"] = discreet_trials
 
         return jsonify(valid_client)
