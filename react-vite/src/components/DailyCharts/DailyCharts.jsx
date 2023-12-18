@@ -5,13 +5,15 @@ const DailyCharts = ({ clientCharts }) => {
     <>
       <h1>Daily Charts</h1>
       {clientCharts &&
-        clientCharts?.Daily_Charts.map((dt) => {
+        clientCharts?.Daily_Charts.map((dc) => {
           return (
-            <div key={dt?.id} className="clientDCdata">
-              <NavLink to={`/daily-chart/${dt.id}`} className="navLinkStyleDC">
+            <div key={dc?.id} className="clientDCdata">
+              <NavLink to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
                 <div className="dcButtons">
-                  <div>{dt?.chart_date}</div>
-                  View Intervals
+                  <p>{dc?.chart_date}</p>
+                  <div>Days Rating: {dc?.avgForChart}</div>
+                  <div>Total Intervals: {dc?.interval_count}</div>
+                  <p>View Chart</p>
                 </div>
               </NavLink>
             </div>
