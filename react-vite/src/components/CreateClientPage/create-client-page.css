@@ -16,6 +16,12 @@
   font-size: 1.2em;
   font-weight: bolder;
 }
+.formButtonDisabled {
+  width: 50%;
+  height: 5vh;
+  font-size: 1.2em;
+  font-weight: bolder;
+}
 
 #submitBtn {
   background-color: orange;
@@ -23,6 +29,13 @@
   cursor: pointer;
   border-radius: 8px;
 }
+
+#submitBtnDisabled {
+  background-color: rgb(153, 153, 153);
+  border-radius: 8px;
+  color: grey;
+}
+
 #cancelBtn {
   border-radius: 8px;
   background-color: red;
