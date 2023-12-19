@@ -1,0 +1,12 @@
+.deleteModalContain {
+  width: 50vw;
+  height: 20vh;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
