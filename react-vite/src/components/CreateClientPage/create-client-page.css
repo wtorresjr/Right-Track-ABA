@@ -1,5 +1,5 @@
 .createClient {
-  width: 60vw;
+  width: 30vw;
   padding: 20px;
   border-radius: 10px;
 }
@@ -8,4 +8,38 @@
   width: 100%;
   font-size: 16px;
   resize: none;
+}
+
+.formButton {
+  width: 50%;
+  height: 5vh;
+  font-size: 1.2em;
+  font-weight: bolder;
+}
+
+#submitBtn {
+  background-color: orange;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+#cancelBtn {
+  border-radius: 8px;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+}
+
+.formBtnsContain {
+  margin: 20px 0 0 0;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.newClientForm label {
+  width: 100%;
+  padding: 10px 0 0 0;
 }
