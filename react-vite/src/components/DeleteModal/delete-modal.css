@@ -19,3 +19,7 @@ h1 {
   cursor: pointer;
   margin: 20px 0 0 0;
 }
+
+#confirmInput {
+  text-align: center;
+}

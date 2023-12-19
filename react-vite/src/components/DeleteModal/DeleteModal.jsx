@@ -2,6 +2,7 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
+import { deleteAClientThunk } from "../../redux/clients";
 
 const DeleteModal = ({ client }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,14 @@ const DeleteModal = ({ client }) => {
     }
   }, [userInput]);
 
-  const deleteClient = () => {};
+  const deleteClient = () => {
+    const successDelete = dispatch(deleteAClientThunk(client?.id));
+    if (successDelete) {
+      closeModal();
+    } else {
+      throw new Error("Error deleting client...");
+    }
+  };
 
   return (
     <div className="deleteModalContain">
@@ -37,6 +45,7 @@ const DeleteModal = ({ client }) => {
         </p>
       </p>
       <input
+        id="confirmInput"
         type="text"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
@@ -44,7 +53,9 @@ const DeleteModal = ({ client }) => {
       <button disabled={isDisabled} onClick={deleteClient} id="modalDelBtn">
         Delete
       </button>
-      <button onClick={closeModal} id="modalCancelBtn">Cancel</button>
+      <button onClick={closeModal} id="modalCancelBtn">
+        Cancel
+      </button>
     </div>
   );
 };

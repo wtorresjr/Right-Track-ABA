@@ -19,7 +19,7 @@ const ManageClients = () => {
     setModalContent(<CreateClient />);
   };
 
-  return ( 
+  return (
     <div className="mainDisplayContain">
       <div className="manageClientsHeader">
         <h1>Manage Clients</h1>
