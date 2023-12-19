@@ -1,5 +1,30 @@
 const GET_CLIENTS = "clients/getClients";
 const GET_BY_ID = "clients/byID";
+const CREATE_CLIENT = "clients/createClient";
+
+const create_new_client = (newClient) => {
+  return {
+    type: CREATE_CLIENT,
+    payload: newClient,
+  };
+};
+
+export const createNewClientThunk = (clientInfo) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-clients/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(clientInfo),
+    });
+    if (response.ok) {
+      const clientCreated = await response.json();
+      dispatch(create_new_client(clientCreated));
+      return clientCreated;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 const get_clients = (usersClients) => {
   return {
@@ -27,10 +52,9 @@ export const getClientByIDThunk = (client_id) => async (dispatch) => {
       return { ok: false, payload: errorData };
     }
   } catch (errors) {
-    return { ok: false, payload: { message: 'Error fetching client data' } };
+    return { ok: false, payload: { message: "Error fetching client data" } };
   }
 };
-
 
 export const getClientsThunk = () => async (dispatch) => {
   try {
@@ -62,6 +86,8 @@ export const clientsReducer = (state = initialState, action) => {
         ...state,
         client_by_id: action.payload,
       };
+    case CREATE_CLIENT:
+      return { ...state, [action.payload.id]: action.newClient };
     default:
       return state;
   }

@@ -1,7 +1,13 @@
 import "./create-client-page.css";
 import { useState } from "react";
 import { useModal } from "../../context/Modal";
+import { useDispatch } from "react-redux";
+import { createNewClientThunk } from "../../redux/clients";
+import { useNavigate } from "react-router-dom";
+
 const CreateClient = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [guardianEmail, setGuardianEmail] = useState();
@@ -9,7 +15,7 @@ const CreateClient = () => {
   const [clientNotes, setClientNotes] = useState();
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newClient = {
       first_name: firstName,
@@ -19,14 +25,27 @@ const CreateClient = () => {
       client_notes: clientNotes,
     };
 
-    console.log(newClient, "<-----New Client");
+    try {
+      const newClientCreate = await dispatch(createNewClientThunk(newClient));
+      if (newClientCreate) {
+        navigate(`/client/${newClientCreate.id}`);
+        closeModal();
+      }
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
     <div className="createClient">
       <div className="mainDisplayContain">
         <form onSubmit={handleSubmit} className="newClientForm">
-        <h1>Create A New Client</h1>
+          <i
+            className="fa-solid fa-circle-xmark fa-2xl"
+            id="closeBtn"
+            onClick={closeModal}
+          ></i>
+          <h1>Create A New Client</h1>
           <label>
             First Name:
             <input
