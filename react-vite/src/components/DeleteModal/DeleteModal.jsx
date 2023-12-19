@@ -41,10 +41,10 @@ const DeleteModal = ({ client }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button disabled={isDisabled} onClick={deleteClient}>
+      <button disabled={isDisabled} onClick={deleteClient} id="modalDelBtn">
         Delete
       </button>
-      <button onClick={closeModal}>Cancel</button>
+      <button onClick={closeModal} id="modalCancelBtn">Cancel</button>
     </div>
   );
 };

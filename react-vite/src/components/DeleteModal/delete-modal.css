@@ -1,6 +1,6 @@
 .deleteModalContain {
   width: 50vw;
-  height: 22vh;
+  height: auto;
   padding: 20px;
   text-align: center;
   /* box-sizing: border-box; */
@@ -12,8 +12,10 @@ h1 {
   text-align: center;
 }
 
- button {
+#modalDelBtn,
+#modalCancelBtn {
   padding: 10px 0 10px 0;
   width: 50%;
   cursor: pointer;
+  margin: 20px 0 0 0;
 }
