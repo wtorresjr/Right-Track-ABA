@@ -20,11 +20,12 @@ const CreateClient = () => {
 
   const errorCollector = {};
   useEffect(() => {
-    if (!firstName.length || firstName.length < 2) {
-      errorCollector.firstName = "First name is required";
+    if (!firstName.length || firstName.length < 2 || firstName.length > 30) {
+      errorCollector.firstName =
+        "First name must be between 2 and 30 characters";
     }
-    if (!lastName.length || lastName.length < 2) {
-      errorCollector.lastName = "Last name is required";
+    if (!lastName.length || lastName.length < 2 || lastName.length > 35) {
+      errorCollector.lastName = "Last name must be between 2 and 35 characters";
     }
     if (!guardianEmail.match(emailRegex)) {
       errorCollector.guardianEmail = "Invalid email address";
@@ -32,11 +33,12 @@ const CreateClient = () => {
     if (!dob.length) {
       errorCollector.dob = "Date of birth is required";
     }
+
     const today = new Date();
     const selectedDate = new Date(dob);
-    // console.log(dob, "<---DOB", today, "<---TODAY");
+
     if (selectedDate >= today) {
-      errorCollector.dobTooGreat = "Dob cannot be todays date or future date";
+      errorCollector.dobTooGreat = "DOB cannot be todays date or future date";
     }
 
     setErrors(errorCollector);
@@ -87,7 +89,7 @@ const CreateClient = () => {
               onChange={(e) => setFirstName(e.target.value)}
             />
             {errors.firstName && (
-              <p className="formErrors">{errors.firstName}</p>
+              <div className="formErrors">{errors.firstName}</div>
             )}
           </label>
           <label>
@@ -97,7 +99,9 @@ const CreateClient = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
-            {errors.lastName && <p className="formErrors">{errors.lastName}</p>}
+            {errors.lastName && (
+              <div className="formErrors">{errors.lastName}</div>
+            )}
           </label>
           <label>
             Guardian Email:
@@ -107,7 +111,7 @@ const CreateClient = () => {
               onChange={(e) => setGuardianEmail(e.target.value)}
             />
             {errors.guardianEmail && (
-              <p className="formErrors">{errors.guardianEmail}</p>
+              <div className="formErrors">{errors.guardianEmail}</div>
             )}
           </label>
           <label>
@@ -117,9 +121,9 @@ const CreateClient = () => {
               value={dob}
               onChange={(e) => setDob(e.target.value)}
             />
-            {errors.dob && <p className="formErrors">{errors.dob}</p>}
+            {errors.dob && <div className="formErrors">{errors.dob}</div>}
             {errors.dobTooGreat && (
-              <p className="formErrors">{errors.dobTooGreat}</p>
+              <div className="formErrors">{errors.dobTooGreat}</div>
             )}
           </label>
           <label>
@@ -129,6 +133,7 @@ const CreateClient = () => {
               id="clientNotes"
               value={clientNotes}
               onChange={(e) => setClientNotes(e.target.value)}
+              placeholder="Optional"
             ></textarea>
           </label>
           <div className="formBtnsContain">
