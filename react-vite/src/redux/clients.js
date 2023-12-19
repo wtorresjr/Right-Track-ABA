@@ -1,6 +1,29 @@
 const GET_CLIENTS = "clients/getClients";
 const GET_BY_ID = "clients/byID";
 const CREATE_CLIENT = "clients/createClient";
+const DELETE_CLIENT = "clients/deleteClient";
+
+const delete_a_client = (deletedClient) => {
+  return {
+    type: DELETE_CLIENT,
+    payload: deletedClient,
+  };
+};
+
+export const deleteAClientThunk = (client_id) => async (dispatch) => {
+  const response = await fetch(`/api/my-clients/${client_id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (response.ok) {
+    const clientDeleted = await response.json();
+    dispatch(delete_a_client(clientDeleted));
+    dispatch(getClientsThunk());
+    return clientDeleted;
+  } else {
+    throw new Error("Failed to delete client");
+  }
+};
 
 const create_new_client = (newClient) => {
   return {
@@ -87,6 +110,12 @@ export const clientsReducer = (state = initialState, action) => {
       };
     case CREATE_CLIENT:
       return { ...state, [action.payload.id]: action.newClient };
+    case DELETE_CLIENT:
+      const { [action.payload]: deletedClient, ...remainingClients } = state;
+      return {
+        ...state,
+        clients: remainingClients,
+      };
     default:
       return state;
   }

@@ -21,12 +21,12 @@ const DailyCharts = ({ clientCharts }) => {
                 <div
                   className="dcButtons"
                   style={{
-                    border:`5px solid ${dayColorRating}`,
+                    border: `5px solid ${dayColorRating}`,
                   }}
                 >
                   <p>{dc?.chart_date}</p>
-                  <div>Days Rating: {dc?.avgForChart}</div>
                   <div>Total Intervals: {dc?.interval_count}</div>
+                  <div>Avg Rating: {dc?.avgForChart}</div>
                   <p>View Chart</p>
                 </div>
               </NavLink>
