@@ -30,7 +30,9 @@
   flex-flow: column nowrap;
 }
 
-.btnsContain button {
+#viewBtn,
+#delBtn,
+#editBtn {
   height: 50%;
   cursor: pointer;
   font-weight: bolder;
