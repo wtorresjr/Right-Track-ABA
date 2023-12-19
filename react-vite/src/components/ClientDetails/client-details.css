@@ -36,7 +36,9 @@
   gap: 10px;
 }
 
-.btnsContain button {
+.btnsContain #editBtn,
+#viewBtn,
+#delBtn {
   width: 33%;
   height: 100%;
   border-radius: 9px;

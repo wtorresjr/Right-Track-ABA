@@ -1,12 +1,19 @@
 .deleteModalContain {
   width: 50vw;
-  height: 20vh;
+  height: 22vh;
   padding: 20px;
   text-align: center;
+  /* box-sizing: border-box; */
 }
 
 h1 {
   padding: 0px;
   margin: 0px;
   text-align: center;
+}
+
+ button {
+  padding: 10px 0 10px 0;
+  width: 50%;
+  cursor: pointer;
 }
