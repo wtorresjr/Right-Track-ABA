@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import "./manage-clients.css";
+import { useModal } from "../../context/Modal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 const ClientInfo = ({ client }) => {
+  const { setModalContent } = useModal();
   const navigate = useNavigate();
   const handleClick = (client_id, action) => {
     if (action === "view") {
@@ -14,6 +17,11 @@ const ClientInfo = ({ client }) => {
       console.log(client_id, action);
     }
   };
+
+  const openDeleteModal = () => {
+    setModalContent(<DeleteModal client={client} />);
+  };
+
   return (
     <div className="clientInfoContain" key={client?.id}>
       <div className="clientData">
@@ -35,12 +43,7 @@ const ClientInfo = ({ client }) => {
         </div>
       </div>
       <div className="btnsContain">
-        <button
-          id="delBtn"
-          onClick={() => {
-            handleClick(client.id, "delete");
-          }}
-        >
+        <button id="delBtn" onClick={openDeleteModal}>
           Delete
         </button>
         <button
