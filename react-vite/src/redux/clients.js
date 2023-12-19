@@ -10,19 +10,18 @@ const create_new_client = (newClient) => {
 };
 
 export const createNewClientThunk = (clientInfo) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/my-clients/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(clientInfo),
-    });
-    if (response.ok) {
-      const clientCreated = await response.json();
-      dispatch(create_new_client(clientCreated));
-      return clientCreated;
-    }
-  } catch (error) {
-    throw error;
+  const response = await fetch(`/api/my-clients/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(clientInfo),
+  });
+
+  if (response.ok) {
+    const clientCreated = await response.json();
+    dispatch(create_new_client(clientCreated));
+    return clientCreated;
+  } else {
+    throw new Error("Failed to create client");
   }
 };
 

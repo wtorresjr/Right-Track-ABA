@@ -60,14 +60,12 @@ const CreateClient = () => {
       client_notes: clientNotes,
     };
 
-    try {
-      const newClientCreate = await dispatch(createNewClientThunk(newClient));
-      if (newClientCreate) {
-        navigate(`/client/${newClientCreate.id}`);
-        closeModal();
-      }
-    } catch (error) {
-      throw error;
+    const newClientCreate = await dispatch(createNewClientThunk(newClient));
+    if (newClientCreate) {
+      navigate(`/client/${newClientCreate.id}`);
+      closeModal();
+    } else {
+      throw new Error("Error creating client");
     }
   };
 
