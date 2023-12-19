@@ -1,0 +1,25 @@
+.deleteModalContain {
+  width: 50vw;
+  height: auto;
+  padding: 20px;
+  text-align: center;
+  /* box-sizing: border-box; */
+}
+
+h1 {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
+
+#modalDelBtn,
+#modalCancelBtn {
+  padding: 10px 0 10px 0;
+  width: 50%;
+  cursor: pointer;
+  margin: 20px 0 0 0;
+}
+
+#confirmInput {
+  text-align: center;
+}
