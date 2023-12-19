@@ -72,3 +72,9 @@ label {
   font-size: 16px;
   color: orange;
 }
+
+.formErrors {
+  color: red;
+  background-color: rgb(58, 58, 58);
+  padding: 5px;
+}
