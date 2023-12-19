@@ -1,11 +1,14 @@
 import "./create-client-page.css";
 import { useState } from "react";
+import { useModal } from "../../context/Modal";
 const CreateClient = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [guardianEmail, setGuardianEmail] = useState();
   const [dob, setDob] = useState();
   const [clientNotes, setClientNotes] = useState();
+  const { closeModal } = useModal();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newClient = {
@@ -22,8 +25,8 @@ const CreateClient = () => {
   return (
     <div className="createClient">
       <div className="mainDisplayContain">
+        <form onSubmit={handleSubmit} className="newClientForm">
         <h1>Create A New Client</h1>
-        <form>
           <label>
             First Name:
             <input
@@ -65,7 +68,14 @@ const CreateClient = () => {
               onChange={(e) => setClientNotes(e.target.value)}
             ></textarea>
           </label>
-          <button onClick={handleSubmit}>Submit</button>
+          <div className="formBtnsContain">
+            <button onClick={closeModal} className="formButton" id="cancelBtn">
+              Cancel
+            </button>
+            <button type="submit" className="formButton" id="submitBtn">
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </div>
