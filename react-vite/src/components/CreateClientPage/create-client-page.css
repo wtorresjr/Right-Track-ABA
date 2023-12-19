@@ -43,3 +43,14 @@
   width: 100%;
   padding: 10px 0 0 0;
 }
+
+#closeBtn {
+  position: absolute;
+  right: 35px;
+  top: 70px;
+  cursor: pointer;
+}
+
+#closeBtn:hover {
+  color: black;
+}
