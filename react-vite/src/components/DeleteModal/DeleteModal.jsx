@@ -2,7 +2,7 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { deleteAClientThunk } from "../../redux/clients";
+import { deleteAClientThunk, getClientsThunk } from "../../redux/clients";
 import DeleteMessage from "./DeletingMessage";
 
 const DeleteModal = ({ client }) => {
