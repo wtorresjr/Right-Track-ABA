@@ -23,3 +23,14 @@ h1 {
 #confirmInput {
   text-align: center;
 }
+
+.deleteMessageContain {
+  width: 30vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: green;
+  border: 3px solid green;
+  border-radius: 10px;
+}
