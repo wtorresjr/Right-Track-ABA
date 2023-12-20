@@ -1,2 +1,3 @@
 import DeleteModal from "./DeleteModal";
-export default DeleteModal;
+import DeleteMessage from "./DeletingMessage";
+export { DeleteModal, DeleteMessage };
