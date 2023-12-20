@@ -1,7 +1,11 @@
 // import { useModal } from "../../context/Modal";
-
+import "./delete-modal.css";
 const DeleteMessage = () => {
-  return <h1>Deleting...</h1>;
+  return (
+    <div className="deleteMessageContain">
+      <h1>Successfully Deleted...</h1>
+    </div>
+  );
 };
 
 export default DeleteMessage;
