@@ -18,6 +18,7 @@ export const updateClientThunk =
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(clientInfo),
     });
+
     if (response.ok) {
       const updatedClient = await response.json();
       dispatch(update_a_client(updatedClient));

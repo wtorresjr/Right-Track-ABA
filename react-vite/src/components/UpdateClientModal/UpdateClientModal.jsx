@@ -9,12 +9,16 @@ const UpdateClientModal = ({ client }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const stringDob = new Date(client?.dob);
+  const formatDate = stringDob.toISOString().slice(0, 10);
+
   const [isDisabled, setIsDisabled] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [guardianEmail, setGuardianEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [clientNotes, setClientNotes] = useState("");
+  const [firstName, setFirstName] = useState(client?.first_name);
+  const [lastName, setLastName] = useState(client?.last_name);
+  const [guardianEmail, setGuardianEmail] = useState(client?.guardian_email);
+  const [dob, setDob] = useState(formatDate);
+  const [clientNotes, setClientNotes] = useState(client?.client_notes);
   const { closeModal } = useModal();
   const [errors, setErrors] = useState({});
 
@@ -56,13 +60,19 @@ const UpdateClientModal = ({ client }) => {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
-      dob: dob,
+      dob: new Date(dob),
       client_notes: clientNotes,
     };
+
+    updatedClientInput.dob = updatedClientInput.dob.toISOString().slice(0, 10);
+    console.log(updatedClientInput, "----------Updated info Before Dispatch");
 
     const updatedClient = await dispatch(
       updateClientThunk(client?.id, updatedClientInput)
     );
+
+    console.log(updatedClient, "Update Client After Dispatch");
+
     if (updatedClient) {
       navigate(`/client/${client?.id}`);
       closeModal();
@@ -71,16 +81,14 @@ const UpdateClientModal = ({ client }) => {
     }
   };
 
-  useEffect(() => {
-    const stringDob = new Date(client?.dob);
-    const formatDate = stringDob.toISOString().slice(0, 10);
+  // useEffect(() => {
 
-    setFirstName(client?.first_name);
-    setLastName(client?.last_name);
-    setDob(formatDate);
-    setClientNotes(client?.client_notes);
-    setGuardianEmail(client?.guardian_email);
-  }, [dispatch]);
+  //   setFirstName(client?.first_name);
+  //   setLastName(client?.last_name);
+  //   setDob(formatDate);
+  //   setClientNotes(client?.client_notes);
+  //   setGuardianEmail(client?.guardian_email);
+  // }, [dispatch]);
 
   return (
     <div className="createClient">
