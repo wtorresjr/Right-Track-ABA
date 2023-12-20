@@ -42,9 +42,12 @@ export const deleteAClientThunk = (client_id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   if (response.ok) {
-    dispatch(delete_a_client(client_id));
-    dispatch(getClientsThunk());
-    return client_id;
+    const removedClient = await response.json();
+    const finishedDisp = await dispatch(delete_a_client(removedClient));
+    if (finishedDisp) {
+      dispatch(getClientsThunk());
+    }
+    return removedClient;
   } else {
     throw new Error("Failed to delete client");
   }
