@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
+import { useModal } from "../../context/Modal";
 import "./client-details.css";
 import DailyCharts from "../DailyCharts";
 import DiscreetTrials from "../DiscreetTrials";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
 const ClientDetails = () => {
+  const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("Loading...");
@@ -36,8 +40,13 @@ const ClientDetails = () => {
     getData();
   }, [client_id, dispatch, message]);
 
-  const handleClick = () => {
-    console.log("HandleClicked");
+  const openDeleteModal = () => {
+    setModalContent(<DeleteModal client={client} trigger={"ClientDetails"} />);
+  };
+  const openEditModal = () => {
+    setModalContent(
+      <UpdateClientModal client={client} trigger={"ClientDetails"} />
+    );
   };
 
   return (
@@ -66,20 +75,10 @@ const ClientDetails = () => {
             </div>
           </div>
           <div className="btnsContain">
-            <button
-              id="editBtn"
-              onClick={() => {
-                handleClick(client.id, "edit");
-              }}
-            >
+            <button id="editBtn" onClick={openEditModal}>
               Edit Client Data
             </button>
-            <button
-              id="delBtn"
-              onClick={() => {
-                handleClick(client.id, "delete");
-              }}
-            >
+            <button id="delBtn" onClick={openDeleteModal}>
               Delete Client
             </button>
           </div>
