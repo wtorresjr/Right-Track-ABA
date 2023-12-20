@@ -13,7 +13,7 @@ const DeleteModal = ({ client }) => {
 
   useEffect(() => {
     setConfirmDelText(`CONFIRM DELETE ${client?.first_name}`);
-  }, [dispatch]);
+  }, [dispatch, client?.first_name]);
 
   useEffect(() => {
     if (userInput.length && userInput === confirmDelText) {
@@ -21,7 +21,7 @@ const DeleteModal = ({ client }) => {
     } else {
       setIsDisabled(true);
     }
-  }, [userInput]);
+  }, [userInput, confirmDelText]);
 
   const deleteClient = () => {
     const successDelete = dispatch(deleteAClientThunk(client?.id));
@@ -40,9 +40,9 @@ const DeleteModal = ({ client }) => {
       <p>
         To delete {client?.first_name} {client?.last_name} and all their related
         data, please enter the text below into the input:
-        <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
-          {confirmDelText}
-        </p>
+      </p>
+      <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
+        {confirmDelText}
       </p>
       <input
         id="confirmInput"
