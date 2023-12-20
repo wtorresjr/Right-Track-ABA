@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteAClientThunk, getClientsThunk } from "../../redux/clients";
-// import DeleteMessage from "./DeletingMessage";
+import { useNavigate } from "react-router-dom";
+import DeleteMessage from "./DeletingMessage";
 
 const DeleteModal = ({ client }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { closeModal } = useModal();
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmDelText, setConfirmDelText] = useState("");
@@ -25,15 +27,17 @@ const DeleteModal = ({ client }) => {
     }
   }, [userInput, confirmDelText]);
 
-  // const openDeleteMessage = () => {
-  //   setModalContent(<DeleteMessage />);
-  // };
+  const openDeleteMessage = () => {
+    setModalContent(<DeleteMessage />);
+  };
 
   const deleteClient = () => {
     const successDelete = dispatch(deleteAClientThunk(client?.id));
     // openDeleteMessage();
     if (successDelete) {
       closeModal();
+      openDeleteMessage();
+      navigate("/manage-clients");
     } else {
       throw new Error("Error deleting client...");
     }
