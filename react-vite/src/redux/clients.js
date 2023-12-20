@@ -2,6 +2,32 @@ const GET_CLIENTS = "clients/getClients";
 const GET_BY_ID = "clients/byID";
 const CREATE_CLIENT = "clients/createClient";
 const DELETE_CLIENT = "clients/deleteClient";
+const UPDATE_CLIENT = "clients/updateClient";
+
+const update_a_client = (updatedClientData) => {
+  return {
+    type: UPDATE_CLIENT,
+    payload: updatedClientData,
+  };
+};
+
+export const updateClientThunk =
+  (client_id, clientInfo) => async (dispatch) => {
+    const response = await fetch(`/api/my-clients/${client_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(clientInfo),
+    });
+
+    if (response.ok) {
+      const updatedClient = await response.json();
+      dispatch(update_a_client(updatedClient));
+      dispatch(getClientsThunk());
+      return updatedClient;
+    } else {
+      throw new Error("Error editing client");
+    }
+  };
 
 const delete_a_client = (deletedClient) => {
   return {
@@ -16,10 +42,9 @@ export const deleteAClientThunk = (client_id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   if (response.ok) {
-    const clientDeleted = await response.json();
-    dispatch(delete_a_client(clientDeleted));
+    dispatch(delete_a_client(client_id));
     dispatch(getClientsThunk());
-    return clientDeleted;
+    return client_id;
   } else {
     throw new Error("Failed to delete client");
   }
@@ -109,7 +134,14 @@ export const clientsReducer = (state = initialState, action) => {
         client_by_id: action.payload,
       };
     case CREATE_CLIENT:
-      return { ...state, [action.payload.id]: action.newClient };
+      return { ...state, [action.payload.id]: action.payload };
+
+    case UPDATE_CLIENT:
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
+
     case DELETE_CLIENT:
       const { [action.payload]: deletedClient, ...remainingClients } = state;
       return {
