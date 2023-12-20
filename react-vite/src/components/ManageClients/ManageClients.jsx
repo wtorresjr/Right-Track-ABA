@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import ClientInfo from "./ClientInfo";
@@ -7,13 +7,27 @@ import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
 
 const ManageClients = () => {
+  const [searchFilter, setSearchFilter] = useState("");
   const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
+  const [filteredClients, setFilteredClients] = useState([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getClientsThunk());
-  }, [dispatch]);
+  }, [dispatch, searchFilter]);
+
+  useEffect(() => {
+    const results = clients?.filter((item) =>
+      Object.values(item).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchFilter.toLowerCase())
+      )
+    );
+    setFilteredClients(results);
+  }, [clients, searchFilter]);
 
   const openCreateClientModal = () => {
     setModalContent(<CreateClient />);
@@ -29,11 +43,12 @@ const ManageClients = () => {
         <input
           type="text"
           placeholder="Search For A Client"
-          onClick={() => alert("Feature coming soon!")}
+          value={searchFilter}
+          onChange={(e) => setSearchFilter(e.target.value)}
         />
       </div>
-      {clients &&
-        clients?.map((client) => {
+      {filteredClients &&
+        filteredClients?.map((client) => {
           return <ClientInfo key={client.id} client={client} />;
         })}
     </div>
