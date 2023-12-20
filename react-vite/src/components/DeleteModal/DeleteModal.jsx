@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteAClientThunk } from "../../redux/clients";
+import DeleteMessage from "./DeletingMessage";
 
 const DeleteModal = ({ client }) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const DeleteModal = ({ client }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmDelText, setConfirmDelText] = useState("");
   const [userInput, setUserInput] = useState("");
+  const { setModalContent } = useModal();
 
   useEffect(() => {
     setConfirmDelText(`CONFIRM DELETE ${client?.first_name}`);
@@ -23,8 +25,13 @@ const DeleteModal = ({ client }) => {
     }
   }, [userInput, confirmDelText]);
 
+  const openDeleteMessage = () => {
+    setModalContent(<DeleteMessage />);
+  };
+
   const deleteClient = () => {
     const successDelete = dispatch(deleteAClientThunk(client?.id));
+    openDeleteMessage();
     if (successDelete) {
       closeModal();
     } else {
