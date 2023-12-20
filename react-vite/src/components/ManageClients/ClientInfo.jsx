@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
 const ClientInfo = ({ client }) => {
   const { setModalContent } = useModal();
@@ -20,6 +21,9 @@ const ClientInfo = ({ client }) => {
 
   const openDeleteModal = () => {
     setModalContent(<DeleteModal client={client} />);
+  };
+  const openEditModal = () => {
+    setModalContent(<UpdateClientModal client={client} />);
   };
 
   return (
@@ -46,12 +50,7 @@ const ClientInfo = ({ client }) => {
         <button id="delBtn" onClick={openDeleteModal}>
           Delete
         </button>
-        <button
-          id="editBtn"
-          onClick={() => {
-            handleClick(client.id, "edit");
-          }}
-        >
+        <button id="editBtn" onClick={openEditModal}>
           Edit
         </button>
         <button

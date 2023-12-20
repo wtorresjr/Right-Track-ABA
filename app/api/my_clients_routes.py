@@ -132,6 +132,11 @@ def create_new_client():
 # Edit client
 
 
+from datetime import date
+
+# ...
+
+
 @my_clients.route("/<int:client_id>", methods=["PUT"])
 @login_required
 def edit_a_client(client_id):
@@ -149,6 +154,10 @@ def edit_a_client(client_id):
             )
 
         user_edit_data = request.get_json()
+
+        if "dob" in user_edit_data:
+            dob = user_edit_data["dob"].split("-")
+            user_edit_data["dob"] = date(int(dob[0]), int(dob[1]), int(dob[2]))
 
         for [key, item] in user_edit_data.items():
             setattr(client_to_edit, key, item)
