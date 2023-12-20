@@ -2,6 +2,18 @@ const GET_CLIENTS = "clients/getClients";
 const GET_BY_ID = "clients/byID";
 const CREATE_CLIENT = "clients/createClient";
 const DELETE_CLIENT = "clients/deleteClient";
+const UPDATE_CLIENT = "clients/updateClient";
+
+const update_a_client = (updatedClient) => {
+  return {
+    type: UPDATE_CLIENT,
+    payload: updatedClient,
+  };
+};
+
+export const updateClientThunk = (client_id) => async (dispatch) => {
+  const response = await fetch(`/api/my`)
+}
 
 const delete_a_client = (deletedClient) => {
   return {
