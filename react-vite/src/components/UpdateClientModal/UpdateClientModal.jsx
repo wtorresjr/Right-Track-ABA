@@ -2,7 +2,7 @@ import "./create-client-page.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { createNewClientThunk } from "../../redux/clients";
+import { updateClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 
 const UpdateClientModal = ({ client }) => {
@@ -52,10 +52,7 @@ const UpdateClientModal = ({ client }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
-
-    const updatedClientData = {
+    const updatedClientInput = {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
@@ -63,9 +60,11 @@ const UpdateClientModal = ({ client }) => {
       client_notes: clientNotes,
     };
 
-    const updatedClient = await dispatch(createNewClientThunk(updatedClientData));
+    const updatedClient = await dispatch(
+      updateClientThunk(client?.id, updatedClientInput)
+    );
     if (updatedClient) {
-      navigate(`/client/${updatedClientData.id}`);
+      navigate(`/client/${client?.id}`);
       closeModal();
     } else {
       throw new Error("Error Updating client");
