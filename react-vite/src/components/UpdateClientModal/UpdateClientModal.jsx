@@ -2,7 +2,7 @@ import "./create-client-page.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { updateClientThunk } from "../../redux/clients";
+import { getClientByIDThunk, updateClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 
 const UpdateClientModal = ({ client }) => {
@@ -65,30 +65,20 @@ const UpdateClientModal = ({ client }) => {
     };
 
     updatedClientInput.dob = updatedClientInput.dob.toISOString().slice(0, 10);
-    console.log(updatedClientInput, "----------Updated info Before Dispatch");
 
     const updatedClient = await dispatch(
       updateClientThunk(client?.id, updatedClientInput)
     );
 
-    console.log(updatedClient, "Update Client After Dispatch");
-
     if (updatedClient) {
       navigate(`/client/${client?.id}`);
+      dispatch(getClientByIDThunk(client?.id))
       closeModal();
     } else {
       throw new Error("Error Updating client");
     }
   };
 
-  // useEffect(() => {
-
-  //   setFirstName(client?.first_name);
-  //   setLastName(client?.last_name);
-  //   setDob(formatDate);
-  //   setClientNotes(client?.client_notes);
-  //   setGuardianEmail(client?.guardian_email);
-  // }, [dispatch]);
 
   return (
     <div className="createClient">
