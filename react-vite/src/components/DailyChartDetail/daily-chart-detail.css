@@ -1,0 +1,20 @@
+.behaviorsTag {
+  display: flex;
+  background-color: grey;
+  padding: 5px;
+  justify-content: space-around;
+}
+
+.intervalInfoContain label {
+  padding: 0px;
+  color: orange;
+  width: 100%;
+}
+
+.intervalInfoContain {
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
