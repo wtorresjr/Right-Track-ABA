@@ -1,3 +1,19 @@
+activities = [
+    "Reading",
+    "Writing",
+    "Math",
+    "Science",
+    "Recess",
+    "Free Time",
+    "Circle Time",
+    "Clean Up",
+    "Art",
+    "Lunch",
+    "Snack",
+    "P.E.",
+]
+
+
 behaviors = [
     "Tantrums",
     "Throwing",
