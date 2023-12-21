@@ -62,7 +62,7 @@ def seed_clients():
                 for [key, value] in int_tags.items():
                     if key:
                         interval_rating -= 1
-                    if interval_rating == 1:
+                    if interval_rating == 0:
                         break
 
                 interval1 = Interval(

@@ -1,3 +1,4 @@
 import DailyCharts from "./DailyCharts";
+import LegendComponent from "./LegendComponent";
 
-export default DailyCharts;
+export { DailyCharts, LegendComponent };
