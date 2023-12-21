@@ -9,6 +9,7 @@ from .seeder_helper_arrays import (
     field_count,
     color_choices,
     shape_choices,
+    activities,
 )
 from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 import json
@@ -51,11 +52,18 @@ def seed_clients():
             start_time = datetime(2023, 1, 1, 9, 15)
             for _ in range(randint(3, 9)):
                 interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
-                interval_rating = 1 if len(interval_tags) > 0 else choice([2, 3])
 
                 int_tags = {}
                 for behavior in interval_tags:
                     int_tags[behavior] = randint(1, 9)
+
+                interval_rating = 5
+
+                for [key, value] in int_tags.items():
+                    if key:
+                        interval_rating -= 1
+                    if interval_rating == 0:
+                        break
 
                 interval1 = Interval(
                     start_interval=start_time.time(),
@@ -65,6 +73,7 @@ def seed_clients():
                     interval_rating=interval_rating,
                     therapist_id=new_client["therapist_id"],
                     chart_id=new_chart["id"],
+                    activity=choice(activities),
                 )
                 db.session.add(interval1)
                 db.session.commit()
@@ -76,8 +85,6 @@ def seed_clients():
                     start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
 
     db.session.commit()
-
-    # seed_daily_charts()
 
 
 def undo_clients():
