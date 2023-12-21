@@ -1,20 +1,25 @@
 import { NavLink } from "react-router-dom";
 import "./daily-chart.css";
+import LegendComponent from "./LegendComponent";
 const DailyCharts = ({ clientCharts }) => {
   let dayColorRating;
   return (
     <>
       <h1>Daily Performance Charts</h1>
+      <LegendComponent />
       {clientCharts &&
         clientCharts?.Daily_Charts.map((dc) => {
           dayColorRating =
-            parseFloat(dc?.avgForChart) >= 1.5
-              ? "green"
-              : parseFloat(dc?.avgForChart) > 1
+            parseFloat(dc?.avgForChart) >= 4
+              ? "green" // Green
+              : parseFloat(dc?.avgForChart) >= 3
+              ? "yellowgreen"
+              : parseFloat(dc?.avgForChart) >= 2
               ? "yellow"
-              : parseFloat(dc?.avgForChart) <= 1
-              ? "red"
-              : "black";
+              : parseFloat(dc?.avgForChart) >= 1
+              ? "orange"
+              : "red";
+
           return (
             <div key={dc?.id} className="clientDCdata">
               <NavLink to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
