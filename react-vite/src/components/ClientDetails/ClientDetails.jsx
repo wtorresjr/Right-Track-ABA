@@ -4,7 +4,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import { useModal } from "../../context/Modal";
 import "./client-details.css";
-import DailyCharts from "../DailyCharts";
+import { DailyCharts } from "../DailyCharts";
 import DiscreetTrials from "../DiscreetTrials";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";

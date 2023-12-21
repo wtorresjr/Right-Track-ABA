@@ -15,6 +15,7 @@ class Interval(db.Model, UserMixin):
     interval_notes = db.Column(db.Text)
     interval_tags = db.Column(db.JSON())
     interval_rating = db.Column(db.Integer, nullable=False)
+    activity = db.Column(db.String, nullable=False)
     chart_id = db.Column(
         db.Integer,
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
@@ -32,6 +33,7 @@ class Interval(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
+            "activity": self.activity,
             "start_interval": self.start_interval.strftime("%H:%M"),
             "end_interval": self.end_interval.strftime("%H:%M"),
             "interval_tags": self.interval_tags,
