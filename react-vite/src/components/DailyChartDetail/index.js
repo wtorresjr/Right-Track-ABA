@@ -1,3 +1,4 @@
 import DailyChartDetail from "./DailyChartDetail";
+import IntervalComponent from "./IntervalComponent";
 
-export default DailyChartDetail;
+export { DailyChartDetail, IntervalComponent };
