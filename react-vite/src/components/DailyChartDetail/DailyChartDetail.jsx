@@ -9,10 +9,14 @@ const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
   const clientChart = useSelector((state) => state?.chart?.chart);
+  const currentChart = useSelector(
+    (state) => state?.clients?.clients_by_id?.Daily_Charts
+  );
   const chartIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
+  const avg = useSelector((state) => state?.avgForDate);
 
   useEffect(() => {
     dispatch(getChartByIdThunk(chart_id));
@@ -30,6 +34,8 @@ const DailyChartDetail = () => {
         >
           Back To {clientInfo?.first_name}'s Detail Page
         </NavLink>
+        {/* {avg} */}
+        <p>Avg For Day:{chart_id || "Fail"}</p>
       </div>
       {clientInfo?.last_name}, {clientInfo?.first_name}
       {chartIntervals &&
