@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 
@@ -21,7 +21,16 @@ const DailyChartDetail = () => {
 
   return (
     <div className="mainDisplayContain">
-      <h1>Daily Chart Detail - {clientChart?.Chart?.chart_date}</h1>
+      <div>
+        <h1>Daily Chart Detail - {clientChart?.Chart?.chart_date} </h1>
+        <NavLink
+          to={`/client/${clientInfo?.id}`}
+          className="navLinkStyle"
+          style={{ fontWeight: "bold" }}
+        >
+          Back To {clientInfo?.first_name}'s Detail Page
+        </NavLink>
+      </div>
       {clientInfo?.last_name}, {clientInfo?.first_name}
       {chartIntervals &&
         chartIntervals?.map((interval) => {
