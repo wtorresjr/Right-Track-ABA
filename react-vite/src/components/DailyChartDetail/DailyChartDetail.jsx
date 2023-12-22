@@ -16,11 +16,14 @@ const DailyChartDetail = () => {
     (state) => state?.chart?.chart?.Chart_Intervals
   );
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
-  const avg = useSelector((state) => state?.avgForDate);
+  const clientCHARTS = useSelector(
+    (state) => state?.clients?.client_by_id?.Daily_Charts
+  );
 
   useEffect(() => {
     dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(clientInfo?.id));
+    console.log(clientChart);
   }, [dispatch]);
 
   return (
@@ -34,45 +37,46 @@ const DailyChartDetail = () => {
         >
           Back To {clientInfo?.first_name}'s Detail Page
         </NavLink>
-        {/* {avg} */}
-        <p>Avg For Day:{chart_id || "Fail"}</p>
+
+        <p>Avg For Day:{clientCHARTS?.avgForChart || "Fail"}</p>
+
+        {chartIntervals &&
+          chartIntervals?.map((interval) => {
+            return (
+              <div key={interval?.id} className="intervalInfoContain">
+                <div className="intervalHeader">
+                  <label>
+                    Interval Time: {interval?.start_interval} -{" "}
+                    {interval?.end_interval}
+                  </label>{" "}
+                  |<label> Activity: {interval?.activity} </label>|
+                  <label> Interval Rating: {interval?.interval_rating}</label>
+                </div>
+                <p>
+                  <label>Interval Notes:</label> {interval?.interval_notes}
+                </p>
+                <label>Problem Behaviors: </label>
+
+                {Object.keys(interval?.interval_tags).length ? (
+                  <div className="behaviorsTag">
+                    {Object.entries(interval?.interval_tags || {}).map(
+                      ([behavior, count]) => (
+                        <div key={behavior}>
+                          <div>
+                            {behavior}: {count}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                ) : (
+                  "None."
+                )}
+              </div>
+            );
+          })}
       </div>
       {clientInfo?.last_name}, {clientInfo?.first_name}
-      {chartIntervals &&
-        chartIntervals?.map((interval) => {
-          return (
-            <div key={interval?.id} className="intervalInfoContain">
-              <div className="intervalHeader">
-                <label>
-                  Interval Time: {interval?.start_interval} -{" "}
-                  {interval?.end_interval}
-                </label>{" "}
-                |<label> Activity: {interval?.activity} </label>|
-                <label> Interval Rating: {interval?.interval_rating}</label>
-              </div>
-              <p>
-                <label>Interval Notes:</label> {interval?.interval_notes}
-              </p>
-              <label>Problem Behaviors: </label>
-
-              {Object.keys(interval?.interval_tags).length ? (
-                <p className="behaviorsTag">
-                  {Object.entries(interval?.interval_tags || {}).map(
-                    ([behavior, count]) => (
-                      <div key={behavior}>
-                        <div>
-                          {behavior}: {count}
-                        </div>
-                      </div>
-                    )
-                  )}
-                </p>
-              ) : (
-                "None."
-              )}
-            </div>
-          );
-        })}
     </div>
   );
 };
