@@ -1,6 +1,6 @@
 .behaviorsTag {
   display: flex;
-  background-color: grey;
+  background-color: rgb(196, 22, 22);
   padding: 5px;
   justify-content: space-around;
 }
