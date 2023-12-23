@@ -1,17 +1,24 @@
 import { NavLink, Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
+import { useSelector } from "react-redux";
 const DailyCharts = ({ clientCharts }) => {
+  const currentClient = useSelector((state) => state?.clients?.client_by_id);
   let dayColorRating;
   return (
     <>
       <h1>Daily Performance Charts</h1>
-      <LegendComponent />
+      <div className="dcHeader">
+        <LegendComponent />
+        <NavLink to={`/new-daily-chart/${currentClient?.id}`}>
+          <button id="createNewChartBtn">Create New Chart</button>
+        </NavLink>
+      </div>
       {clientCharts &&
         clientCharts?.Daily_Charts.map((dc) => {
           dayColorRating =
             parseFloat(dc?.avgForChart) >= 4
-              ? "green" // Green
+              ? "green"
               : parseFloat(dc?.avgForChart) >= 3
               ? "yellowgreen"
               : parseFloat(dc?.avgForChart) >= 2
@@ -35,6 +42,10 @@ const DailyCharts = ({ clientCharts }) => {
                   <p>View Chart</p>
                 </div>
               </Link>
+              <div className="chartCrudBtns">
+                <button>Edit Chart</button>
+                <button>Delete Chart</button>
+              </div>
             </div>
           );
         })}
