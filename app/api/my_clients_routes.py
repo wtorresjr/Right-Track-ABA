@@ -25,8 +25,6 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
-    # found_client = Client.query.get(client_id)
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
@@ -68,6 +66,11 @@ def get_client_by_id(client_id):
             daily_charts, key=lambda x: x["chart_date"]
         )
         valid_client["Discreet_Trials"] = discreet_trials
+        valid_client["Incomplete_Charts"] = [
+            incChart.to_dict()
+            for incChart in found_client.daily_charts
+            if not incChart.chart_complete
+        ]
 
         return jsonify(valid_client)
 
