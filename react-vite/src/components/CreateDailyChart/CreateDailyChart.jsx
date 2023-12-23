@@ -29,7 +29,7 @@ const CreateDailyChart = () => {
             <div>
               <label>Incomplete Charts for {currentClient?.first_name}: </label>
               <NavLink
-                to={`/daily_chart/${incChart?.id}`}
+                to={`/daily-chart/${incChart?.id}`}
                 className="navLinkStyle"
               >
                 {incChart?.chart_date}
