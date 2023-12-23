@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
 const DailyCharts = ({ clientCharts }) => {
@@ -22,7 +22,7 @@ const DailyCharts = ({ clientCharts }) => {
 
           return (
             <div key={dc?.id} className="clientDCdata">
-              <NavLink to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
+              <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
                 <div
                   className="dcButtons"
                   style={{
@@ -34,7 +34,7 @@ const DailyCharts = ({ clientCharts }) => {
                   <div>Avg Rating: {dc?.avgForChart}</div>
                   <p>View Chart</p>
                 </div>
-              </NavLink>
+              </Link>
             </div>
           );
         })}
