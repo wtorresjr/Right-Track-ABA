@@ -4,6 +4,7 @@ import { getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
+import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,6 @@ const DailyChartDetail = () => {
 
   const currentIntervals = currentChart[0]?.intervals;
 
-  // console.log(clientInfo?.Daily_Charts, "<------- Client Info");
-  console.log(currentChart, "<------- Current Chart");
   const [avgForDate, setAvgForDate] = useState();
   useEffect(() => {
     dispatch(getClientByIDThunk(clientInfo?.id));
@@ -36,7 +35,11 @@ const DailyChartDetail = () => {
         >
           <p>Back To {clientInfo?.first_name}'s Detail Page</p>
         </NavLink>
-        <h2>Interval Rating: {currentChart[0]?.avgForChart || "No Intervals Yet"}</h2>
+
+        <AddIntervalComp />
+        <h2>
+          Chart Rating: {currentChart[0]?.avgForChart || "No Intervals Yet"}
+        </h2>
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
