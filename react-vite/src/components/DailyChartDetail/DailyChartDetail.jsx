@@ -36,7 +36,7 @@ const DailyChartDetail = () => {
         >
           <p>Back To {clientInfo?.first_name}'s Detail Page</p>
         </NavLink>
-        <h2>Avg For Day: {currentChart[0]?.avgForChart || "No Intervals Yet"}</h2>
+        <h2>Interval Rating: {currentChart[0]?.avgForChart || "No Intervals Yet"}</h2>
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>

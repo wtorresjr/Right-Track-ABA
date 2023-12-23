@@ -43,6 +43,7 @@ def seed_clients():
                     start_date=date(2023, 12, 1), end_date=date(2024, 1, 30)
                 ),
                 therapist_id=new_client["therapist_id"],
+                chart_complete=True,
             )
             db.session.add(chart)
             db.session.commit()
