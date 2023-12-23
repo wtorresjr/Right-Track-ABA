@@ -1,6 +1,6 @@
 .behaviorsTag {
   display: flex;
-  background-color: grey;
+  background-color: rgb(196, 22, 22);
   padding: 5px;
   justify-content: space-around;
 }
@@ -12,9 +12,14 @@
 }
 
 .intervalInfoContain {
-  border: 1px solid grey;
-  border-radius: 10px;
+  border-top: none;
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  border-radius: 0 0 10px 10px;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+  margin: 10px 0 0 0;
+  background-color: black;
 }
