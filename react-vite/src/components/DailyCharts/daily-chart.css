@@ -1,6 +1,12 @@
 .clientDCdata {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
+}
+
+.chartCrudBtns {
+  display: flex;
+  gap: 5px;
+  margin: 5px 0 0 0;
 }
 
 .dcButtons {
@@ -38,4 +44,23 @@
   text-align: center;
   height: 100%;
   font-weight: bold;
+}
+
+.dcHeader {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+#createNewChartBtn {
+  width: 20vw;
+  height: 50px;
+  background-color: #881600;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
