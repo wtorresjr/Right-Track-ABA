@@ -8,37 +8,27 @@ import "./daily-chart-detail.css";
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
-  const clientChart = useSelector((state) => state?.chart?.chart);
-  const currentChart = useSelector(
-    (state) => state?.clients?.clients_by_id?.Daily_Charts
-  );
   const chartIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
-  const clientCHARTS = useSelector(
-    (state) => state?.clients?.client_by_id?.Daily_Charts
+  const currentChart = clientInfo?.Daily_Charts?.filter(
+    (chart) => +chart.id === +chart_id
   );
+
+  const currentIntervals = currentChart[0]?.intervals;
+
+  // console.log(clientInfo?.Daily_Charts, "<------- Client Info");
+  console.log(currentChart, "<------- Current Chart");
   const [avgForDate, setAvgForDate] = useState();
   useEffect(() => {
-    dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(clientInfo?.id));
-    console.log(clientChart);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const chartAvg = clientCHARTS?.filter(
-      (chart) => chart.id === chartIntervals?.chart_id
-    );
-    console.log(chartAvg);
-    // setAvgForDate(clientCHARTS[0].avgForChart);
-    setAvgForDate(chartAvg?.avgForChart);
   }, [dispatch]);
 
   return (
     <div className="mainDisplayContain">
       <div>
-        <h1>Daily Chart Detail - {clientChart?.Chart?.chart_date} </h1>
+        <h1>Daily Chart Detail - {currentChart[0]?.chart_date} </h1>
         <NavLink
           to={`/client/${clientInfo?.id}`}
           className="navLinkStyle"
@@ -46,11 +36,12 @@ const DailyChartDetail = () => {
         >
           Back To {clientInfo?.first_name}'s Detail Page
         </NavLink>
-
-        <p>Avg For Day: {avgForDate || "Fail"}</p>
-
-        {chartIntervals &&
-          chartIntervals?.map((interval) => {
+        <h2>Avg For Day: {currentChart[0]?.avgForChart || "Fail"}</h2>
+        <h2>
+          {clientInfo?.last_name}, {clientInfo?.first_name}
+        </h2>
+        {currentIntervals &&
+          currentIntervals?.map((interval) => {
             return (
               <div key={interval?.id} className="intervalInfoContain">
                 <div className="intervalHeader">
@@ -85,7 +76,6 @@ const DailyChartDetail = () => {
             );
           })}
       </div>
-      {clientInfo?.last_name}, {clientInfo?.first_name}
     </div>
   );
 };
