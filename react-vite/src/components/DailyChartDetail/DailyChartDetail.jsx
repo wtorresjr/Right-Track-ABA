@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
@@ -19,11 +19,20 @@ const DailyChartDetail = () => {
   const clientCHARTS = useSelector(
     (state) => state?.clients?.client_by_id?.Daily_Charts
   );
-
+  const [avgForDate, setAvgForDate] = useState();
   useEffect(() => {
     dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(clientInfo?.id));
     console.log(clientChart);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const chartAvg = clientCHARTS?.filter(
+      (chart) => chart.id === chartIntervals?.chart_id
+    );
+    console.log(chartAvg);
+    // setAvgForDate(clientCHARTS[0].avgForChart);
+    setAvgForDate(chartAvg?.avgForChart);
   }, [dispatch]);
 
   return (
@@ -38,7 +47,7 @@ const DailyChartDetail = () => {
           Back To {clientInfo?.first_name}'s Detail Page
         </NavLink>
 
-        <p>Avg For Day:{clientCHARTS?.avgForChart || "Fail"}</p>
+        <p>Avg For Day: {avgForDate || "Fail"}</p>
 
         {chartIntervals &&
           chartIntervals?.map((interval) => {
