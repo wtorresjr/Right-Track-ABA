@@ -5,6 +5,8 @@ const LegendComponent = () => {
     <div id="legend">
       <h3>Behavior Legend</h3>
       <div id="colors">
+        <div className="color" style={{ backgroundColor: "white", color:"black" }}>Incomplete
+        </div>
         <div className="color" style={{ backgroundColor: "red" }}>
           Poor
         </div>
