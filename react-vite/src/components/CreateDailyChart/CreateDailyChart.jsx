@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const CreateDailyChart = () => {
   const { client_id } = useParams();
@@ -23,6 +23,21 @@ const CreateDailyChart = () => {
         Create Daily Chart For {currentClient?.first_name}{" "}
         {currentClient?.last_name}
       </h1>
+      {currentClient?.Incomplete_Charts &&
+        currentClient?.Incomplete_Charts?.map((incChart) => {
+          return (
+            <div>
+              <label>Incomplete Charts for {currentClient?.first_name}: </label>
+              <NavLink
+                to={`/daily_chart/${incChart?.id}`}
+                className="navLinkStyle"
+              >
+                {incChart?.chart_date}
+              </NavLink>
+            </div>
+          );
+        })}
+
       {currentClient && !currentClient?.message ? (
         <form onSubmit={handleSubmit}>
           <button>Create Chart</button>
