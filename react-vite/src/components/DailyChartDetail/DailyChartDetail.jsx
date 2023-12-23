@@ -34,7 +34,7 @@ const DailyChartDetail = () => {
           className="navLinkStyle"
           style={{ fontWeight: "bold" }}
         >
-          Back To {clientInfo?.first_name}'s Detail Page
+          <p>Back To {clientInfo?.first_name}'s Detail Page</p>
         </NavLink>
         <h2>Avg For Day: {currentChart[0]?.avgForChart || "Fail"}</h2>
         <h2>
