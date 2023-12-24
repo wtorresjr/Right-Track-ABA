@@ -87,12 +87,14 @@ const AddIntervalComp = ({ client }) => {
         <label>
           Start Time
           <input type="time" onChange={(e) => setStartTime(e.target.value)} />
-          {errors?.startTime && <p>{errors?.startTime}</p>}
+          {errors?.startTime && (
+            <p className="errorsPtag">{errors?.startTime}</p>
+          )}
         </label>
         <label>
           End Time
           <input type="time" onChange={(e) => setEndTime(e.target.value)} />
-          {errors?.endTime && <p>{errors?.endTime}</p>}
+          {errors?.endTime && <p className="errorsPtag">{errors?.endTime}</p>}
         </label>
       </div>
 
@@ -152,7 +154,12 @@ const AddIntervalComp = ({ client }) => {
         "None"
       )}
 
-      <button type="Submit" disabled={isDisabled} onClick={handleSubmit} id="addIntervalBtn">
+      <button
+        type="Submit"
+        disabled={isDisabled}
+        onClick={handleSubmit}
+        id="addIntervalBtn"
+      >
         Add Interval
       </button>
     </div>
