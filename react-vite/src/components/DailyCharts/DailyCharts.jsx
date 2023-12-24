@@ -16,7 +16,7 @@ const DailyCharts = ({ clientCharts }) => {
       </div>
       {clientCharts &&
         clientCharts?.Daily_Charts.map((dc) => {
-          console.log(dc, "Curr Daily Chart");
+          // console.log(dc, "Curr Daily Chart");
           dayColorRating =
             parseFloat(dc?.avgForChart) >= 4
               ? "green"
