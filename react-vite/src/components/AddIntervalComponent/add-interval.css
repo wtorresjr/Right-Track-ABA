@@ -32,10 +32,11 @@
   font-size: 22px;
 }
 
-/* .addMinusBtns {
-  background-color: black;
-  width: 50%;
-} */
+.addMinusBtns {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
 
 .addMinus {
   /* width: 50%; */
@@ -53,7 +54,17 @@
 }
 .behaviorsDiv button {
   width: 50%;
+  font-size: 18px;
+  background-color: rgb(255, 153, 0);
+  border: none;
 }
+
+/* .countItem button {
+  margin: 0 5px;
+}
+.countItem :last-child {
+  margin: 0;
+} */
 
 .behaviorsDiv {
   display: flex;
@@ -62,6 +73,19 @@
   padding: 0 0 10px 0;
   height: 40px;
   gap: 10px;
+}
+
+.countBox {
+  background-color: black;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.behaviorsDiv select {
+  font-size: 18px;
 }
 #addIntervalBtn {
   font-size: 26px;
