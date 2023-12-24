@@ -14,48 +14,49 @@ const DailyCharts = ({ clientCharts }) => {
           <button id="createNewChartBtn">Create New Chart</button>
         </NavLink>
       </div>
-      {clientCharts &&
-        clientCharts?.Daily_Charts.map((dc) => {
-          // console.log(dc, "Curr Daily Chart");
-          dayColorRating =
-            parseFloat(dc?.avgForChart) >= 4
-              ? "green"
-              : parseFloat(dc?.avgForChart) >= 3
-              ? "yellowgreen"
-              : parseFloat(dc?.avgForChart) >= 2
-              ? "yellow"
-              : parseFloat(dc?.avgForChart) >= 1
-              ? "orange"
-              : parseFloat(dc?.avgForChart) < 1
-              ? "red"
-              : null;
+      <div className="chartsContain">
+        {clientCharts &&
+          clientCharts?.Daily_Charts.map((dc) => {
+            dayColorRating =
+              parseFloat(dc?.avgForChart) >= 4
+                ? "green"
+                : parseFloat(dc?.avgForChart) >= 3
+                ? "yellowgreen"
+                : parseFloat(dc?.avgForChart) >= 2
+                ? "yellow"
+                : parseFloat(dc?.avgForChart) >= 1
+                ? "orange"
+                : parseFloat(dc?.avgForChart) < 1
+                ? "red"
+                : null;
 
-          {
-            dc?.chart_complete === false ? (dayColorRating = "white") : null;
-          }
+            {
+              dc?.chart_complete === false ? (dayColorRating = "white") : null;
+            }
 
-          return (
-            <div key={dc?.id} className="clientDCdata">
-              <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
-                <div
-                  className="dcButtons"
-                  style={{
-                    border: `5px solid ${dayColorRating}`,
-                  }}
-                >
-                  <p>{dc?.chart_date}</p>
-                  <div>Total Intervals: {dc?.interval_count}</div>
-                  <div>Avg Rating: {dc?.avgForChart}</div>
-                  <p>View Chart</p>
+            return (
+              <div key={dc?.id} className="clientDCdata">
+                <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
+                  <div
+                    className="dcButtons"
+                    style={{
+                      border: `5px solid ${dayColorRating}`,
+                    }}
+                  >
+                    <p>{dc?.chart_date}</p>
+                    <div>Total Intervals: {dc?.interval_count}</div>
+                    <div>Avg Rating: {dc?.avgForChart}</div>
+                    <p>View Chart</p>
+                  </div>
+                </Link>
+                <div className="chartCrudBtns">
+                  <button>Edit Chart</button>
+                  <button>Delete Chart</button>
                 </div>
-              </Link>
-              <div className="chartCrudBtns">
-                <button>Edit Chart</button>
-                <button>Delete Chart</button>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+      </div>
     </>
   );
 };
