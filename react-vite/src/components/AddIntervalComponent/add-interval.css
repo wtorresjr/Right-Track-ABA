@@ -3,44 +3,69 @@
   background-color: rgba(17, 17, 17, 0.842);
   padding: 10px;
   border-radius: 10px;
+  width: 50%;
 }
 
-.strEndTimes-inputs {
-  /* width: 20%; */
+.timeDiv {
   display: flex;
   flex-flow: row nowrap;
-  /* background-color: lightgrey; */
-}
-
-.timeContain {
-  width: 30%;
-  background-color: lightgrey;
-  border-radius: 10px;
-}
-
-.behaviorDiv {
-  box-sizing: border-box;
-  padding: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  /* font-size: 34px; */
-}
-
-.activeBehaviors {
-  background-color: rgb(92, 92, 92);
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  border: 1px solid white;
+  margin: 10px 0 0 0;
 }
 
 .behaviorCountItem {
-  background-color: red;
-  width: 100%;
+  background-color: rgb(70, 70, 70);
+  /* margin: 5px 0 0 0; */
+  /* width: 100%; */
+  /* display: flex; */
+  /* flex-flow: row nowrap; */
 }
 
-.addMinusBtns {
+.countItem {
+  border: 1px solid rgb(221, 221, 221);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 22px;
+}
+
+/* .addMinusBtns {
   background-color: black;
   width: 50%;
+} */
+
+.addMinus {
+  /* width: 50%; */
+  height: 50px;
+  width: 50px;
+  font-size: 28px;
+}
+
+/* .addMinusBtns {
+  width: 50%;
+} */
+
+.behaviorsDiv select {
+  width: 50%;
+}
+.behaviorsDiv button {
+  width: 50%;
+}
+
+.behaviorsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0 0 10px 0;
+  height: 40px;
+  gap: 10px;
+}
+#addIntervalBtn {
+  font-size: 26px;
+  width: 100%;
+  height: 50px;
+  margin: 10px 0 0 0;
 }
