@@ -125,7 +125,7 @@ const AddIntervalComp = ({ client }) => {
           {Object.entries(currIntervalBehaviors || {}).map(
             ([behavior, count]) => (
               <div key={behavior} className="countItem">
-                {behavior}: {count}
+                {behavior}:
                 <div className="addMinusBtns">
                   <button
                     className="addMinus"
@@ -136,6 +136,8 @@ const AddIntervalComp = ({ client }) => {
                   >
                     -
                   </button>
+                  <div className="countBox">{count}</div>
+
                   <button
                     className="addMinus"
                     onClick={(e) => {
