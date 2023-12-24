@@ -26,3 +26,21 @@
   justify-content: space-between;
   /* font-size: 34px; */
 }
+
+.activeBehaviors {
+  background-color: rgb(92, 92, 92);
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.behaviorCountItem {
+  background-color: red;
+  width: 100%;
+}
+
+.addMinusBtns {
+  background-color: black;
+  width: 50%;
+}
