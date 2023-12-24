@@ -14,7 +14,7 @@ const CreateDailyChart = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Clicked");
+    // console.log("Clicked");
   };
 
   return (
