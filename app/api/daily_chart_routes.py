@@ -80,7 +80,7 @@ def add_new_client():
     db.session.add(new_chart)
     db.session.commit()
 
-    return jsonify({"Req data": new_chart.to_dict()})
+    return jsonify({"New_Chart": new_chart.to_dict()})
 
 
 @daily_charts_bp.route("/client/<int:client_id>", methods=["GET"])
