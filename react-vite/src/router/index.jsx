@@ -6,8 +6,9 @@ import MainDisplay from "../components/MainDisplay";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import ManageClients from "../components/ManageClients/ManageClients";
 import ClientDetails from "../components/ClientDetails";
-import CreateClient from "../components/CreateClientPage";
+// import CreateClient from "../components/CreateClientPage";
 import DailyChartDetail from "../components/DailyChartDetail/DailyChartDetail";
+import CreateDailyChart from "../components/CreateDailyChart/CreateDailyChart";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <DailyChartDetail />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/new-daily-chart/:client_id",
+        element: (
+          <PrivateRoute>
+            <CreateDailyChart />
           </PrivateRoute>
         ),
       },

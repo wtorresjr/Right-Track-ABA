@@ -1,0 +1,97 @@
+.intervalCompContain {
+  box-sizing: border-box;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 10px;
+  width: 50%;
+  border: 1px solid orange;
+}
+
+.timeDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  border: 1px solid white;
+  margin: 10px 0 0 0;
+}
+
+.behaviorCountItem {
+  background-color: rgb(70, 70, 70);
+  /* margin: 5px 0 0 0; */
+  /* width: 100%; */
+  /* display: flex; */
+  /* flex-flow: row nowrap; */
+}
+
+.countItem {
+  border: 1px solid rgb(221, 221, 221);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 22px;
+}
+
+.addMinusBtns {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
+
+.addMinus {
+  /* width: 50%; */
+  height: 50px;
+  width: 50px;
+  font-size: 28px;
+}
+
+/* .addMinusBtns {
+  width: 50%;
+} */
+
+.behaviorsDiv select {
+  width: 50%;
+}
+.behaviorsDiv button {
+  width: 50%;
+  font-size: 18px;
+  background-color: rgb(255, 153, 0);
+  border: none;
+}
+
+/* .countItem button {
+  margin: 0 5px;
+}
+.countItem :last-child {
+  margin: 0;
+} */
+
+.behaviorsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0 0 10px 0;
+  height: 40px;
+  gap: 10px;
+}
+
+.countBox {
+  background-color: black;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.behaviorsDiv select {
+  font-size: 18px;
+}
+#addIntervalBtn {
+  font-size: 26px;
+  width: 100%;
+  height: 50px;
+  margin: 10px 0 0 0;
+  cursor: pointer;
+}
