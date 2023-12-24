@@ -78,49 +78,55 @@ const AddIntervalComp = ({ client }) => {
 
       return updatedBehaviors;
     });
-
-    // console.log(behavior, "Current Behavior");
   };
 
   return (
     <div className="intervalCompContain">
       <h1>Add New Interval</h1>
+      <div className="timeDiv">
+        <label>
+          Start Time
+          <input type="time" onChange={(e) => setStartTime(e.target.value)} />
+          {errors?.startTime && <p>{errors?.startTime}</p>}
+        </label>
+        <label>
+          End Time
+          <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+          {errors?.endTime && <p>{errors?.endTime}</p>}
+        </label>
+      </div>
 
-      {/* <form onSubmit={handleSubmit}> */}
-      <input type="time" onChange={(e) => setStartTime(e.target.value)} />
-      {errors?.startTime && <p>{errors?.startTime}</p>}
-      <input type="time" onChange={(e) => setEndTime(e.target.value)} />
-      {errors?.endTime && <p>{errors?.endTime}</p>}
-
-      <select onChange={(e) => setCurrBehavior(e.target.value)}>
-        {behaviors &&
-          behaviors?.map((behavior) => {
-            return (
-              <option key={behavior} value={behavior}>
-                {behavior}
-              </option>
-            );
-          })}
-      </select>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          newBehavior(currBehavior, "add");
-        }}
-      >
-        Add Behavior
-      </button>
+      <h2>Problem Behaviors</h2>
+      <div className="behaviorsDiv">
+        <select onChange={(e) => setCurrBehavior(e.target.value)}>
+          {behaviors &&
+            behaviors?.map((behavior) => {
+              return (
+                <option key={behavior} value={behavior}>
+                  {behavior}
+                </option>
+              );
+            })}
+        </select>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            newBehavior(currBehavior, "add");
+          }}
+        >
+          Add Behavior
+        </button>
+      </div>
 
       {Object.keys(currIntervalBehaviors).length ? (
         <div className="behaviorCountItem">
           {Object.entries(currIntervalBehaviors || {}).map(
             ([behavior, count]) => (
-              <div key={behavior}>
-                <div>
-                  {behavior}: {count}
-                </div>
+              <div key={behavior} className="countItem">
+                {behavior}: {count}
                 <div className="addMinusBtns">
                   <button
+                    className="addMinus"
                     onClick={(e) => {
                       e.stopPropagation();
                       newBehavior(behavior, "remove");
@@ -129,6 +135,7 @@ const AddIntervalComp = ({ client }) => {
                     -
                   </button>
                   <button
+                    className="addMinus"
                     onClick={(e) => {
                       e.stopPropagation();
                       newBehavior(behavior, "add");
@@ -145,10 +152,9 @@ const AddIntervalComp = ({ client }) => {
         "None"
       )}
 
-      <button type="Submit" disabled={isDisabled} onClick={handleSubmit}>
+      <button type="Submit" disabled={isDisabled} onClick={handleSubmit} id="addIntervalBtn">
         Add Interval
       </button>
-      {/* </form> */}
     </div>
   );
 };
