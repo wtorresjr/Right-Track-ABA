@@ -16,6 +16,7 @@ my_clients = Blueprint("my-clients", __name__)
 def get_clients():
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
     client_list = [client.to_dict() for client in clients]
+    client_list = sorted(client_list, key=lambda x: x["created_at"], reverse=True)
     return jsonify({"Clients": client_list}), 200
 
 
@@ -63,7 +64,7 @@ def get_client_by_id(client_id):
 
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
         valid_client["Daily_Charts"] = sorted(
-            daily_charts, key=lambda x: x["chart_date"]
+            daily_charts, key=lambda x: x["chart_date"], reverse=True
         )
         valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
