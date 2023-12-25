@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
+import { useParams } from "react-router-dom";
+import { addIntervalToChart } from "../../redux/charts";
 
 const behaviors = [
   "Tantrums",
@@ -41,7 +43,8 @@ const activities = [
   "P.E.",
 ];
 
-const AddIntervalComp = () => {
+const AddIntervalComp = ({ client }) => {
+  const { chart_id } = useParams();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [currBehavior, setCurrBehavior] = useState(behaviors[0]);
@@ -85,18 +88,20 @@ const AddIntervalComp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     const newIntervalData = {
       start_interval: startTime,
       end_interval: endTime,
       interval_tags: currIntervalBehaviors,
       interval_notes: currIntNotes,
       interval_rating: intervalRating,
+      chart_id: chart_id,
+      client_id: client?.id,
+      activity: currActivity,
     };
 
-    // dispatch()
+    dispatch(addIntervalToChart(newIntervalData));
 
-    console.log(newIntervalData, "New Handle Submit");
+    // console.log(newIntervalData, "New Handle Submit");
   };
 
   const newBehavior = (behavior, addOrRemove) => {
