@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
@@ -9,25 +9,22 @@ import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
-  const chartIntervals = useSelector(
+
+  const clientInfo = useSelector((state) => state?.clients?.client_by_id);
+  const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
+  const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
-  const clientInfo = useSelector((state) => state?.clients?.client_by_id);
-  const currentChart = clientInfo?.Daily_Charts?.filter(
-    (chart) => +chart.id === +chart_id
-  );
 
-  const currentIntervals = currentChart[0]?.intervals;
-
-  const [avgForDate, setAvgForDate] = useState();
   useEffect(() => {
-    dispatch(getClientByIDThunk(clientInfo?.id));
-  }, [dispatch]);
+    dispatch(getChartByIdThunk(chart_id));
+    dispatch(getClientByIDThunk(currentChart?.client_id));
+  }, [dispatch, chart_id, currentChart?.client_id]);
 
   return (
     <div className="mainDisplayContain">
       <div>
-        <h1>Daily Chart Detail - {currentChart[0]?.chart_date} </h1>
+        <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
         <NavLink
           to={`/client/${clientInfo?.id}`}
           className="navLinkStyle"
@@ -37,8 +34,10 @@ const DailyChartDetail = () => {
         </NavLink>
 
         <AddIntervalComp client={clientInfo} />
+
+        {/* Needs to link to chart with avg rating data */}
         <h2>
-          Chart Rating: {currentChart[0]?.avgForChart || "No Intervals Yet"}
+          Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
         </h2>
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
