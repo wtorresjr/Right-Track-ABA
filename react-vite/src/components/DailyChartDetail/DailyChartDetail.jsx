@@ -34,8 +34,6 @@ const DailyChartDetail = () => {
         </NavLink>
 
         <AddIntervalComp client={clientInfo} />
-
-        {/* Needs to link to chart with avg rating data */}
         <h2>
           Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
         </h2>
