@@ -36,7 +36,9 @@ const DailyChartDetail = () => {
         <AddIntervalComp client={clientInfo} />
 
         {/* Needs to link to chart with avg rating data */}
-        {/* <h2>Chart Rating: {currentChart?.avgForChart || "No Intervals Yet"}</h2> */}
+        <h2>
+          Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+        </h2>
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
