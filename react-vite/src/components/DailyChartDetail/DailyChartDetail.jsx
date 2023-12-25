@@ -7,38 +7,36 @@ import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 
 const DailyChartDetail = () => {
-  // const { state } = useLocation();
   const dispatch = useDispatch();
   const { chart_id } = useParams();
 
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
-  const currentChart = useSelector((state) => state?.chart?.chart);
-
-  console.log(clientInfo, "Client INFO");
-
-  const currentIntervals = currentChart?.Chart_Intervals || [];
+  const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
+  const currentIntervals = useSelector(
+    (state) => state?.chart?.chart?.Chart_Intervals
+  );
 
   useEffect(() => {
     dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(currentChart?.client_id));
-  }, [dispatch]);
+  }, [dispatch, chart_id, currentChart?.client_id]);
 
   return (
     <div className="mainDisplayContain">
       <div>
-        {/* <h1>Daily Chart Detail - {currentChart[0]?.chart_date} </h1> */}
+        <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
         <NavLink
           to={`/client/${clientInfo?.id}`}
           className="navLinkStyle"
           style={{ fontWeight: "bold" }}
         >
-          {/* <p>Back To {clientInfo?.first_name}'s Detail Page</p> */}
+          <p>Back To {clientInfo?.first_name}'s Detail Page</p>
         </NavLink>
 
         <AddIntervalComp client={clientInfo} />
-        <h2>
-          {/* Chart Rating: {currentChart[0]?.avgForChart || "No Intervals Yet"} */}
-        </h2>
+
+        {/* Needs to link to chart with avg rating data */}
+        {/* <h2>Chart Rating: {currentChart?.avgForChart || "No Intervals Yet"}</h2> */}
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
