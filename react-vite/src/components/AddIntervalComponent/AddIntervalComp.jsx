@@ -51,13 +51,11 @@ const AddIntervalComp = ({ client }) => {
   const [currIntervalBehaviors, setCurrIntervalBehavior] = useState({});
   const [isDisabled, setDisabled] = useState(true);
   const [currActivity, setCurrActivity] = useState();
-  const [intervalRating, setIntervalRating] = useState();
+  const [intervalRating, setIntervalRating] = useState("");
   const [currentRatingColor, setCurrentRatingColor] = useState("white");
-
   const [currIntNotes, setCurrIntNotes] = useState("");
   const dispatch = useDispatch();
   const [errors, setErrors] = useState();
-  // const [getCurrentTime, setGetCurrentTime] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
   const errorCollector = {};
@@ -71,7 +69,7 @@ const AddIntervalComp = ({ client }) => {
     if (!currActivity) {
       errorCollector["activity"] = "Activity is required";
     }
-    if (!intervalRating) {
+    if (intervalRating === "") {
       errorCollector["intervalRating"] = "Interval rating is required";
     }
     if (!currIntNotes || currIntNotes.trim().length < 5) {
@@ -261,6 +259,15 @@ const AddIntervalComp = ({ client }) => {
             <LegendComponent />
             <div className="ratingButtons">
               <label>Interval Rating:</label>
+              <button
+                className="ratingBtn"
+                style={{ backgroundColor: "red" }}
+                onClick={() => {
+                  setIntervalRating(0), setCurrentRatingColor("red");
+                }}
+              >
+                0
+              </button>
               <button
                 className="ratingBtn"
                 style={{ backgroundColor: "red" }}
