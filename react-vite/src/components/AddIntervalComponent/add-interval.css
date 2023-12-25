@@ -120,6 +120,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   flex-flow: column wrap;
+  align-items: center;
 }
 
 .countBox {
@@ -141,8 +142,8 @@
   height: 80px;
   margin: 10px 0 0 0;
   cursor: pointer;
-  background-color: rgb(0, 171, 228);
-  color: white;
+  /* background-color: rgb(0, 171, 228); */
+  /* color: white; */
   font-weight: bolder;
   /* border: 5px solid rgb(95, 95, 95); */
 }
