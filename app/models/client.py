@@ -44,4 +44,5 @@ class Client(db.Model, UserMixin):
             "client_notes": self.client_notes,
             "guardian_email": self.guardian_email,
             "therapist_id": self.therapist_id,
+            "created_at": self.created_at,
         }
