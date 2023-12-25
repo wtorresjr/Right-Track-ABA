@@ -10,9 +10,9 @@ const DailyCharts = ({ clientCharts }) => {
       <h1>Daily Performance Charts</h1>
       <div className="dcHeader">
         <LegendComponent />
-        <NavLink to={`/new-daily-chart/${currentClient?.id}`}>
+        {/* <NavLink to={`/new-daily-chart/${currentClient?.id}`}>
           <button id="createNewChartBtn">Create New Chart</button>
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className="chartsContain">
         {clientCharts &&
@@ -36,7 +36,13 @@ const DailyCharts = ({ clientCharts }) => {
 
             return (
               <div key={dc?.id} className="clientDCdata">
-                <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
+                <Link
+                  to={{
+                    pathname: `/daily-chart/${dc.id}`,
+                    state: { client: clientCharts },
+                  }}
+                  className="navLinkStyleDC"
+                >
                   <div
                     className="dcButtons"
                     style={{

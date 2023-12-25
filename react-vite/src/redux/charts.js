@@ -54,5 +54,4 @@ function chartsReducer(state = initialState, action) {
   }
 }
 
-
 export default chartsReducer;
