@@ -47,6 +47,13 @@ def get_chart_by_id(chart_id):
             )
 
         if request.method == "GET":
+            avg_rating = [
+                sum(interval["interval_rating"] for interval in intervals)
+                / len(intervals)
+            ]
+
+            chart_data["Chart_Avg_Rating"] = round(avg_rating[0], 2)
+
             return jsonify({"Chart": chart_data, "Chart_Intervals": intervals}), 200
 
         if request.method == "PUT":
