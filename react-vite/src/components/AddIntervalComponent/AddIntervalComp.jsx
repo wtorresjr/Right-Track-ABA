@@ -48,6 +48,8 @@ const AddIntervalComp = () => {
   const [currIntervalBehaviors, setCurrIntervalBehavior] = useState({});
   const [isDisabled, setDisabled] = useState(true);
   const [currActivity, setCurrActivity] = useState();
+  const [intervalRating, setIntervalRating] = useState();
+  const [currentRatingColor, setCurrentRatingColor] = useState("white");
   // const dispatch = useDispatch();
   const [errors, setErrors] = useState();
 
@@ -61,6 +63,9 @@ const AddIntervalComp = () => {
     }
     if (!currActivity) {
       errorCollector["activity"] = "Activity is required";
+    }
+    if (!intervalRating) {
+      errorCollector["intervalRating"] = "Interval rating is required";
     }
     if (Object.keys(errorCollector).length) {
       setDisabled(true);
@@ -101,7 +106,10 @@ const AddIntervalComp = () => {
   };
 
   return (
-    <div id="outerCompContain">
+    <div
+      id="outerCompContain"
+      style={{ border: `10px solid ${currentRatingColor}` }}
+    >
       <div className="intervalCompContain">
         <h1>Add New Interval</h1>
         <div className="timeDiv">
@@ -178,31 +186,82 @@ const AddIntervalComp = () => {
         )}
       </div>
       <div className="noteActivityRating">
-
-        <label>Activity:</label>
-        <div className="behaviorsDiv">
-          <select
-            onChange={(e) => setCurrActivity(e.target.value)}
-            defaultValue="Choose Activity"
-          >
-            <option value="" selected>
-              Choose an Activity
-            </option>
-            {activities &&
-              activities?.map((activity) => {
-                return <option key={activity}>{activity}</option>;
-              })}
-          </select>
+        <div className="narWrap">
+          <div className="behaviorsDiv2">
+            <label>Activity:</label>
+            <select
+              onChange={(e) => setCurrActivity(e.target.value)}
+              defaultValue="Choose Activity"
+            >
+              <option value="" selected>
+                Choose an Activity
+              </option>
+              {activities &&
+                activities?.map((activity) => {
+                  return <option key={activity}>{activity}</option>;
+                })}
+            </select>
+          </div>
+          <label>Current Interval Rating:</label>
+          <div className="irDisplay" style={{ color: `${currentRatingColor}` }}>
+            {intervalRating}
+          </div>
         </div>
         {errors?.activity && <p className="errorsPtag">{errors?.activity}</p>}
         <label>Interval Notes:</label>
         <textarea className="intervalNotes" rows="7"></textarea>
-
-        <label>Interval Rating:</label>
         <LegendComponent />
         <div className="ratingButtons">
-
+          <label>Interval Rating:</label>
+          <button
+            className="ratingBtn"
+            style={{ backgroundColor: "red" }}
+            onClick={() => {
+              setIntervalRating(1), setCurrentRatingColor("red");
+            }}
+          >
+            1
+          </button>
+          <button
+            className="ratingBtn"
+            style={{ backgroundColor: "orange" }}
+            onClick={() => {
+              setIntervalRating(2), setCurrentRatingColor("orange");
+            }}
+          >
+            2
+          </button>
+          <button
+            className="ratingBtn"
+            style={{ backgroundColor: "yellow" }}
+            onClick={() => {
+              setIntervalRating(3), setCurrentRatingColor("yellow");
+            }}
+          >
+            3
+          </button>
+          <button
+            className="ratingBtn"
+            style={{ backgroundColor: "yellowgreen" }}
+            onClick={() => {
+              setIntervalRating(4), setCurrentRatingColor("yellowgreen");
+            }}
+          >
+            4
+          </button>
+          <button
+            className="ratingBtn"
+            style={{ backgroundColor: "green" }}
+            onClick={() => {
+              setIntervalRating(5), setCurrentRatingColor("green");
+            }}
+          >
+            5
+          </button>
         </div>
+        {errors?.intervalRating && (
+          <p className="errorsPtag">{errors?.intervalRating}</p>
+        )}
       </div>
       <button
         type="Submit"
