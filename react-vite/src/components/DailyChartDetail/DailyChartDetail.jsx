@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
@@ -15,19 +15,22 @@ const DailyChartDetail = () => {
   const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
-  const newInt = useSelector((state) => state?.newInterval);
+  const [isIncomplete, setIsIncomplete] = useState(false);
 
   useEffect(() => {
     dispatch(getClientByIDThunk(currentChart?.client_id));
     dispatch(getChartByIdThunk(chart_id));
-  }, [
-    // dispatch,
-    chart_id,
-    currentChart?.client_id,
+  }, [dispatch, chart_id, currentChart?.client_id]);
 
-    // currentChart?.Chart_Avg_Rating,
-    // currentChart?.Num_Intervals,
-  ]);
+  useEffect(() => {
+    if (!currentChart?.chart_complete) {
+      setIsIncomplete(true);
+    } else {
+      setIsIncomplete(false);
+    }
+  }, [dispatch, chart_id, currentChart?.id]);
+
+  const submitChart = () => {};
 
   return (
     <div className="mainDisplayContain">
@@ -48,6 +51,7 @@ const DailyChartDetail = () => {
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
+        {isIncomplete && <button onClick={submitChart}>Submit Chart</button>}
         {currentIntervals &&
           currentIntervals?.map((interval) => {
             return (
