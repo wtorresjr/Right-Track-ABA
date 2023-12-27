@@ -13,7 +13,7 @@ const CreateDailyChart = () => {
   const [todaysDate, setTodaysDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [newChartCompleted, setNewChartCompleted] = useState(null); // New state
+  const [newChartCompleted, setNewChartCompleted] = useState(null);
 
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
@@ -31,7 +31,6 @@ const CreateDailyChart = () => {
       chart_date: todaysDate,
       client_id: selectedClient,
     };
-
 
     const newChartResult = await dispatch(createNewChartThunk(startNewChart));
     setNewChartCompleted(newChartResult);
