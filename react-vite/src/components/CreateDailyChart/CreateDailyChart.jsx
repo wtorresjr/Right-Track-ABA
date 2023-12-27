@@ -66,12 +66,12 @@ const CreateDailyChart = () => {
       {currentClient && !currentClient?.message ? (
         <div className="newChartMenu">
           <form onSubmit={handleSubmit}>
-            <input
+            <input id="dateInput"
               type="date"
               value={todaysDate}
               onChange={(e) => setTodaysDate(e.target.value)}
             />
-            <select
+            <select id="clientSelector"
               value={selectedClient || "Select Client"}
               onChange={(e) => setSelectedClient(e.target.value)}
             >
@@ -85,7 +85,7 @@ const CreateDailyChart = () => {
                   );
                 })}
             </select>
-            <button>Create Chart</button>
+            <button id="createChartBtn">Create Chart</button>
           </form>
         </div>
       ) : (

@@ -15,25 +15,25 @@
   width: 100%;
   height: 50px;
 }
-.newChartMenu select {
+.newChartMenu #clientSelector {
   width: 60%;
   text-align: center;
   cursor: pointer;
 }
 
-.newChartMenu input {
+.newChartMenu #dateInput {
   width: 20%;
   margin: 0;
 }
 
-.newChartMenu button {
+.newChartMenu #createChartBtn {
   width: 20%;
   cursor: pointer;
   border: none;
 }
-.newChartMenu button,
-select,
-input {
+.newChartMenu #createChartBtn,
+#clientSelector,
+#dateInput {
   height: 100%;
   border-radius: 10px;
 }

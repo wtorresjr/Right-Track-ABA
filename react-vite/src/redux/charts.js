@@ -87,7 +87,29 @@ export const addIntervalToChart = (userIntervalInput) => async (dispatch) => {
   }
 };
 
+// const initialState = { chart: { intervals: [] } };
 const initialState = { chart: null };
+
+// function chartsReducer(state = initialState, action) {
+//   switch (action.type) {
+//     case GET_CHART:
+//       return { ...state, chart: action.payload };
+//     case ADD_INTERVAL:
+//       return {
+//         ...state,
+//         chart: {
+//           ...state.chart,
+//           intervals: state.chart
+//             ? [...(state.chart.intervals || []), action.payload]
+//             : [action.payload],
+//         },
+//       };
+//     case CREATE_CHART:
+//       return { ...state, chart: action.payload };
+//     default:
+//       return state;
+//   }
+// }
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
