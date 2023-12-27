@@ -1,5 +1,6 @@
 const GET_CHART = "charts/getChart";
 const ADD_INTERVAL = "charts/addInterval";
+const CREATE_CHART = "charts/createChart";
 
 const addInterval = (intervalToAdd) => {
   return {
@@ -13,6 +14,28 @@ const getChart = (foundChart) => {
     type: GET_CHART,
     payload: foundChart,
   };
+};
+
+const createChart = (newChart) => {
+  return {
+    type: CREATE_CHART,
+    payload: newChart,
+  };
+};
+
+export const createNewChartThunk = (chartData) => async (dispatch) => {
+  const response = await fetch(`/api/my-daily-charts/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(chartData),
+  });
+  if (response.ok) {
+    const newCreatedChart = await response.json();
+    dispatch(createChart(newCreatedChart));
+    return newCreatedChart;
+  } else {
+    throw new Error("Error creating chart.");
+  }
 };
 
 export const getChartByIdThunk = (chart_id) => async (dispatch) => {
