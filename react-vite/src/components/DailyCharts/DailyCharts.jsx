@@ -43,7 +43,9 @@ const DailyCharts = ({ clientCharts }) => {
                       border: `5px solid ${dayColorRating}`,
                     }}
                   >
-                    <p>{dc?.chart_date}</p>
+                    <p>
+                      <label>Date: {dc?.chart_date}</label>
+                    </p>
                     <div>Total Intervals: {dc?.interval_count}</div>
                     <div>Avg Rating: {dc?.avgForChart}</div>
                     <p>View Chart</p>
