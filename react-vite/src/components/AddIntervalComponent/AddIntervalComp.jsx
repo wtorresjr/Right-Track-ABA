@@ -58,6 +58,18 @@ const AddIntervalComp = ({ client }) => {
   const [errors, setErrors] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
+  const resetAfterSubmit = () => {
+    setStartTime();
+    setEndTime();
+    setCurrBehavior();
+    setCurrIntervalBehavior({});
+    setCurrActivity();
+    setCurrIntNotes("");
+    setIntervalRating("");
+    setCurrentRatingColor("white");
+    setIsOpen(false);
+  };
+
   const errorCollector = {};
   useEffect(() => {
     if (!startTime) {
@@ -83,7 +95,7 @@ const AddIntervalComp = ({ client }) => {
     setErrors(errorCollector);
   }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newIntervalData = {
@@ -97,9 +109,10 @@ const AddIntervalComp = ({ client }) => {
       activity: currActivity,
     };
 
-    dispatch(addIntervalToChart(newIntervalData));
-
-    // console.log(newIntervalData, "New Handle Submit");
+    const addIntv = dispatch(addIntervalToChart(newIntervalData));
+    if (addIntv) {
+      resetAfterSubmit();
+    }
   };
 
   const newBehavior = (behavior, addOrRemove) => {
