@@ -1,20 +1,33 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getClientByIDThunk } from "../../redux/clients";
-import { useEffect } from "react";
+import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import "./create-daily-chart.css";
+import { createNewChartThunk } from "../../redux/charts";
 
 const CreateDailyChart = () => {
   const { client_id } = useParams();
+  const [selectedClient, setSelectedClient] = useState(client_id);
+  const [todaysDate, setTodaysDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
+  const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
+    dispatch(getClientsThunk());
   }, [dispatch]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Clicked");
+    console.log("Create new chart for client", selectedClient, todaysDate);
+
+    
+
+    dispatch(createNewChartThunk());
   };
 
   return (
@@ -39,9 +52,30 @@ const CreateDailyChart = () => {
         })}
 
       {currentClient && !currentClient?.message ? (
-        <form onSubmit={handleSubmit}>
-          <button>Create Chart</button>
-        </form>
+        <div className="newChartMenu">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="date"
+              value={todaysDate}
+              onChange={(e) => setTodaysDate(e.target.value)}
+            />
+            <select
+              value={selectedClient || "Select Client"}
+              onChange={(e) => setSelectedClient(e.target.value)}
+            >
+              {clientList &&
+                clientList.map((client) => {
+                  return (
+                    <option key={client?.id} value={client?.id}>
+                      {client?.first_name} {client?.last_name} --- DOB:{" "}
+                      {client?.dob}
+                    </option>
+                  );
+                })}
+            </select>
+            <button>Create Chart</button>
+          </form>
+        </div>
       ) : (
         <h1>{currentClient?.message}</h1>
       )}
