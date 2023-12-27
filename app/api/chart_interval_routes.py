@@ -116,6 +116,7 @@ def create_new_interval():
         interval_notes=user_input_data["interval_notes"],
         interval_rating=user_input_data["interval_rating"],
         interval_tags=user_input_data["interval_tags"],
+        activity=user_input_data["activity"],
     )
 
     db.session.add(new_interval)
