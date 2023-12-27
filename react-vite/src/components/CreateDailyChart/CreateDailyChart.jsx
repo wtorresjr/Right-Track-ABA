@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
 import { createNewChartThunk } from "../../redux/charts";
+import { useNavigate } from "react-router-dom";
 
 const CreateDailyChart = () => {
+  const navigate = useNavigate();
   const { client_id } = useParams();
   const [selectedClient, setSelectedClient] = useState(client_id);
   const [todaysDate, setTodaysDate] = useState(
     new Date().toISOString().split("T")[0]
   );
+  const [newChartCompleted, setNewChartCompleted] = useState(null); // New state
 
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
@@ -19,16 +22,26 @@ const CreateDailyChart = () => {
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
-  }, [dispatch]);
+  }, [dispatch, client_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Create new chart for client", selectedClient, todaysDate);
 
-    
+    const startNewChart = {
+      chart_date: todaysDate,
+      client_id: selectedClient,
+    };
 
-    dispatch(createNewChartThunk());
+
+    const newChartResult = await dispatch(createNewChartThunk(startNewChart));
+    setNewChartCompleted(newChartResult);
   };
+
+  useEffect(() => {
+    if (newChartCompleted) {
+      navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
+    }
+  }, [newChartCompleted, navigate]);
 
   return (
     <div className="mainDisplayContain">
@@ -39,7 +52,7 @@ const CreateDailyChart = () => {
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
           return (
-            <div>
+            <div key={incChart?.id}>
               <label>Incomplete Charts for {currentClient?.first_name}: </label>
               <NavLink
                 to={`/daily-chart/${incChart?.id}`}
