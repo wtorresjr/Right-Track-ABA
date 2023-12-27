@@ -15,11 +15,19 @@ const DailyChartDetail = () => {
   const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
+  const newInt = useSelector((state) => state?.newInterval);
 
   useEffect(() => {
-    dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(currentChart?.client_id));
-  }, [dispatch, chart_id, currentChart?.client_id]);
+    dispatch(getChartByIdThunk(chart_id));
+  }, [
+    // dispatch,
+    chart_id,
+    currentChart?.client_id,
+
+    // currentChart?.Chart_Avg_Rating,
+    // currentChart?.Num_Intervals,
+  ]);
 
   return (
     <div className="mainDisplayContain">

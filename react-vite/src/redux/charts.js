@@ -64,13 +64,15 @@ export const addIntervalToChart = (userIntervalInput) => async (dispatch) => {
   }
 };
 
-const initialState = { chart: null };
+const initialState = { chart: null, interval: null, createdChart: null };
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHART:
       return { ...state, chart: action.payload };
     case ADD_INTERVAL:
+      return { ...state, chart: action.payload };
+    case CREATE_CHART:
       return { ...state, chart: action.payload };
     default:
       return state;
