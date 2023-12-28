@@ -53,6 +53,7 @@ def get_chart_by_id(chart_id):
             ]
 
             chart_data["Chart_Avg_Rating"] = round(avg_rating[0], 2)
+            chart_data["Num_Intervals"] = len(intervals)
 
             return jsonify({"Chart": chart_data, "Chart_Intervals": intervals}), 200
 
