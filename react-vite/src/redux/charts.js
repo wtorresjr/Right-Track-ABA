@@ -108,18 +108,63 @@ export const delDailyChartThunk = (chart_id) => async (dispatch) => {
   }
 };
 
-const initialState = { chart: null };
+// const initialState = { chart: null };
+
+const initialState = {
+  clients: null,
+  client_by_id: {
+    Daily_Charts: [],
+  },
+  chart: {
+    Chart: null,
+    Chart_Intervals: [],
+  },
+};
+
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHART:
       return { ...state, chart: action.payload };
     case ADD_INTERVAL:
-      return { ...state, chart: action.payload };
+      return {
+        ...state,
+        client_by_id: {
+          ...state.client_by_id,
+          Daily_Charts: state.client_by_id.Daily_Charts.map((chart) =>
+            chart.id === action.payload.chart_id
+              ? {
+                  ...chart,
+                  intervals: [...chart.intervals, action.payload],
+                }
+              : chart
+          ),
+        },
+        chart: {
+          ...state.chart,
+          Chart_Intervals: [...state.chart.Chart_Intervals, action.payload],
+        },
+      };
+
+    // case ADD_INTERVAL:
+    //   return { ...state, chart: action.payload };
     case CREATE_CHART:
       return { ...state, chart: action.payload };
+
     case DELETE_CHART:
-      return { ...state, chart: null };
+      return {
+        ...state,
+        client_by_id: {
+          ...state.client_by_id,
+          Daily_Charts: state.client_by_id.Daily_Charts.filter(
+            (chart) => chart.id !== action.payload.id
+          ),
+        },
+        chart: null,
+      };
+
+    // case DELETE_CHART:
+    //   return { ...state, chart: null };
     default:
       return state;
   }

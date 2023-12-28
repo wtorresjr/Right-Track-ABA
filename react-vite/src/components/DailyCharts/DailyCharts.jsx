@@ -11,6 +11,8 @@ const DailyCharts = ({ clientCharts }) => {
   const { setModalContent } = useModal();
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
 
+  console.log("Client Charts:", clientCharts); // Add this line to check the state
+
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
   };
