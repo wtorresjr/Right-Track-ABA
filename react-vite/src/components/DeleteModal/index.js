@@ -1,3 +1,4 @@
 import DeleteModal from "./DeleteModal";
 import DeleteMessage from "./DeletingMessage";
-export { DeleteModal, DeleteMessage };
+import DeleteChartModal from "./DeleteChartModal";
+export { DeleteModal, DeleteMessage, DeleteChartModal };
