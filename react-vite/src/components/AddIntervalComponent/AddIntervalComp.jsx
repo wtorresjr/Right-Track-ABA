@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
-import { addIntervalToChart } from "../../redux/charts";
+import { addIntervalToChart, getChartByIdThunk } from "../../redux/charts";
 
 const behaviors = [
   "Tantrums",
@@ -111,6 +111,7 @@ const AddIntervalComp = ({ client }) => {
 
     const addIntv = dispatch(addIntervalToChart(newIntervalData));
     if (addIntv) {
+      // dispatch(getChartByIdThunk(chart_id));
       resetAfterSubmit();
     }
   };
@@ -237,7 +238,7 @@ const AddIntervalComp = ({ client }) => {
                 <label>Activity:</label>
                 <select
                   onChange={(e) => setCurrActivity(e.target.value)}
-                  defaultValue="Choose Activity"
+                  defaultValue="Choose an Activity"
                 >
                   <option value="" selected>
                     Choose an Activity
