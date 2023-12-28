@@ -1,25 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getChartByIdThunk } from "../../redux/charts";
+import { completeTheChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
+import { useNavigate } from "react-router-dom";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
+  const navigate = useNavigate();
 
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
   const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
   const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
+  const [isIncomplete, setIsIncomplete] = useState(false);
 
   useEffect(() => {
-    dispatch(getChartByIdThunk(chart_id));
     dispatch(getClientByIDThunk(currentChart?.client_id));
+    dispatch(getChartByIdThunk(chart_id));
   }, [dispatch, chart_id, currentChart?.client_id]);
+
+  useEffect(() => {
+    if (!currentChart?.chart_complete) {
+      setIsIncomplete(true);
+    } else {
+      setIsIncomplete(false);
+    }
+  }, [dispatch, chart_id, currentChart?.id]);
+
+  const submitChart = async () => {
+    const completedChartInfo = {
+      chart_complete: true,
+    };
+
+    const finished = await dispatch(
+      completeTheChartThunk(completedChartInfo, chart_id)
+    );
+    if (finished) {
+      navigate(`/client/${clientInfo?.id}`);
+    }
+  };
 
   return (
     <div className="mainDisplayContain">
@@ -40,6 +64,7 @@ const DailyChartDetail = () => {
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
+        {isIncomplete && <button onClick={submitChart}>Submit Chart</button>}
         {currentIntervals &&
           currentIntervals?.map((interval) => {
             return (
