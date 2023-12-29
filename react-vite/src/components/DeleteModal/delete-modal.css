@@ -32,4 +32,5 @@ h1 {
   color: green;
   border: 3px solid green;
   border-radius: 10px;
+  text-align: center;
 }
