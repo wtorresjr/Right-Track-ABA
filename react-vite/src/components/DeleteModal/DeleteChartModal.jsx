@@ -38,7 +38,6 @@ const DeleteChartModal = ({ chartInfo }) => {
       closeModal();
       openDeleteMessage();
       dispatch(getClientByIDThunk(chartInfo?.client_id));
-      // navigate(`/client/${chartInfo?.client_id}`);
     } else {
       throw new Error("Error deleting chart...");
     }
