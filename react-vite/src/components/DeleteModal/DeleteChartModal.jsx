@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
 import { delDailyChartThunk } from "../../redux/charts";
+import { getClientByIDThunk } from "../../redux/clients";
 
 const DeleteChartModal = ({ chartInfo }) => {
   const dispatch = useDispatch();
@@ -31,12 +32,13 @@ const DeleteChartModal = ({ chartInfo }) => {
     setModalContent(<DeleteMessage />);
   };
 
-  const deleteClient = () => {
-    const successDelete = dispatch(delDailyChartThunk(chartInfo?.id));
+  const deleteChart = async () => {
+    const successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
     if (successDelete) {
       closeModal();
       openDeleteMessage();
-      navigate(`/client/${dc?.client_id}`);
+      dispatch(getClientByIDThunk(chartInfo?.client_id));
+      // navigate(`/client/${chartInfo?.client_id}`);
     } else {
       throw new Error("Error deleting chart...");
     }
@@ -46,8 +48,8 @@ const DeleteChartModal = ({ chartInfo }) => {
     <div className="deleteModalContain">
       <h1>Delete Chart Number {chartInfo?.id}?</h1>
       <p>
-        To delete chart number {chartInfo?.id} and all related data, please enter the text
-        below into the input:
+        To delete chart number {chartInfo?.id} and all related data, please
+        enter the text below into the input:
       </p>
       <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
         {confirmDelText}
@@ -58,7 +60,7 @@ const DeleteChartModal = ({ chartInfo }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button disabled={isDisabled} onClick={deleteClient} id="modalDelBtn">
+      <button disabled={isDisabled} onClick={deleteChart} id="modalDelBtn">
         Delete
       </button>
       <button onClick={closeModal} id="modalCancelBtn">

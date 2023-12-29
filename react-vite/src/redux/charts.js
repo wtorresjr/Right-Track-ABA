@@ -90,7 +90,7 @@ export const addIntervalToChart = (userIntervalInput) => async (dispatch) => {
 
 const deleteChart = (chartToDelete) => {
   return {
-    type: DELETE_CHART_CHART,
+    type: DELETE_CHART,
     payload: chartToDelete,
   };
 };
