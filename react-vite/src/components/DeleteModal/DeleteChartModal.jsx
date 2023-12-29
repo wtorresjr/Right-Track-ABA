@@ -2,11 +2,12 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { deleteAClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
+import { delDailyChartThunk } from "../../redux/charts";
+import { getClientByIDThunk } from "../../redux/clients";
 
-const DeleteModal = ({ client }) => {
+const DeleteChartModal = ({ chartInfo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { closeModal } = useModal();
@@ -16,8 +17,8 @@ const DeleteModal = ({ client }) => {
   const { setModalContent } = useModal();
 
   useEffect(() => {
-    setConfirmDelText(`CONFIRM DELETE ${client?.first_name}`);
-  }, [dispatch, client?.first_name]);
+    setConfirmDelText(`CONFIRM DELETE ${chartInfo?.id}`);
+  }, [dispatch, chartInfo?.id]);
 
   useEffect(() => {
     if (userInput.length && userInput === confirmDelText) {
@@ -31,25 +32,23 @@ const DeleteModal = ({ client }) => {
     setModalContent(<DeleteMessage />);
   };
 
-  const deleteClient = () => {
-    const successDelete = dispatch(deleteAClientThunk(client?.id));
+  const deleteChart = async () => {
+    const successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
     if (successDelete) {
       closeModal();
       openDeleteMessage();
-      navigate("/manage-clients");
+      dispatch(getClientByIDThunk(chartInfo?.client_id));
     } else {
-      throw new Error("Error deleting client...");
+      throw new Error("Error deleting chart...");
     }
   };
 
   return (
     <div className="deleteModalContain">
-      <h1>
-        Delete Client {client?.first_name} {client?.last_name}?
-      </h1>
+      <h1>Delete Chart Number {chartInfo?.id}?</h1>
       <p>
-        To delete {client?.first_name} {client?.last_name} and all their related
-        data, please enter the text below into the input:
+        To delete chart number {chartInfo?.id} and all related data, please
+        enter the text below into the input:
       </p>
       <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
         {confirmDelText}
@@ -60,7 +59,7 @@ const DeleteModal = ({ client }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button disabled={isDisabled} onClick={deleteClient} id="modalDelBtn">
+      <button disabled={isDisabled} onClick={deleteChart} id="modalDelBtn">
         Delete
       </button>
       <button onClick={closeModal} id="modalCancelBtn">
@@ -70,4 +69,4 @@ const DeleteModal = ({ client }) => {
   );
 };
 
-export default DeleteModal;
+export default DeleteChartModal;
