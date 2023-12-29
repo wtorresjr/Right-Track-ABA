@@ -3,7 +3,7 @@ import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-import { createNewChartThunk } from "../../redux/charts";
+import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 
 const CreateDailyChart = () => {
@@ -38,6 +38,7 @@ const CreateDailyChart = () => {
 
   useEffect(() => {
     if (newChartCompleted) {
+      dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
       navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
     }
   }, [newChartCompleted, navigate]);
@@ -66,12 +67,14 @@ const CreateDailyChart = () => {
       {currentClient && !currentClient?.message ? (
         <div className="newChartMenu">
           <form onSubmit={handleSubmit}>
-            <input id="dateInput"
+            <input
+              id="dateInput"
               type="date"
               value={todaysDate}
               onChange={(e) => setTodaysDate(e.target.value)}
             />
-            <select id="clientSelector"
+            <select
+              id="clientSelector"
               value={selectedClient || "Select Client"}
               onChange={(e) => setSelectedClient(e.target.value)}
             >

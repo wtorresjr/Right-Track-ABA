@@ -1,10 +1,28 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useParams } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import { DeleteChartModal } from "../DeleteModal";
+import { useEffect } from "react";
+import { getClientByIDThunk } from "../../redux/clients";
+
 const DailyCharts = ({ clientCharts }) => {
+  const { client_id } = useParams();
+  const dispatch = useDispatch();
+  const { setModalContent } = useModal();
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
+
+  const openDeleteModal = (chart) => {
+    setModalContent(<DeleteChartModal chartInfo={chart} />);
+  };
+
   let dayColorRating;
+
+  // useEffect(() => {
+  //   dispatch(getClientByIDThunk(client_id));
+  // }, [dispatch, currentClient?.length]);
+
   return (
     <>
       <h1>Daily Performance Charts</h1>
@@ -53,7 +71,13 @@ const DailyCharts = ({ clientCharts }) => {
                 </Link>
                 <div className="chartCrudBtns">
                   <button>Edit Chart</button>
-                  <button>Delete Chart</button>
+                  <button
+                    onClick={() => {
+                      openDeleteModal(dc);
+                    }}
+                  >
+                    Delete Chart
+                  </button>
                 </div>
               </div>
             );
