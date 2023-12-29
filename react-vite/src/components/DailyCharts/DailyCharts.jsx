@@ -4,33 +4,33 @@ import LegendComponent from "./LegendComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
-import { useEffect } from "react";
-import { getClientByIDThunk } from "../../redux/clients";
+import CreateDailyChart from "../CreateDailyChart";
+// import { getClientByIDThunk } from "../../redux/clients";
 
 const DailyCharts = ({ clientCharts }) => {
-  const { client_id } = useParams();
-  const dispatch = useDispatch();
+  // const { client_id } = useParams();
+  // const dispatch = useDispatch();
   const { setModalContent } = useModal();
-  const currentClient = useSelector((state) => state?.clients?.client_by_id);
+  // const currentClient = useSelector((state) => state?.clients?.client_by_id);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
   };
 
-  let dayColorRating;
+  const openCreateChartModal = () => {
+    setModalContent(<CreateDailyChart />);
+  };
 
-  // useEffect(() => {
-  //   dispatch(getClientByIDThunk(client_id));
-  // }, [dispatch, currentClient?.length]);
+  let dayColorRating;
 
   return (
     <>
       <h1>Daily Performance Charts</h1>
       <div className="dcHeader">
         <LegendComponent />
-        <NavLink to={`/new-daily-chart/${currentClient?.id}`}>
-          <button id="createNewChartBtn">Create New Chart</button>
-        </NavLink>
+        <button id="createNewChartBtn" onClick={openCreateChartModal}>
+          Create New Chart
+        </button>
       </div>
       <div className="chartsContain">
         {clientCharts &&
