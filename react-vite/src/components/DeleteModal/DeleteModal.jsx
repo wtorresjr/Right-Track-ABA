@@ -33,7 +33,6 @@ const DeleteModal = ({ client }) => {
 
   const deleteClient = () => {
     const successDelete = dispatch(deleteAClientThunk(client?.id));
-    // openDeleteMessage();
     if (successDelete) {
       closeModal();
       openDeleteMessage();
