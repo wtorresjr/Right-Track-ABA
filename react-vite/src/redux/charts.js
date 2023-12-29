@@ -121,7 +121,6 @@ const initialState = {
   },
 };
 
-
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHART:
@@ -146,8 +145,6 @@ function chartsReducer(state = initialState, action) {
         },
       };
 
-    // case ADD_INTERVAL:
-    //   return { ...state, chart: action.payload };
     case CREATE_CHART:
       return { ...state, chart: action.payload };
 
@@ -162,9 +159,12 @@ function chartsReducer(state = initialState, action) {
         },
         chart: null,
       };
+    case COMPLETE_CHART:
+      return {
+        ...state,
+        chart: action.payload,
+      };
 
-    // case DELETE_CHART:
-    //   return { ...state, chart: null };
     default:
       return state;
   }
