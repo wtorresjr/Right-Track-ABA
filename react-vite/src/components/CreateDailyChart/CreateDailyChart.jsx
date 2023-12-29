@@ -44,7 +44,7 @@ const CreateDailyChart = () => {
   }, [newChartCompleted, navigate]);
 
   return (
-    <div className="mainDisplayContain">
+    <div className="newChartModal">
       <h1>
         Create Daily Chart For {currentClient?.first_name}{" "}
         {currentClient?.last_name}
