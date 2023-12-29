@@ -22,7 +22,7 @@ const DailyChartDetail = () => {
   useEffect(() => {
     dispatch(getClientByIDThunk(currentChart?.client_id));
     dispatch(getChartByIdThunk(chart_id));
-  }, [dispatch, chart_id, currentChart?.client_id]);
+  }, [dispatch, chart_id, currentChart?.client_id, currentIntervals?.length]);
 
   useEffect(() => {
     if (!currentChart?.chart_complete) {
@@ -82,7 +82,7 @@ const DailyChartDetail = () => {
                 </p>
                 <label>Problem Behaviors: </label>
 
-                {Object.keys(interval?.interval_tags).length ? (
+                {Object.keys(interval?.interval_tags ?? {}).length ? (
                   <div className="behaviorsTag">
                     {Object.entries(interval?.interval_tags || {}).map(
                       ([behavior, count]) => (

@@ -148,7 +148,8 @@ export const clientsReducer = (state = initialState, action) => {
       };
 
     case DELETE_CLIENT:
-      const { [action.payload]: deletedClient, ...remainingClients } = state;
+      const { [action.payload]: deletedClient, ...remainingClients } =
+        state.clients;
       return {
         ...state,
         clients: remainingClients,
