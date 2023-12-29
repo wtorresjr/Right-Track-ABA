@@ -64,7 +64,11 @@ const DailyChartDetail = () => {
         <h2>
           {clientInfo?.last_name}, {clientInfo?.first_name}
         </h2>
-        {isIncomplete && <button onClick={submitChart}>Submit Chart</button>}
+        {isIncomplete && currentIntervals?.length > 0 ? (
+          <button onClick={submitChart}>Set Chart As Complete</button>
+        ) : (
+          ""
+        )}
         {currentIntervals &&
           currentIntervals?.map((interval) => {
             return (
