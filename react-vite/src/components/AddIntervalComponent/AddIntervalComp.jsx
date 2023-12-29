@@ -142,7 +142,7 @@ const AddIntervalComp = ({ client }) => {
           setIsOpen((prev) => !prev);
         }}
       >
-        {!isOpen ? "Enter New Interval" : "Close Interval - No Data Submitted"}
+        {!isOpen ? "Add New Interval" : "Close / No Data Added"}
       </button>
       {isOpen ? (
         <div
