@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
+import "../DailyCharts/daily-chart.css";
 const DiscreetTrials = ({ clientDT }) => {
   return (
-    <>
+    <div className="chartsContain">
       <h1>Discreet Trials</h1>
       {clientDT &&
         clientDT?.Discreet_Trials?.map((dt) => {
@@ -20,7 +21,7 @@ const DiscreetTrials = ({ clientDT }) => {
             </div>
           );
         })}
-    </>
+    </div>
   );
 };
 
