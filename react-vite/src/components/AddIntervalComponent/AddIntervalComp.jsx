@@ -118,7 +118,6 @@ const AddIntervalComp = ({ client }) => {
 
     const addIntv = dispatch(addIntervalToChart(newIntervalData));
     if (addIntv) {
-      // dispatch(getChartByIdThunk(chart_id));
       resetAfterSubmit();
     }
   };
