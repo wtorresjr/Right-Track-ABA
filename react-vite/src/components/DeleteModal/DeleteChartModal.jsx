@@ -2,14 +2,14 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
 import { delDailyChartThunk } from "../../redux/charts";
 import { getClientByIDThunk } from "../../redux/clients";
 
 const DeleteChartModal = ({ chartInfo }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { closeModal } = useModal();
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmDelText, setConfirmDelText] = useState("");
