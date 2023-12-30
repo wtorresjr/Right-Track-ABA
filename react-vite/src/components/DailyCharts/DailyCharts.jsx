@@ -20,7 +20,7 @@ const DailyCharts = ({ clientCharts }) => {
   let dayColorRating;
 
   return (
-    <>
+    <div>
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
@@ -71,7 +71,7 @@ const DailyCharts = ({ clientCharts }) => {
             );
           })}
       </div>
-    </>
+    </div>
   );
 };
 

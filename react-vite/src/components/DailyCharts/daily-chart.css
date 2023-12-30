@@ -1,13 +1,11 @@
 .clientDCdata {
   display: flex;
   flex-flow: column nowrap;
-  flex-grow: 1;
 }
 
 .chartsContain {
   display: flex;
-  flex-flow: row wrap;
-  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .chartCrudBtns {
@@ -27,6 +25,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
+  flex: 1 1 calc((100% - 16px) / 3);
+  max-width: calc((100% - 16px) / 3);
+  min-width: 200px;
+  /* padding: 5px 150px; */
+  box-sizing: border-box;
+  margin: 8px;
 }
 
 .navLinkStyleDC {
@@ -34,16 +38,27 @@
   text-decoration: none;
 }
 
-#legend {
+.legendCompContain {
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
   width: 100%;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding:10px;
+  box-sizing: border-box;
+}
+
+#legend {
+  /* display: flex;
+  flex-flow: row wrap; */
+  /* align-items: center; */
+  width: 20%;
   padding: 0;
+  /* justify-content: center; */
 }
 
 #colors {
-  width: 75%;
+  width: 100%;
   height: 25px;
   border: 1px solid rgb(180, 180, 180);
   margin: 0 0 0 20px;
@@ -63,6 +78,7 @@
   width: 100%;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: center;
 }
 
 #createNewChartBtn {
