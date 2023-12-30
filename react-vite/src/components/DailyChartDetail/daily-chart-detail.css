@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.intervalHeader{
+  border:5px solid
+}
+
 .intervalInfoContain {
   border-top: none;
   border-bottom: 1px solid grey;
@@ -22,4 +26,34 @@
   box-sizing: border-box;
   margin: 10px 0 0 0;
   background-color: black;
+}
+
+#setChartBtn {
+  background-color: orange;
+  border: none;
+
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#chartOptionsDiv {
+  border: 1px solid rgb(155, 155, 155);
+  padding: 10px;
+  margin: 20px 0 0 0;
+  display: flex;
+  flex-flow: row wrap;
+  border-radius: 10px;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ratingBg {
+  background-color: black;
+  padding: 5px;
+  border-radius: 10px;
 }
