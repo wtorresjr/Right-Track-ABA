@@ -27,22 +27,29 @@ const DailyChartDetail = () => {
     dispatch(getChartByIdThunk(chart_id));
 
     if (currentChart) {
-      const ratingColor =
+      const chartColor =
         currentChart?.Chart_Avg_Rating >= 4
           ? "green"
           : currentChart?.Chart_Avg_Rating >= 3
           ? "yellowgreen"
           : currentChart?.Chart_Avg_Rating >= 2
           ? "yellow"
-          : currentChart?.Chart_Avg_Rating >= 1
+          : currentChart?.Chart_Avg_Rating <= 1
           ? "orange"
           : currentChart?.Chart_Avg_Rating < 1
           ? "red"
           : null;
 
-      setRatingColor(ratingColor);
+      setRatingColor(chartColor);
     }
-  }, [dispatch, chart_id, currentChart?.client_id, currentIntervals?.length]);
+  }, [
+    dispatch,
+    chart_id,
+    currentChart?.client_id,
+    currentIntervals?.length,
+    ratingColor,
+    currentChart?.Chart_Avg_Rating,
+  ]);
 
   useEffect(() => {
     if (!currentChart?.chart_complete) {
