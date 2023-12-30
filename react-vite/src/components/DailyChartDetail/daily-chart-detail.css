@@ -16,6 +16,8 @@
 
 .intervalHeader {
   border: 10px solid;
+  border-radius: 15px;
+  padding: 5px;
 }
 
 .intervalInfoContain {
@@ -23,7 +25,8 @@
   border-bottom: 8px solid grey;
   border-left: 1px solid grey;
   border-right: 1px solid grey;
-  border-radius: 0 0 10px 10px;
+  border-radius:15px;
+  /* border-radius: 0 0 10px 10px; */
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
