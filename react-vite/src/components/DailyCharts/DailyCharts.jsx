@@ -20,13 +20,15 @@ const DailyCharts = ({ clientCharts }) => {
   let dayColorRating;
 
   return (
-    <>
-      <h1>Daily Performance Charts</h1>
-      <div className="dcHeader">
-        <LegendComponent />
+    <div>
+      <h1>
+        Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
           Create New Chart
         </button>
+      </h1>
+      <div className="dcHeader">
+        <LegendComponent />
       </div>
       <div className="chartsContain">
         {clientCharts &&
@@ -69,7 +71,7 @@ const DailyCharts = ({ clientCharts }) => {
             );
           })}
       </div>
-    </>
+    </div>
   );
 };
 
