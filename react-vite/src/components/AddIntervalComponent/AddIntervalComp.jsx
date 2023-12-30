@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
-import { addIntervalToChart, getChartByIdThunk } from "../../redux/charts";
+import { addIntervalToChart } from "../../redux/charts";
 
 const behaviors = [
   "Tantrums",
@@ -93,7 +93,14 @@ const AddIntervalComp = ({ client }) => {
       setDisabled(false);
     }
     setErrors(errorCollector);
-  }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
+  }, [
+    startTime,
+    endTime,
+    intervalRating,
+    currIntNotes,
+    currActivity,
+    // errorCollector,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -240,9 +247,7 @@ const AddIntervalComp = ({ client }) => {
                   onChange={(e) => setCurrActivity(e.target.value)}
                   defaultValue="Choose an Activity"
                 >
-                  <option value="" selected>
-                    Choose an Activity
-                  </option>
+                  <option value="">Choose an Activity</option>
                   {activities &&
                     activities?.map((activity) => {
                       return <option key={activity}>{activity}</option>;

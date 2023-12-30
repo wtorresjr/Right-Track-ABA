@@ -1,7 +1,8 @@
-import { NavLink, Link, useParams } from "react-router-dom";
+// import { NavLink, Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import CreateDailyChart from "../CreateDailyChart";
