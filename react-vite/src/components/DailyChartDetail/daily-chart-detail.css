@@ -1,8 +1,11 @@
 .behaviorsTag {
   display: flex;
-  background-color: rgb(196, 22, 22);
+  /* background-color: rgb(196, 22, 22); */
+  border: 2px solid rgb(133, 133, 133);
+  border-radius: 10px;
   padding: 5px;
   justify-content: space-around;
+  margin: 15px 0 0 0;
 }
 
 .intervalInfoContain label {
@@ -11,16 +14,19 @@
   width: 100%;
 }
 
-.intervalHeader{
-  border:5px solid
+.intervalHeader {
+  border: 10px solid;
+  border-radius: 15px;
+  padding: 5px;
 }
+
 
 .intervalInfoContain {
   border-top: none;
-  border-bottom: 1px solid grey;
+  border-bottom: 8px solid grey;
   border-left: 1px solid grey;
   border-right: 1px solid grey;
-  border-radius: 0 0 10px 10px;
+  border-radius:15px;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
