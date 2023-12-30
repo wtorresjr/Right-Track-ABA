@@ -5,10 +5,12 @@ import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
 import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 
 const CreateDailyChart = () => {
   const navigate = useNavigate();
   const { client_id } = useParams();
+  const { closeModal } = useModal();
   const [selectedClient, setSelectedClient] = useState(client_id);
   const [todaysDate, setTodaysDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -38,13 +40,14 @@ const CreateDailyChart = () => {
 
   useEffect(() => {
     if (newChartCompleted) {
+      closeModal();
       dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
       navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
     }
   }, [newChartCompleted, navigate]);
 
   return (
-    <div className="mainDisplayContain">
+    <div className="newChartModal">
       <h1>
         Create Daily Chart For {currentClient?.first_name}{" "}
         {currentClient?.last_name}

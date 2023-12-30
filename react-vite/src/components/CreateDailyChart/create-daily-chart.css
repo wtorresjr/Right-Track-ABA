@@ -1,9 +1,16 @@
+.newChartModal {
+  padding: 10px;
+  border: 5px solid orange;
+  border-radius: 10px;
+}
+
 .newChartMenu {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   width: 100%;
   justify-content: space-between;
+  padding: 20px 0 0 0;
 }
 
 .newChartMenu form {
@@ -30,6 +37,8 @@
   width: 20%;
   cursor: pointer;
   border: none;
+  background-color: black;
+  color: white;
 }
 .newChartMenu #createChartBtn,
 #clientSelector,

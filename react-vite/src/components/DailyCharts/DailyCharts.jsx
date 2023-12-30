@@ -1,53 +1,37 @@
-import { NavLink, Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
-import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
-import { useEffect } from "react";
-import { getClientByIDThunk } from "../../redux/clients";
+import CreateDailyChart from "../CreateDailyChart";
+import returnColor from "../helpers/returnColor";
 
 const DailyCharts = ({ clientCharts }) => {
-  const { client_id } = useParams();
-  const dispatch = useDispatch();
   const { setModalContent } = useModal();
-  const currentClient = useSelector((state) => state?.clients?.client_by_id);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
   };
 
-  let dayColorRating;
+  const openCreateChartModal = () => {
+    setModalContent(<CreateDailyChart />);
+  };
 
-  // useEffect(() => {
-  //   dispatch(getClientByIDThunk(client_id));
-  // }, [dispatch, currentClient?.length]);
+  let dayColorRating;
 
   return (
     <>
       <h1>Daily Performance Charts</h1>
       <div className="dcHeader">
         <LegendComponent />
-        <NavLink to={`/new-daily-chart/${currentClient?.id}`}>
-          <button id="createNewChartBtn">Create New Chart</button>
-        </NavLink>
+        <button id="createNewChartBtn" onClick={openCreateChartModal}>
+          Create New Chart
+        </button>
       </div>
       <div className="chartsContain">
         {clientCharts &&
           clientCharts?.Daily_Charts.map((dc) => {
-            dayColorRating =
-              parseFloat(dc?.avgForChart) >= 4
-                ? "green"
-                : parseFloat(dc?.avgForChart) >= 3
-                ? "yellowgreen"
-                : parseFloat(dc?.avgForChart) >= 2
-                ? "yellow"
-                : parseFloat(dc?.avgForChart) >= 1
-                ? "orange"
-                : parseFloat(dc?.avgForChart) < 1
-                ? "red"
-                : null;
-
+            dayColorRating = returnColor(dc?.avgForChart, "float");
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }
@@ -61,12 +45,14 @@ const DailyCharts = ({ clientCharts }) => {
                       border: `5px solid ${dayColorRating}`,
                     }}
                   >
-                    <p>
-                      <label>Date: {dc?.chart_date}</label>
-                    </p>
-                    <div>Total Intervals: {dc?.interval_count}</div>
-                    <div>Avg Rating: {dc?.avgForChart}</div>
-                    <p>View Chart</p>
+                    <div className="folderText">
+                      <p>
+                        <label>Date: {dc?.chart_date}</label>
+                      </p>
+                      <div>Total Intervals: {dc?.interval_count}</div>
+                      <div>Avg Rating: {dc?.avgForChart}</div>
+                      <p>View Chart</p>
+                    </div>
                   </div>
                 </Link>
                 <div className="chartCrudBtns">

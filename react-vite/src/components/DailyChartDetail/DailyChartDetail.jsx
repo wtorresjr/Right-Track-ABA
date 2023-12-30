@@ -6,6 +6,8 @@ import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 import { useNavigate } from "react-router-dom";
+import { LegendComponent } from "../DailyCharts";
+import returnColor from "../helpers/returnColor";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
@@ -17,12 +19,26 @@ const DailyChartDetail = () => {
   const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
+
+  const [ratingColor, setRatingColor] = useState("white");
   const [isIncomplete, setIsIncomplete] = useState(false);
 
   useEffect(() => {
     dispatch(getClientByIDThunk(currentChart?.client_id));
     dispatch(getChartByIdThunk(chart_id));
-  }, [dispatch, chart_id, currentChart?.client_id, currentIntervals?.length]);
+
+    if (currentChart) {
+      const chartColor = returnColor(currentChart?.Chart_Avg_Rating, "float");
+      setRatingColor(chartColor);
+    }
+  }, [
+    dispatch,
+    chart_id,
+    currentChart?.client_id,
+    currentIntervals?.length,
+    ratingColor,
+    currentChart?.Chart_Avg_Rating,
+  ]);
 
   useEffect(() => {
     if (!currentChart?.chart_complete) {
@@ -58,18 +74,38 @@ const DailyChartDetail = () => {
         </NavLink>
 
         <AddIntervalComp client={clientInfo} />
-        <h2>
-          Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-        </h2>
-        <h2>
-          {clientInfo?.last_name}, {clientInfo?.first_name}
-        </h2>
-        {isIncomplete && <button onClick={submitChart}>Submit Chart</button>}
+
+        <LegendComponent />
+
+        <div id="chartOptionsDiv">
+          <h2 style={{ color: ratingColor }} id="ratingBg">
+            Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+          </h2>
+          <h2>
+            Client: {clientInfo?.first_name} {clientInfo?.last_name}
+          </h2>
+
+          {isIncomplete && currentIntervals?.length > 0 ? (
+            <button onClick={submitChart} id="setChartBtn">
+              Set Chart As Complete
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
         {currentIntervals &&
           currentIntervals?.map((interval) => {
             return (
               <div key={interval?.id} className="intervalInfoContain">
-                <div className="intervalHeader">
+                <div
+                  className="intervalHeader"
+                  style={{
+                    borderColor: returnColor(
+                      interval?.interval_rating,
+                      "whole"
+                    ),
+                  }}
+                >
                   <label>
                     Interval Time: {interval?.start_interval} -{" "}
                     {interval?.end_interval}
