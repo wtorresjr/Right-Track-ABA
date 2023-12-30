@@ -3,16 +3,17 @@ export const returnColor = (ratingVal, valType) => {
     return "red";
   }
   if (valType === "float") {
+    // const colorValue = "pink";
     const colorValue =
-      ratingVal >= 4
+      parseFloat(ratingVal) >= 4
         ? "green"
-        : ratingVal >= 3.5
+        : parseFloat(ratingVal) >= 3.5
         ? "yellowgreen"
-        : ratingVal >= 2.5
+        : parseFloat(ratingVal) >= 2.5
         ? "yellow"
-        : ratingVal >= 1.5
+        : parseFloat(ratingVal) >= 1.5
         ? "orange"
-        : ratingVal <= 1
+        : parseFloat(ratingVal) <= 1
         ? "red"
         : null;
 
