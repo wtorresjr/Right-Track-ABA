@@ -75,16 +75,21 @@ const DailyChartDetail = () => {
 
         <AddIntervalComp client={clientInfo} />
 
-        <LegendComponent />
-
         <div id="chartOptionsDiv">
-          <h2 style={{ color: ratingColor }} id="ratingBg">
-            Chart Rating: {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-          </h2>
           <h2>
             Client: {clientInfo?.first_name} {clientInfo?.last_name}
           </h2>
 
+          <h2
+            style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
+            id="ratingBg"
+          >
+            Average Interval Rating:{" "}
+            {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+          </h2>
+          <div className="dcHeader">
+            <LegendComponent />
+          </div>
           {isIncomplete && currentIntervals?.length > 0 ? (
             <button onClick={submitChart} id="setChartBtn">
               Set Chart As Complete
