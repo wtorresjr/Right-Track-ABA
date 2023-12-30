@@ -31,7 +31,7 @@ const DailyCharts = ({ clientCharts }) => {
       <div className="chartsContain">
         {clientCharts &&
           clientCharts?.Daily_Charts.map((dc) => {
-            dayColorRating = returnColor(dc?.avgForChart);
+            dayColorRating = returnColor(dc?.avgForChart, "float");
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }

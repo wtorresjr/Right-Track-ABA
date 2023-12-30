@@ -100,7 +100,6 @@ const DailyChartDetail = () => {
                 <div
                   className="intervalHeader"
                   style={{
-                    // backgroundColor: "red",
                     borderColor: returnColor(
                       interval?.interval_rating,
                       "whole"
