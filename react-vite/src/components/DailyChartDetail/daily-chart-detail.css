@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.intervalHeader{
+  border:5px solid
+}
+
 .intervalInfoContain {
   border-top: none;
   border-bottom: 1px solid grey;

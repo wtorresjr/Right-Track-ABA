@@ -7,6 +7,7 @@ import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 import { useNavigate } from "react-router-dom";
 import { LegendComponent } from "../DailyCharts";
+import returnColor from "../helpers/returnColor";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
@@ -27,19 +28,7 @@ const DailyChartDetail = () => {
     dispatch(getChartByIdThunk(chart_id));
 
     if (currentChart) {
-      const chartColor =
-        currentChart?.Chart_Avg_Rating >= 4
-          ? "green"
-          : currentChart?.Chart_Avg_Rating >= 3
-          ? "yellowgreen"
-          : currentChart?.Chart_Avg_Rating >= 2
-          ? "yellow"
-          : currentChart?.Chart_Avg_Rating <= 1
-          ? "orange"
-          : currentChart?.Chart_Avg_Rating < 1
-          ? "red"
-          : null;
-
+      const chartColor = returnColor(currentChart?.Chart_Avg_Rating, "float");
       setRatingColor(chartColor);
     }
   }, [
@@ -108,7 +97,16 @@ const DailyChartDetail = () => {
           currentIntervals?.map((interval) => {
             return (
               <div key={interval?.id} className="intervalInfoContain">
-                <div className="intervalHeader">
+                <div
+                  className="intervalHeader"
+                  style={{
+                    // backgroundColor: "red",
+                    borderColor: returnColor(
+                      interval?.interval_rating,
+                      "whole"
+                    ),
+                  }}
+                >
                   <label>
                     Interval Time: {interval?.start_interval} -{" "}
                     {interval?.end_interval}

@@ -1,18 +1,13 @@
-// import { NavLink, Link, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
-// import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import CreateDailyChart from "../CreateDailyChart";
-// import { getClientByIDThunk } from "../../redux/clients";
+import returnColor from "../helpers/returnColor";
 
 const DailyCharts = ({ clientCharts }) => {
-  // const { client_id } = useParams();
-  // const dispatch = useDispatch();
   const { setModalContent } = useModal();
-  // const currentClient = useSelector((state) => state?.clients?.client_by_id);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
@@ -36,19 +31,7 @@ const DailyCharts = ({ clientCharts }) => {
       <div className="chartsContain">
         {clientCharts &&
           clientCharts?.Daily_Charts.map((dc) => {
-            dayColorRating =
-              parseFloat(dc?.avgForChart) >= 4
-                ? "green"
-                : parseFloat(dc?.avgForChart) >= 3
-                ? "yellowgreen"
-                : parseFloat(dc?.avgForChart) >= 2
-                ? "yellow"
-                : parseFloat(dc?.avgForChart) >= 1
-                ? "orange"
-                : parseFloat(dc?.avgForChart) < 1
-                ? "red"
-                : null;
-
+            dayColorRating = returnColor(dc?.avgForChart);
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }
