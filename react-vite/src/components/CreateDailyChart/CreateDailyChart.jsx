@@ -91,6 +91,7 @@ const CreateDailyChart = () => {
                   );
                 })}
             </select>
+            <button id="cancelBtn">Cancel</button>
             <button id="createChartBtn">Create Chart</button>
           </form>
         </div>
