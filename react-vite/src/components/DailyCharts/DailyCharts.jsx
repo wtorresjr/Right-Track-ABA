@@ -3,7 +3,7 @@ import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
-import CreateDailyChart from "../CreateDailyChart";
+import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 
 const DailyCharts = ({ clientCharts }) => {
@@ -15,6 +15,10 @@ const DailyCharts = ({ clientCharts }) => {
 
   const openCreateChartModal = () => {
     setModalContent(<CreateDailyChart />);
+  };
+
+  const openUpdateChartModal = (dc) => {
+    setModalContent(<UpdateDailyChart dc={dc} />);
   };
 
   let dayColorRating;
@@ -58,7 +62,13 @@ const DailyCharts = ({ clientCharts }) => {
                   </div>
                 </Link>
                 <div className="chartCrudBtns">
-                  <button>Edit Chart</button>
+                  <button
+                    onClick={() => {
+                      openUpdateChartModal(dc);
+                    }}
+                  >
+                    Edit Chart
+                  </button>
                   <button
                     onClick={() => {
                       openDeleteModal(dc);
