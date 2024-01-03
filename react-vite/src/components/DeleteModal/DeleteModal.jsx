@@ -28,7 +28,7 @@ const DeleteModal = ({ client }) => {
   }, [userInput, confirmDelText]);
 
   const openDeleteMessage = () => {
-    setModalContent(<DeleteMessage />);
+    setModalContent(<DeleteMessage message={"Client was deleted."} />);
   };
 
   const deleteClient = () => {
