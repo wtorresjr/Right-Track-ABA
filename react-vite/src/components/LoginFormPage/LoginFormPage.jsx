@@ -31,6 +31,16 @@ function LoginFormPage() {
     }
   };
 
+  const demoLogIn = async (e) => {
+    e.preventDefault();
+    dispatch(
+      thunkLogin({
+        email: "demo@demo.com",
+        password: "password",
+      })
+    );
+  };
+
   return (
     <div className="loginFormModal">
       {errors.length > 0 &&
@@ -63,6 +73,9 @@ function LoginFormPage() {
           </label>
           {errors.password && <p className="errorsPtag">{errors.password}</p>}
           <button type="submit">Log In</button>
+          <button type="submit" onClick={demoLogIn}>
+            Demo Login
+          </button>
         </form>
       </div>
     </div>
