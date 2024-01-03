@@ -3,6 +3,11 @@ const GET_BY_ID = "clients/byID";
 const CREATE_CLIENT = "clients/createClient";
 const DELETE_CLIENT = "clients/deleteClient";
 const UPDATE_CLIENT = "clients/updateClient";
+const RESET_STATE = "session/resetState";
+
+export const resetState = () => ({
+  type: RESET_STATE,
+});
 
 const update_a_client = (updatedClientData) => {
   return {
@@ -128,6 +133,8 @@ const initialState = {
 
 export const clientsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case RESET_STATE:
+      return { ...state, clients: null, chart: null, client_by_id: null };
     case GET_CLIENTS:
       return {
         ...state,
