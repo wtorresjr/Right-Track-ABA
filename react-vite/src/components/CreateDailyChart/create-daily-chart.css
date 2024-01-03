@@ -33,16 +33,23 @@
   margin: 0;
 }
 
-.newChartMenu #createChartBtn {
-  width: 20%;
-  cursor: pointer;
-  border: none;
+.newChartMenu #cancelBtn {
   background-color: black;
   color: white;
 }
+
+.newChartMenu #createChartBtn,
+#cancelBtn {
+  width: 20%;
+  cursor: pointer;
+  border: none;
+  background-color: orange;
+  color: wblackhite;
+}
 .newChartMenu #createChartBtn,
 #clientSelector,
-#dateInput {
+#dateInput,
+#cancelBtn {
   height: 100%;
   border-radius: 10px;
 }
