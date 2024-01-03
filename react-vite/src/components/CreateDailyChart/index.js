@@ -1,2 +1,3 @@
 import CreateDailyChart from "./CreateDailyChart";
-export default CreateDailyChart;
+import UpdateDailyChart from "./UpdateDailyChart";
+export { CreateDailyChart, UpdateDailyChart };
