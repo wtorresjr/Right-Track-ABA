@@ -1,3 +1,5 @@
+import { resetState } from "./clients";
+
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
 
@@ -46,9 +48,6 @@ export const thunkSignup = (user) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   });
-
-  console.log(user, "<--------------------- Response from backend");
-
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
@@ -63,6 +62,7 @@ export const thunkSignup = (user) => async (dispatch) => {
 export const thunkLogout = () => async (dispatch) => {
   await fetch("/api/auth/logout");
   dispatch(removeUser());
+  dispatch(resetState());
 };
 
 const initialState = { user: null };
