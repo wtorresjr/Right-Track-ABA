@@ -3,6 +3,29 @@ const ADD_INTERVAL = "charts/addInterval";
 const CREATE_CHART = "charts/createChart";
 const COMPLETE_CHART = "charts/completeChart";
 const DELETE_CHART = "charts/deleteChart";
+const UPDATE_CHART = "charts/updateChart";
+
+const updateChart = (chartToUpdate) => {
+  return {
+    type: UPDATE_CHART,
+    payload: chartToUpdate,
+  };
+};
+
+export const updateTheChartThunk = (data, chart_id) => async (dispatch) => {
+  const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    const editTheChart = await response.json();
+    dispatch(updateChart(editTheChart));
+    return editTheChart;
+  } else {
+    throw new Error("Error editing chart");
+  }
+};
 
 const closeChart = (chartToClose) => {
   return {
@@ -123,6 +146,12 @@ const initialState = {
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case UPDATE_CHART:
+      return {
+        ...state,
+        chart: action.payload,
+      };
+
     case GET_CHART:
       return { ...state, chart: action.payload };
     case ADD_INTERVAL:

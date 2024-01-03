@@ -3,12 +3,18 @@ import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
+import {
+  createNewChartThunk,
+  getChartByIdThunk,
+  updateTheChartThunk,
+} from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { DeleteMessage } from "../DeleteModal";
 
-const CreateDailyChart = () => {
+const UpdateDailyChart = ({ dc }) => {
   const navigate = useNavigate();
+  const { setModalContent } = useModal();
   const { client_id } = useParams();
   const { closeModal } = useModal();
   const [selectedClient, setSelectedClient] = useState(client_id);
@@ -29,27 +35,36 @@ const CreateDailyChart = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(dc, "dc test");
+
     const startNewChart = {
       chart_date: todaysDate,
       client_id: selectedClient,
     };
 
-    const newChartResult = await dispatch(createNewChartThunk(startNewChart));
+    const newChartResult = await dispatch(
+      updateTheChartThunk(startNewChart, dc?.id)
+    );
     setNewChartCompleted(newChartResult);
+  };
+
+  const openMessageDiag = () => {
+    setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
   };
 
   useEffect(() => {
     if (newChartCompleted) {
       closeModal();
-      dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
-      navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
+      openMessageDiag();
+      dispatch(getChartByIdThunk(dc?.id));
+      navigate(`/daily-chart/${dc?.id}`);
     }
   }, [newChartCompleted, navigate]);
 
   return (
     <div className="newChartModal">
       <h1>
-        Create Daily Chart For {currentClient?.first_name}{" "}
+        Update Daily Chart For {currentClient?.first_name}{" "}
         {currentClient?.last_name}
       </h1>
       {currentClient?.Incomplete_Charts &&
@@ -94,7 +109,7 @@ const CreateDailyChart = () => {
             <button id="cancelBtn" onClick={() => closeModal()}>
               Cancel
             </button>
-            <button id="createChartBtn">Create Chart</button>
+            <button id="createChartBtn">Update Chart</button>
           </form>
         </div>
       ) : (
@@ -104,4 +119,4 @@ const CreateDailyChart = () => {
   );
 };
 
-export default CreateDailyChart;
+export default UpdateDailyChart;
