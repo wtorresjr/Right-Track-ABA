@@ -29,7 +29,7 @@ const DeleteChartModal = ({ chartInfo }) => {
   }, [userInput, confirmDelText]);
 
   const openDeleteMessage = () => {
-    setModalContent(<DeleteMessage />);
+    setModalContent(<DeleteMessage message={"Successfully Deleted."} />);
   };
 
   const deleteChart = async () => {

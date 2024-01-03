@@ -1,6 +1,6 @@
 import { useModal } from "../../context/Modal";
 import "./delete-modal.css";
-const DeleteMessage = () => {
+const DeleteMessage = ({ message }) => {
   const { closeModal } = useModal();
 
   const closeTheMessage = () => {
@@ -11,7 +11,7 @@ const DeleteMessage = () => {
 
   return (
     <div className="deleteMessageContain">
-      <h1>Successfully Deleted</h1>
+      <h1>{message}</h1>
     </div>
   );
 };
