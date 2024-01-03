@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, NavLink } from "react-router-dom";
 import "./LoginForm.css";
+import SignupFormPage from "../SignupFormPage";
+import { useModal } from "../../context/Modal";
+import SignupFormModal from "../SignupFormModal";
 
 function LoginFormPage() {
+  const { setModalContent } = useModal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
@@ -29,6 +33,10 @@ function LoginFormPage() {
     } else {
       navigate("/home");
     }
+  };
+
+  const openSignUpModal = () => {
+    setModalContent(<SignupFormModal />);
   };
 
   const demoLogIn = async (e) => {
@@ -76,6 +84,9 @@ function LoginFormPage() {
           <button type="submit" onClick={demoLogIn}>
             Demo Login
           </button>
+          <p>
+            <NavLink onClick={openSignUpModal}>Sign Up</NavLink>
+          </p>
         </form>
       </div>
     </div>
