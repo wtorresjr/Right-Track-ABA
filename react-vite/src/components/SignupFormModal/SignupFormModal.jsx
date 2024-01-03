@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
 import "./SignupForm.css";
 
 function SignupFormModal() {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const dispatch = useDispatch();
+
+  const [isDisabled, setIsDisabled] = useState(true);
   const [email, setEmail] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -14,22 +17,40 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const errorCollector = {};
 
     if (!first_name.length) {
-      return setErrors({ firstName: "First name is required." });
+      errorCollector.firstName =
+        "First name must be between 2 to 30 characters";
     }
     if (!last_name.length) {
-      return setErrors({ lastName: "Last name is required." });
+      errorCollector.lastName = "Last name must be between 2 to 35 characters";
+    }
+    if (!email.match(emailRegex)) {
+      errorCollector.email = "Invalid email address";
+    }
+
+    if (!password) {
+      errorCollector.password = "Password is required";
     }
 
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field.",
-      });
+      errorCollector.confirmPassword =
+        "Confirm Password field must be the same as the Password field.";
     }
+
+    setErrors(errorCollector);
+
+    if (!Object.keys(errorCollector).length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [dispatch, first_name, last_name, email, password, confirmPassword]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     const serverResponse = await dispatch(
       thunkSignup({
@@ -48,10 +69,10 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
+    <div className="signUpFormContain">
       <form onSubmit={handleSubmit}>
+        <h1>Sign Up</h1>
+        {errors.server && <p>{errors.server}</p>}
         <label>
           Email
           <input
@@ -61,7 +82,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="errorsPtag">{errors.email}</p>}
         <label>
           First Name
           <input
@@ -70,7 +91,7 @@ function SignupFormModal() {
             onChange={(e) => setFirstName(e.target.value)}
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className="errorsPtag">{errors.firstName}</p>}
         <label>
           Last Name
           <input
@@ -79,7 +100,7 @@ function SignupFormModal() {
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className="errorsPtag">{errors.lastName}</p>}
         <label>
           Password
           <input
@@ -89,7 +110,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="errorsPtag">{errors.password}</p>}
         <label>
           Confirm Password
           <input
@@ -99,10 +120,15 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && (
+          <p className="errorsPtag">{errors.confirmPassword}</p>
+        )}
+        <button type="submit" disabled={isDisabled}>
+          Sign Up
+        </button>
+        <button onClick={() => closeModal()}>Cancel</button>
       </form>
-    </>
+    </div>
   );
 }
 
