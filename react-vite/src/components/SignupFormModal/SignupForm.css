@@ -1,0 +1,20 @@
+.signUpFormContain {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-width: 480px;
+  max-width: 540px;
+}
+
+.signUpFormContain form h1 {
+  padding: 0 0 10px 0;
+}
+
+.signUpFormContain form button {
+  width: 50%;
+  height: 40px;
+  margin: 20px 0 0 0;
+  cursor: pointer;
+}
