@@ -5,9 +5,39 @@ import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
+import { useEffect, useState } from "react";
 
 const DailyCharts = ({ clientCharts }) => {
   const { setModalContent } = useModal();
+  const [searchFilter, setSearchFilter] = useState("");
+  const [filteredCharts, setFilteredCharts] = useState([]);
+
+  useEffect(() => {
+    console.log(clientCharts, "Client Charts");
+    const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
+      Object.values(charts).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchFilter.toLowerCase())
+      )
+    );
+    const intervalTagResults = clientCharts?.Daily_Charts?.filter((item) =>
+      Object.values(...item.intervals).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchFilter.toLowerCase())
+      )
+    );
+
+    if (dateResults.length) {
+      setFilteredCharts(dateResults);
+    }
+    if (intervalTagResults.length) {
+      setFilteredCharts(intervalTagResults);
+    }
+
+    // setFilteredCharts(results);
+  }, [searchFilter, clientCharts]);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
@@ -31,12 +61,22 @@ const DailyCharts = ({ clientCharts }) => {
           Create New Chart
         </button>
       </h1>
+
       <div className="dcHeader">
         <LegendComponent />
       </div>
+      <input
+        type="text"
+        placeholder="Search Daily Charts (By Date or Interval Tags)"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+      />
       <div className="chartsContain">
-        {clientCharts &&
-          clientCharts?.Daily_Charts.map((dc) => {
+        {/* {clientCharts &&
+          clientCharts?.Daily_Charts.map((dc) => { */}
+
+        {filteredCharts &&
+          filteredCharts?.map((dc) => {
             dayColorRating = returnColor(dc?.avgForChart, "float");
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
