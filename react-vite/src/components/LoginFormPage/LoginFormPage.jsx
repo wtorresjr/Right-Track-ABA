@@ -60,6 +60,11 @@ function LoginFormPage() {
       <div className="formContain">
         <form onSubmit={handleSubmit} className="loginForm">
           <img className="logo-image-login" src="../right-track-aba-logo.png" />
+          {Object.keys(errors).length ? (
+            <p className="errorsPtag">Login incorrect</p>
+          ) : (
+            ""
+          )}
           <label>
             Email
             <input
@@ -69,7 +74,6 @@ function LoginFormPage() {
               required
             />
           </label>
-          {errors.email && <p className="errorsPtag">{errors.email}</p>}
           <label>
             Password
             <input
@@ -79,7 +83,7 @@ function LoginFormPage() {
               required
             />
           </label>
-          {errors.password && <p className="errorsPtag">{errors.password}</p>}
+          {/* {errors.password && <p className="errorsPtag">{errors.password}</p>} */}
           <button type="submit">Log In</button>
           <button type="submit" onClick={demoLogIn}>
             Demo Login
