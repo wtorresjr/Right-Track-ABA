@@ -24,7 +24,7 @@ const ManageClients = () => {
         (value) =>
           typeof value === "string" &&
           value.toLowerCase().includes(searchFilter.toLowerCase())
-      )
+      ) 
     );
     setFilteredClients(results);
   }, [clients, searchFilter]);
