@@ -24,6 +24,18 @@ const UpdateClientModal = ({ client }) => {
 
   const errorCollector = {};
   useEffect(() => {
+    const lN = lastName.trimStart();
+    const fN = firstName.trimStart();
+    const capLastName = lN.charAt(0).toUpperCase() + lN.slice(1);
+    const capFirstName = fN.charAt(0).toUpperCase() + fN.slice(1);
+    const emailTrim = guardianEmail.trim();
+    const trimStartNotes = clientNotes.trimStart();
+
+    setFirstName(capFirstName);
+    setLastName(capLastName);
+    setGuardianEmail(emailTrim);
+    setClientNotes(trimStartNotes);
+
     if (!firstName.length || firstName.length < 2 || firstName.length > 30) {
       errorCollector.firstName =
         "First name must be between 2 and 30 characters";
@@ -31,7 +43,7 @@ const UpdateClientModal = ({ client }) => {
     if (!lastName.length || lastName.length < 2 || lastName.length > 35) {
       errorCollector.lastName = "Last name must be between 2 and 35 characters";
     }
-    if (!guardianEmail.match(emailRegex)) {
+    if (!guardianEmail.match(emailRegex) || guardianEmail.trim() === "") {
       errorCollector.guardianEmail = "Invalid email address";
     }
     if (!dob.length) {
@@ -39,10 +51,15 @@ const UpdateClientModal = ({ client }) => {
     }
 
     const today = new Date();
+    today.setHours(-12, 0, 0, 0);
     const selectedDate = new Date(dob);
+    selectedDate.setHours(12, 0, 0, 0);
 
-    if (selectedDate >= today) {
-      errorCollector.dobTooGreat = "DOB cannot be todays date or future date";
+    console.log(today.getTime(), "Todays Date");
+    console.log(selectedDate.getTime(), "Selected DOB");
+
+    if (selectedDate.getTime() >= today.getTime()) {
+      errorCollector.dobTooGreat = "DOB cannot be todays date or a future date";
     }
 
     setErrors(errorCollector);
@@ -72,13 +89,12 @@ const UpdateClientModal = ({ client }) => {
 
     if (updatedClient) {
       navigate(`/client/${client?.id}`);
-      dispatch(getClientByIDThunk(client?.id))
+      dispatch(getClientByIDThunk(client?.id));
       closeModal();
     } else {
       throw new Error("Error Updating client");
     }
   };
-
 
   return (
     <div className="createClient">
