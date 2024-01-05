@@ -5,9 +5,36 @@ import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
+import { useEffect, useState } from "react";
 
 const DailyCharts = ({ clientCharts }) => {
   const { setModalContent } = useModal();
+  const [searchFilter, setSearchFilter] = useState("");
+  const [filteredCharts, setFilteredCharts] = useState([]);
+
+  useEffect(() => {
+    const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
+      Object.values(charts).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchFilter?.toLowerCase())
+      )
+    );
+    // const intervalTagResults = clientCharts?.Daily_Charts?.filter((item) =>
+    //   Object.values(...item?.intervals).some(
+    //     (value) =>
+    //       typeof value === "string" &&
+    //       value.toLowerCase().includes(searchFilter?.toLowerCase())
+    //   )
+    // );
+
+    if (dateResults) {
+      setFilteredCharts(dateResults);
+    }
+    // if (intervalTagResults) {
+    //   setFilteredCharts(intervalTagResults);
+    // }
+  }, [searchFilter, clientCharts]);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
@@ -20,37 +47,47 @@ const DailyCharts = ({ clientCharts }) => {
   const openUpdateChartModal = (dc) => {
     setModalContent(<UpdateDailyChart dc={dc} />);
   };
-
+  
   let dayColorRating;
-
+  
   return (
-    <div>
+    <div className="chartsContain">
+
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
           Create New Chart
         </button>
       </h1>
+
       <div className="dcHeader">
         <LegendComponent />
       </div>
+
+      <input
+        type="text"
+        placeholder="Search Daily Charts (By Date or Interval Tags)"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+      />
+      
       <div className="chartsContain">
-        {clientCharts &&
-          clientCharts?.Daily_Charts.map((dc) => {
+        {filteredCharts &&
+          filteredCharts?.map((dc) => {
             dayColorRating = returnColor(dc?.avgForChart, "float");
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }
-
+            
             return (
               <div key={dc?.id} className="clientDCdata">
-                <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
+                <Link to={`/daily-chart/${dc?.id}`} className="navLinkStyleDC">
                   <div
                     className="dcButtons"
                     style={{
                       border: `5px solid ${dayColorRating}`,
                     }}
-                  >
+                    >
                     <div className="folderText">
                       <p>
                         <label>Date: {dc?.chart_date}</label>
@@ -66,14 +103,14 @@ const DailyCharts = ({ clientCharts }) => {
                     onClick={() => {
                       openUpdateChartModal(dc);
                     }}
-                  >
+                    >
                     Edit Chart
                   </button>
                   <button
                     onClick={() => {
                       openDeleteModal(dc);
                     }}
-                  >
+                    >
                     Delete Chart
                   </button>
                 </div>
