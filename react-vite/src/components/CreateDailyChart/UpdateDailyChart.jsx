@@ -19,9 +19,7 @@ const UpdateDailyChart = ({ dc }) => {
   const { closeModal } = useModal();
   const [selectedClient, setSelectedClient] = useState(client_id);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [todaysDate, setTodaysDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [todaysDate, setTodaysDate] = useState(dc?.chart_date);
   const [newChartCompleted, setNewChartCompleted] = useState(null);
   const [errors, setErrors] = useState({});
 
@@ -36,6 +34,7 @@ const UpdateDailyChart = ({ dc }) => {
 
   const errorCollector = {};
   useEffect(() => {
+    console.log(dc, "daily chart prop");
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const selectedDate = new Date(todaysDate);
@@ -56,8 +55,6 @@ const UpdateDailyChart = ({ dc }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(dc, "dc test");
 
     const startNewChart = {
       chart_date: todaysDate,
