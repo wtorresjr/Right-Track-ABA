@@ -34,7 +34,6 @@ const UpdateDailyChart = ({ dc }) => {
 
   const errorCollector = {};
   useEffect(() => {
-    console.log(dc, "daily chart prop");
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const selectedDate = new Date(todaysDate);
