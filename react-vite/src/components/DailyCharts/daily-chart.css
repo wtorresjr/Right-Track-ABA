@@ -7,7 +7,7 @@
 .chartsContain {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   width: 100%;
   padding: 20px 0 0 0;
 }
