@@ -47,11 +47,12 @@ const DailyCharts = ({ clientCharts }) => {
   const openUpdateChartModal = (dc) => {
     setModalContent(<UpdateDailyChart dc={dc} />);
   };
-
+  
   let dayColorRating;
-
+  
   return (
     <div className="chartsContain">
+
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
@@ -62,12 +63,14 @@ const DailyCharts = ({ clientCharts }) => {
       <div className="dcHeader">
         <LegendComponent />
       </div>
+
       <input
         type="text"
         placeholder="Search Daily Charts (By Date or Interval Tags)"
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
+      
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {
@@ -75,7 +78,7 @@ const DailyCharts = ({ clientCharts }) => {
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }
-
+            
             return (
               <div key={dc?.id} className="clientDCdata">
                 <Link to={`/daily-chart/${dc?.id}`} className="navLinkStyleDC">
@@ -84,7 +87,7 @@ const DailyCharts = ({ clientCharts }) => {
                     style={{
                       border: `5px solid ${dayColorRating}`,
                     }}
-                  >
+                    >
                     <div className="folderText">
                       <p>
                         <label>Date: {dc?.chart_date}</label>
@@ -100,14 +103,14 @@ const DailyCharts = ({ clientCharts }) => {
                     onClick={() => {
                       openUpdateChartModal(dc);
                     }}
-                  >
+                    >
                     Edit Chart
                   </button>
                   <button
                     onClick={() => {
                       openDeleteModal(dc);
                     }}
-                  >
+                    >
                     Delete Chart
                   </button>
                 </div>
