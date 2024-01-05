@@ -17,23 +17,23 @@ const DailyCharts = ({ clientCharts }) => {
       Object.values(charts).some(
         (value) =>
           typeof value === "string" &&
-          value.toLowerCase().includes(searchFilter.toLowerCase())
+          value.toLowerCase().includes(searchFilter?.toLowerCase())
       )
     );
-    const intervalTagResults = clientCharts?.Daily_Charts?.filter((item) =>
-      Object.values(...item.intervals).some(
-        (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(searchFilter.toLowerCase())
-      )
-    );
+    // const intervalTagResults = clientCharts?.Daily_Charts?.filter((item) =>
+    //   Object.values(...item?.intervals).some(
+    //     (value) =>
+    //       typeof value === "string" &&
+    //       value.toLowerCase().includes(searchFilter?.toLowerCase())
+    //   )
+    // );
 
     if (dateResults) {
       setFilteredCharts(dateResults);
     }
-    if (intervalTagResults) {
-      setFilteredCharts(intervalTagResults);
-    }
+    // if (intervalTagResults) {
+    //   setFilteredCharts(intervalTagResults);
+    // }
   }, [searchFilter, clientCharts]);
 
   const openDeleteModal = (chart) => {
@@ -51,7 +51,7 @@ const DailyCharts = ({ clientCharts }) => {
   let dayColorRating;
 
   return (
-    <div>
+    <div className="chartsContain">
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
@@ -78,7 +78,7 @@ const DailyCharts = ({ clientCharts }) => {
 
             return (
               <div key={dc?.id} className="clientDCdata">
-                <Link to={`/daily-chart/${dc.id}`} className="navLinkStyleDC">
+                <Link to={`/daily-chart/${dc?.id}`} className="navLinkStyleDC">
                   <div
                     className="dcButtons"
                     style={{

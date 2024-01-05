@@ -16,6 +16,9 @@ const CreateDailyChart = () => {
   const [todaysDate, setTodaysDate] = useState(
     new Date().toISOString().split("T")[0]
   );
+  // const [todaysDate, setTodaysDate] = useState(
+  //   new Date().toISOString().split("T")[0]
+  // );
   const [errors, setErrors] = useState({});
 
   const [newChartCompleted, setNewChartCompleted] = useState(null);
@@ -83,6 +86,7 @@ const CreateDailyChart = () => {
               <NavLink
                 to={`/daily-chart/${incChart?.id}`}
                 className="navLinkStyle"
+                onClick={() => closeModal()}
               >
                 {incChart?.chart_date}
               </NavLink>

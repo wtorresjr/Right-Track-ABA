@@ -6,6 +6,8 @@
 .chartsContain {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .chartCrudBtns {
@@ -44,7 +46,7 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  padding:10px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
