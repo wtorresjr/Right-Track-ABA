@@ -39,7 +39,6 @@ label {
   color: white;
   font-weight: bold;
   background-color: red;
-  width: 50%;
   padding: 4px;
   text-align: center;
   border-radius: 8px;
@@ -78,5 +77,3 @@ label {
   background-color: rgb(58, 58, 58);
   padding: 5px;
 }
-
-
