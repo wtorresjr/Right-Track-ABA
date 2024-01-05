@@ -13,7 +13,6 @@ const DailyCharts = ({ clientCharts }) => {
   const [filteredCharts, setFilteredCharts] = useState([]);
 
   useEffect(() => {
-    console.log(clientCharts, "Client Charts");
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
       Object.values(charts).some(
         (value) =>
@@ -29,14 +28,12 @@ const DailyCharts = ({ clientCharts }) => {
       )
     );
 
-    if (dateResults.length) {
+    if (dateResults) {
       setFilteredCharts(dateResults);
     }
-    if (intervalTagResults.length) {
+    if (intervalTagResults) {
       setFilteredCharts(intervalTagResults);
     }
-
-    // setFilteredCharts(results);
   }, [searchFilter, clientCharts]);
 
   const openDeleteModal = (chart) => {
@@ -72,9 +69,6 @@ const DailyCharts = ({ clientCharts }) => {
         onChange={(e) => setSearchFilter(e.target.value)}
       />
       <div className="chartsContain">
-        {/* {clientCharts &&
-          clientCharts?.Daily_Charts.map((dc) => { */}
-
         {filteredCharts &&
           filteredCharts?.map((dc) => {
             dayColorRating = returnColor(dc?.avgForChart, "float");
