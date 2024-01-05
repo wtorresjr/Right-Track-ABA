@@ -1,6 +1,7 @@
 .clientDCdata {
   display: flex;
   flex-flow: column nowrap;
+  margin: 10px 0 10px 0;
 }
 
 .chartsContain {
@@ -8,6 +9,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
+  padding: 20px 0 0 0;
 }
 
 .chartCrudBtns {

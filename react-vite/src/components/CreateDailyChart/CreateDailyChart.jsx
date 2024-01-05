@@ -16,9 +16,6 @@ const CreateDailyChart = () => {
   const [todaysDate, setTodaysDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  // const [todaysDate, setTodaysDate] = useState(
-  //   new Date().toISOString().split("T")[0]
-  // );
   const [errors, setErrors] = useState({});
 
   const [newChartCompleted, setNewChartCompleted] = useState(null);
@@ -30,7 +27,6 @@ const CreateDailyChart = () => {
   const errorCollector = {};
   useEffect(() => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
     const selectedDate = new Date(todaysDate);
     selectedDate.setHours(24, 0, 0, 0);
 
