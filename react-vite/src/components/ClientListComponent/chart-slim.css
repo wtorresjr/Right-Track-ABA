@@ -1,0 +1,11 @@
+.slimDivContain {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.slimDiv {
+  border: 2px solid orange;
+  padding: 5px;
+  margin: 10px 0;
+  width: 20%;
+}

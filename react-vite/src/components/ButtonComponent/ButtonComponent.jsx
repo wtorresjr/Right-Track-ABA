@@ -3,6 +3,7 @@ import "./button-component.css";
 
 const ButtonComponent = ({
   btnText,
+  scndText,
   btnStyle,
   btnClass,
   faAwesomeStyle,
@@ -16,7 +17,10 @@ const ButtonComponent = ({
 
   return (
     <div className={btnClass} id={btnStyle} onClick={handleClick}>
-      <h2>{btnText}</h2>
+      <div>
+        <h2>{btnText}</h2>
+        <h5>{scndText}</h5>
+      </div>
       <i className={faAwesomeStyle} style={{ color: "#ffffff" }}></i>
     </div>
   );

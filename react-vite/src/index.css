@@ -4,12 +4,12 @@ html {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   height: 100%;
   font-size: 16px;
-  /* margin: 0 auto; */
 }
 
 body {
   padding: 20px 0px;
-  width: 80%;
+  max-width: 90%;
+  min-width: 60%;
   margin: 0 auto;
   background-image: url("../asd-puzzle.jpg");
   background-size: cover;
@@ -51,19 +51,6 @@ label {
 
 .logo-image-login {
   width: 100%;
-}
-
-.mainDisplayContain {
-  background-color: rgba(0, 0, 0, 0.7);
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
-  padding: 10px 20px;
-  box-sizing: border-box;
-  margin: 20px 0 0 0;
-  border-radius: 10px;
-  display: flex;
-  flex-flow: column wrap;
-  gap: 20px;
-  color: white;
 }
 
 .navLinkStyle {
