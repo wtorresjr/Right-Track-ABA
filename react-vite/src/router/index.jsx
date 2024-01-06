@@ -9,6 +9,8 @@ import ClientDetails from "../components/ClientDetails";
 // import CreateClient from "../components/CreateClientPage";
 import DailyChartDetail from "../components/DailyChartDetail/DailyChartDetail";
 import CreateDailyChart from "../components/CreateDailyChart/CreateDailyChart";
+import { DailyCharts } from "../components/DailyCharts";
+import DailyChartAll from "../components/DailyChartAll";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ClientDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/daily-charts",
+        element: (
+          <PrivateRoute>
+            <DailyChartAll />
           </PrivateRoute>
         ),
       },
