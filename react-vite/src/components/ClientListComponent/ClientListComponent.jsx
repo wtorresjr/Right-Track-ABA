@@ -49,7 +49,10 @@ const ClientListComponent = () => {
         clientCharts.Daily_Charts.map((chart) => {
           return (
             <div key={chart.id}>
-              <ChartSlimComponent chart={chart} />
+              <ChartSlimComponent
+                chart={chart}
+                client={clientList[1]}
+              />
             </div>
           );
         })
