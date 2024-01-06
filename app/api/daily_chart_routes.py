@@ -12,11 +12,24 @@ daily_charts_bp = Blueprint("my-daily-charts", __name__)
 @login_required
 def get_all_charts():
     therapist_charts = Daily_Chart.query.filter_by(therapist_id=current_user.id).all()
-    chart_list = [chart.to_dict() for chart in therapist_charts]
+    chart_list = [
+        {
+            "chart": chart.to_dict(),
+            "client_first_name": chart.client.first_name,
+            "client_last_name": chart.client.last_name,
+            # "avg_for_chart": Client.client_id.avg_for_chart,
+        }
+        for chart in therapist_charts
+    ]
+
     if not chart_list:
         return jsonify({"message": "No charts found"}), 404
 
-    return jsonify({"Therapist_Charts": chart_list})
+    # my_charts = [chart for chart in chart_list]
+
+    # return jsonify({"Therapist_Charts": chart_list})
+    # return jsonify(chart_list)
+    return chart_list
 
 
 # GET, READ, UPDATE A Chart by ID
