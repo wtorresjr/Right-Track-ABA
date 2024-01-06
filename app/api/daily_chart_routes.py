@@ -17,6 +17,7 @@ def get_all_charts():
             "chart": chart.to_dict(),
             "client_first_name": chart.client.first_name,
             "client_last_name": chart.client.last_name,
+            # "avg_for_chart": Client.client_id.avg_for_chart,
         }
         for chart in therapist_charts
     ]
@@ -27,7 +28,8 @@ def get_all_charts():
     # my_charts = [chart for chart in chart_list]
 
     # return jsonify({"Therapist_Charts": chart_list})
-    return jsonify(chart_list)
+    # return jsonify(chart_list)
+    return chart_list
 
 
 # GET, READ, UPDATE A Chart by ID

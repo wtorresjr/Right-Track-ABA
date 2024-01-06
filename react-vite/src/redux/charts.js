@@ -87,7 +87,10 @@ export const createNewChartThunk = (chartData) => async (dispatch) => {
 };
 
 export const getChartByIdThunk = (chart_id) => async (dispatch) => {
-  const response = await fetch(`/api/my-daily-charts/${chart_id}`);
+  const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
+    method: "GET",
+    header: { "Content-Type": "application/json" },
+  });
   if (response.ok) {
     const chart = await response.json();
     dispatch(getChart(chart));
@@ -139,7 +142,7 @@ const getAllCharts = (allCharts) => {
   };
 };
 
-export const getAllChartsThunk = (therapist_id) => async (dispatch) => {
+export const getAllChartsThunk = () => async (dispatch) => {
   const response = await fetch(`/api/my-daily-charts/`, {
     method: "GET",
     header: { "Content-Type": "application/json" },
@@ -168,7 +171,7 @@ function chartsReducer(state = initialState, action) {
     case GET_ALL_CHARTS:
       return {
         ...state,
-        ...action.payload,
+        allCharts: action.payload,
       };
     case UPDATE_CHART:
       return {
