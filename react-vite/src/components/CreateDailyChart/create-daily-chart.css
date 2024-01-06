@@ -27,6 +27,15 @@
   text-align: center;
   cursor: pointer;
 }
+#dcClientSelect {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  height: 50px;
+  border: 2px solid orange;
+  border-radius: 15px;
+  font-size: 18px;
+}
 
 .newChartMenu #dateInput {
   width: 20%;
