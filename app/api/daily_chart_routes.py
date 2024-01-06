@@ -24,7 +24,10 @@ def get_all_charts():
     if not chart_list:
         return jsonify({"message": "No charts found"}), 404
 
-    return jsonify({"Therapist_Charts": chart_list})
+    # my_charts = [chart for chart in chart_list]
+
+    # return jsonify({"Therapist_Charts": chart_list})
+    return jsonify(chart_list)
 
 
 # GET, READ, UPDATE A Chart by ID

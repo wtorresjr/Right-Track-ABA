@@ -4,6 +4,7 @@ const CREATE_CHART = "charts/createChart";
 const COMPLETE_CHART = "charts/completeChart";
 const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
+const GET_ALL_CHARTS = "charts/getAllCharts";
 
 const updateChart = (chartToUpdate) => {
   return {
@@ -131,7 +132,24 @@ export const delDailyChartThunk = (chart_id) => async (dispatch) => {
   }
 };
 
-// const initialState = { chart: null };
+const getAllCharts = (allCharts) => {
+  return {
+    type: GET_ALL_CHARTS,
+    payload: allCharts,
+  };
+};
+
+export const getAllChartsThunk = (therapist_id) => async (dispatch) => {
+  const response = await fetch(`/api/my-daily-charts/`, {
+    method: "GET",
+    header: { "Content-Type": "application/json" },
+  });
+  if (response.ok) {
+    const allFoundCharts = await response.json();
+    dispatch(getAllCharts(allFoundCharts));
+    return allFoundCharts;
+  }
+};
 
 const initialState = {
   clients: null,
@@ -142,16 +160,21 @@ const initialState = {
     Chart: null,
     Chart_Intervals: [],
   },
+  allCharts: [],
 };
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_ALL_CHARTS:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case UPDATE_CHART:
       return {
         ...state,
         chart: action.payload,
       };
-
     case GET_CHART:
       return { ...state, chart: action.payload };
     case ADD_INTERVAL:
