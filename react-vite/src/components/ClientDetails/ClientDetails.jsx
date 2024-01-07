@@ -56,7 +56,8 @@ const ClientDetails = () => {
           <h1>
             {client?.last_name}, {client?.first_name}
             <NavLink to="/manage-clients" className="navLinkStyle">
-              Back To Manage Clients
+              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
+              Clients
             </NavLink>
           </h1>
 
