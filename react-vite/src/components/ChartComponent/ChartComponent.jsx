@@ -12,17 +12,24 @@ const ChartComponent = ({ clientCharts }) => {
           color: "grey",
         },
       },
+      x: {
+        grid: {
+          color: "grey",
+        },
+      },
     },
   };
   return (
     <div className="chartContain">
       <Line
         data={{
-          labels: clientCharts.map((chart) => chart.chart_date),
+          labels: clientCharts.map((chart) => chart.chart_date).reverse(),
           datasets: [
             {
               label: "Chart Avg",
-              data: clientCharts.map((chartAvg) => chartAvg.avgForChart),
+              data: clientCharts
+                .map((chartAvg) => chartAvg.avgForChart)
+                .reverse(),
             },
           ],
         }}
