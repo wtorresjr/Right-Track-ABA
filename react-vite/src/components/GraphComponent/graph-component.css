@@ -1,0 +1,60 @@
+.chartDisplayArea {
+  /* flex-grow: 1; */
+  width: 100%;
+}
+.chartOptions {
+  width: 30%;
+  /* flex-grow: 1; */
+  /* width: 40%; */
+}
+
+.chartView {
+  display: flex;
+  /* flex-direction: row-reverse; */
+  flex-flow: row-reverse nowrap;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  /* flex-flow: 1; */
+}
+
+.chartContain {
+  background-color: black;
+  border-radius: 10px;
+  border: 1px solid white;
+  margin: 20px 0 20px 0;
+}
+
+.dateDivider label,
+.chartTypeContain label {
+  padding: 0 20px 0 0;
+  /* margin: 0 20px 0 0; */
+  width: auto;
+}
+
+.dateDivider {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  flex-flow: row nowrap;
+  margin: 20px 0 0 0;
+}
+
+.dateDivider input {
+  flex-grow: 1;
+}
+
+.chartTypeContain {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  gap: 20px;
+  margin: 20px 0 0 0;
+}
+
+.chartTypeContain button {
+  flex-grow: 1;
+  height: 30px;
+}

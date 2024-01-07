@@ -1,8 +1,11 @@
 import { Chart as ChartJS } from "chart.js/auto";
-import { Line } from "react-chartjs-2";
-import "./chart-component.css";
+import { Line, Bar, Scatter, Pie } from "react-chartjs-2";
+import "./graph-component.css";
+import { useState } from "react";
 
-const ChartComponent = ({ clientCharts }) => {
+const GraphComponent = ({ clientCharts, chartType }) => {
+  console.log(clientCharts);
+  const [selectedChartType, setChartType] = useState(Line);
   const options = {
     scales: {
       y: {
@@ -21,7 +24,7 @@ const ChartComponent = ({ clientCharts }) => {
   };
   return (
     <div className="chartContain">
-      <Line
+      <Bar
         data={{
           labels: clientCharts.map((chart) => chart.chart_date).reverse(),
           datasets: [
@@ -39,4 +42,4 @@ const ChartComponent = ({ clientCharts }) => {
   );
 };
 
-export default ChartComponent;
+export default GraphComponent;
