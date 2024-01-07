@@ -26,13 +26,15 @@ const GraphComponent = ({ clientCharts, chartType }) => {
     <div className="chartContain">
       <Bar
         data={{
-          labels: clientCharts.map((chart) => chart.chart_date).reverse(),
+          labels: clientCharts?.map(
+            (chart) => chart.chart_date
+          ).reverse(),
           datasets: [
             {
               label: "Chart Avg",
-              data: clientCharts
-                .map((chartAvg) => chartAvg.avgForChart)
-                .reverse(),
+              data: clientCharts?.map(
+                (chartAvg) => chartAvg.avgForChart
+              ).reverse(),
             },
           ],
         }}

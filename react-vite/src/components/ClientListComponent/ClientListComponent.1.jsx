@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
-import "../CreateDailyChart/create-daily-chart.css";
 import GraphComponent from "../GraphComponent/GraphComponent";
 
-const ClientListComponent = () => {
+export const ClientListComponent = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedChartType, setSelectedChartType] = useState();
@@ -13,28 +12,16 @@ const ClientListComponent = () => {
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const [startDay, setStartDay] = useState();
   const [endDay, setEndDay] = useState();
-  const [filteredCharts, setFilteredCharts] = useState();
-
+  // const [filteredCharts, setFilteredCharts] = useState();
   useEffect(() => {
     dispatch(getClientsThunk());
   }, [dispatch]);
 
   useEffect(() => {
-    setFilteredCharts();
     if (startDay && endDay && clientCharts) {
-      const filterCharts = clientCharts?.Daily_Charts?.filter((chart) => {
-        return (
-          new Date(chart.chart_date).getTime() >=
-            new Date(startDay).getTime() &&
-          new Date(chart.chart_date).getTime() <= new Date(endDay).getTime()
-        );
-      });
-
-      if (Object.entries(filterCharts).length) {
-        setFilteredCharts(filterCharts);
-      }
+      console.log("Conditions met to filter charts");
     }
-  }, [dispatch, startDay, endDay, selectedClient]);
+  }, [dispatch, startDay, endDay]);
 
   useEffect(() => {
     const findClientCharts = async () => {
@@ -88,7 +75,6 @@ const ClientListComponent = () => {
               Start:
               <input
                 type="date"
-                value={startDay}
                 onChange={(e) => setStartDay(e.target.value)}
               ></input>
             </label>
@@ -96,20 +82,12 @@ const ClientListComponent = () => {
               End:
               <input
                 type="date"
-                value={endDay}
                 onChange={(e) => setEndDay(e.target.value)}
               ></input>
             </label>
           </div>
         </div>
 
-        <button
-          onClick={(e) => {
-            setStartDay(""), setEndDay("");
-          }}
-        >
-          Clear Date Filters
-        </button>
         <div className="chartTypeContain">
           <label>Chart Type:</label>
           <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
@@ -117,14 +95,20 @@ const ClientListComponent = () => {
           <button>Scatter</button>
           <button>Pie</button>
         </div>
+        {/*
+            <div className="chartTypeContain">
+              <label>Chart Type:</label>
+              <button>Bar</button>
+              <button>Line</button>
+              <button>Scatter</button>
+              <button>Pie</button>
+            </div> */}
       </div>{" "}
       {selectedClient && chartDataPoint === "AVG" ? (
         <div className="chartDisplayArea">
           <GraphComponent
             chartType={selectedChartType}
-            clientCharts={
-              filteredCharts ? filteredCharts : clientCharts.Daily_Charts
-            }
+            clientCharts={clientCharts.Daily_Charts}
           />
         </div>
       ) : (
@@ -135,5 +119,3 @@ const ClientListComponent = () => {
     </div>
   );
 };
-
-export default ClientListComponent;
