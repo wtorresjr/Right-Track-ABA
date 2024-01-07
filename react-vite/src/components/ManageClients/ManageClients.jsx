@@ -24,7 +24,7 @@ const ManageClients = () => {
         (value) =>
           typeof value === "string" &&
           value.toLowerCase().includes(searchFilter.toLowerCase())
-      ) 
+      )
     );
     setFilteredClients(results);
   }, [clients, searchFilter]);
@@ -38,7 +38,8 @@ const ManageClients = () => {
       <div className="manageClientsHeader">
         <h1>Manage Clients</h1>
         <button id="addNewClientBtn" onClick={openCreateClientModal}>
-          Add New Client
+          <i className="fa-regular fa-address-card fa-xl"></i>
+          Add New Client <i className="fa-regular fa-address-card fa-xl"></i>
         </button>
         <input
           type="text"
