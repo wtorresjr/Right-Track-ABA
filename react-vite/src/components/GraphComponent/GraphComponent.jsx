@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const GraphComponent = ({ clientCharts, chartType }) => {
   console.log(clientCharts);
-  const [selectedChartType, setChartType] = useState("Line");
   const options = {
     scales: {
       y: {
