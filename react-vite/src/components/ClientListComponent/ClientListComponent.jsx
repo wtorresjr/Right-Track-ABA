@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
-import ChartSlimComponent from "./ChartSlimComponent";
 import ChartComponent from "../ChartComponent/ChartComponent";
 
 const ClientListComponent = () => {
@@ -48,9 +47,9 @@ const ClientListComponent = () => {
       {clientCharts ? (
         <ChartComponent clientCharts={clientCharts.Daily_Charts} />
       ) : (
-        ""
+        <p className="errorsPtag">Choose A Client</p>
       )}
-      {clientCharts ? (
+      {/* {clientCharts ? (
         clientCharts.Daily_Charts.map((chart) => {
           return (
             <div key={chart.id}>
@@ -60,7 +59,7 @@ const ClientListComponent = () => {
         })
       ) : (
         <p className="errorsPtag">{"No client selected"}</p>
-      )}
+      )} */}
     </div>
   );
 };
