@@ -1,11 +1,13 @@
 .slimDivContain {
   display: flex;
   flex-flow: row wrap;
+  width: 100%;
 }
 
 .slimDiv {
   border: 2px solid orange;
   padding: 5px;
   margin: 10px 0;
-  width: 20%;
+  box-sizing: border-box;
+  /* width: 40%; */
 }

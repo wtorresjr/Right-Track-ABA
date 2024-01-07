@@ -3,11 +3,7 @@ import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-import {
-  createNewChartThunk,
-  getChartByIdThunk,
-  updateTheChartThunk,
-} from "../../redux/charts";
+import { getChartByIdThunk, updateTheChartThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
