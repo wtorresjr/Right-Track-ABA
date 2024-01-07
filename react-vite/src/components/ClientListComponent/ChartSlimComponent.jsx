@@ -7,11 +7,10 @@ const ChartSlimComponent = ({ chart }) => {
         <label>Chart Date:</label>
         {chart.chart_date}
       </div>
-      <div className="slimDiv">
-        <label>Chart Avg:</label>
-        {chart.avgForChart}
-      </div>
+      <div className="slimDiv">{chart.avgForChart}</div>
     </div>
   );
 };
+
 export default ChartSlimComponent;
+
