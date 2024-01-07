@@ -36,7 +36,7 @@ def seed_clients():
         seed_discreet_trials(new_client)
 
         # def seed_daily_charts():
-        for _ in range(randint(5, 9)):
+        for _ in range(randint(10, 20)):
             chart = Daily_Chart(
                 client_id=client_idx,
                 chart_date=fake.date_between(
@@ -51,7 +51,7 @@ def seed_clients():
 
             # def seed_intervals():
             start_time = datetime(2023, 1, 1, 9, 15)
-            for _ in range(randint(3, 9)):
+            for _ in range(randint(5, 14)):
                 interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
 
                 int_tags = {}

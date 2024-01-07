@@ -102,20 +102,23 @@ const ClientListComponent = () => {
             </label>
           </div>
         </div>
-
-        <button
-          onClick={(e) => {
-            setStartDay(""), setEndDay("");
-          }}
-        >
-          Clear Date Filters
-        </button>
+        <p style={{ justifyContent: "right", display: "flex" }}>
+          <button
+            onClick={(e) => {
+              setStartDay(""), setEndDay("");
+            }}
+          >
+            Clear Date Filters
+          </button>
+        </p>
         <div className="chartTypeContain">
           <label>Chart Type:</label>
           <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
-          <button>Line</button>
-          <button>Scatter</button>
-          <button>Pie</button>
+          <button onClick={() => setSelectedChartType("Line")}>Line</button>
+          <button onClick={() => setSelectedChartType("Scatter")}>
+            Scatter
+          </button>
+          <button onClick={() => setSelectedChartType("Pie")}>Pie</button>
         </div>
       </div>{" "}
       {selectedClient && chartDataPoint === "AVG" ? (
@@ -129,7 +132,7 @@ const ClientListComponent = () => {
         </div>
       ) : (
         <div className="chartDisplayArea">
-          <p className="errorsPtag">Choose a client</p>
+          <p className="errorsPtag">Choose a client & Data Point</p>
         </div>
       )}
     </div>
