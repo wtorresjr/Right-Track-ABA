@@ -63,85 +63,89 @@ const DailyChartDetail = () => {
 
   return (
     <div className="mainDisplayContain">
-      <div>
-        <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-        <NavLink
-          to={`/client/${clientInfo?.id}`}
-          className="navLinkStyle"
-          style={{ fontWeight: "bold" }}
-        >
-          <p>Back To {clientInfo?.first_name}'s Detail Page</p>
-        </NavLink>
-
-        <AddIntervalComp client={clientInfo} />
-
-        <div id="chartOptionsDiv">
-          <h2>
-            Client: {clientInfo?.first_name} {clientInfo?.last_name}
-          </h2>
-
-          <h2
-            style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
-            id="ratingBg"
-          >
-            Average Interval Rating:{" "}
-            {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-          </h2>
-          <div className="dcHeader">
-            <LegendComponent />
-          </div>
-          {isIncomplete && currentIntervals?.length > 0 ? (
-            <button onClick={submitChart} id="setChartBtn">
-              Set Chart As Complete
-            </button>
-          ) : (
-            ""
-          )}
+      <div className="chartDetailHeader">
+        <div>
+          <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
         </div>
-        {currentIntervals &&
-          currentIntervals?.map((interval) => {
-            return (
-              <div key={interval?.id} className="intervalInfoContain">
-                <div
-                  className="intervalHeader"
-                  style={{
-                    borderColor: returnColor(
-                      interval?.interval_rating,
-                      "whole"
-                    ),
-                  }}
-                >
-                  <label>
-                    Interval Time: {interval?.start_interval} -{" "}
-                    {interval?.end_interval}
-                  </label>{" "}
-                  |<label> Activity: {interval?.activity} </label>|
-                  <label> Interval Rating: {interval?.interval_rating}</label>
-                </div>
-                <p>
-                  <label>Interval Notes:</label> {interval?.interval_notes}
-                </p>
-                <label>Problem Behaviors: </label>
-
-                {Object.keys(interval?.interval_tags ?? {}).length ? (
-                  <div className="behaviorsTag">
-                    {Object.entries(interval?.interval_tags || {}).map(
-                      ([behavior, count]) => (
-                        <div key={behavior}>
-                          <div>
-                            {behavior}: {count}
-                          </div>
-                        </div>
-                      )
-                    )}
-                  </div>
-                ) : (
-                  "None."
-                )}
-              </div>
-            );
-          })}
+        <div>
+          <NavLink
+            to={`/client/${clientInfo?.id}`}
+            className="navLinkStyle"
+            style={{ fontWeight: "bold" }}
+          >
+            <div>
+              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+              {clientInfo?.first_name}'s Detail Page
+            </div>
+          </NavLink>
+        </div>
       </div>
+
+      <AddIntervalComp client={clientInfo} />
+
+      <div id="chartOptionsDiv">
+        <h2>
+          Client: {clientInfo?.first_name} {clientInfo?.last_name}
+        </h2>
+
+        <h2
+          style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
+          id="ratingBg"
+        >
+          Average Interval Rating:{" "}
+          {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+        </h2>
+        <div className="dcHeader">
+          <LegendComponent />
+        </div>
+        {isIncomplete && currentIntervals?.length > 0 ? (
+          <button onClick={submitChart} id="setChartBtn">
+            Set Chart As Complete
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+      {currentIntervals &&
+        currentIntervals?.map((interval) => {
+          return (
+            <div key={interval?.id} className="intervalInfoContain">
+              <div
+                className="intervalHeader"
+                style={{
+                  borderColor: returnColor(interval?.interval_rating, "whole"),
+                }}
+              >
+                <label>
+                  Interval Time: {interval?.start_interval} -{" "}
+                  {interval?.end_interval}
+                </label>{" "}
+                |<label> Activity: {interval?.activity} </label>|
+                <label> Interval Rating: {interval?.interval_rating}</label>
+              </div>
+              <p>
+                <label>Interval Notes:</label> {interval?.interval_notes}
+              </p>
+              <label>Problem Behaviors: </label>
+
+              {Object.keys(interval?.interval_tags ?? {}).length ? (
+                <div className="behaviorsTag">
+                  {Object.entries(interval?.interval_tags || {}).map(
+                    ([behavior, count]) => (
+                      <div key={behavior}>
+                        <div>
+                          {behavior}: {count}
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                "None."
+              )}
+            </div>
+          );
+        })}
     </div>
   );
 };
