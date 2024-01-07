@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
 import ChartSlimComponent from "./ChartSlimComponent";
+import ChartComponent from "../ChartComponent/ChartComponent";
 
 const ClientListComponent = () => {
   const dispatch = useDispatch();
@@ -44,15 +45,16 @@ const ClientListComponent = () => {
             })}
         </select>
       </div>
-
+      {clientCharts ? (
+        <ChartComponent clientCharts={clientCharts.Daily_Charts} />
+      ) : (
+        ""
+      )}
       {clientCharts ? (
         clientCharts.Daily_Charts.map((chart) => {
           return (
             <div key={chart.id}>
-              <ChartSlimComponent
-                chart={chart}
-                client={clientList[1]}
-              />
+              <ChartSlimComponent chart={chart} />
             </div>
           );
         })

@@ -3,7 +3,6 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate, NavLink } from "react-router-dom";
 import "./LoginForm.css";
-import SignupFormPage from "../SignupFormPage";
 import { useModal } from "../../context/Modal";
 import SignupFormModal from "../SignupFormModal";
 
