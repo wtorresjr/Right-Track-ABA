@@ -59,7 +59,7 @@ const ClientInfo = ({ client }) => {
             handleClick(client.id, "view");
           }}
         >
-          View Data
+          Client Session Data
         </button>
       </div>
     </div>

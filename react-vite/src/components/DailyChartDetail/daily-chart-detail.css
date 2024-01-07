@@ -20,13 +20,27 @@
   padding: 5px;
 }
 
+.chartDetailHeader {
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  box-sizing: border-box;
+  margin: 20px 0 0 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-flow: column wrap; */
+  gap: 20px;
+  color: white;
+}
 
 .intervalInfoContain {
   border-top: none;
   border-bottom: 8px solid grey;
   border-left: 1px solid grey;
   border-right: 1px solid grey;
-  border-radius:15px;
+  border-radius: 15px;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
