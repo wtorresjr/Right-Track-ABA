@@ -9,7 +9,8 @@ const DiscreetTrials = ({ clientDT }) => {
           return (
             <div key={dt.id}>
               <NavLink
-                to={`/discreet-trial/${dt.id}`}
+                onClick={(e) => alert("Feature coming soon...")}
+                // to={`/discreet-trial/${dt.id}`}
                 className="navLinkStyleDC"
               >
                 <div className="dcButtons">
