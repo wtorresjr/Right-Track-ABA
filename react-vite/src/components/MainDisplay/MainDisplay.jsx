@@ -25,7 +25,7 @@ const MainDisplay = () => {
       /> */}
       <ButtonComponent
         btnText={"View Reports"}
-        scndText={"View"}
+        scndText={"Track Client Progress"}
         btnStyle={"viewReports"}
         btnClass={"button-comp-container btnHover"}
         faAwesomeStyle={"fa-solid fa-chart-column fa-2xl"}
