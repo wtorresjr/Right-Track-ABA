@@ -22,11 +22,12 @@ def get_clients():
 
 # Get client for logged in therapist by client_id
 
+
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
     page = request.args.get("page", default=1, type=int)
-    per_page = request.args.get("per_page", default=5, type=int)
+    per_page = request.args.get("per_page", default=20, type=int)
 
     found_client = (
         Client.query.filter_by(id=client_id)
