@@ -22,6 +22,7 @@ const CreateDailyChart = () => {
 
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
+  const [clientName, setClientName] = useState();
   const dispatch = useDispatch();
 
   const errorCollector = {};
@@ -44,8 +45,21 @@ const CreateDailyChart = () => {
   }, [dispatch, todaysDate]);
 
   useEffect(() => {
+    const nameChanger = clientList?.filter((client) => {
+      return client.id === +selectedClient;
+    });
+    const firstLastName =
+      nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+
+    setClientName(firstLastName);
+  }, [dispatch, selectedClient]);
+
+  useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
+    if (!selectedClient) {
+      setSelectedClient(clientList[0]?.id);
+    }
   }, [dispatch, client_id]);
 
   const handleSubmit = async (e) => {
@@ -71,8 +85,9 @@ const CreateDailyChart = () => {
   return (
     <div className="newChartModal">
       <h1>
-        Create Daily Chart For {currentClient?.first_name}{" "}
-        {currentClient?.last_name}
+        Create Daily Chart For {clientName}
+        {/* {currentClient?.first_name}{" "}
+        {currentClient?.last_name} */}
       </h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {

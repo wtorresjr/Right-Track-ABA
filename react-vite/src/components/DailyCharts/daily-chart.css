@@ -19,6 +19,12 @@
   justify-content: center;
 }
 
+.chartTotalsContain {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+}
+
 .dcButtons {
   border: 1px solid rgb(113, 113, 113);
   padding: 0px 10px;

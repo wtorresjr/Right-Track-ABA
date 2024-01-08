@@ -19,7 +19,7 @@ const ButtonComponent = ({
     <div className={btnClass} id={btnStyle} onClick={handleClick}>
       <div>
         <h2>{btnText}</h2>
-        <h5>{scndText}</h5>
+        <h3>{scndText}</h3>
       </div>
       <i className={faAwesomeStyle} style={{ color: "#ffffff" }}></i>
     </div>
