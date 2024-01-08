@@ -77,9 +77,9 @@ function ProfileButton() {
                   View Reports
                 </NavLink>
               </li>
-              <li className="navLinks" onClick={openCreateChartModal}>
+              {/* <li className="navLinks" onClick={openCreateChartModal}>
                 Create Daily Chart
-              </li>
+              </li> */}
               {/* <li>
                 <NavLink
                   to="/daily-charts"
