@@ -45,20 +45,24 @@
 .newChartMenu #cancelBtn {
   background-color: black;
   color: white;
+  height: 100%;
 }
 
-.newChartMenu #createChartBtn,
-#cancelBtn {
+.newChartMenu #createChartBtn {
   /* width: 20%; */
+  height: 100%;
   cursor: pointer;
   border: none;
   background-color: orange;
   color: wblackhite;
 }
 .newChartMenu #createChartBtn,
-#clientSelector,
 #dateInput,
 #cancelBtn {
   border-radius: 10px;
 }
 
+#clientSelector {
+  height: 100%;
+  border-radius: 10px;
+}
