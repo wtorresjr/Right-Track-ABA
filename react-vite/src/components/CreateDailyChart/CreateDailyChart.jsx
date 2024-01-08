@@ -57,6 +57,9 @@ const CreateDailyChart = () => {
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
+    if (!selectedClient) {
+      setSelectedClient(clientList[0]?.id);
+    }
   }, [dispatch, client_id]);
 
   const handleSubmit = async (e) => {
