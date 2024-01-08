@@ -18,7 +18,7 @@ const UpdateDailyChart = ({ dc }) => {
   const [todaysDate, setTodaysDate] = useState(dc?.chart_date);
   const [newChartCompleted, setNewChartCompleted] = useState(null);
   const [errors, setErrors] = useState({});
-
+  const [clientName, setClientName] = useState();
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const dispatch = useDispatch();
@@ -47,6 +47,16 @@ const UpdateDailyChart = ({ dc }) => {
       setIsDisabled(true);
     }
   }, [dispatch, todaysDate]);
+
+  useEffect(() => {
+    const nameChanger = clientList?.filter((client) => {
+      return client.id === +selectedClient;
+    });
+    const firstLastName =
+      nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+
+    setClientName(firstLastName);
+  }, [dispatch, selectedClient]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,10 +87,7 @@ const UpdateDailyChart = ({ dc }) => {
 
   return (
     <div className="newChartModal">
-      <h1>
-        Update Daily Chart For {currentClient?.first_name}{" "}
-        {currentClient?.last_name}
-      </h1>
+      <h1>Update Daily Chart For {clientName}</h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
           return (

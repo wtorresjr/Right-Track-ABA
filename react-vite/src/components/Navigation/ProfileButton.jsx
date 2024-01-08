@@ -5,12 +5,20 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { useModal } from "../../context/Modal";
+import { CreateDailyChart } from "../CreateDailyChart";
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+
+  const { setModalContent } = useModal();
+
+  const openCreateChartModal = () => {
+    setModalContent(<CreateDailyChart />);
+  };
 
   const toggleMenu = (e) => {
     e.stopPropagation();
@@ -69,7 +77,10 @@ function ProfileButton() {
                   View Reports
                 </NavLink>
               </li>
-              <li>
+              <li className="navLinks" onClick={openCreateChartModal}>
+                Create Daily Chart
+              </li>
+              {/* <li>
                 <NavLink
                   to="/daily-charts"
                   className="navLinks"
@@ -77,8 +88,8 @@ function ProfileButton() {
                 >
                   Daily Charts
                 </NavLink>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <NavLink
                   to="/discreet-trials"
                   className="navLinks"
@@ -86,7 +97,7 @@ function ProfileButton() {
                 >
                   Discreet Trials
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <button onClick={logout} className="logoutBtn">
                   Log Out

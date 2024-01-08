@@ -47,12 +47,11 @@ const DailyCharts = ({ clientCharts }) => {
   const openUpdateChartModal = (dc) => {
     setModalContent(<UpdateDailyChart dc={dc} />);
   };
-  
+
   let dayColorRating;
-  
+
   return (
     <div className="chartsContain">
-
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
@@ -66,11 +65,17 @@ const DailyCharts = ({ clientCharts }) => {
 
       <input
         type="text"
-        placeholder="Search Daily Charts (By Date or Interval Tags)"
+        placeholder="Search Daily Charts (By Date)"
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
-      
+      <div className="chartTotalsContain">
+        {/* <h2>Total Charts: {clientCharts.Num_Of_Charts}</h2> */}
+        <h2>
+          Total Charts: {filteredCharts.length}
+          {searchFilter ? " (Filtered)" : ""}
+        </h2>
+      </div>
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {
@@ -78,7 +83,7 @@ const DailyCharts = ({ clientCharts }) => {
             {
               dc?.chart_complete === false ? (dayColorRating = "white") : null;
             }
-            
+
             return (
               <div key={dc?.id} className="clientDCdata">
                 <Link to={`/daily-chart/${dc?.id}`} className="navLinkStyleDC">
@@ -87,7 +92,7 @@ const DailyCharts = ({ clientCharts }) => {
                     style={{
                       border: `5px solid ${dayColorRating}`,
                     }}
-                    >
+                  >
                     <div className="folderText">
                       <p>
                         <label>Date: {dc?.chart_date}</label>
@@ -103,14 +108,14 @@ const DailyCharts = ({ clientCharts }) => {
                     onClick={() => {
                       openUpdateChartModal(dc);
                     }}
-                    >
+                  >
                     Edit Chart
                   </button>
                   <button
                     onClick={() => {
                       openDeleteModal(dc);
                     }}
-                    >
+                  >
                     Delete Chart
                   </button>
                 </div>
