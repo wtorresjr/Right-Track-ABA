@@ -52,7 +52,7 @@ const CreateDailyChart = () => {
       nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
 
     setClientName(firstLastName);
-  }, [dispatch, selectedClient]);
+  }, [dispatch, selectedClient, clientList]);
 
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
