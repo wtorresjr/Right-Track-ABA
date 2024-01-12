@@ -26,7 +26,7 @@ const UpdateDailyChart = ({ dc }) => {
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
-  }, [dispatch, client_id]);
+  }, [client_id]);
 
   const errorCollector = {};
   useEffect(() => {
@@ -48,15 +48,29 @@ const UpdateDailyChart = ({ dc }) => {
     }
   }, [dispatch, todaysDate]);
 
+  // useEffect(() => {
+  //   const nameChanger = clientList?.filter((client) => {
+  //     return client.id === +selectedClient;
+  //   });
+  //   const firstLastName =
+  //     nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+
+  //   setClientName(firstLastName);
+  // }, [dispatch, selectedClient]);
+
   useEffect(() => {
     const nameChanger = clientList?.filter((client) => {
       return client.id === +selectedClient;
     });
     const firstLastName =
-      nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+      nameChanger?.length > 0
+        ? `${nameChanger[0]?.first_name} ${nameChanger[0]?.last_name}`
+        : "";
 
     setClientName(firstLastName);
   }, [dispatch, selectedClient]);
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
