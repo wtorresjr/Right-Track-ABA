@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
 import { useModal } from "../../context/Modal";
@@ -6,11 +6,32 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getClientByIDThunk } from "../../redux/clients";
 
 const DailyCharts = ({ clientCharts }) => {
+  const dispatch = useDispatch();
+  const { client_id } = useParams();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
+
+  useEffect(() => {
+    const checkIfRefreshed = async () => {
+      if (!clientCharts?.length) {
+        console.log("Page refreshed clientCharts does not exist.");
+        console.log("Client ID->", client_id);
+        const getTheCharts = await dispatch(getClientByIDThunk(client_id));
+        if (getTheCharts) {
+          
+        }
+      }
+      if (clientCharts?.length) {
+        console.log("Client Charts populated");
+      }
+    };
+    checkIfRefreshed();
+  }, []);
 
   useEffect(() => {
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>

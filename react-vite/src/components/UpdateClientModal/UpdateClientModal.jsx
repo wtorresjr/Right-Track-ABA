@@ -55,9 +55,6 @@ const UpdateClientModal = ({ client }) => {
     const selectedDate = new Date(dob);
     selectedDate.setHours(12, 0, 0, 0);
 
-    console.log(today.getTime(), "Todays Date");
-    console.log(selectedDate.getTime(), "Selected DOB");
-
     if (selectedDate.getTime() >= today.getTime()) {
       errorCollector.dobTooGreat = "DOB cannot be todays date or a future date";
     }
