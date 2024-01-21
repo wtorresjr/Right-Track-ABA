@@ -40,6 +40,8 @@ def get_client_by_id(client_id):
 
     valid_client = found_client.to_dict()
 
+    all_chart_avg_totals = 0
+
     if valid_client["therapist_id"] == current_user.id:
         daily_charts = []
 
@@ -67,6 +69,8 @@ def get_client_by_id(client_id):
 
             chart_dict["avgForChart"] = round(avg_rating, 2)
 
+            all_chart_avg_totals += chart_dict["avgForChart"]
+
             daily_charts.append(chart_dict)
 
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
@@ -80,6 +84,9 @@ def get_client_by_id(client_id):
             for incChart in found_client.daily_charts
             if not incChart.chart_complete
         ]
+        valid_client["All_Charts_Avg"] = round(
+            all_chart_avg_totals / valid_client["Num_Of_Charts"], 2
+        )
 
         return jsonify(valid_client)
 
