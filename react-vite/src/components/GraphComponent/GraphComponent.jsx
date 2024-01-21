@@ -3,7 +3,7 @@ import { Line, Bar, Scatter, Pie } from "react-chartjs-2";
 import "./graph-component.css";
 import { useEffect, useState } from "react";
 
-const GraphComponent = ({ clientCharts, chartType, chartDataPoint }) => {
+const GraphComponent = ({ clientCharts, chartType, chartDataPoint, selectedClient }) => {
   const [chartData, setChartData] = useState();
 
   useEffect(() => {
@@ -11,11 +11,21 @@ const GraphComponent = ({ clientCharts, chartType, chartDataPoint }) => {
       setChartData(clientCharts);
     }
     if (chartDataPoint === "PB") {
+      // console.log(clientCharts, "Selected BP Client Charts");
+      const intervalData = [];
+      clientCharts?.map((chart) => {
+        chart["intervals"].map((intervalTags) => {
+          console.log(intervalTags);
+          // intervalTags.push(intervalTags);
+        });
 
+        intervalData;
+      });
     }
     if (chartDataPoint === "BD") {
     }
-  }, [chartDataPoint]);
+    return;
+  }, [chartDataPoint, selectedClient]);
 
   const options = {
     scales: {

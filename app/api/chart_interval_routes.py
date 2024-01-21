@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
 from app.models import Interval
 from datetime import time, datetime
+from sqlalchemy.orm import joinedload
 
 chart_interval_bp = Blueprint("interval", __name__)
 
@@ -18,10 +19,16 @@ def get_interval_by_id(interval_id):
     if not found_interval:
         return jsonify({"message": f"No interval by ID {interval_id} found."}), 404
 
-    the_interval = found_interval.to_dict()
+    # Ensure that the 'chart' relationship is loaded
+    found_interval = Interval.query.options(joinedload("chart")).get(interval_id)
 
-    if the_interval["therapist_id"] == current_user.id:
-        return jsonify({"Interval": found_interval.to_dict()}), 200
+    if found_interval.chart.therapist_id == current_user.id:
+        the_interval = found_interval.to_dict()
+
+        # Include client_id in the response
+        the_interval["client_id"] = found_interval.chart.client_id
+
+        return jsonify({"Interval": the_interval}), 200
 
     return (
         jsonify(
