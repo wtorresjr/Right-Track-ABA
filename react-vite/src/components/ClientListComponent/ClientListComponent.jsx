@@ -129,6 +129,7 @@ const ClientListComponent = () => {
               filteredCharts ? filteredCharts : clientCharts?.Daily_Charts
             }
             chartDataPoint={chartDataPoint}
+            selectedClient={selectedClient}
           />
         </div>
       ) : (
