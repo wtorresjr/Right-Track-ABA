@@ -139,8 +139,7 @@
 
 // export default DailyCharts;
 
-
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
 import { useModal } from "../../context/Modal";
@@ -148,12 +147,12 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getClientByIDThunk } from "../../redux/clients";
+// import { useDispatch } from "react-redux";
+// import { getClientByIDThunk } from "../../redux/clients";
 
 const DailyCharts = ({ clientCharts }) => {
-  const dispatch = useDispatch();
-  const { client_id } = useParams();
+  // const dispatch = useDispatch();
+  // const { client_id } = useParams();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
@@ -213,6 +212,9 @@ const DailyCharts = ({ clientCharts }) => {
         <h2>
           Total Charts: {filteredCharts.length}
           {searchFilter ? " (Filtered)" : ""}
+        </h2>
+        <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
+          Avg For All Charts: {clientCharts?.All_Charts_Avg}
         </h2>
       </div>
       <div className="chartsContain">
