@@ -43,6 +43,4 @@ class Interval(db.Model, UserMixin):
             "therapist_id": self.therapist_id,
             "chart_id": self.chart_id,
         }
-        if include_client_id:
-            data["client_id"] = self.chart.client_id if self.chart else None
-        return data
+

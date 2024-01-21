@@ -27,6 +27,7 @@ def get_interval_by_id(interval_id):
 
         # Include client_id in the response
         the_interval["client_id"] = found_interval.chart.client_id
+        the_interval["chart_date"] = found_interval.chart.chart_date
 
         return jsonify({"Interval": the_interval}), 200
 
