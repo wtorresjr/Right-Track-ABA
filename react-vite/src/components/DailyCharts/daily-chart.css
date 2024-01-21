@@ -19,6 +19,20 @@
   justify-content: center;
 }
 
+.chartCrudBtns button {
+  background-color: black;
+  color: white;
+  height: 30px;
+  border: 1px solid rgb(136, 136, 136);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.chartCrudBtns button:hover {
+  background-color: white;
+  color: black;
+}
+
 .chartTotalsContain {
   display: flex;
   flex-flow: row wrap;
@@ -101,4 +115,9 @@
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+}
+
+#createNewChartBtn:hover {
+  background-color: black;
+  color: white;
 }
