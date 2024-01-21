@@ -4,4 +4,10 @@
   height: 40px;
   border: 1px solid grey;
   border-radius: 10px;
+  width: 40%;
+}
+
+.addGraphButton {
+  display: flex;
+  justify-content: center;
 }

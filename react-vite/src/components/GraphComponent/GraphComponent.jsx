@@ -4,6 +4,10 @@ import "./graph-component.css";
 import { useState } from "react";
 
 const GraphComponent = ({ clientCharts, chartType }) => {
+
+
+  
+
   console.log(clientCharts);
   const options = {
     scales: {
