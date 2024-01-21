@@ -19,9 +19,12 @@
 
 .custom-tooltip {
   background-color: black;
-  padding: 3px;
+  padding: 5px;
   border: 1px solid white;
   border-radius: 5px;
+  display: flex;
+  flex-flow: column wrap;
+  width: 150px;
 }
 
 .chartContain {

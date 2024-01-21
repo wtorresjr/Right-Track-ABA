@@ -47,9 +47,9 @@ const GraphComponent = ({
     // }
   }, [chartDataPoint, selectedClient, clientCharts]);
 
-  if (chartData) {
-    console.log(chartData, "<-----Chart Data for PB");
-  }
+  // if (chartData) {
+  //   console.log(chartData, "<-----Chart Data for PB");
+  // }
 
   let ChartComponent;
   let ChartElement;
@@ -66,6 +66,7 @@ const GraphComponent = ({
               {entry.name}: {entry.value}
             </div>
           ))}
+          <p>Click data point to view chart.</p>
         </div>
       );
     }
@@ -111,9 +112,7 @@ const GraphComponent = ({
         <ChartComponent
           data={chartData}
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
-          onClick={(data, activeIndex) =>
-            handleClick(data, activeIndex, chartData[activeIndex]?.id)
-          }
+          onClick={(data) => handleClick(data)}
         >
           <ChartElement
             fill={fillType}
@@ -128,7 +127,7 @@ const GraphComponent = ({
             stroke="red"
             name="Interval Count"
           />
-          <CartesianGrid stroke="#ccc" strokeDasharray={(2, 2)} />
+          <CartesianGrid stroke="#eee" strokeDasharray={(2, 2)} />
           <XAxis
             dataKey="chart_date"
             reversed={true}
@@ -138,6 +137,7 @@ const GraphComponent = ({
             domain={["0", "auto"]}
             interval="preserveStartEnd"
             ticks={[0, 5, 10, 15, 20]}
+            tickCount={20}
           />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
