@@ -8,6 +8,7 @@ import {
   BarChart,
   Bar,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import "./graph-component.css";
 import { useEffect, useState } from "react";
@@ -51,6 +52,24 @@ const GraphComponent = ({
   let ChartComponent;
   let ChartElement;
   let fillType;
+  let fillType2;
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          Date: {label}
+          {payload.map((entry, index) => (
+            <div key={index} style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   switch (chartType) {
     case "Line":
@@ -61,27 +80,49 @@ const GraphComponent = ({
     case "Bar":
       ChartComponent = BarChart;
       ChartElement = Bar;
-      fillType = "blue";
+      fillType = "lightblue";
+      fillType2 = "red";
       break;
     default:
       ChartComponent = LineChart;
       ChartElement = Line;
       fillType = "white";
+      fillType2 = "red";
   }
 
   return (
     <div className="chartContain">
       <ResponsiveContainer width="100%" height={400}>
-        <ChartComponent data={chartData}>
+        <ChartComponent
+          data={chartData}
+          margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
+        >
           <ChartElement
-            // type="monotone"
             fill={fillType}
             dataKey="avgForChart"
+            strokeWidth={3}
+            name="Chart Avg"
+          />
+          <ChartElement
+            fill={fillType2}
+            dataKey="interval_count"
+            strokeWidth={3}
+            stroke="red"
+            name="Interval Count"
           />
           <CartesianGrid stroke="#ccc" strokeDasharray={(2, 2)} />
-          <XAxis dataKey="chart_date" reversed={true} />
-          <YAxis domain={[0, 5]} ticks={[0, 1, 2, 3, 4, 5]} />
-          <Tooltip />
+          <XAxis
+            dataKey="chart_date"
+            reversed={true}
+            interval={"preserveStartEnd"}
+          />
+          <YAxis
+            domain={["0", "auto"]}
+            interval="preserveStartEnd"
+            ticks={[0, 5, 10, 15, 20]}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
         </ChartComponent>
       </ResponsiveContainer>
     </div>
