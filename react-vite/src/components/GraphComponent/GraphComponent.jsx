@@ -55,7 +55,7 @@ const GraphComponent = ({ clientCharts, chartType }) => {
             },
           ],
         }}
-        options={options}
+        options={options} 
       />
     </div>
   );
