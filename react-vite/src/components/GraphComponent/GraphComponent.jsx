@@ -9,28 +9,59 @@ const GraphComponent = ({
   chartDataPoint,
   selectedClient,
 }) => {
-  const [chartData, setChartData] = useState();
+  const [chartData, setChartData] = useState({});
 
   useEffect(() => {
     if (chartDataPoint === "AVG") {
-      setChartData(clientCharts);
+      const chartAvgs = clientCharts
+        ?.map((chart) => chart.avgForChart)
+        .reverse();
+      const chartDates = clientCharts
+        ?.map((chart) => chart.chart_date)
+        .reverse();
+      setChartData({ avgs: chartAvgs, dates: chartDates });
     }
-    if (chartDataPoint === "PB") {
-      console.log(clientCharts, "Selected BP Client Charts");
-      // const intervalData = [];
-      // clientCharts?.map((chart) => {
-      //   chart["intervals"].map((intervalTags) => {
-      //     console.log(intervalTags);
-      //     // intervalTags.push(intervalTags);
-      //   });
 
-      //   intervalData;
-      // });
+    if (chartDataPoint === "PB") {
+      const pbChartData = {
+        labels: clientCharts
+          ?.flatMap((chart) =>
+            chart.intervals.map((interval) => interval.activity)
+          )
+          .reverse(),
+        datasets: Object.keys(
+          clientCharts
+            ?.flatMap((chart) =>
+              chart.intervals.map((interval) => interval.interval_tags)
+            )
+            .reduce((acc, tags) => {
+              Object.keys(tags).forEach((tag) => {
+                acc[tag] = true;
+              });
+              return acc;
+            }, {})
+        ).map((tag) => ({
+          label: tag,
+          data: clientCharts
+            ?.flatMap((chart) =>
+              chart.intervals.map((interval) =>
+                interval.interval_tags[tag] !== undefined
+                  ? interval.interval_tags[tag]
+                  : 0
+              )
+            )
+            .reduce((acc, values) => acc.concat(values), []) // Flatten nested arrays
+            .map((value) => ({ y: value })) // Wrap each value in an object to meet Chart.js expectations
+            .reverse(),
+        })),
+      };
+
+      setChartData(pbChartData);
     }
+
     if (chartDataPoint === "BD") {
     }
-    return;
-  }, [chartDataPoint, selectedClient]);
+  }, [chartDataPoint, selectedClient, clientCharts]);
 
   const options = {
     scales: {
@@ -70,20 +101,41 @@ const GraphComponent = ({
 
   return (
     <div className="chartContain">
-      <ChartComponent
-        data={{
-          labels: chartData?.map((chart) => chart.chart_date).reverse(),
-          datasets: [
-            {
-              label: "Chart Avg",
-              data: chartData
-                ?.map((chartAvg) => chartAvg.avgForChart)
-                .reverse(),
-            },
-          ],
-        }}
-        options={options}
-      />
+      {chartDataPoint === "AVG" ? (
+        <ChartComponent
+          data={{
+            labels: chartData["dates"],
+            datasets: [
+              {
+                label: "Chart Avg",
+                data: chartData["avgs"],
+              },
+            ],
+          }}
+          options={options}
+        />
+      ) : (
+        ""
+      )}{" "}
+      {chartDataPoint === "PB" ? (
+        <ChartComponent
+          data={{
+            labels: chartData["activity"],
+            // ?.map((chart) => chart.activity).reverse(),
+            datasets: [
+              {
+                label: "Interval Avg",
+                data: chartData["interval_tags"],
+                // ?.map((interval) => interval.interval_tags)
+                // .reverse(),
+              },
+            ],
+          }}
+          options={options}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
