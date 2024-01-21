@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import "./graph-component.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GraphComponent = ({
   clientCharts,
@@ -20,6 +21,7 @@ const GraphComponent = ({
   selectedClient,
 }) => {
   const [chartData, setChartData] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chartDataPoint === "AVG") {
@@ -90,12 +92,28 @@ const GraphComponent = ({
       fillType2 = "red";
   }
 
+  const handleClick = (data) => {
+    if (data.activePayload) {
+      const chartId = data.activePayload[0].payload.id;
+      const newWindow = window.open(`/daily-chart/${chartId}`, "_blank");
+      if (newWindow) {
+        newWindow.focus();
+      } else {
+        console.error("Unable to open new window.");
+      }
+      return;
+    }
+  };
+
   return (
     <div className="chartContain">
       <ResponsiveContainer width="100%" height={400}>
         <ChartComponent
           data={chartData}
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
+          onClick={(data, activeIndex) =>
+            handleClick(data, activeIndex, chartData[activeIndex]?.id)
+          }
         >
           <ChartElement
             fill={fillType}
