@@ -121,18 +121,15 @@ const ClientListComponent = () => {
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button>
         </div>
       </div>{" "}
-      {selectedClient && chartDataPoint === "AVG" ? (
+      {selectedClient && chartDataPoint && clientCharts ? (
         <div className="chartDisplayArea">
           <GraphComponent
             chartType={selectedChartType}
             clientCharts={
-              filteredCharts ? filteredCharts : clientCharts.Daily_Charts
+              filteredCharts ? filteredCharts : clientCharts?.Daily_Charts
             }
+            chartDataPoint={chartDataPoint}
           />
-        </div>
-      ) : selectedClient && chartDataPoint === "PB" ? (
-        <div className="chartDisplayArea">
-          <h1>Problem Behaviors</h1>
         </div>
       ) : (
         <div className="chartDisplayArea">

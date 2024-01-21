@@ -1,14 +1,22 @@
 import Chart, { Chart as ChartJS } from "chart.js/auto";
 import { Line, Bar, Scatter, Pie } from "react-chartjs-2";
 import "./graph-component.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const GraphComponent = ({ clientCharts, chartType }) => {
+const GraphComponent = ({ clientCharts, chartType, chartDataPoint }) => {
+  const [chartData, setChartData] = useState();
 
+  useEffect(() => {
+    if (chartDataPoint === "AVG") {
+      setChartData(clientCharts);
+    }
+    if (chartDataPoint === "PB") {
 
-  
+    }
+    if (chartDataPoint === "BD") {
+    }
+  }, [chartDataPoint]);
 
-  console.log(clientCharts);
   const options = {
     scales: {
       y: {
@@ -49,17 +57,17 @@ const GraphComponent = ({ clientCharts, chartType }) => {
     <div className="chartContain">
       <ChartComponent
         data={{
-          labels: clientCharts?.map((chart) => chart.chart_date).reverse(),
+          labels: chartData?.map((chart) => chart.chart_date).reverse(),
           datasets: [
             {
               label: "Chart Avg",
-              data: clientCharts
+              data: chartData
                 ?.map((chartAvg) => chartAvg.avgForChart)
                 .reverse(),
             },
           ],
         }}
-        options={options} 
+        options={options}
       />
     </div>
   );
