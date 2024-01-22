@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import "./graph-component.css";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import returnColor from "../helpers/returnColor";
 
 const GraphComponent = ({
   clientCharts,
@@ -21,40 +21,52 @@ const GraphComponent = ({
   selectedClient,
 }) => {
   const [chartData, setChartData] = useState({});
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    if (chartDataPoint === "AVG") {
-      setChartData(clientCharts);
-    }
-
-    // if (chartDataPoint === "PB") {
-    //   const pbChartData = {
-    //     labels: clientCharts
-    //       ?.map((chart) => chart.intervals.map((interval) => interval.activity))
-    //       .reverse(),
-    //     datasets: clientCharts
-    //       ?.map((chart) =>
-    //         chart.intervals.map((interval) => interval.interval_rating)
-    //       )
-    //       .reverse(),
-    //   };
-
-    //   setChartData(pbChartData);
-    // }
-
-    // if (chartDataPoint === "BD") {
-    // }
-  }, [chartDataPoint, selectedClient, clientCharts]);
-
-  // if (chartData) {
-  //   console.log(chartData, "<-----Chart Data for PB");
-  // }
+  // const [pbehaviorsLabels, setPbehaviorsLabels] = useState();
+  // const [pbehaviorData, setPbehaviorData] = useState();
 
   let ChartComponent;
   let ChartElement;
   let fillType;
   let fillType2;
+  let dataPt1;
+  let dataPt2;
+  let dataPtLabels;
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    if (chartDataPoint === "AVG") {
+      dataPt1 = "avgForChart";
+      dataPt2 = "interval_count";
+      dataPtLabels = "chart_date";
+      setChartData(clientCharts);
+    }
+
+    if (chartDataPoint === "PB") {
+      console.log("Client Charts", clientCharts);
+      const pbChartData = clientCharts?.map((chart) => chart.chart_date);
+      if (pbChartData) {
+        dataPtLabels = pbChartData;
+        dataPt1 = pbChartData;
+        console.log("CHart Dates", pbChartData);
+        setPbehaviorData(clientCharts);
+        setPbehaviorsLabels(dataPtLabels);
+      }
+    }
+
+    // if (chartDataPoint === "BD") {
+    // }
+  }, [
+    chartDataPoint,
+    selectedClient,
+    clientCharts,
+    dataPt1,
+    dataPt2,
+    dataPtLabels,
+  ]);
+
+  if (dataPtLabels) {
+    console.log(dataPtLabels, "<-----Chart Data for PB");
+  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -62,7 +74,7 @@ const GraphComponent = ({
         <div className="custom-tooltip">
           Date: {label}
           {payload.map((entry, index) => (
-            <div key={index} style={{ color: entry.color }}>
+            <div key={index} style={{ color: `${returnColor(entry.value)}` }}>
               {entry.name}: {entry.value}
             </div>
           ))}
@@ -91,6 +103,9 @@ const GraphComponent = ({
       ChartElement = Line;
       fillType = "white";
       fillType2 = "red";
+      dataPt1 = "avgForChart";
+      dataPt2 = "interval_count";
+      dataPtLabels = "chart_date";
   }
 
   const handleClick = (data) => {
@@ -109,6 +124,7 @@ const GraphComponent = ({
   return (
     <div className="chartContain">
       <ResponsiveContainer width="100%" height={400}>
+        
         <ChartComponent
           data={chartData}
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
@@ -116,20 +132,20 @@ const GraphComponent = ({
         >
           <ChartElement
             fill={fillType}
-            dataKey="avgForChart"
+            dataKey={dataPt1}
             strokeWidth={3}
             name="Chart Avg"
           />
           <ChartElement
             fill={fillType2}
-            dataKey="interval_count"
+            dataKey={dataPt2}
             strokeWidth={3}
             stroke="red"
             name="Interval Count"
           />
           <CartesianGrid stroke="#eee" strokeDasharray={(2, 2)} />
           <XAxis
-            dataKey="chart_date"
+            dataKey={dataPtLabels}
             reversed={true}
             interval={"preserveStartEnd"}
           />
@@ -137,7 +153,6 @@ const GraphComponent = ({
             domain={["0", "auto"]}
             interval="preserveStartEnd"
             ticks={[0, 5, 10, 15, 20]}
-            tickCount={20}
           />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
