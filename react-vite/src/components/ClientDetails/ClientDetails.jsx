@@ -51,7 +51,7 @@ const ClientDetails = () => {
 
   return (
     <>
-      {loaded ? (
+      {loaded && client ? (
         <div className="mainDisplayContain" id="clientDetails">
           <h1>
             {client?.last_name}, {client?.first_name}

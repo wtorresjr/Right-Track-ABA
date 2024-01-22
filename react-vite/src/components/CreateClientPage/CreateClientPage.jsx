@@ -19,53 +19,53 @@ const CreateClient = () => {
   const [errors, setErrors] = useState({});
 
   const errorCollector = {};
- useEffect(() => {
-   const lN = lastName.trimStart();
-   const fN = firstName.trimStart();
-   const capLastName = lN.charAt(0).toUpperCase() + lN.slice(1);
-   const capFirstName = fN.charAt(0).toUpperCase() + fN.slice(1);
-   const emailTrim = guardianEmail.trim();
-   const trimStartNotes = clientNotes.trimStart();
+  useEffect(() => {
+    const lN = lastName.trimStart();
+    const fN = firstName.trimStart();
+    const capLastName = lN.charAt(0).toUpperCase() + lN.slice(1);
+    const capFirstName = fN.charAt(0).toUpperCase() + fN.slice(1);
+    const emailTrim = guardianEmail.trim();
+    const trimStartNotes = clientNotes.trimStart();
 
-   setFirstName(capFirstName);
-   setLastName(capLastName);
-   setGuardianEmail(emailTrim);
-   setClientNotes(trimStartNotes);
+    setFirstName(capFirstName);
+    setLastName(capLastName);
+    setGuardianEmail(emailTrim);
+    setClientNotes(trimStartNotes);
 
-   if (!firstName.length || firstName.length < 2 || firstName.length > 30) {
-     errorCollector.firstName =
-       "First name must be between 2 and 30 characters";
-   }
-   if (!lastName.length || lastName.length < 2 || lastName.length > 35) {
-     errorCollector.lastName = "Last name must be between 2 and 35 characters";
-   }
-   if (!guardianEmail.match(emailRegex) || guardianEmail.trim() === "") {
-     errorCollector.guardianEmail = "Invalid email address";
-   }
-   if (!dob.length) {
-     errorCollector.dob = "Date of birth is required";
-   }
+    if (!firstName.length || firstName.length < 2 || firstName.length > 30) {
+      errorCollector.firstName =
+        "First name must be between 2 and 30 characters";
+    }
+    if (!lastName.length || lastName.length < 2 || lastName.length > 35) {
+      errorCollector.lastName = "Last name must be between 2 and 35 characters";
+    }
+    if (!guardianEmail.match(emailRegex) || guardianEmail.trim() === "") {
+      errorCollector.guardianEmail = "Invalid email address";
+    }
+    if (!dob.length) {
+      errorCollector.dob = "Date of birth is required";
+    }
 
-   const today = new Date();
-   today.setHours(-12, 0, 0, 0);
-   const selectedDate = new Date(dob);
-   selectedDate.setHours(12, 0, 0, 0);
+    const today = new Date();
+    today.setHours(-12, 0, 0, 0);
+    const selectedDate = new Date(dob);
+    selectedDate.setHours(12, 0, 0, 0);
 
-   if (selectedDate.getTime() >= today.getTime()) {
-     errorCollector.dobTooGreat = "DOB cannot be todays date or a future date";
-   }
+    if (selectedDate.getTime() >= today.getTime()) {
+      errorCollector.dobTooGreat = "DOB cannot be todays date or a future date";
+    }
 
-   setErrors(errorCollector);
-   if (Object.keys(errorCollector).length > 0) {
-     setIsDisabled(true);
-   } else {
-     setIsDisabled(false);
-   }
- }, [dispatch, firstName, lastName, guardianEmail, dob, clientNotes]);
+    setErrors(errorCollector);
+    if (Object.keys(errorCollector).length > 0) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [dispatch, firstName, lastName, guardianEmail, dob, clientNotes]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Clicked Submit");
+    // console.log("Clicked Submit");
     const newClient = {
       first_name: firstName,
       last_name: lastName,
@@ -75,7 +75,7 @@ const CreateClient = () => {
     };
 
     const newClientCreate = await dispatch(createNewClientThunk(newClient));
-    if (newClientCreate) {
+    if (newClientCreate.ok) {
       navigate(`/client/${newClientCreate.id}`);
       closeModal();
     } else {
