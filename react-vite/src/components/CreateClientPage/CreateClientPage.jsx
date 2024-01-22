@@ -75,7 +75,7 @@ const CreateClient = () => {
     };
 
     const newClientCreate = await dispatch(createNewClientThunk(newClient));
-    if (newClientCreate.ok) {
+    if (newClientCreate) {
       navigate(`/client/${newClientCreate.id}`);
       closeModal();
     } else {
