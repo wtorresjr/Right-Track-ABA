@@ -50,7 +50,7 @@ const ClientListComponent = () => {
     <div className="chartView">
       <div className="chartOptions">
         <label>
-          Clients:
+          Client:
           <select
             id="dcClientSelect"
             onChange={(e) => setSelectedClient(e.target.value)}
@@ -75,8 +75,8 @@ const ClientListComponent = () => {
           >
             <option>Choose Data Points</option>
             <option value="AVG">Average Chart Rating</option>
-            {/* <option value="PB">Problem Behaviors</option> */}
-            {/* <option value="BD">Behavior Duration</option> */}
+            {/* <option value="PB">Problem Behaviors</option>
+            <option value="BD">Behavior Duration</option> */}
             {selectedClient ? "Loaded selected client" : "Not Loaded"}
           </select>
         </label>
@@ -121,13 +121,15 @@ const ClientListComponent = () => {
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button>
         </div>
       </div>{" "}
-      {selectedClient && chartDataPoint === "AVG" ? (
+      {selectedClient && chartDataPoint && clientCharts ? (
         <div className="chartDisplayArea">
           <GraphComponent
             chartType={selectedChartType}
             clientCharts={
-              filteredCharts ? filteredCharts : clientCharts.Daily_Charts
+              filteredCharts ? filteredCharts : clientCharts?.Daily_Charts
             }
+            chartDataPoint={chartDataPoint}
+            selectedClient={selectedClient}
           />
         </div>
       ) : (

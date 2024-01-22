@@ -1,12 +1,27 @@
-import "./daily-chart-all.css";
+import React, { useState } from "react";
+import "./report-viewer.css";
 import { ClientListComponent } from "../ClientListComponent";
 
 const ReportViewer = () => {
+  const [graphComponents, setGraphComponents] = useState([]);
+
+  const addGraph = () => {
+    setGraphComponents((prevGraphs) => [
+      ...prevGraphs,
+      <ClientListComponent key={prevGraphs.length} />,
+    ]);
+  };
+
   return (
     <div className="mainDisplayContain">
       <h1>Report Viewer</h1>
+      <div className="addGraphButton">
+        <button onClick={addGraph}>Add New Graph</button>
+      </div>
 
-      <ClientListComponent />
+      {graphComponents.map((graph, index) => (
+        <div key={index}>{graph}</div>
+      ))}
     </div>
   );
 };

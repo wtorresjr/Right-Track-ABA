@@ -71,6 +71,11 @@
   padding: 0 20px;
 }
 
+#addNewClientBtn:hover {
+  background-color: black;
+  color: white;
+}
+
 #delBtn:hover,
 #editBtn:hover,
 #viewBtn:hover {
