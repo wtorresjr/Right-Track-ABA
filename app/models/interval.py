@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 
+
 class Interval(db.Model, UserMixin):
     __tablename__ = "intervals"
 
@@ -42,3 +43,4 @@ class Interval(db.Model, UserMixin):
             "therapist_id": self.therapist_id,
             "chart_id": self.chart_id,
         }
+

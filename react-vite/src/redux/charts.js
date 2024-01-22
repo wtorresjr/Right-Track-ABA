@@ -5,6 +5,18 @@ const COMPLETE_CHART = "charts/completeChart";
 const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
 const GET_ALL_CHARTS = "charts/getAllCharts";
+// const GET_INTERVALS = "charts/getAllIntervals";
+
+// const getIntervals = (clientIntervals) => {
+//   return {
+//     type: GET_INTERVALS,
+//     payload: clientIntervals,
+//   };
+// };
+
+// export const getIntervals = (client_id) => {
+  
+// }
 
 const updateChart = (chartToUpdate) => {
   return {
@@ -12,6 +24,7 @@ const updateChart = (chartToUpdate) => {
     payload: chartToUpdate,
   };
 };
+
 
 export const updateTheChartThunk = (data, chart_id) => async (dispatch) => {
   const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
