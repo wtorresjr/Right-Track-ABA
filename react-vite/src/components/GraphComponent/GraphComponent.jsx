@@ -47,7 +47,7 @@ const GraphComponent = ({
       if (pbChartData) {
         dataPtLabels = pbChartData;
         dataPt1 = pbChartData;
-        console.log("CHart Dates", pbChartData);
+        // console.log("CHart Dates", pbChartData);
         setPbehaviorData(clientCharts);
         setPbehaviorsLabels(dataPtLabels);
       }
@@ -64,9 +64,9 @@ const GraphComponent = ({
     dataPtLabels,
   ]);
 
-  if (dataPtLabels) {
-    console.log(dataPtLabels, "<-----Chart Data for PB");
-  }
+  // if (dataPtLabels) {
+  //   console.log(dataPtLabels, "<-----Chart Data for PB");
+  // }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
