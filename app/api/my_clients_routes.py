@@ -84,9 +84,12 @@ def get_client_by_id(client_id):
             for incChart in found_client.daily_charts
             if not incChart.chart_complete
         ]
-        valid_client["All_Charts_Avg"] = round(
-            all_chart_avg_totals / valid_client["Num_Of_Charts"], 2
-        )
+        if all_chart_avg_totals != 0:
+            valid_client["All_Charts_Avg"] = round(
+                all_chart_avg_totals / valid_client["Num_Of_Charts"], 2
+            )
+        else:
+            valid_client["All_Charts_Avg"] = 0
 
         return jsonify(valid_client)
 
