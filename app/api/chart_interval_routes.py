@@ -53,7 +53,14 @@ def get_intervals_by_client_id(client_id):
         for chart_date, behaviors in behavior_dict.items()
     ]
 
-    return behavior_counts_by_date
+    # Sort the list by chart_date
+    sorted_behavior_counts = sorted(
+        behavior_counts_by_date,
+        key=lambda x: datetime.strptime(x["chart_date"], "%Y-%m-%d"),
+        reverse=True,
+    )
+
+    return jsonify(sorted_behavior_counts)
 
 
 # @chart_interval_bp.route("/<int:client_id>", methods=["GET"])

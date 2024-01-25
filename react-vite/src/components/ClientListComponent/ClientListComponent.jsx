@@ -75,8 +75,8 @@ const ClientListComponent = () => {
           >
             <option>Choose Data Points</option>
             <option value="AVG">Average Chart Rating</option>
-            {/* <option value="PB">Problem Behaviors</option>
-            <option value="BD">Behavior Duration</option> */}
+            <option value="PB">Problem Behaviors</option>
+            <option value="BD">Behavior Duration</option>
             {selectedClient ? "Loaded selected client" : "Not Loaded"}
           </select>
         </label>
