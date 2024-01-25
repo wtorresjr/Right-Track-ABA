@@ -12,7 +12,9 @@ import {
 } from "recharts";
 import "./graph-component.css";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import returnColor from "../helpers/returnColor";
+import { getAllIntervalsThunk } from "../../redux/charts";
 
 const GraphComponent = ({
   clientCharts,
@@ -21,6 +23,7 @@ const GraphComponent = ({
   selectedClient,
 }) => {
   const [chartData, setChartData] = useState({});
+  const dispatch = useDispatch();
   // const [pbehaviorsLabels, setPbehaviorsLabels] = useState();
   // const [pbehaviorData, setPbehaviorData] = useState();
 
@@ -42,19 +45,19 @@ const GraphComponent = ({
     }
 
     if (chartDataPoint === "PB") {
-      console.log("Client Charts", clientCharts);
-      const pbChartData = clientCharts?.map((chart) => chart.chart_date);
-      if (pbChartData) {
-        dataPtLabels = pbChartData;
-        dataPt1 = pbChartData;
-        // console.log("CHart Dates", pbChartData);
-        setPbehaviorData(clientCharts);
-        setPbehaviorsLabels(dataPtLabels);
-      }
+      // console.log(+selectedClient, "Selected Client");
+      const getTheData = async () => {
+        const behaviorData = await dispatch(
+          getAllIntervalsThunk(+selectedClient)
+        );
+        if (behaviorData) {
+          dataPtLabels = "chart_date";
+          setChartData(behaviorData);
+          console.log(behaviorData);
+        }
+      };
+      getTheData();
     }
-
-    // if (chartDataPoint === "BD") {
-    // }
   }, [
     chartDataPoint,
     selectedClient,
@@ -124,7 +127,6 @@ const GraphComponent = ({
   return (
     <div className="chartContain">
       <ResponsiveContainer width="100%" height={400}>
-        
         <ChartComponent
           data={chartData}
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
