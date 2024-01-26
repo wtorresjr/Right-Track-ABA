@@ -186,11 +186,13 @@ const ClientListComponent = () => {
   const [startDay, setStartDay] = useState("");
   const [endDay, setEndDay] = useState("");
   const [filteredCharts, setFilteredCharts] = useState();
+  const [dataPoint, setDataPoint] = useState();
+  const [dataPointTwo, setDataPointTwo] = useState();
+  const [dataLabels, setDataLabels] = useState();
 
   useEffect(() => {
     dispatch(getClientsThunk());
   }, [dispatch]);
-
 
   useEffect(() => {
     if (selectedClient && chartDataPoint && allIntervals) {
@@ -201,6 +203,9 @@ const ClientListComponent = () => {
           );
           if (clientData) {
             setClientCharts(clientData?.payload.Daily_Charts);
+            setDataPoint("avgForChart");
+            setDataPointTwo("interval_count");
+            setDataLabels("chart_date");
           }
         }
         if (chartDataPoint === "PB") {
@@ -210,6 +215,8 @@ const ClientListComponent = () => {
           );
           if (getIntervals) {
             setClientCharts(getIntervals);
+            setDataPoint("behaviors");
+            setDataLabels("chart_date");
           }
         }
       };
@@ -217,7 +224,6 @@ const ClientListComponent = () => {
       findClientCharts(selectedClient);
     }
   }, [selectedClient, chartDataPoint]);
-
 
   useEffect(() => {
     setFilteredCharts();
@@ -264,6 +270,7 @@ const ClientListComponent = () => {
             <option>Choose Data Points</option>
             <option value="AVG">Average Chart Rating</option>
             <option value="PB">Problem Behaviors</option>
+            {/* <option value="PB">Problem Behaviors</option> */}
           </select>
         </label>
 
@@ -311,8 +318,10 @@ const ClientListComponent = () => {
           <GraphComponentV2
             selectedChartType={selectedChartType}
             clientCharts={filteredCharts || clientCharts}
-            chartDataPoint={chartDataPoint}
             selectedClient={selectedClient}
+            dataPoint={dataPoint}
+            dataPointTwo={dataPointTwo || ""}
+            dataLabels={dataLabels}
           />
         </div>
       ) : (
