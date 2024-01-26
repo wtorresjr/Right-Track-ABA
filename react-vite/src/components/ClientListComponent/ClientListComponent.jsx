@@ -105,7 +105,7 @@ const ClientListComponent = () => {
           >
             <option>Choose Data Points</option>
             <option value="AVG">Average Chart Rating</option>
-            <option value="PB">Problem Behaviors</option>
+            {/* <option value="PB">Problem Behaviors</option> */}
             {/* <option value="PB">Problem Behaviors</option> */}
           </select>
         </label>
@@ -143,10 +143,10 @@ const ClientListComponent = () => {
           <label>Chart Type:</label>
           <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
           <button onClick={() => setSelectedChartType("Line")}>Line</button>
-          <button onClick={() => setSelectedChartType("Scatter")}>
+          {/* <button onClick={() => setSelectedChartType("Scatter")}>
             Scatter
           </button>
-          <button onClick={() => setSelectedChartType("Pie")}>Pie</button>
+          <button onClick={() => setSelectedChartType("Pie")}>Pie</button> */}
         </div>
       </div>{" "}
       {selectedClient && chartDataPoint && (filteredCharts || clientCharts) ? (
