@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Interval
+from app.models import Interval, Daily_Chart
 from datetime import time, datetime
 from sqlalchemy.orm import joinedload
 
@@ -10,35 +10,118 @@ chart_interval_bp = Blueprint("interval", __name__)
 
 # Get interval by id
 
+# Get Interval by Client_Id
 
-@chart_interval_bp.route("/<int:interval_id>", methods=["GET"])
+from collections import Counter
+
+
+from collections import defaultdict
+
+
+@chart_interval_bp.route("/<int:client_id>", methods=["GET"])
 @login_required
-def get_interval_by_id(interval_id):
-    found_interval = Interval.query.get(interval_id)
-
-    if not found_interval:
-        return jsonify({"message": f"No interval by ID {interval_id} found."}), 404
-
-    # Ensure that the 'chart' relationship is loaded
-    found_interval = Interval.query.options(joinedload("chart")).get(interval_id)
-
-    if found_interval.chart.therapist_id == current_user.id:
-        the_interval = found_interval.to_dict()
-
-        # Include client_id in the response
-        the_interval["client_id"] = found_interval.chart.client_id
-        the_interval["chart_date"] = found_interval.chart.chart_date
-
-        return jsonify({"Interval": the_interval}), 200
-
-    return (
-        jsonify(
-            {
-                "message": f"Interval ID {interval_id} does not belong to therapist's chart"
-            }
-        ),
-        403,
+def get_intervals_by_client_id(client_id):
+    found_intervals = (
+        Interval.query.join(Daily_Chart)
+        .filter(Daily_Chart.client_id == client_id)
+        .options(joinedload(Interval.chart))
+        .all()
     )
+
+    if not found_intervals:
+        return (
+            jsonify({"message": f"No intervals found for client id: {client_id}"}),
+            404,
+        )
+
+    # Create a defaultdict to store behaviors and their counts for each chart_date
+    behavior_dict = defaultdict(dict)
+
+    for interval in found_intervals:
+        chart_date = interval.chart.chart_date
+        problem_behaviors = interval.interval_tags.items()
+
+        # Update the behavior_dict with the occurrences for chart_date
+        for behavior, value in problem_behaviors:
+            behavior_dict[chart_date][behavior] = (
+                behavior_dict[chart_date].get(behavior, 0) + value
+            )
+
+    # Convert the behavior_dict to a list of dictionaries
+    behavior_counts_by_date = [
+        {"chart_date": chart_date, "behaviors": behaviors}
+        for chart_date, behaviors in behavior_dict.items()
+    ]
+
+    # Sort the list by chart_date
+    sorted_behavior_counts = sorted(
+        behavior_counts_by_date,
+        key=lambda x: datetime.strptime(x["chart_date"], "%Y-%m-%d"),
+        reverse=True,
+    )
+
+    return jsonify(sorted_behavior_counts)
+
+
+# @chart_interval_bp.route("/<int:client_id>", methods=["GET"])
+# @login_required
+# def get_intervals_by_client_id(client_id):
+#     found_intervals = (
+#         Interval.query.join(Daily_Chart)
+#         .filter(Daily_Chart.client_id == client_id)
+#         .options(joinedload(Interval.chart))
+#         .all()
+#     )
+
+#     if not found_intervals:
+#         return (
+#             jsonify({"message": f"No intervals found for client id: {client_id}"}),
+#             404,
+#         )
+
+#     valid_intervals = [
+#         {
+#             "chart_date": interval.chart.chart_date,
+#             "activity": interval.activity,
+#             "problem_behaviors": [
+#                 {"behavior": behavior, "value": value}
+#                 for behavior, value in interval.interval_tags.items()
+#             ],
+#         }
+#         for interval in found_intervals
+#     ]
+
+#     return jsonify(valid_intervals)
+
+
+# @chart_interval_bp.route("/<int:interval_id>", methods=["GET"])
+# @login_required
+# def get_interval_by_id(interval_id):
+#     found_interval = Interval.query.get(interval_id)
+
+#     if not found_interval:
+#         return jsonify({"message": f"No interval by ID {interval_id} found."}), 404
+
+#     # Ensure that the 'chart' relationship is loaded
+#     found_interval = Interval.query.options(joinedload("chart")).get(interval_id)
+
+#     if found_interval.chart.therapist_id == current_user.id:
+#         the_interval = found_interval.to_dict()
+
+#         # Include client_id in the response
+#         the_interval["client_id"] = found_interval.chart.client_id
+#         the_interval["chart_date"] = found_interval.chart.chart_date
+
+#         return jsonify({"Interval": the_interval}), 200
+
+#     return (
+#         jsonify(
+#             {
+#                 "message": f"Interval ID {interval_id} does not belong to therapist's chart"
+#             }
+#         ),
+#         403,
+#     )
 
 
 # Edit an interval by ID

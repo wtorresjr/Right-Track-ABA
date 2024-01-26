@@ -9,70 +9,31 @@ import {
   Bar,
   ResponsiveContainer,
   Legend,
+  ScatterChart,
+  Scatter,
+  PieChart,
+  Pie,
 } from "recharts";
 import "./graph-component.css";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useEffect, useState } from "react";
+// import { useDispatch } from "react-redux";
 import returnColor from "../helpers/returnColor";
-import { getAllIntervalsThunk } from "../../redux/charts";
 
-const GraphComponent = ({
+const GraphComponentV2 = ({
   clientCharts,
-  chartType,
-  chartDataPoint,
-  selectedClient,
+  selectedChartType,
+  // selectedClient,
   dataPoint,
   dataPointTwo,
   dataLabels,
+  legendTitle,
+  legendTitleTwo,
+  chartDataPoint,
 }) => {
-  const [chartData, setChartData] = useState();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   let ChartComponent;
   let ChartElement;
-  let fillType;
-  let fillType2;
-  let dataPt1;
-  let dataPt2;
-  let dataPtLabels;
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    if (chartDataPoint === "AVG") {
-      dataPt1 = "avgForChart";
-      dataPt2 = "interval_count";
-      dataPtLabels = "chart_date";
-      setChartData(clientCharts);
-    }
-
-    if (chartDataPoint === "PB") {
-      // console.log(+selectedClient, "Selected Client");
-      const getTheData = async () => {
-        const behaviorData = await dispatch(
-          getAllIntervalsThunk(+selectedClient)
-        );
-        if (behaviorData) {
-          dataPtLabels = "chart_date";
-          dataPt1 = "behaviors";
-          setChartData(behaviorData);
-          console.log(behaviorData);
-        }
-      };
-      getTheData();
-    }
-  }, [
-    chartDataPoint,
-    selectedClient,
-    clientCharts,
-    dataPt1,
-    dataPt2,
-    dataPtLabels,
-    chartType,
-  ]);
-
-  // if (dataPtLabels) {
-  //   console.log(dataPtLabels, "<-----Chart Data for PB");
-  // }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -92,29 +53,26 @@ const GraphComponent = ({
     return null;
   };
 
-  switch (chartType) {
+  switch (selectedChartType) {
     case "Line":
       ChartComponent = LineChart;
       ChartElement = Line;
-      fillType = "white";
       break;
     case "Bar":
       ChartComponent = BarChart;
       ChartElement = Bar;
-      fillType = "lightblue";
-      fillType2 = "red";
-      dataPt1 = "avgForChart";
-      dataPt2 = "interval_count";
-      dataPtLabels = "chart_date";
+      break;
+    case "Scatter":
+      ChartComponent = ScatterChart;
+      ChartElement = Scatter;
+      break;
+    case "Pie":
+      ChartComponent = PieChart;
+      ChartElement = Pie;
       break;
     default:
       ChartComponent = LineChart;
       ChartElement = Line;
-      fillType = "white";
-      fillType2 = "red";
-      dataPt1 = "avgForChart";
-      dataPt2 = "interval_count";
-      dataPtLabels = "chart_date";
   }
 
   const handleClick = (data) => {
@@ -134,26 +92,40 @@ const GraphComponent = ({
     <div className="chartContain">
       <ResponsiveContainer width="100%" height={400}>
         <ChartComponent
-          data={chartData}
+          data={clientCharts}
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
           onClick={(data) => handleClick(data)}
         >
+          {chartDataPoint === "PB" && ChartComponent !== "PieChart" && (
+            <>
+              {Object.keys(clientCharts[0].behaviors).map((behavior) => (
+                <ChartElement
+                  key={behavior}
+                  dataKey={`${dataPoint}.${behavior}`}
+                  strokeWidth={3}
+                  name={behavior}
+                />
+              ))}
+            </>
+          )}
+
           <ChartElement
-            fill={fillType}
-            dataKey={dataPt1}
+            dataKey={dataPoint}
             strokeWidth={3}
-            name="Chart Avg"
+            name={legendTitle}
+            stroke="lightblue"
+            fill="lightblue"
           />
           <ChartElement
-            fill={fillType2}
-            dataKey={dataPt2}
+            dataKey={dataPointTwo || null}
             strokeWidth={3}
             stroke="red"
-            name="Interval Count"
+            fill="red"
+            name={legendTitleTwo}
           />
           <CartesianGrid stroke="#eee" strokeDasharray={(2, 2)} />
           <XAxis
-            dataKey={dataPtLabels}
+            dataKey={dataLabels}
             reversed={true}
             interval={"preserveStartEnd"}
           />
@@ -170,4 +142,4 @@ const GraphComponent = ({
   );
 };
 
-export default GraphComponent;
+export default GraphComponentV2;
