@@ -4,6 +4,7 @@ import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
 // import GraphComponent from "../GraphComponent/GraphComponent";
 import GraphComponentV2 from "../GraphComponent/GraphComponentV2";
+import { getAllIntervalsThunk } from "../../redux/charts";
 
 const ClientListComponent = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,10 @@ const ClientListComponent = () => {
   const [chartDataPoint, setChartDataPoint] = useState();
   const [clientCharts, setClientCharts] = useState();
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
-  const [startDay, setStartDay] = useState();
-  const [endDay, setEndDay] = useState();
+  const allIntervals = useSelector((state) => state?.chart?.allClientIntervals);
+
+  const [startDay, setStartDay] = useState("");
+  const [endDay, setEndDay] = useState("");
   const [filteredCharts, setFilteredCharts] = useState();
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const ClientListComponent = () => {
   useEffect(() => {
     setFilteredCharts();
     if (startDay && endDay && clientCharts) {
-      const filterCharts = clientCharts?.Daily_Charts?.filter((chart) => {
+      const filterCharts = clientCharts?.filter((chart) => {
         return (
           new Date(chart.chart_date).getTime() >=
             new Date(startDay).getTime() &&
@@ -39,10 +42,20 @@ const ClientListComponent = () => {
 
   useEffect(() => {
     const findClientCharts = async () => {
-      const clientData = await dispatch(getClientByIDThunk(selectedClient));
-      if (clientData.ok) {
-        console.log(clientData.payload, "Client Data not State");
-        setClientCharts(clientData.payload);
+      if (chartDataPoint === "AVG") {
+        const clientData = await dispatch(getClientByIDThunk(+selectedClient));
+        if (clientData) {
+          setClientCharts(clientData?.payload.Daily_Charts);
+        }
+      }
+      if (chartDataPoint === "PB") {
+        console.log("Selected PB");
+        const getIntervals = await dispatch(
+          getAllIntervalsThunk(+selectedClient)
+        );
+        if (getIntervals) {
+          setClientCharts(allIntervals);
+        }
       }
     };
 
@@ -137,7 +150,7 @@ const ClientListComponent = () => {
             selectedClient={selectedClient}
           /> */}
           <GraphComponentV2
-            chartType={selectedChartType}
+            selectedChartType={selectedChartType}
             clientCharts={filteredCharts ? filteredCharts : clientCharts}
             chartDataPoint={chartDataPoint}
             selectedClient={selectedClient}
