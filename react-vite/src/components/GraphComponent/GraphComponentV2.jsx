@@ -15,14 +15,14 @@ import {
   Pie,
 } from "recharts";
 import "./graph-component.css";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useEffect, useState } from "react";
+// import { useDispatch } from "react-redux";
 import returnColor from "../helpers/returnColor";
 
 const GraphComponentV2 = ({
   clientCharts,
   selectedChartType,
-  selectedClient,
+  // selectedClient,
   dataPoint,
   dataPointTwo,
   dataLabels,
@@ -65,9 +65,11 @@ const GraphComponentV2 = ({
     case "Scatter":
       ChartComponent = ScatterChart;
       ChartElement = Scatter;
+      break;
     case "Pie":
       ChartComponent = PieChart;
       ChartElement = Pie;
+      break;
     default:
       ChartComponent = LineChart;
       ChartElement = Line;
