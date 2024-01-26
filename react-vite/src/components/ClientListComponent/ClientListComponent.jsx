@@ -160,6 +160,7 @@ const ClientListComponent = () => {
             dataLabels={dataLabels}
             legendTitle={legendTitle}
             legendTitleTwo={legendTitleTwo}
+            chartDataPoint={chartDataPoint}
           />
         </div>
       ) : (

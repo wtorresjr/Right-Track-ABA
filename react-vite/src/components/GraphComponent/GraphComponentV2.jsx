@@ -28,17 +28,13 @@ const GraphComponentV2 = ({
   dataLabels,
   legendTitle,
   legendTitleTwo,
+  chartDataPoint,
 }) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(selectedChartType, "Chart type change");
-  }, [dispatch, selectedChartType]);
 
   let ChartComponent;
   let ChartElement;
-  let fillType;
-  let fillType2;
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -99,14 +95,25 @@ const GraphComponentV2 = ({
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
           onClick={(data) => handleClick(data)}
         >
+          {chartDataPoint === "PB" && (
+            <>
+              {Object.keys(clientCharts[0].behaviors).map((behavior) => (
+                <ChartElement
+                  key={behavior}
+                  dataKey={`${dataPoint}.${behavior}`}
+                  strokeWidth={3}
+                  name={behavior}
+                />
+              ))}
+            </>
+          )}
+
           <ChartElement
-            fill={fillType}
             dataKey={dataPoint}
             strokeWidth={3}
             name={legendTitle}
           />
           <ChartElement
-            fill={fillType2}
             dataKey={dataPointTwo || null}
             strokeWidth={3}
             stroke="red"
