@@ -18,7 +18,6 @@ import "./graph-component.css";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import returnColor from "../helpers/returnColor";
-import { getAllIntervalsThunk } from "../../redux/charts";
 
 const GraphComponentV2 = ({
   clientCharts,
@@ -27,6 +26,8 @@ const GraphComponentV2 = ({
   dataPoint,
   dataPointTwo,
   dataLabels,
+  legendTitle,
+  legendTitleTwo,
 }) => {
   const dispatch = useDispatch();
 
@@ -61,7 +62,6 @@ const GraphComponentV2 = ({
     case "Line":
       ChartComponent = LineChart;
       ChartElement = Line;
-      // fillType = "white";
       break;
     case "Bar":
       ChartComponent = BarChart;
@@ -103,14 +103,14 @@ const GraphComponentV2 = ({
             fill={fillType}
             dataKey={dataPoint}
             strokeWidth={3}
-            name="Chart Avg"
+            name={legendTitle}
           />
           <ChartElement
             fill={fillType2}
             dataKey={dataPointTwo || null}
             strokeWidth={3}
             stroke="red"
-            name="Interval Count"
+            name={legendTitleTwo}
           />
           <CartesianGrid stroke="#eee" strokeDasharray={(2, 2)} />
           <XAxis
