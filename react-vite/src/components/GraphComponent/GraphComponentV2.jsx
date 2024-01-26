@@ -30,8 +30,7 @@ const GraphComponentV2 = ({
   legendTitleTwo,
   chartDataPoint,
 }) => {
-  const dispatch = useDispatch();
-
+  // const dispatch = useDispatch();
 
   let ChartComponent;
   let ChartElement;
@@ -95,7 +94,7 @@ const GraphComponentV2 = ({
           margin={{ top: 25, right: 50, left: 25, bottom: 25 }}
           onClick={(data) => handleClick(data)}
         >
-          {chartDataPoint === "PB" && (
+          {chartDataPoint === "PB" && ChartComponent !== "PieChart" && (
             <>
               {Object.keys(clientCharts[0].behaviors).map((behavior) => (
                 <ChartElement
@@ -112,11 +111,14 @@ const GraphComponentV2 = ({
             dataKey={dataPoint}
             strokeWidth={3}
             name={legendTitle}
+            stroke="lightblue"
+            fill="lightblue"
           />
           <ChartElement
             dataKey={dataPointTwo || null}
             strokeWidth={3}
             stroke="red"
+            fill="red"
             name={legendTitleTwo}
           />
           <CartesianGrid stroke="#eee" strokeDasharray={(2, 2)} />
