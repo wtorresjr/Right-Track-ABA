@@ -22,10 +22,8 @@ const GraphComponent = ({
   chartDataPoint,
   selectedClient,
 }) => {
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
-  // const [pbehaviorsLabels, setPbehaviorsLabels] = useState();
-  // const [pbehaviorData, setPbehaviorData] = useState();
 
   let ChartComponent;
   let ChartElement;
@@ -52,6 +50,7 @@ const GraphComponent = ({
         );
         if (behaviorData) {
           dataPtLabels = "chart_date";
+          dataPt1 = "behaviors";
           setChartData(behaviorData);
           console.log(behaviorData);
         }
@@ -65,6 +64,7 @@ const GraphComponent = ({
     dataPt1,
     dataPt2,
     dataPtLabels,
+    chartType,
   ]);
 
   // if (dataPtLabels) {
@@ -100,6 +100,9 @@ const GraphComponent = ({
       ChartElement = Bar;
       fillType = "lightblue";
       fillType2 = "red";
+      dataPt1 = "avgForChart";
+      dataPt2 = "interval_count";
+      dataPtLabels = "chart_date";
       break;
     default:
       ChartComponent = LineChart;

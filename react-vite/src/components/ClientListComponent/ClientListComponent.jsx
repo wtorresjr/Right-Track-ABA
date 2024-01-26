@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
-import GraphComponent from "../GraphComponent/GraphComponent";
+// import GraphComponent from "../GraphComponent/GraphComponent";
+import GraphComponentV2 from "../GraphComponent/GraphComponentV2";
 
 const ClientListComponent = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
-  const [selectedChartType, setSelectedChartType] = useState();
+  const [selectedChartType, setSelectedChartType] = useState("Line");
   const [chartDataPoint, setChartDataPoint] = useState();
   const [clientCharts, setClientCharts] = useState();
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
@@ -34,17 +35,21 @@ const ClientListComponent = () => {
         setFilteredCharts(filterCharts);
       }
     }
-  }, [dispatch, startDay, endDay, selectedClient]);
+  }, [dispatch, startDay, endDay, selectedClient, chartDataPoint]);
 
   useEffect(() => {
     const findClientCharts = async () => {
       const clientData = await dispatch(getClientByIDThunk(selectedClient));
       if (clientData.ok) {
+        console.log(clientData.payload, "Client Data not State");
         setClientCharts(clientData.payload);
       }
     };
-    findClientCharts(selectedClient);
-  }, [selectedClient]);
+
+    if (selectedClient && chartDataPoint) {
+      findClientCharts(selectedClient);
+    }
+  }, [selectedClient, chartDataPoint]);
 
   return (
     <div className="chartView">
@@ -76,7 +81,7 @@ const ClientListComponent = () => {
             <option>Choose Data Points</option>
             <option value="AVG">Average Chart Rating</option>
             <option value="PB">Problem Behaviors</option>
-            <option value="BD">Behavior Duration</option>
+            {/* <option value="BD">Behavior Duration</option> */}
             {selectedClient ? "Loaded selected client" : "Not Loaded"}
           </select>
         </label>
@@ -123,11 +128,17 @@ const ClientListComponent = () => {
       </div>{" "}
       {selectedClient && chartDataPoint && clientCharts ? (
         <div className="chartDisplayArea">
-          <GraphComponent
+          {/* <GraphComponent
             chartType={selectedChartType}
             clientCharts={
               filteredCharts ? filteredCharts : clientCharts?.Daily_Charts
             }
+            chartDataPoint={chartDataPoint}
+            selectedClient={selectedClient}
+          /> */}
+          <GraphComponentV2
+            chartType={selectedChartType}
+            clientCharts={filteredCharts ? filteredCharts : clientCharts}
             chartDataPoint={chartDataPoint}
             selectedClient={selectedClient}
           />
