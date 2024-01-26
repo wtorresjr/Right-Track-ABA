@@ -5,18 +5,28 @@ const COMPLETE_CHART = "charts/completeChart";
 const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
 const GET_ALL_CHARTS = "charts/getAllCharts";
-// const GET_INTERVALS = "charts/getAllIntervals";
+const GET_ALL_INTERVALS = "charts/getAllIntervals";
 
-// const getIntervals = (clientIntervals) => {
-//   return {
-//     type: GET_INTERVALS,
-//     payload: clientIntervals,
-//   };
-// };
+const getAllIntervals = (clientIntervals) => {
+  return {
+    type: GET_ALL_INTERVALS,
+    payload: clientIntervals,
+  };
+};
 
-// export const getIntervals = (client_id) => {
-  
-// }
+export const getAllIntervalsThunk = (client_id) => async (dispatch) => {
+  const response = await fetch(`/api/interval/${client_id}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (response.ok) {
+    const allIntervals = await response.json();
+    dispatch(getAllIntervals(allIntervals));
+    return allIntervals;
+  } else {
+    throw new Error("Error fetching all intervals");
+  }
+};
 
 const updateChart = (chartToUpdate) => {
   return {
@@ -24,7 +34,6 @@ const updateChart = (chartToUpdate) => {
     payload: chartToUpdate,
   };
 };
-
 
 export const updateTheChartThunk = (data, chart_id) => async (dispatch) => {
   const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
@@ -177,10 +186,16 @@ const initialState = {
     Chart_Intervals: [],
   },
   allCharts: [],
+  allClientIntervals: [],
 };
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_ALL_INTERVALS:
+      return {
+        ...state,
+        allClientIntervals: action.payload,
+      };
     case GET_ALL_CHARTS:
       return {
         ...state,
