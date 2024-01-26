@@ -21,6 +21,9 @@ const GraphComponent = ({
   chartType,
   chartDataPoint,
   selectedClient,
+  dataPoint,
+  dataPointTwo,
+  dataLabels,
 }) => {
   const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
