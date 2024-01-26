@@ -189,6 +189,8 @@ const ClientListComponent = () => {
   const [dataPoint, setDataPoint] = useState();
   const [dataPointTwo, setDataPointTwo] = useState();
   const [dataLabels, setDataLabels] = useState();
+  const [legendTitle, setLegendTitle] = useState();
+  const [legendTitleTwo, setLegendTitleTwo] = useState();
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -203,9 +205,11 @@ const ClientListComponent = () => {
           );
           if (clientData) {
             setClientCharts(clientData?.payload.Daily_Charts);
+            setDataLabels("chart_date");
             setDataPoint("avgForChart");
             setDataPointTwo("interval_count");
-            setDataLabels("chart_date");
+            setLegendTitle("Chart Average");
+            setLegendTitleTwo("Interval Count");
           }
         }
         if (chartDataPoint === "PB") {
@@ -217,6 +221,7 @@ const ClientListComponent = () => {
             setClientCharts(getIntervals);
             setDataPoint("behaviors");
             setDataLabels("chart_date");
+            setLegendTitle("Problem Behaviors");
           }
         }
       };
@@ -322,6 +327,8 @@ const ClientListComponent = () => {
             dataPoint={dataPoint}
             dataPointTwo={dataPointTwo || ""}
             dataLabels={dataLabels}
+            legendTitle={legendTitle}
+            legendTitleTwo={legendTitleTwo || ""}
           />
         </div>
       ) : (
