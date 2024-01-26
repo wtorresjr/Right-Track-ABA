@@ -3,7 +3,6 @@ from flask_login import UserMixin
 from datetime import datetime
 
 
-
 class Interval(db.Model, UserMixin):
     __tablename__ = "intervals"
 
@@ -22,6 +21,7 @@ class Interval(db.Model, UserMixin):
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
         nullable=False,
     )
+
     therapist_id = db.Column(db.Integer, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -43,4 +43,3 @@ class Interval(db.Model, UserMixin):
             "therapist_id": self.therapist_id,
             "chart_id": self.chart_id,
         }
-
