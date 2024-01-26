@@ -19,17 +19,18 @@ import { getAllIntervalsThunk } from "../../redux/charts";
 const GraphComponentV2 = ({
   chartDataPoint,
   selectedClient,
-  chartType,
+  selectedChartType,
   clientCharts,
 }) => {
   return (
     <>
-      <h1>{console.log(chartType, "Chart Type From Graph Comp")}</h1>
+      <h1>{console.log(selectedChartType, "Chart Type From Graph Comp")}</h1>
       <h1>{console.log(clientCharts, "Client Charts from Graph Component")}</h1>
       <h1>{console.log(selectedClient, "Selected Client From Graph Comp")}</h1>
       <h1>
         {console.log(chartDataPoint, "Chart Data Point from Graph Component")}
       </h1>
+      Test
     </>
   );
 };
