@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { addIntervalToChart } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
+import { DeleteMessage } from "../DeleteModal";
 
 const behaviors = [
   "Tantrums",
@@ -60,6 +61,7 @@ const AddIntervalComp = ({ client }) => {
   const [errors, setErrors] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const { closeModal } = useModal();
+  const { setModalContent } = useModal();
 
   const resetAfterSubmit = () => {
     setStartTime();
@@ -116,6 +118,9 @@ const AddIntervalComp = ({ client }) => {
     if (addIntv) {
       resetAfterSubmit();
       closeModal();
+      setModalContent(
+        <DeleteMessage message={"Interval Added Succesfully!"} />
+      );
     }
   };
 
