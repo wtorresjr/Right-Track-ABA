@@ -5,6 +5,7 @@ import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
 import { addIntervalToChart } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
+import { useModal } from "../../context/Modal";
 
 const behaviors = [
   "Tantrums",
@@ -58,6 +59,7 @@ const AddIntervalComp = ({ client }) => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  const { closeModal } = useModal();
 
   const resetAfterSubmit = () => {
     setStartTime();
@@ -113,6 +115,7 @@ const AddIntervalComp = ({ client }) => {
     const addIntv = dispatch(addIntervalToChart(newIntervalData));
     if (addIntv) {
       resetAfterSubmit();
+      closeModal();
     }
   };
 
@@ -264,7 +267,7 @@ const AddIntervalComp = ({ client }) => {
               }}
               className="ratingDropDown"
             >
-              <option>Select a rating</option>
+              <option value={""}>Select a rating</option>
               <option value={0} style={{ backgroundColor: "red" }}>
                 0
               </option>
@@ -293,9 +296,12 @@ const AddIntervalComp = ({ client }) => {
           type="Submit"
           disabled={isDisabled}
           onClick={handleSubmit}
-          id="addIntervalBtn"
+          id="modalDelBtn"
         >
           Add Interval
+        </button>
+        <button onClick={closeModal} id="modalCancelBtn">
+          Cancel
         </button>
       </div>
     </>
