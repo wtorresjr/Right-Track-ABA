@@ -22,20 +22,29 @@ function LoginFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     openLoggingInMessage();
-    const serverResponse = await dispatch(
-      thunkLogin({
-        email,
-        password,
-      })
-    );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-      setIsVisible(false);
-    } else {
-      navigate("/home");
+    try {
+      const serverResponse = await dispatch(
+        thunkLogin({
+          email,
+          password,
+        })
+      );
+
+      if (serverResponse) {
+        setErrors(serverResponse);
+        setIsVisible(true);
+      } else {
+        navigate("/home");
+        setIsVisible(false);
+      }
+    } catch (error) {
+      // Handle errors, if any, from the thunkLogin action
+      console.error("Error during login:", error);
+      setIsVisible(false); // Make sure to hide the message on error as well
     }
   };
+
 
   const openLoggingInMessage = () => {
     setModalContent(
