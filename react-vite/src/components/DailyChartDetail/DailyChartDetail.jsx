@@ -79,6 +79,10 @@ const DailyChartDetail = () => {
     }
   };
 
+  const openAddIntModal = () => {
+    setModalContent(<AddIntervalComp client={clientInfo} />);
+  };
+
   return (
     <div className="mainDisplayContain">
       <div className="chartDetailHeader">
@@ -97,10 +101,7 @@ const DailyChartDetail = () => {
             </div>
           </NavLink>
         </div>
-      </div>
-
-      <AddIntervalComp client={clientInfo} />
-
+      </div>{" "}
       <div id="chartOptionsDiv">
         <h2>
           Client: {clientInfo?.first_name} {clientInfo?.last_name}
@@ -128,6 +129,11 @@ const DailyChartDetail = () => {
         ) : (
           ""
         )}
+      </div>
+      <div style={{ display: "flex", justifyContent: "right" }}>
+        <button id="createNewChartBtn" onClick={openAddIntModal}>
+          Add New Interval
+        </button>
       </div>
       {currentIntervals &&
         currentIntervals?.map((interval) => {
