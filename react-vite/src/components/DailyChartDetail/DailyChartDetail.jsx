@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { completeTheChartThunk, getChartByIdThunk } from "../../redux/charts";
+import {
+  completeTheChartThunk,
+  deleteIntervalThunk,
+  getChartByIdThunk,
+} from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
@@ -22,6 +26,7 @@ const DailyChartDetail = () => {
 
   const [ratingColor, setRatingColor] = useState("white");
   const [isIncomplete, setIsIncomplete] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     dispatch(getClientByIDThunk(currentChart?.client_id));
@@ -34,10 +39,12 @@ const DailyChartDetail = () => {
   }, [
     dispatch,
     chart_id,
+    currentChart?.id,
     currentChart?.client_id,
     currentIntervals?.length,
     ratingColor,
     currentChart?.Chart_Avg_Rating,
+    refresh,
   ]);
 
   useEffect(() => {
@@ -61,12 +68,21 @@ const DailyChartDetail = () => {
     }
   };
 
-  const handleCrudClick = (intervalId, actionType) => {
+  const handleCrudClick = async (intervalId, actionType) => {
     if (actionType === "edit") {
       console.log("You want to edit ID:", intervalId);
     }
     if (actionType === "delete") {
-      console.log("You want to delete ID:", intervalId);
+      try {
+        const deleteTheInterval = await dispatch(
+          deleteIntervalThunk(intervalId)
+        );
+        if (deleteTheInterval) {
+          setRefresh((prev) => !prev);
+        }
+      } catch (error) {
+        console.error("Error deleting interval", error);
+      }
     }
   };
 

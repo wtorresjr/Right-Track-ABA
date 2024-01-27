@@ -6,6 +6,27 @@ const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
 const GET_ALL_CHARTS = "charts/getAllCharts";
 const GET_ALL_INTERVALS = "charts/getAllIntervals";
+const DELETE_INTERVAL = "charts/deleteInterval";
+
+const deleteInterval = (intervalToDelete) => {
+  return {
+    type: DELETE_INTERVAL,
+    payload: intervalToDelete,
+  };
+};
+
+export const deleteIntervalThunk = (intervalId) => async (dispatch) => {
+  const response = await fetch(`/api/interval/${intervalId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const deletedInterval = await response.json();
+    dispatch(deleteInterval(deletedInterval));
+    return deletedInterval;
+  } else {
+    throw new Error("Error deleting Interval");
+  }
+};
 
 const getAllIntervals = (clientIntervals) => {
   return {
@@ -191,6 +212,30 @@ const initialState = {
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case DELETE_INTERVAL:
+      return {
+        ...state,
+        client_by_id: {
+          ...state.client_by_id,
+          Daily_Charts: state.client_by_id.Daily_Charts.map((chart) =>
+            chart.id === action.payload.chart_id
+              ? {
+                  ...chart,
+                  intervals: chart.intervals.filter(
+                    (interval) => interval.id !== action.payload.id
+                  ),
+                }
+              : chart
+          ),
+        },
+        chart: {
+          ...state.chart,
+          Chart_Intervals: state.chart.Chart_Intervals.filter(
+            (interval) => interval.id !== action.payload.id
+          ),
+        },
+      };
+
     case GET_ALL_INTERVALS:
       return {
         ...state,
