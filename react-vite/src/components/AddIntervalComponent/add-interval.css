@@ -155,6 +155,8 @@
   flex-flow: row nowrap;
   gap: 5px;
   flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .ratingBtn {
@@ -174,4 +176,13 @@
 .narWrap {
   display: flex;
   flex-flow: row nowrap;
+}
+
+.ratingDropDown {
+  width: 100%;
+  height: 30px;
+}
+
+.ratingDropDown:hover {
+  outline: none;
 }
