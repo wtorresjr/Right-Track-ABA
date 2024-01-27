@@ -1,25 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./delete-modal.css";
-
-const DeleteMessage = ({ message, timeOutLength }) => {
+const DeleteMessage = ({ message, timeOutLength, isVisible, origin }) => {
   const { closeModal } = useModal();
-  const [isVisible, setIsVisible] = useState(true);
+
+  const closeTheMessage = () => {
+    closeModal();
+  };
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsVisible(false);
+    if (!isVisible && origin === "loginPage") {
       closeModal();
-    }, 1000);
+    } else {
+      setTimeout(closeTheMessage, 1500);
+    }
+  }, [isVisible]);
 
-    return () => clearTimeout(timeoutId);
-  }, [timeOutLength, closeModal]);
-
-  return isVisible ? (
+  return (
     <div className="deleteMessageContain">
       <h1>{message}</h1>
     </div>
-  ) : null;
+  );
 };
 
 export default DeleteMessage;
