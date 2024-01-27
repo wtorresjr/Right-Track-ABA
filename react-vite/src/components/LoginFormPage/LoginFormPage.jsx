@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate, NavLink } from "react-router-dom";
@@ -15,7 +15,7 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [loggingIn, setLoggingIn] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   if (sessionUser) return <Navigate to="/home" replace={true} />;
 
@@ -31,13 +31,20 @@ function LoginFormPage() {
 
     if (serverResponse) {
       setErrors(serverResponse);
+      setIsVisible(false);
     } else {
       navigate("/home");
     }
   };
 
   const openLoggingInMessage = () => {
-    setModalContent(<DeletingMessage message={"Logging In..."} />);
+    setModalContent(
+      <DeletingMessage
+        message={"Logging In..."}
+        isVisible={isVisible}
+        origin={"loginPage"}
+      />
+    );
   };
 
   const openSignUpModal = () => {
@@ -65,7 +72,11 @@ function LoginFormPage() {
         ))}
       <div className="formContain">
         <form onSubmit={handleSubmit} className="loginForm">
-          <img className="logo-image-login" src="../right-track-aba-logo.png" />
+          <img
+            className="logo-image-login"
+            src="../right-track-aba-logo.png"
+            alt="Logo"
+          />
           {Object.keys(errors).length ? (
             <p className="errorsPtag">Email or Password is Incorrect</p>
           ) : (
