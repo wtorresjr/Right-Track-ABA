@@ -4,6 +4,7 @@ import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
 import { addIntervalToChart } from "../../redux/charts";
+import returnColor from "../helpers/returnColor";
 
 const behaviors = [
   "Tantrums",
@@ -93,14 +94,7 @@ const AddIntervalComp = ({ client }) => {
       setDisabled(false);
     }
     setErrors(errorCollector);
-  }, [
-    startTime,
-    endTime,
-    intervalRating,
-    currIntNotes,
-    currActivity,
-    // errorCollector,
-  ]);
+  }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -142,212 +136,168 @@ const AddIntervalComp = ({ client }) => {
 
   return (
     <>
-      <button
-        id="addIntervalBtn"
-        onClick={() => {
-          setIsOpen((prev) => !prev);
-        }}
+      <div
+        id="outerCompContain"
+        style={{ border: `10px solid ${currentRatingColor}` }}
       >
-        {!isOpen ? "Add New Interval" : "Close / No Data Added"}
-      </button>
-      {isOpen ? (
-        <div
-          id="outerCompContain"
-          style={{ border: `10px solid ${currentRatingColor}` }}
-        >
-          <div className="intervalCompContain">
-            <h1>Add New Interval</h1>
-            <div className="timeDiv">
-              <label>
-                Start Time
-                <input
-                  type="time"
-                  onChange={(e) => setStartTime(e.target.value)}
-                />
-                {errors?.startTime && (
-                  <p className="errorsPtag">{errors?.startTime}</p>
-                )}
-              </label>
-              <label>
-                End Time
-                <input
-                  type="time"
-                  onChange={(e) => setEndTime(e.target.value)}
-                />
-                {errors?.endTime && (
-                  <p className="errorsPtag">{errors?.endTime}</p>
-                )}
-              </label>
-            </div>
+        <div className="intervalCompContain">
+          <h1>Add New Interval</h1>
+          <div className="timeDiv">
+            <label>
+              Start Time
+              <input
+                type="time"
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+              {errors?.startTime && (
+                <p className="errorsPtag">{errors?.startTime}</p>
+              )}
+            </label>
+            <label>
+              End Time
+              <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+              {errors?.endTime && (
+                <p className="errorsPtag">{errors?.endTime}</p>
+              )}
+            </label>
+          </div>
 
-            <h2>Problem Behaviors</h2>
-            <div className="behaviorsDiv">
-              <select onChange={(e) => setCurrBehavior(e.target.value)}>
-                {behaviors &&
-                  behaviors?.map((behavior) => {
-                    return (
-                      <option key={behavior} value={behavior}>
-                        {behavior}
-                      </option>
-                    );
+          <h2>Problem Behaviors</h2>
+          <div className="behaviorsDiv">
+            <select onChange={(e) => setCurrBehavior(e.target.value)}>
+              {behaviors &&
+                behaviors?.map((behavior) => {
+                  return (
+                    <option key={behavior} value={behavior}>
+                      {behavior}
+                    </option>
+                  );
+                })}
+            </select>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                newBehavior(currBehavior, "add");
+              }}
+            >
+              Add Behavior
+            </button>
+          </div>
+
+          {Object.keys(currIntervalBehaviors).length ? (
+            <div className="behaviorCountItem">
+              {Object.entries(currIntervalBehaviors || {}).map(
+                ([behavior, count]) => (
+                  <div key={behavior} className="countItem">
+                    {behavior}:
+                    <div className="addMinusBtns">
+                      <button
+                        className="addMinus"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          newBehavior(behavior, "remove");
+                        }}
+                      >
+                        -
+                      </button>
+                      <div className="countBox">{count}</div>
+
+                      <button
+                        className="addMinus"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          newBehavior(behavior, "add");
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="noteActivityRating">
+          <div className="narWrap">
+            <div className="behaviorsDiv2">
+              <label>Activity:</label>
+              <select
+                onChange={(e) => setCurrActivity(e.target.value)}
+                defaultValue="Choose an Activity"
+              >
+                <option value="">Choose an Activity</option>
+                {activities &&
+                  activities?.map((activity) => {
+                    return <option key={activity}>{activity}</option>;
                   })}
               </select>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  newBehavior(currBehavior, "add");
-                }}
-              >
-                Add Behavior
-              </button>
             </div>
-
-            {Object.keys(currIntervalBehaviors).length ? (
-              <div className="behaviorCountItem">
-                {Object.entries(currIntervalBehaviors || {}).map(
-                  ([behavior, count]) => (
-                    <div key={behavior} className="countItem">
-                      {behavior}:
-                      <div className="addMinusBtns">
-                        <button
-                          className="addMinus"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            newBehavior(behavior, "remove");
-                          }}
-                        >
-                          -
-                        </button>
-                        <div className="countBox">{count}</div>
-
-                        <button
-                          className="addMinus"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            newBehavior(behavior, "add");
-                          }}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            ) : (
-              ""
-            )}
+            <label>Current Interval Rating:</label>
+            <div
+              className="irDisplay"
+              style={{ color: `${currentRatingColor}` }}
+            >
+              {intervalRating}
+            </div>
           </div>
-          <div className="noteActivityRating">
-            <div className="narWrap">
-              <div className="behaviorsDiv2">
-                <label>Activity:</label>
-                <select
-                  onChange={(e) => setCurrActivity(e.target.value)}
-                  defaultValue="Choose an Activity"
-                >
-                  <option value="">Choose an Activity</option>
-                  {activities &&
-                    activities?.map((activity) => {
-                      return <option key={activity}>{activity}</option>;
-                    })}
-                </select>
-              </div>
-              <label>Current Interval Rating:</label>
-              <div
-                className="irDisplay"
-                style={{ color: `${currentRatingColor}` }}
-              >
-                {intervalRating}
-              </div>
-            </div>
-            {errors?.activity && (
-              <p className="errorsPtag">{errors?.activity}</p>
-            )}
-            <label>Interval Notes:</label>
-            <textarea
-              className="intervalNotes"
-              rows="7"
-              value={currIntNotes}
-              onChange={(e) => setCurrIntNotes(e.target.value)}
-            ></textarea>
-            {errors?.intervalNotes && (
-              <p className="errorsPtag">{errors?.intervalNotes}</p>
-            )}
-            <LegendComponent />
-            <div className="ratingButtons">
-              <label>Interval Rating:</label>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "red" }}
-                onClick={() => {
-                  setIntervalRating(0), setCurrentRatingColor("red");
-                }}
-              >
+          {errors?.activity && <p className="errorsPtag">{errors?.activity}</p>}
+          <label>Interval Notes:</label>
+          <textarea
+            className="intervalNotes"
+            rows="7"
+            value={currIntNotes}
+            onChange={(e) => setCurrIntNotes(e.target.value)}
+          ></textarea>
+          {errors?.intervalNotes && (
+            <p className="errorsPtag">{errors?.intervalNotes}</p>
+          )}
+          <LegendComponent />
+          <div className="ratingButtons">
+            <label>Interval Rating:</label>
+            <select
+              onChange={(e) => {
+                setIntervalRating(e.target.value);
+                setCurrentRatingColor(returnColor(e.target.value));
+              }}
+              className="ratingDropDown"
+            >
+              <option>Select a rating</option>
+              <option value={0} style={{ backgroundColor: "red" }}>
                 0
-              </button>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "red" }}
-                onClick={() => {
-                  setIntervalRating(1), setCurrentRatingColor("red");
-                }}
-              >
+              </option>
+              <option value={1} style={{ backgroundColor: "red" }}>
                 1
-              </button>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "orange" }}
-                onClick={() => {
-                  setIntervalRating(2), setCurrentRatingColor("orange");
-                }}
-              >
+              </option>
+              <option value={2} style={{ backgroundColor: "orange" }}>
                 2
-              </button>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "yellow" }}
-                onClick={() => {
-                  setIntervalRating(3), setCurrentRatingColor("yellow");
-                }}
-              >
+              </option>
+              <option value={3} style={{ backgroundColor: "yellow" }}>
                 3
-              </button>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "yellowgreen" }}
-                onClick={() => {
-                  setIntervalRating(4), setCurrentRatingColor("yellowgreen");
-                }}
-              >
+              </option>
+              <option value={4} style={{ backgroundColor: "yellowgreen" }}>
                 4
-              </button>
-              <button
-                className="ratingBtn"
-                style={{ backgroundColor: "green" }}
-                onClick={() => {
-                  setIntervalRating(5), setCurrentRatingColor("green");
-                }}
-              >
+              </option>
+              <option value={5} style={{ backgroundColor: "green" }}>
                 5
-              </button>
-            </div>
-            {errors?.intervalRating && (
-              <p className="errorsPtag">{errors?.intervalRating}</p>
-            )}
+              </option>
+            </select>
           </div>
-          <button
-            type="Submit"
-            disabled={isDisabled}
-            onClick={handleSubmit}
-            id="addIntervalBtn"
-          >
-            Add Interval
-          </button>
+          {errors?.intervalRating && (
+            <p className="errorsPtag">{errors?.intervalRating}</p>
+          )}
         </div>
-      ) : (
-        ""
-      )}
+        <button
+          type="Submit"
+          disabled={isDisabled}
+          onClick={handleSubmit}
+          id="addIntervalBtn"
+        >
+          Add Interval
+        </button>
+      </div>
     </>
   );
 };
