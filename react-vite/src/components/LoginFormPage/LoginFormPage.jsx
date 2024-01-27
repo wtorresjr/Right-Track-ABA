@@ -3,8 +3,9 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate, NavLink } from "react-router-dom";
 import "./LoginForm.css";
-import { useModal } from "../../context/Modal";
 import SignupFormModal from "../SignupFormModal";
+import { useModal } from "../../context/Modal";
+import DeletingMessage from "../DeleteModal/DeletingMessage";
 
 function LoginFormPage() {
   const { setModalContent } = useModal();
@@ -14,12 +15,13 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  // const [loggingIn, setLoggingIn] = useState(false);
 
   if (sessionUser) return <Navigate to="/home" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    openLoggingInMessage();
     const serverResponse = await dispatch(
       thunkLogin({
         email,
@@ -34,12 +36,19 @@ function LoginFormPage() {
     }
   };
 
+  const openLoggingInMessage = () => {
+    setModalContent(
+      <DeletingMessage message={"Logging In..."} timeOutLength={5000} />
+    );
+  };
+
   const openSignUpModal = () => {
     setModalContent(<SignupFormModal />);
   };
 
   const demoLogIn = async (e) => {
     e.preventDefault();
+    openLoggingInMessage();
     dispatch(
       thunkLogin({
         email: "demo@demo.com",
@@ -60,7 +69,7 @@ function LoginFormPage() {
         <form onSubmit={handleSubmit} className="loginForm">
           <img className="logo-image-login" src="../right-track-aba-logo.png" />
           {Object.keys(errors).length ? (
-            <p className="errorsPtag">Login incorrect</p>
+            <p className="errorsPtag">Email or Password is Incorrect</p>
           ) : (
             ""
           )}
@@ -82,7 +91,6 @@ function LoginFormPage() {
               required
             />
           </label>
-          {/* {errors.password && <p className="errorsPtag">{errors.password}</p>} */}
           <button type="submit">Log In</button>
           <button type="submit" onClick={demoLogIn}>
             Demo Login
