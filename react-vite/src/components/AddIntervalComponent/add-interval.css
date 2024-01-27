@@ -1,36 +1,25 @@
 .intervalCompContain {
   box-sizing: border-box;
-  background-color: rgb(0, 0, 0);
   padding: 10px;
-  /* border-radius: 10px; */
-  width: 50%;
-  /* height: auto; */
-  /* border: 1px solid orange; */
 }
 
 #outerCompContain {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  /* border: 1px solid red; */
-  box-sizing: border-box;
+  overflow: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .intervalNotes {
-  /* margin: px 0 0 0; */
   width: 100%;
-  /* height: 100%; */
   box-sizing: border-box;
   display: flex;
   resize: none;
   font-size: 22px;
   padding: 5px;
-  /* margin: 0 0 15px 0; */
 }
 
 .noteActivityRating {
-  width: 50%;
-  /* border: 1px solid white; */
   padding: 10px;
   box-sizing: border-box;
 }
@@ -40,20 +29,10 @@
   flex-flow: row nowrap;
   flex-shrink: 1;
   flex-grow: 1;
-  /* border: 1px solid white; */
   margin: 10px 0 0 0;
 }
 
-.behaviorCountItem {
-  background-color: rgb(70, 70, 70);
-  /* margin: 5px 0 0 0; */
-  /* width: 100%; */
-  /* display: flex; */
-  /* flex-flow: row nowrap; */
-}
-
 .countItem {
-  border: 1px solid rgb(221, 221, 221);
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -70,15 +49,10 @@
 }
 
 .addMinus {
-  /* width: 50%; */
   height: 50px;
   width: 50px;
   font-size: 28px;
 }
-
-/* .addMinusBtns {
-  width: 50%;
-} */
 
 .behaviorsDiv select {
   width: 50%;
@@ -89,13 +63,6 @@
   background-color: rgb(255, 153, 0);
   border: none;
 }
-
-/* .countItem button {
-  margin: 0 5px;
-}
-.countItem :last-child {
-  margin: 0;
-} */
 
 .behaviorsDiv {
   display: flex;
@@ -108,7 +75,6 @@
 
 .behaviorsDiv2 {
   display: flex;
-  /* flex-flow: column wrap; */
   justify-content: space-between;
   padding: 0 0 10px 0;
   height: 40px;
@@ -124,7 +90,6 @@
 }
 
 .countBox {
-  background-color: black;
   width: 50px;
   height: 50px;
   display: flex;
@@ -143,18 +108,16 @@
   margin: 10px 0 0 0;
   cursor: pointer;
   border-radius: 8px;
-  /* background-color: rgb(0, 171, 228); */
-  /* color: white; */
   font-weight: bolder;
-  /* border: 5px solid rgb(95, 95, 95); */
 }
 
 .ratingButtons {
   display: flex;
-  /* border: 1px solid white; */
   flex-flow: row nowrap;
   gap: 5px;
   flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .ratingBtn {
@@ -174,4 +137,13 @@
 .narWrap {
   display: flex;
   flex-flow: row nowrap;
+}
+
+.ratingDropDown {
+  width: 100%;
+  height: 30px;
+}
+
+.ratingDropDown:hover {
+  outline: none;
 }
