@@ -2,21 +2,23 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
-import { deleteIntervalThunk } from "../../redux/charts";
+import { deleteIntervalThunk, getChartByIdThunk } from "../../redux/charts";
+import { useNavigate } from "react-router-dom";
 
 const DeleteIntervalModal = ({ interval }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { closeModal } = useModal();
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmDelText, setConfirmDelText] = useState("");
   const [userInput, setUserInput] = useState("");
+  const [chart, setChart] = useState();
   const { setModalContent } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setConfirmDelText(`YES DELETE`);
+    setChart(interval?.chart_id);
   }, [dispatch, interval?.id]);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const DeleteIntervalModal = ({ interval }) => {
     if (successDelete) {
       closeModal();
       openDeleteMessage();
-      // navigate("/manage-clients");
+      dispatch(getChartByIdThunk(chart));
     } else {
       throw new Error("Error deleting Interval...");
     }
@@ -44,12 +46,10 @@ const DeleteIntervalModal = ({ interval }) => {
 
   return (
     <div className="deleteModalContain">
-      <h1>
-        Delete This Interval ?
-      </h1>
+      <h1>Delete This Interval ?</h1>
       <p>
-        To delete this interval and all of it's related
-        data, please enter the text below in the input:
+        To delete this interval and all of it's related data, please enter the
+        text below in the input:
       </p>
       <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
         {confirmDelText}

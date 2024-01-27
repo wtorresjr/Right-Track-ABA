@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  completeTheChartThunk,
-  deleteIntervalThunk,
-  getChartByIdThunk,
-} from "../../redux/charts";
+import { completeTheChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
@@ -80,16 +76,6 @@ const DailyChartDetail = () => {
     }
     if (actionType === "delete") {
       openDeleteModal(interval);
-      // try {
-      //   const deleteTheInterval = await dispatch(
-      //     deleteIntervalThunk(intervalId)
-      //   );
-      //   if (deleteTheInterval) {
-      //     setRefresh((prev) => !prev);
-      //   }
-      // } catch (error) {
-      //   console.error("Error deleting interval", error);
-      // }
     }
   };
 

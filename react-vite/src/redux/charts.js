@@ -197,6 +197,7 @@ export const getAllChartsThunk = () => async (dispatch) => {
   }
 };
 
+
 const initialState = {
   clients: null,
   client_by_id: {
