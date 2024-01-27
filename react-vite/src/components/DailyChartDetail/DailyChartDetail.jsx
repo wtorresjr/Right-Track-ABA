@@ -8,12 +8,13 @@ import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 import { useNavigate } from "react-router-dom";
 import { LegendComponent } from "../DailyCharts";
 import returnColor from "../helpers/returnColor";
+import { useModal } from "../../context/Modal";
+import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
   const navigate = useNavigate();
-
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
   const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
   const currentIntervals = useSelector(
@@ -22,6 +23,8 @@ const DailyChartDetail = () => {
 
   const [ratingColor, setRatingColor] = useState("white");
   const [isIncomplete, setIsIncomplete] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+  const { setModalContent } = useModal();
 
   useEffect(() => {
     dispatch(getClientByIDThunk(currentChart?.client_id));
@@ -34,10 +37,12 @@ const DailyChartDetail = () => {
   }, [
     dispatch,
     chart_id,
+    currentChart?.id,
     currentChart?.client_id,
     currentIntervals?.length,
     ratingColor,
     currentChart?.Chart_Avg_Rating,
+    refresh,
   ]);
 
   useEffect(() => {
@@ -58,6 +63,19 @@ const DailyChartDetail = () => {
     );
     if (finished) {
       navigate(`/client/${clientInfo?.id}`);
+    }
+  };
+
+  const openDeleteModal = (interval) => {
+    setModalContent(<DeleteIntervalModal interval={interval} />);
+  };
+
+  const handleCrudClick = async (interval, actionType) => {
+    if (actionType === "edit") {
+      console.log("You want to edit ID:", interval);
+    }
+    if (actionType === "delete") {
+      openDeleteModal(interval);
     }
   };
 
@@ -148,6 +166,14 @@ const DailyChartDetail = () => {
               ) : (
                 "None."
               )}
+              <div className="intervalCrudBtns">
+                <button onClick={() => handleCrudClick(interval, "edit")}>
+                  Edit
+                </button>
+                <button onClick={() => handleCrudClick(interval, "delete")}>
+                  Delete
+                </button>
+              </div>
             </div>
           );
         })}
