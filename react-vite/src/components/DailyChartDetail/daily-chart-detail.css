@@ -86,8 +86,8 @@
 }
 
 .intervalCrudBtns button {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   height: 30px;
   border: 1px solid rgb(136, 136, 136);
   border-radius: 10px;

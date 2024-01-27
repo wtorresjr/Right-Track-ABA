@@ -178,8 +178,9 @@ def delete_interval_by_id(interval_id):
         db.session.commit()
         return (
             jsonify({"Success": f"Interval {interval_id} was deleted."}),
-            403,
+            200,
         )
+
     return (
         jsonify({"message": f"Interval {interval_id} does not belong to therapist."}),
         403,
