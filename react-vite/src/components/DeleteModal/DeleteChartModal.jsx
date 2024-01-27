@@ -17,7 +17,7 @@ const DeleteChartModal = ({ chartInfo }) => {
   const { setModalContent } = useModal();
 
   useEffect(() => {
-    setConfirmDelText(`CONFIRM DELETE ${chartInfo?.id}`);
+    setConfirmDelText(`YES DELETE`);
   }, [dispatch, chartInfo?.id]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const DeleteChartModal = ({ chartInfo }) => {
 
   return (
     <div className="deleteModalContain">
-      <h1>Delete Chart Number {chartInfo?.id}?</h1>
+      <h1>Delete This Chart ?</h1>
       <p>
         To delete chart number {chartInfo?.id} and all related data, please
         enter the text below into the input:
