@@ -15,7 +15,7 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  // const [loggingIn, setLoggingIn] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   if (sessionUser) return <Navigate to="/home" replace={true} />;
 
@@ -37,9 +37,7 @@ function LoginFormPage() {
   };
 
   const openLoggingInMessage = () => {
-    setModalContent(
-      <DeletingMessage message={"Logging In..."} timeOutLength={5000} />
-    );
+    setModalContent(<DeletingMessage message={"Logging In..."} />);
   };
 
   const openSignUpModal = () => {
