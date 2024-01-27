@@ -61,6 +61,15 @@ const DailyChartDetail = () => {
     }
   };
 
+  const handleCrudClick = (intervalId, actionType) => {
+    if (actionType === "edit") {
+      console.log("You want to edit ID:", intervalId);
+    }
+    if (actionType === "delete") {
+      console.log("You want to delete ID:", intervalId);
+    }
+  };
+
   return (
     <div className="mainDisplayContain">
       <div className="chartDetailHeader">
@@ -148,6 +157,14 @@ const DailyChartDetail = () => {
               ) : (
                 "None."
               )}
+              <div className="intervalCrudBtns">
+                <button onClick={() => handleCrudClick(interval.id, "edit")}>
+                  Edit
+                </button>
+                <button onClick={() => handleCrudClick(interval.id, "delete")}>
+                  Delete
+                </button>
+              </div>
             </div>
           );
         })}
