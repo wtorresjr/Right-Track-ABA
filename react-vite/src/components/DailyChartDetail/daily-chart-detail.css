@@ -77,3 +77,24 @@
   padding: 5px;
   border-radius: 10px;
 }
+
+.intervalCrudBtns {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 0 0;
+  justify-content: left;
+}
+
+.intervalCrudBtns button {
+  background-color: black;
+  color: white;
+  height: 30px;
+  border: 1px solid rgb(136, 136, 136);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.intervalCrudBtns button:hover {
+  background-color: white;
+  color: black;
+}
