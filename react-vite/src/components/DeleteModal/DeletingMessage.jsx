@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./delete-modal.css";
-const DeleteMessage = ({ message, timeOutLength, isVisible, origin }) => {
+const DeleteMessage = ({ message, isVisible, origin }) => {
   const { closeModal } = useModal();
 
   const closeTheMessage = () => {
