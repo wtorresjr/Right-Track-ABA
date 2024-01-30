@@ -57,9 +57,11 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [currActivity, setCurrActivity] = useState(intervalToEdit.activity);
   const [intervalRating, setIntervalRating] = useState(
-    intervalToEdit.interval_rating.toString()
+    intervalToEdit.interval_rating
   );
-  const [currentRatingColor, setCurrentRatingColor] = useState("white");
+  const [currentRatingColor, setCurrentRatingColor] = useState(
+    returnColor(intervalRating)
+  );
   const [currIntNotes, setCurrIntNotes] = useState(
     intervalToEdit.interval_notes
   );
@@ -162,6 +164,7 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
               <input
                 type="time"
                 onChange={(e) => setStartTime(e.target.value)}
+                value={startTime}
               />
               {errors?.startTime && (
                 <p className="errorsPtag">{errors?.startTime}</p>
@@ -169,7 +172,11 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
             </label>
             <label>
               End Time
-              <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+              <input
+                type="time"
+                onChange={(e) => setEndTime(e.target.value)}
+                value={endTime}
+              />
               {errors?.endTime && (
                 <p className="errorsPtag">{errors?.endTime}</p>
               )}
@@ -241,6 +248,7 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
               <select
                 onChange={(e) => setCurrActivity(e.target.value)}
                 defaultValue="Choose an Activity"
+                value={currActivity}
               >
                 <option value="">Choose an Activity</option>
                 {activities &&
@@ -276,6 +284,7 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
                 setIntervalRating(e.target.value);
                 setCurrentRatingColor(returnColor(e.target.value));
               }}
+              value={intervalRating}
               className="ratingDropDown"
             >
               <option value={""}>Select a rating</option>
