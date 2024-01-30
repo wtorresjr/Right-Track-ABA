@@ -7,6 +7,22 @@ from app.models import Daily_Chart, Client, Interval
 daily_charts_bp = Blueprint("my-daily-charts", __name__)
 
 
+@daily_charts_bp.route("/interval/<int:interval_id>", methods=["GET"])
+@login_required
+def get_interval_by_interval_id(interval_id):
+    fetched_interval = Interval.query.get(interval_id)
+
+    if not fetched_interval:
+        return jsonify({"message": "Interval not found"}), 404
+
+    found_interval = fetched_interval.to_dict()
+
+    if found_interval["therapist_id"] != current_user.id:
+        return jsonify({"message": "Interval does not belong to your client"}), 403
+
+    return fetched_interval.to_dict()
+
+
 # Get all therapist charts
 @daily_charts_bp.route("/", methods=["GET"])
 @login_required
@@ -17,7 +33,6 @@ def get_all_charts():
             "chart": chart.to_dict(),
             "client_first_name": chart.client.first_name,
             "client_last_name": chart.client.last_name,
-            # "avg_for_chart": Client.client_id.avg_for_chart,
         }
         for chart in therapist_charts
     ]
@@ -25,10 +40,6 @@ def get_all_charts():
     if not chart_list:
         return jsonify({"message": "No charts found"}), 404
 
-    # my_charts = [chart for chart in chart_list]
-
-    # return jsonify({"Therapist_Charts": chart_list})
-    # return jsonify(chart_list)
     return chart_list
 
 
