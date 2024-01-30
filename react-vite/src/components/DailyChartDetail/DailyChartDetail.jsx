@@ -10,6 +10,7 @@ import { LegendComponent } from "../DailyCharts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
+import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
@@ -70,9 +71,16 @@ const DailyChartDetail = () => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
   };
 
+  const openEditIntervalModal = (interval) => {
+    setModalContent(
+      <UpdateIntervalComp client={clientInfo} intervalToEdit={interval} />
+    );
+  };
+
   const handleCrudClick = async (interval, actionType) => {
     if (actionType === "edit") {
       console.log("You want to edit ID:", interval);
+      openEditIntervalModal(interval);
     }
     if (actionType === "delete") {
       openDeleteModal(interval);
@@ -174,10 +182,10 @@ const DailyChartDetail = () => {
               )}
               <div className="intervalCrudBtns">
                 <button onClick={() => handleCrudClick(interval, "edit")}>
-                  Edit
+                  Edit Interval
                 </button>
                 <button onClick={() => handleCrudClick(interval, "delete")}>
-                  Delete
+                  Delete Interval
                 </button>
               </div>
             </div>

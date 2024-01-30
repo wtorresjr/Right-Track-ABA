@@ -6,6 +6,7 @@ const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
 const GET_ALL_CHARTS = "charts/getAllCharts";
 const GET_ALL_INTERVALS = "charts/getAllIntervals";
+const GET_INTERVAL = "charts/getInterval";
 const DELETE_INTERVAL = "charts/deleteInterval";
 
 const deleteInterval = (intervalToDelete) => {
@@ -197,6 +198,24 @@ export const getAllChartsThunk = () => async (dispatch) => {
   }
 };
 
+const getOneInterval = (intervalFound) => {
+  return {
+    type: GET_INTERVAL,
+    payload: intervalFound,
+  };
+};
+
+export const getOneIntervalThunk = (interval_id) => async (dispatch) => {
+  const response = await fetch(`/api/my-daily-charts/interval/${interval_id}`, {
+    method: "GET",
+    header: { "Content-Type": "application/json" },
+  });
+  if (response.ok) {
+    const foundInterval = await response.json();
+    dispatch(getOneInterval(foundInterval));
+    return foundInterval;
+  }
+};
 
 const initialState = {
   clients: null,
