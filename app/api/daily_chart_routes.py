@@ -7,6 +7,8 @@ from app.models import Daily_Chart, Client, Interval
 daily_charts_bp = Blueprint("my-daily-charts", __name__)
 
 
+#Get interval by ID
+
 @daily_charts_bp.route("/interval/<int:interval_id>", methods=["GET"])
 @login_required
 def get_interval_by_interval_id(interval_id):
