@@ -10,7 +10,7 @@ chart_interval_bp = Blueprint("interval", __name__)
 
 # Get interval by id
 
-# Get Interval by Client_Id
+# Get Intervals by Client_Id
 
 from collections import Counter
 
