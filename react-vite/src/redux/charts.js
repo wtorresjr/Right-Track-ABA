@@ -218,7 +218,6 @@ export const getOneIntervalThunk = (interval_id) => async (dispatch) => {
   }
 };
 
-
 const editAnInterval = (editedInterval) => {
   return {
     type: EDIT_AN_INTERVAL,
@@ -226,20 +225,24 @@ const editAnInterval = (editedInterval) => {
   };
 };
 
-export const editIntervalThunk = (data, intervalId) => async (dispatch) => {
-  const response = await fetch(`/api/interval/${intervalId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (response.ok) {
-    const editedInterval = await response.json();
-    dispatch(editAnInterval(editedInterval));
-    return editedInterval;
-  } else {
-    throw new Error("Error editing interval");
-  }
-};
+export const editIntervalThunk =
+  (data, intervalId, chart_id) => async (dispatch) => {
+    const response = await fetch(`/api/interval/${intervalId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const editedInterval = await response.json();
+      const done = await dispatch(editAnInterval(editedInterval));
+      if (done) {
+        dispatch(getChartByIdThunk(chart_id));
+        return editedInterval;
+      }
+    } else {
+      throw new Error("Error editing interval");
+    }
+  };
 
 const initialState = {
   clients: null,

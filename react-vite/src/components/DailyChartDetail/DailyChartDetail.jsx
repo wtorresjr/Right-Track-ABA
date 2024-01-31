@@ -41,6 +41,7 @@ const DailyChartDetail = () => {
     currentChart?.id,
     currentChart?.client_id,
     currentIntervals?.length,
+    // currentIntervals?.,
     ratingColor,
     currentChart?.Chart_Avg_Rating,
     refresh,
@@ -79,7 +80,6 @@ const DailyChartDetail = () => {
 
   const handleCrudClick = async (interval, actionType) => {
     if (actionType === "edit") {
-      console.log("You want to edit ID:", interval);
       openEditIntervalModal(interval);
     }
     if (actionType === "delete") {

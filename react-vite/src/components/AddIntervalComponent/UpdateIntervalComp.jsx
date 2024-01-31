@@ -32,11 +32,6 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
 
-  // const resetAfterSubmit = () => {
-  //   console.log("Reset triggered");
-
-  // };
-
   const errorCollector = {};
   useEffect(() => {
     if (!startTime) {
@@ -82,11 +77,13 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
     };
 
     const updateIntv = dispatch(
-      editIntervalThunk(intervalUpdateData, intervalToEdit.id)
+      editIntervalThunk(
+        intervalUpdateData,
+        intervalToEdit.id,
+        intervalToEdit.chart_id
+      )
     );
     if (updateIntv) {
-      // resetAfterSubmit();
-      dispatch(getChartByIdThunk(intervalToEdit.chart_id));
       closeModal();
       setModalContent(
         <DeleteMessage message={"Interval Updated Succesfully!"} />
