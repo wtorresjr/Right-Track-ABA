@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
-import { useParams } from "react-router-dom";
-import { addIntervalToChart } from "../../redux/charts";
+import { editIntervalThunk, getChartByIdThunk } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { behaviors } from "../helpers/dropdown-data";
 import { activities } from "../helpers/dropdown-data";
 
-const UpdateIntervalComp = ({ client, intervalToEdit }) => {
-  const { chart_id } = useParams();
+const UpdateIntervalComp = ({ intervalToEdit }) => {
   const [startTime, setStartTime] = useState(intervalToEdit.start_interval);
   const [endTime, setEndTime] = useState(intervalToEdit.end_interval);
-  const [currBehavior, setCurrBehavior] = useState();
+  const [currBehavior, setCurrBehavior] = useState(behaviors[0]);
   const [currIntervalBehaviors, setCurrIntervalBehavior] = useState(
-    intervalToEdit.interval_tags
+    intervalToEdit?.interval_tags
   );
   const [isDisabled, setDisabled] = useState(true);
   const [currActivity, setCurrActivity] = useState(intervalToEdit.activity);
@@ -34,16 +32,10 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
 
-  const resetAfterSubmit = () => {
-    setStartTime();
-    setEndTime();
-    setCurrBehavior();
-    setCurrIntervalBehavior({});
-    setCurrActivity();
-    setCurrIntNotes("");
-    setIntervalRating("");
-    setCurrentRatingColor("white");
-  };
+  // const resetAfterSubmit = () => {
+  //   console.log("Reset triggered");
+
+  // };
 
   const errorCollector = {};
   useEffect(() => {
@@ -68,28 +60,36 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
       setDisabled(false);
     }
     setErrors(errorCollector);
-  }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
+  }, [
+    startTime,
+    endTime,
+    intervalRating,
+    currIntNotes,
+    currActivity,
+    currBehavior,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newIntervalData = {
+    const intervalUpdateData = {
       start_interval: startTime,
       end_interval: endTime,
       interval_tags: currIntervalBehaviors,
       interval_notes: currIntNotes,
       interval_rating: intervalRating,
-      chart_id: chart_id,
-      client_id: client?.id,
       activity: currActivity,
     };
 
-    const addIntv = dispatch(addIntervalToChart(newIntervalData));
-    if (addIntv) {
-      resetAfterSubmit();
+    const updateIntv = dispatch(
+      editIntervalThunk(intervalUpdateData, intervalToEdit.id)
+    );
+    if (updateIntv) {
+      // resetAfterSubmit();
+      dispatch(getChartByIdThunk(intervalToEdit.chart_id));
       closeModal();
       setModalContent(
-        <DeleteMessage message={"Interval Added Succesfully!"} />
+        <DeleteMessage message={"Interval Updated Succesfully!"} />
       );
     }
   };
