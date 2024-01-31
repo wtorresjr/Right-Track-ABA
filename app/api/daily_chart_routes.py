@@ -26,6 +26,7 @@ def get_interval_by_interval_id(interval_id):
 
 
 # Get all therapist charts
+
 @daily_charts_bp.route("/", methods=["GET"])
 @login_required
 def get_all_charts():
@@ -104,6 +105,9 @@ def get_chart_by_id(chart_id):
         )
 
 
+
+#Create new client 
+
 @daily_charts_bp.route("/", methods=["POST"])
 @login_required
 def add_new_client():
@@ -120,6 +124,8 @@ def add_new_client():
 
     return jsonify({"New_Chart": new_chart.to_dict()})
 
+
+# Get chart by Client ID
 
 @daily_charts_bp.route("/client/<int:client_id>", methods=["GET"])
 @login_required
