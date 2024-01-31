@@ -6,7 +6,9 @@ const DELETE_CHART = "charts/deleteChart";
 const UPDATE_CHART = "charts/updateChart";
 const GET_ALL_CHARTS = "charts/getAllCharts";
 const GET_ALL_INTERVALS = "charts/getAllIntervals";
+const GET_INTERVAL = "charts/getInterval";
 const DELETE_INTERVAL = "charts/deleteInterval";
+const EDIT_AN_INTERVAL = "charts/editAnInterval";
 
 const deleteInterval = (intervalToDelete) => {
   return {
@@ -197,6 +199,50 @@ export const getAllChartsThunk = () => async (dispatch) => {
   }
 };
 
+const getOneInterval = (intervalFound) => {
+  return {
+    type: GET_INTERVAL,
+    payload: intervalFound,
+  };
+};
+
+export const getOneIntervalThunk = (interval_id) => async (dispatch) => {
+  const response = await fetch(`/api/my-daily-charts/interval/${interval_id}`, {
+    method: "GET",
+    header: { "Content-Type": "application/json" },
+  });
+  if (response.ok) {
+    const foundInterval = await response.json();
+    dispatch(getOneInterval(foundInterval));
+    return foundInterval;
+  }
+};
+
+const editAnInterval = (editedInterval) => {
+  return {
+    type: EDIT_AN_INTERVAL,
+    payload: editedInterval,
+  };
+};
+
+export const editIntervalThunk =
+  (data, intervalId, chart_id) => async (dispatch) => {
+    const response = await fetch(`/api/interval/${intervalId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const editedInterval = await response.json();
+      const done = await dispatch(editAnInterval(editedInterval));
+      if (done) {
+        dispatch(getChartByIdThunk(chart_id));
+        return editedInterval;
+      }
+    } else {
+      throw new Error("Error editing interval");
+    }
+  };
 
 const initialState = {
   clients: null,
@@ -213,6 +259,31 @@ const initialState = {
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case EDIT_AN_INTERVAL:
+      return {
+        ...state,
+        client_by_id: {
+          ...state.client_by_id,
+          Daily_Charts: state.client_by_id.Daily_Charts.map((chart) =>
+            chart.id === action.payload.chart_id
+              ? {
+                  ...chart,
+                  intervals: chart.intervals.map((interval) =>
+                    interval.id === action.payload.id
+                      ? action.payload
+                      : interval
+                  ),
+                }
+              : chart
+          ),
+        },
+        chart: {
+          ...state.chart,
+          Chart_Intervals: state.chart.Chart_Intervals.map((interval) =>
+            interval.id === action.payload.id ? action.payload : interval
+          ),
+        },
+      };
     case DELETE_INTERVAL:
       return {
         ...state,
