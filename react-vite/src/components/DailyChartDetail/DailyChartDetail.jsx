@@ -146,7 +146,10 @@ const DailyChartDetail = () => {
       {currentIntervals &&
         currentIntervals?.map((interval) => {
           return (
-            <div key={interval?.id} className="intervalInfoContain">
+            <div
+              key={interval?.id - interval?.chart_id}
+              className="intervalInfoContain"
+            >
               <div
                 className="intervalHeader"
                 style={{
