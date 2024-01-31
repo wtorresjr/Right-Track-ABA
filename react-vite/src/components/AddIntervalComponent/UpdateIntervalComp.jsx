@@ -119,7 +119,7 @@ const UpdateIntervalComp = ({ client, intervalToEdit }) => {
         style={{ border: `10px solid ${currentRatingColor}` }}
       >
         <div className="intervalCompContain">
-          <h1>Edit Interval</h1>
+          <h1>Edit Interval Number {intervalToEdit.id}</h1>
           <div className="timeDiv">
             <label>
               Start Time
