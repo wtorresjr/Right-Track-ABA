@@ -7,44 +7,8 @@ import { addIntervalToChart } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
-
-const behaviors = [
-  "Tantrums",
-  "Throwing",
-  "Self-Injurious Behiavior",
-  "Biting",
-  "Aggression",
-  "Crying",
-  "Vocal Stereotypy",
-  "Property Destruction",
-  "Kicking",
-  "Spitting",
-  "Non-Compliance",
-  "Elopement",
-  "Task Refusal",
-  "Outbursts",
-  "Mouthing",
-  "Negative Statements",
-  "Inappropriate Language",
-  "Hitting",
-  "PICA",
-  "Food Refusal",
-];
-
-const activities = [
-  "Reading",
-  "Writing",
-  "Math",
-  "Science",
-  "Recess",
-  "Free Time",
-  "Circle Time",
-  "Clean Up",
-  "Art",
-  "Lunch",
-  "Snack",
-  "P.E.",
-];
+import { activities } from "../helpers/dropdown-data";
+import { behaviors } from "../helpers/dropdown-data";
 
 const AddIntervalComp = ({ client }) => {
   const { chart_id } = useParams();
@@ -59,7 +23,6 @@ const AddIntervalComp = ({ client }) => {
   const [currIntNotes, setCurrIntNotes] = useState("");
   const dispatch = useDispatch();
   const [errors, setErrors] = useState();
-  const [isOpen, setIsOpen] = useState(false);
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
 
@@ -72,7 +35,6 @@ const AddIntervalComp = ({ client }) => {
     setCurrIntNotes("");
     setIntervalRating("");
     setCurrentRatingColor("white");
-    setIsOpen(false);
   };
 
   const errorCollector = {};
