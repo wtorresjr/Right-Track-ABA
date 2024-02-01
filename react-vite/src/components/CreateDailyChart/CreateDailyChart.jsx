@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
@@ -84,11 +84,7 @@ const CreateDailyChart = () => {
 
   return (
     <div className="newChartModal">
-      <h1>
-        Create Daily Chart For {clientName}
-        {/* {currentClient?.first_name}{" "}
-        {currentClient?.last_name} */}
-      </h1>
+      <h1>Create Daily Chart For {clientName}</h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
           return (
@@ -130,11 +126,11 @@ const CreateDailyChart = () => {
                     );
                   })}
               </select>
-              <button id="cancelBtn" onClick={() => closeModal()}>
-                Cancel
-              </button>
               <button id="createChartBtn" disabled={isDisabled}>
                 Create Chart
+              </button>
+              <button id="cancelBtn" onClick={() => closeModal()}>
+                Cancel
               </button>
             </form>
           </div>
