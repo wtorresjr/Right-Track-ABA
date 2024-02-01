@@ -6,12 +6,9 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { getClientByIDThunk } from "../../redux/clients";
+import Paginator from "../PaginationComp";
 
 const DailyCharts = ({ clientCharts }) => {
-  // const dispatch = useDispatch();
-  // const { client_id } = useParams();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
@@ -76,6 +73,9 @@ const DailyCharts = ({ clientCharts }) => {
           Avg For All Charts: {clientCharts?.All_Charts_Avg}
         </h2>
       </div>
+      <div className="paginator-contain">
+        <Paginator charts={clientCharts} />
+      </div>
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {
@@ -126,7 +126,7 @@ const DailyCharts = ({ clientCharts }) => {
               );
             }
 
-            return null; // handle the case where dc is undefined
+            return null;
           })}
       </div>
     </div>
