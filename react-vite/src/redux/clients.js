@@ -99,9 +99,7 @@ const get_by_id = (clientFound) => {
 
 export const getClientByIDThunk = (client_id) => async (dispatch) => {
   try {
-    const response = await fetch(
-      `/api/my-clients/${client_id}?page=1&per_page=7`
-    );
+    const response = await fetch(`/api/my-clients/${client_id}`);
     if (response.ok) {
       const data = await response.json();
       dispatch(get_by_id(data));

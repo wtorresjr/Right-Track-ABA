@@ -6,12 +6,20 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
-import Paginator from "../PaginationComp";
+// import Paginator from "../PaginationComp";
 
 const DailyCharts = ({ clientCharts }) => {
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(7);
+
+  //Use effect to get page or per_page after change
+  useEffect(() => {
+    console.log(page, "Page updated");
+    console.log(perPage, "Per Page updated");
+  }, [page, perPage]);
 
   useEffect(() => {
     setFilteredCharts(clientCharts);
@@ -58,12 +66,6 @@ const DailyCharts = ({ clientCharts }) => {
         <LegendComponent />
       </div>
 
-      <input
-        type="text"
-        placeholder="Search Daily Charts (By Date)"
-        value={searchFilter}
-        onChange={(e) => setSearchFilter(e.target.value)}
-      />
       <div
         className="chartTotalsContain"
         style={{
@@ -78,9 +80,23 @@ const DailyCharts = ({ clientCharts }) => {
           Avg For All Charts: {clientCharts?.All_Charts_Avg}
         </h2>
       </div>
-      <div className="paginator-contain">
+      <input
+        type="text"
+        placeholder="Search Daily Charts (By Date)"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+      />
+      {/* <div className="paginator-contain">
         <Paginator charts={clientCharts} />
-      </div>
+      </div> */}
+
+      <select onChange={(e) => setPerPage(e.target.value)}>
+        <option value={7}>7</option>
+        <option value={14}>14</option>
+        <option value={21}>21</option>
+        <option value={28}>28</option>
+      </select>
+
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {
