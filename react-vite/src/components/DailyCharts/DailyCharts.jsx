@@ -64,7 +64,12 @@ const DailyCharts = ({ clientCharts }) => {
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
-      <div className="chartTotalsContain">
+      <div
+        className="chartTotalsContain"
+        style={{
+          border: `3px solid ${returnColor(clientCharts?.All_Charts_Avg)}`,
+        }}
+      >
         <h2>
           Total Charts: {filteredCharts.length}
           {searchFilter ? " (Filtered)" : ""}

@@ -27,7 +27,7 @@ def get_clients():
 @login_required
 def get_client_by_id(client_id):
     page = request.args.get("page", default=1, type=int)
-    per_page = request.args.get("per_page", default=20, type=int)
+    per_page = request.args.get("per_page", default=50, type=int)
 
     found_client = (
         Client.query.filter_by(id=client_id)
@@ -43,11 +43,14 @@ def get_client_by_id(client_id):
     all_chart_avg_totals = 0
 
     if valid_client["therapist_id"] == current_user.id:
-        daily_charts = []
+        # Calculate total number of charts before pagination
+        total_charts = len(found_client.daily_charts)
 
         start_idx = (page - 1) * per_page
         end_idx = start_idx + per_page
         paginated_charts = found_client.daily_charts[start_idx:end_idx]
+
+        daily_charts = []
 
         for dc in paginated_charts:
             total_rating = 0
@@ -77,16 +80,18 @@ def get_client_by_id(client_id):
         valid_client["Daily_Charts"] = sorted(
             daily_charts, key=lambda x: x["chart_date"], reverse=True
         )
-        valid_client["Num_Of_Charts"] = len(valid_client["Daily_Charts"])
+        valid_client["Num_Of_Charts"] = total_charts  # Display total number of charts
+
         valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()
             for incChart in found_client.daily_charts
             if not incChart.chart_complete
         ]
-        if all_chart_avg_totals != 0:
+
+        if total_charts != 0:
             valid_client["All_Charts_Avg"] = round(
-                all_chart_avg_totals / valid_client["Num_Of_Charts"], 2
+                all_chart_avg_totals / total_charts, 2
             )
         else:
             valid_client["All_Charts_Avg"] = 0
@@ -94,7 +99,82 @@ def get_client_by_id(client_id):
         return jsonify(valid_client)
 
     else:
-        return jsonify({"message": "Forbidden, client is not registered to you."})
+        return jsonify({"message": "Forbidden, client is not registered to you."}), 403
+
+
+# @my_clients.route("/<int:client_id>", methods=["GET"])
+# @login_required
+# def get_client_by_id(client_id):
+#     page = request.args.get("page", default=1, type=int)
+#     per_page = request.args.get("per_page", default=5, type=int)
+
+#     found_client = (
+#         Client.query.filter_by(id=client_id)
+#         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
+#         .first()
+#     )
+
+#     if not found_client:
+#         return jsonify({"message": f"No client found with ID {client_id}"}), 404
+
+#     valid_client = found_client.to_dict()
+
+#     all_chart_avg_totals = 0
+
+#     if valid_client["therapist_id"] == current_user.id:
+#         daily_charts = []
+
+#         start_idx = (page - 1) * per_page
+#         end_idx = start_idx + per_page
+#         paginated_charts = found_client.daily_charts[start_idx:end_idx]
+
+#         for dc in paginated_charts:
+#             total_rating = 0
+#             chart_dict = dc.to_dict()
+#             chart_dict["intervals"] = [interval.to_dict() for interval in dc.intervals]
+#             chart_dict["interval_count"] = len(chart_dict["intervals"])
+
+#             total_rating = sum(
+#                 interval["interval_rating"]
+#                 for interval in chart_dict["intervals"]
+#                 if "interval_rating" in interval
+#             )
+#             chart_dict["total_rating"] = total_rating
+
+#             if chart_dict["interval_count"] > 0:
+#                 avg_rating = total_rating / chart_dict["interval_count"]
+#             else:
+#                 avg_rating = 0
+
+#             chart_dict["avgForChart"] = round(avg_rating, 2)
+
+#             all_chart_avg_totals += chart_dict["avgForChart"]
+
+#             daily_charts.append(chart_dict)
+
+#         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
+#         valid_client["Daily_Charts"] = sorted(
+#             daily_charts, key=lambda x: x["chart_date"], reverse=True
+#         )
+#         valid_client["Num_Of_Charts"] = len(valid_client["Daily_Charts"])
+
+#         valid_client["Discreet_Trials"] = discreet_trials
+#         valid_client["Incomplete_Charts"] = [
+#             incChart.to_dict()
+#             for incChart in found_client.daily_charts
+#             if not incChart.chart_complete
+#         ]
+#         if all_chart_avg_totals != 0:
+#             valid_client["All_Charts_Avg"] = round(
+#                 all_chart_avg_totals / valid_client["Num_Of_Charts"], 2
+#             )
+#         else:
+#             valid_client["All_Charts_Avg"] = 0
+
+#         return jsonify(valid_client)
+
+#     else:
+#         return jsonify({"message": "Forbidden, client is not registered to you."})
 
 
 @my_clients.route("/<int:client_id>", methods=["DELETE"])
@@ -186,4 +266,4 @@ def edit_a_client(client_id):
         return client_to_edit.to_dict()
 
     except Exception as e:
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"})
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 403

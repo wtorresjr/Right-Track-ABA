@@ -39,6 +39,11 @@
   flex-flow: row wrap;
   justify-content: space-around;
   gap: 20px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  /* border-top: 1px solid grey;
+  border-bottom: 1px solid grey; */
+  margin: 25px 0 0 0;
 }
 
 .dcButtons {
