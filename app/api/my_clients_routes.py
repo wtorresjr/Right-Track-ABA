@@ -26,12 +26,12 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
-    page = int(request.args.get("page"))
-    per_page = int(request.args.get("per_page"))
+    # page = int(request.args.get("page"))
+    # per_page = int(request.args.get("per_page"))
 
     all_chart_count = Daily_Chart.query.filter_by(client_id=client_id).all()
 
-    print(len(all_chart_count), "<=================== Count")
+    # print(len(all_chart_count), "<=================== Count")
 
     found_client = (
         Client.query.filter_by(id=client_id)
@@ -50,13 +50,13 @@ def get_client_by_id(client_id):
         # Calculate total number of charts before pagination
         total_charts = len(found_client.daily_charts)
 
-        start_idx = (page - 1) * per_page
-        end_idx = start_idx + per_page
-        paginated_charts = found_client.daily_charts[start_idx:end_idx]
+        # start_idx = (page - 1) * per_page
+        # end_idx = start_idx + per_page
+        # paginated_charts = found_client.daily_charts[start_idx:end_idx]
 
         daily_charts = []
 
-        for dc in paginated_charts:
+        for dc in found_client.daily_charts:
             total_rating = 0
             chart_dict = dc.to_dict()
             chart_dict["intervals"] = [interval.to_dict() for interval in dc.intervals]
