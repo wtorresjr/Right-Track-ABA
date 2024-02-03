@@ -1,2 +1,3 @@
 import AddIntervalComp from "./AddIntervalComp";
-export default AddIntervalComp;
+import UpdateIntervalComp from "./UpdateIntervalComp";
+export { AddIntervalComp, UpdateIntervalComp };
