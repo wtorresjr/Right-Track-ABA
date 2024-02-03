@@ -48,16 +48,7 @@ const UpdateDailyChart = ({ dc }) => {
     }
   }, [dispatch, todaysDate]);
 
-  // useEffect(() => {
-  //   const nameChanger = clientList?.filter((client) => {
-  //     return client.id === +selectedClient;
-  //   });
-  //   const firstLastName =
-  //     nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
-
-  //   setClientName(firstLastName);
-  // }, [dispatch, selectedClient]);
-
+  
   useEffect(() => {
     const nameChanger = clientList?.filter((client) => {
       return client.id === +selectedClient;
@@ -69,8 +60,6 @@ const UpdateDailyChart = ({ dc }) => {
 
     setClientName(firstLastName);
   }, [dispatch, selectedClient]);
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -142,11 +131,11 @@ const UpdateDailyChart = ({ dc }) => {
                     );
                   })}
               </select>
-              <button id="cancelBtn" onClick={() => closeModal()}>
-                Cancel
-              </button>
               <button id="createChartBtn" disabled={isDisabled}>
                 Update Chart
+              </button>
+              <button id="cancelBtn" onClick={() => closeModal()}>
+                Cancel
               </button>
             </form>
           </div>

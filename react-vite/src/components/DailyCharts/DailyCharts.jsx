@@ -6,18 +6,26 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { getClientByIDThunk } from "../../redux/clients";
+import { useSelector } from "react-redux";
+// import Paginator from "../PaginationComp";
 
 const DailyCharts = ({ clientCharts }) => {
-  // const dispatch = useDispatch();
-  // const { client_id } = useParams();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(7);
+  const numOfCharts = useSelector(
+    (state) => state?.clients?.client_by_id?.Num_Of_Charts
+  );
+
+  //Use effect to get page or per_page after change
 
   useEffect(() => {
     setFilteredCharts(clientCharts);
+
+    const numOfPages = Math.ceil(clientCharts?.Daily_Charts?.length / perPage);
+    setPage(numOfPages);
   }, [clientCharts]);
 
   useEffect(() => {
@@ -61,21 +69,32 @@ const DailyCharts = ({ clientCharts }) => {
         <LegendComponent />
       </div>
 
+      <div
+        className="chartTotalsContain"
+        style={{
+          border: `3px solid ${returnColor(clientCharts?.All_Charts_Avg)}`,
+        }}
+      >
+        <h2>
+          Total Charts: {numOfCharts}
+          {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
+        </h2>
+        <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
+          Avg For All Charts: {clientCharts?.All_Charts_Avg}
+        </h2>
+      </div>
       <input
         type="text"
         placeholder="Search Daily Charts (By Date)"
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
-      <div className="chartTotalsContain">
-        <h2>
-          Total Charts: {filteredCharts.length}
-          {searchFilter ? " (Filtered)" : ""}
-        </h2>
-        <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
-          Avg For All Charts: {clientCharts?.All_Charts_Avg}
-        </h2>
-      </div>
+      {/* <div className="paginator-contain">
+        <Paginator charts={clientCharts} />
+      </div> */}
+
+      {/* <select onChange={(e) => set(e.target.value)}></select> */}
+
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {
@@ -126,7 +145,7 @@ const DailyCharts = ({ clientCharts }) => {
               );
             }
 
-            return null; // handle the case where dc is undefined
+            return null;
           })}
       </div>
     </div>

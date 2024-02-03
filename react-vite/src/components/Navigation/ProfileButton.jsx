@@ -57,7 +57,7 @@ function ProfileButton() {
           {user ? (
             <>
               <p>
-                Hi {user.first_name} {user.last_name},
+                Hi, {user.first_name} {user.last_name}!
               </p>
               <li>
                 <NavLink
@@ -65,6 +65,7 @@ function ProfileButton() {
                   className="navLinks"
                   onClick={closeMenu}
                 >
+                  <i className="fa-solid fa-people-roof fa-2xl" />
                   Manage Clients
                 </NavLink>
               </li>
@@ -74,6 +75,7 @@ function ProfileButton() {
                   className="navLinks"
                   onClick={closeMenu}
                 >
+                  <i className="fa-solid fa-chart-column fa-2xl" />
                   View Reports
                 </NavLink>
               </li>
