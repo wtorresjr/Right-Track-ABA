@@ -60,3 +60,9 @@ li {
 .navLink li:last-child {
   border-bottom: none;
 }
+
+#notAvailable-msg {
+  color: red;
+  font-size: 0.5em;
+}
+

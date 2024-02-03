@@ -28,7 +28,7 @@ const AddIntervalComp = ({ client }) => {
 
   const resetAfterSubmit = () => {
     setStartTime();
-    setEndTime(); 
+    setEndTime();
     setCurrBehavior();
     setCurrIntervalBehavior({});
     setCurrActivity();
@@ -39,6 +39,9 @@ const AddIntervalComp = ({ client }) => {
 
   const errorCollector = {};
   useEffect(() => {
+    if (startTime > endTime) {
+      errorCollector["invalidDate"] = "End Time cannot be before Start Time.";
+    }
     if (!startTime) {
       errorCollector["startTime"] = "Start Required";
     }
@@ -52,13 +55,14 @@ const AddIntervalComp = ({ client }) => {
       errorCollector["intervalRating"] = "Interval rating is required";
     }
     if (!currIntNotes || currIntNotes.trim().length < 5) {
-      errorCollector["intervalNotes"] = "Notes required";
+      errorCollector["intervalNotes"] = "Interval Notes required";
     }
     if (Object.keys(errorCollector).length) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
+
     setErrors(errorCollector);
   }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
 
@@ -114,7 +118,7 @@ const AddIntervalComp = ({ client }) => {
           <h1>Add New Interval</h1>
           <div className="timeDiv">
             <label>
-              Start Time
+              Start Time*
               <input
                 type="time"
                 onChange={(e) => setStartTime(e.target.value)}
@@ -124,10 +128,13 @@ const AddIntervalComp = ({ client }) => {
               )}
             </label>
             <label>
-              End Time
+              End Time*
               <input type="time" onChange={(e) => setEndTime(e.target.value)} />
               {errors?.endTime && (
                 <p className="errorsPtag">{errors?.endTime}</p>
+              )}
+              {errors?.invalidDate && (
+                <p className="errorsPtag">{errors?.invalidDate}</p>
               )}
             </label>
           </div>
@@ -190,40 +197,57 @@ const AddIntervalComp = ({ client }) => {
             ""
           )}
         </div>
+        {/* <div className="narWrap"> */}
         <div className="noteActivityRating">
-          <div className="narWrap">
-            <div className="behaviorsDiv2">
-              <label>Activity:</label>
-              <select
-                onChange={(e) => setCurrActivity(e.target.value)}
-                defaultValue="Choose an Activity"
-              >
-                <option value="">Choose an Activity</option>
-                {activities &&
-                  activities?.map((activity) => {
-                    return <option key={activity}>{activity}</option>;
-                  })}
-              </select>
+          <div className="activityRating">
+            <div className="activityDiv">
+              <label>Activity*</label>
+              <div className="behaviorsDiv">
+                <select
+                  onChange={(e) => setCurrActivity(e.target.value)}
+                  defaultValue="Choose an Activity"
+                >
+                  <option value="">Choose an Activity</option>
+                  {activities &&
+                    activities?.map((activity) => {
+                      return <option key={activity}>{activity}</option>;
+                    })}
+                </select>
+                {/* <div className="activityError"> */}
+                {errors?.activity && (
+                  <p className="errorsPtag">{errors?.activity}</p>
+                  )}
+                  {/* </div> */}
+                  {/* </div> */}
+              </div>
             </div>
-            <label>Current Interval Rating:</label>
-            <div
-              className="irDisplay"
-              style={{ color: `${currentRatingColor}` }}
-            >
-              {intervalRating}
+            <div className="currIntervalDiv">
+              <label>Current Interval Rating:</label>
+              <div
+                className="irDisplay"
+                style={{ color: `${currentRatingColor}` }}
+              >
+                {intervalRating ? (
+                  intervalRating
+                ) : (
+                  <p id="notAvailable-msg">{"N/A"}</p>
+                )}
+              </div>
+              {/* </div> */}
             </div>
           </div>
-          {errors?.activity && <p className="errorsPtag">{errors?.activity}</p>}
-          <label>Interval Notes:</label>
-          <textarea
-            className="intervalNotes"
-            rows="7"
-            value={currIntNotes}
-            onChange={(e) => setCurrIntNotes(e.target.value)}
-          ></textarea>
-          {errors?.intervalNotes && (
-            <p className="errorsPtag">{errors?.intervalNotes}</p>
-          )}
+          <div className="intervalNotesDiv">
+            <label>Interval Notes:</label>
+            <textarea
+              className="intervalNotes"
+              rows="7"
+              value={currIntNotes}
+              onChange={(e) => setCurrIntNotes(e.target.value)}
+            ></textarea>
+            {errors?.intervalNotes && (
+              <p className="errorsPtag">{errors?.intervalNotes}</p>
+            )}
+          </div>
           <LegendComponent />
           <div className="ratingButtons">
             <label>Interval Rating:</label>
