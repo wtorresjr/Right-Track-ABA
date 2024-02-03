@@ -111,7 +111,7 @@ const AddIntervalComp = ({ client }) => {
   };
 
   return (
-    <>
+  
       <div
         id="outerCompContain"
         style={{ border: `10px solid ${currentRatingColor}` }}
@@ -313,7 +313,6 @@ const AddIntervalComp = ({ client }) => {
           Cancel
         </button>
       </div>
-    </>
   );
 };
 

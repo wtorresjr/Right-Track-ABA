@@ -8,6 +8,7 @@
   max-height: 80vh;
   border-radius: 10px;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .intervalNotes {
@@ -67,6 +68,11 @@
   font-size: 18px;
   background-color: rgb(255, 153, 0);
   border: none;
+  cursor: pointer;
+}
+
+.countItem button {
+  cursor: pointer;
 }
 
 .behaviorsDiv {
