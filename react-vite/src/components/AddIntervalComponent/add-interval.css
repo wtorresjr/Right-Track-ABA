@@ -19,14 +19,14 @@
   padding: 5px;
 }
 
-.noteActivityRating {
+/* .noteActivityRating {
   padding: 10px;
   box-sizing: border-box;
-}
+} */
 
 .timeDiv {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   flex-shrink: 1;
   flex-grow: 1;
   margin: 10px 0 0 0;
@@ -40,6 +40,9 @@
   padding: 5px;
   box-sizing: border-box;
   font-size: 22px;
+}
+.activityError {
+  width: 100%;
 }
 
 .addMinusBtns {
@@ -66,19 +69,21 @@
 
 .behaviorsDiv {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  /* flex-flow: row nowrap; */
+  /* justify-content: space-between; */
   padding: 0 0 10px 0;
   height: 40px;
   gap: 10px;
 }
 
-.behaviorsDiv2 {
+.activityRating {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 0 10px 0;
-  height: 40px;
+  /* height: 40px; */
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .narWrap {
@@ -98,9 +103,28 @@
 }
 
 .behaviorsDiv select,
-.behaviorsDiv2 select {
+.activityRating select {
   font-size: 18px;
 }
+
+.activityRating label,
+select {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+}
+
+.activityDiv {
+  display: flex;
+  flex-flow: column;
+  /* align-items: center; */
+  /* justify-content: space-around; */
+  border: 1px solid pink;
+  box-sizing: border-box;
+  /* height: 150px; */
+}
+
 #addIntervalBtn {
   font-size: 26px;
   width: 100%;
@@ -127,7 +151,7 @@
 }
 
 .irDisplay {
-  width: 25%;
+  /* width: 25%; */
   font-size: 72px;
   display: flex;
   justify-content: center;
@@ -146,4 +170,30 @@
 
 .ratingDropDown:hover {
   outline: none;
+}
+
+.noteActivityRating {
+  border: 1px solid red;
+}
+.intervalNotesDiv {
+  border: 1px solid orange;
+  padding: 0 10px;
+}
+
+.intervalNotesDiv label {
+  border: 1px solid orange;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+.intervalNotesDiv textarea {
+  width: 100%;
+  border: 3px solid green;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.currIntervalDiv {
+  border: 1px solid purple;
 }
