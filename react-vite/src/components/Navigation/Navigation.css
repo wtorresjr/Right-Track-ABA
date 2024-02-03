@@ -15,7 +15,6 @@
 }
 
 .hamburger-menu {
-  /* width: auto; */
   display: flex;
   justify-content: right;
 }
@@ -42,15 +41,20 @@
 }
 
 li {
-  border-bottom: 1px solid rgb(199, 199, 199);
   padding: 10px 0;
 }
 
 .navLinks {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
   padding: 10px 0;
   cursor: pointer;
   font-weight: 500;
   text-decoration: none;
+  color: orange;
+  padding: 10px;
 }
 
 .navLink li:last-child {
