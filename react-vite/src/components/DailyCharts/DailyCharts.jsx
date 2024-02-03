@@ -77,7 +77,7 @@ const DailyCharts = ({ clientCharts }) => {
       >
         <h2>
           Total Charts: {numOfCharts}
-          {searchFilter ? ` (${filteredCharts.length} - Filtered)` : ""}
+          {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
         </h2>
         <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
           Avg For All Charts: {clientCharts?.All_Charts_Avg}
