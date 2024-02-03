@@ -16,7 +16,7 @@ const DeleteModal = ({ client }) => {
   const { setModalContent } = useModal();
 
   useEffect(() => {
-    setConfirmDelText(`DELETE ${client?.first_name}`);
+    setConfirmDelText(`DELETE ${client?.guardian_email}`);
   }, [dispatch, client?.first_name]);
 
   useEffect(() => {
