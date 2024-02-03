@@ -44,15 +44,17 @@ const CreateDailyChart = () => {
     }
   }, [dispatch, todaysDate]);
 
+  
   useEffect(() => {
     const nameChanger = clientList?.filter((client) => {
-      return client.id === +selectedClient;
+      return client?.id === +selectedClient;
     });
+    console.log(nameChanger, "Name Changer");
     const firstLastName =
       nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
-
     setClientName(firstLastName);
-  }, [dispatch, selectedClient, clientList]);
+  }, [selectedClient]);
+
 
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
