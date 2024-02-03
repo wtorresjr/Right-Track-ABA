@@ -26,8 +26,8 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
-    # page = int(request.args.get("page"))
-    # per_page = int(request.args.get("per_page"))
+    page = int(request.args.get("page"))
+    per_page = int(request.args.get("per_page"))
 
     all_chart_count = Daily_Chart.query.filter_by(client_id=client_id).all()
 
@@ -50,13 +50,14 @@ def get_client_by_id(client_id):
         # Calculate total number of charts before pagination
         total_charts = len(found_client.daily_charts)
 
-        # start_idx = (page - 1) * per_page
-        # end_idx = start_idx + per_page
-        # paginated_charts = found_client.daily_charts[start_idx:end_idx]
+        start_idx = (page - 1) * per_page
+        end_idx = start_idx + per_page
+        paginated_charts = found_client.daily_charts[start_idx:end_idx]
 
         daily_charts = []
 
-        for dc in found_client.daily_charts:
+        # for dc in found_client.daily_charts:
+        for dc in paginated_charts:
             total_rating = 0
             chart_dict = dc.to_dict()
             chart_dict["intervals"] = [interval.to_dict() for interval in dc.intervals]
@@ -84,7 +85,6 @@ def get_client_by_id(client_id):
         valid_client["Daily_Charts"] = sorted(
             daily_charts, key=lambda x: x["chart_date"], reverse=True
         )
-        valid_client["Num_Of_Charts"] = total_charts  # Display total number of charts
 
         valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
@@ -92,6 +92,7 @@ def get_client_by_id(client_id):
             for incChart in found_client.daily_charts
             if not incChart.chart_complete
         ]
+        valid_client["Num_Of_Charts"] = total_charts  # Display total number of charts
 
         if total_charts != 0:
             valid_client["All_Charts_Avg"] = round(
