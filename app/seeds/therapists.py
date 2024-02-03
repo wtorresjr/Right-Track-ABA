@@ -12,14 +12,14 @@ def seed_therapists():
         password="password",
     )
     db.session.add(demouser)
-    for _ in range(2):
-        demo = Therapist(
-            first_name=fake.first_name(),
-            last_name=fake.last_name(),
-            email=fake.email(),
-            password="password",
-        )
-        db.session.add(demo)
+    # for _ in range(2):
+    #     demo = Therapist(
+    #         first_name=fake.first_name(),
+    #         last_name=fake.last_name(),
+    #         email=fake.email(),
+    #         password="password",
+    #     )
+    #     db.session.add(demo)
     db.session.commit()
 
 

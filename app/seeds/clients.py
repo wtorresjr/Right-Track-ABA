@@ -16,16 +16,17 @@ import json
 
 
 def seed_clients():
-    for client_idx in range(1, 31):
+    for client_idx in range(1, 4):
         client = Client(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             guardian_email=fake.email(),
             dob=fake.date_between(
-                start_date=date(2016, 1, 1), end_date=date(2019, 6, 30)
+                start_date=date(2016, 1, 1), end_date=date(2020, 6, 30)
             ),
             client_notes=fake.paragraph(nb_sentences=5),
-            therapist_id=randint(1, 3),
+            # therapist_id=randint(1, 3),
+            therapist_id=1,
         )
 
         db.session.add(client)
@@ -36,7 +37,7 @@ def seed_clients():
         seed_discreet_trials(new_client)
 
         # def seed_daily_charts():
-        for _ in range(randint(10, 20)):
+        for _ in range(randint(90, 120)):
             chart = Daily_Chart(
                 client_id=client_idx,
                 chart_date=fake.date_between(
