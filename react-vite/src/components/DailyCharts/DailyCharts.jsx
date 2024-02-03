@@ -16,13 +16,12 @@ const DailyCharts = ({ clientCharts }) => {
   const [perPage, setPerPage] = useState(7);
 
   //Use effect to get page or per_page after change
-  useEffect(() => {
-    console.log(page, "Page updated");
-    console.log(perPage, "Per Page updated");
-  }, [page, perPage]);
 
   useEffect(() => {
     setFilteredCharts(clientCharts);
+
+    const numOfPages = Math.ceil(clientCharts?.Daily_Charts?.length / perPage);
+    setPage(numOfPages);
   }, [clientCharts]);
 
   useEffect(() => {
@@ -90,12 +89,9 @@ const DailyCharts = ({ clientCharts }) => {
         <Paginator charts={clientCharts} />
       </div> */}
 
-      <select onChange={(e) => setPerPage(e.target.value)}>
-        <option value={7}>7</option>
-        <option value={14}>14</option>
-        <option value={21}>21</option>
-        <option value={28}>28</option>
-      </select>
+      {/* <select onChange={(e) => set(e.target.value)}></select> */}
+
+      
 
       <div className="chartsContain">
         {filteredCharts &&

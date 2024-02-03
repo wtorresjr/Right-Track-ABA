@@ -65,7 +65,7 @@ const AddIntervalComp = ({ client }) => {
 
   const resetAfterSubmit = () => {
     setStartTime();
-    setEndTime();
+    setEndTime(); 
     setCurrBehavior();
     setCurrIntervalBehavior({});
     setCurrActivity();
