@@ -197,12 +197,12 @@ const AddIntervalComp = ({ client }) => {
             ""
           )}
         </div>
-        {/* <div className="narWrap"> */}
         <div className="noteActivityRating">
           <div className="activityRating">
             <div className="activityDiv">
               <label>Activity*</label>
               <div className="behaviorsDiv">
+                <div id="activitySelect">
                 <select
                   onChange={(e) => setCurrActivity(e.target.value)}
                   defaultValue="Choose an Activity"
@@ -213,12 +213,15 @@ const AddIntervalComp = ({ client }) => {
                       return <option key={activity}>{activity}</option>;
                     })}
                 </select>
+                      <div className="narWrap">
                 {/* <div className="activityError"> */}
-                {errors?.activity && (
-                  <p className="errorsPtag">{errors?.activity}</p>
+                {/* </div> */}
+              {errors?.activity && (
+                <p className="errorsPtag">{errors?.activity}</p>
                   )}
-                  {/* </div> */}
-                  {/* </div> */}
+                    
+                  </div>
+                </div>
               </div>
             </div>
             <div className="currIntervalDiv">
@@ -237,7 +240,7 @@ const AddIntervalComp = ({ client }) => {
             </div>
           </div>
           <div className="intervalNotesDiv">
-            <label>Interval Notes:</label>
+            <label>Interval Notes*</label>
             <textarea
               className="intervalNotes"
               rows="7"
@@ -280,7 +283,10 @@ const AddIntervalComp = ({ client }) => {
             </select>
           </div>
           {errors?.intervalRating && (
-            <p className="errorsPtag">{errors?.intervalRating}</p>
+            <p className="errorsPtag">
+              {errors?.intervalRating}
+
+            </p>
           )}
         </div>
         <button
