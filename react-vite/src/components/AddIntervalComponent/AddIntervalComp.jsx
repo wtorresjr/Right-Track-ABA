@@ -25,6 +25,7 @@ const AddIntervalComp = ({ client }) => {
   const [errors, setErrors] = useState();
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
+  const [count, setCount] = useState();
 
   const resetAfterSubmit = () => {
     setStartTime();
@@ -39,6 +40,9 @@ const AddIntervalComp = ({ client }) => {
 
   const errorCollector = {};
   useEffect(() => {
+    if (startTime > endTime) {
+      errorCollector["invalidDate"] = "End Time cannot be before Start Time.";
+    }
     if (!startTime) {
       errorCollector["startTime"] = "Start Required";
     }
@@ -52,13 +56,14 @@ const AddIntervalComp = ({ client }) => {
       errorCollector["intervalRating"] = "Interval rating is required";
     }
     if (!currIntNotes || currIntNotes.trim().length < 5) {
-      errorCollector["intervalNotes"] = "Notes required";
+      errorCollector["intervalNotes"] = "Interval Notes required";
     }
     if (Object.keys(errorCollector).length) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
+
     setErrors(errorCollector);
   }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
 
@@ -86,6 +91,7 @@ const AddIntervalComp = ({ client }) => {
     }
   };
 
+
   const newBehavior = (behavior, addOrRemove) => {
     setCurrIntervalBehavior((prevBehaviors) => {
       const updatedBehaviors = { ...prevBehaviors };
@@ -93,7 +99,7 @@ const AddIntervalComp = ({ client }) => {
       if (updatedBehaviors[behavior]) {
         updatedBehaviors[behavior] += addOrRemove === "add" ? 1 : -1;
 
-        if (updatedBehaviors[behavior] === 0) {
+        if (updatedBehaviors[behavior] === 0 || addOrRemove === "delete") {
           delete updatedBehaviors[behavior];
         }
       } else {
@@ -105,7 +111,7 @@ const AddIntervalComp = ({ client }) => {
   };
 
   return (
-    <>
+  
       <div
         id="outerCompContain"
         style={{ border: `10px solid ${currentRatingColor}` }}
@@ -114,7 +120,7 @@ const AddIntervalComp = ({ client }) => {
           <h1>Add New Interval</h1>
           <div className="timeDiv">
             <label>
-              Start Time
+              Start Time*
               <input
                 type="time"
                 onChange={(e) => setStartTime(e.target.value)}
@@ -124,10 +130,13 @@ const AddIntervalComp = ({ client }) => {
               )}
             </label>
             <label>
-              End Time
+              End Time*
               <input type="time" onChange={(e) => setEndTime(e.target.value)} />
               {errors?.endTime && (
                 <p className="errorsPtag">{errors?.endTime}</p>
+              )}
+              {errors?.invalidDate && (
+                <p className="errorsPtag">{errors?.invalidDate}</p>
               )}
             </label>
           </div>
@@ -160,27 +169,39 @@ const AddIntervalComp = ({ client }) => {
                 ([behavior, count]) => (
                   <div key={behavior} className="countItem">
                     {behavior}:
-                    <div className="addMinusBtns">
+                    <div id="delAddMinusBtn">
                       <button
+                        id="pbDeleteBtn"
                         className="addMinus"
                         onClick={(e) => {
                           e.stopPropagation();
-                          newBehavior(behavior, "remove");
+                          newBehavior(behavior, "delete");
                         }}
                       >
-                        -
+                        Delete
                       </button>
-                      <div className="countBox">{count}</div>
+                      <div className="addMinusBtns">
+                        <button
+                          className="addMinus"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            newBehavior(behavior, "remove");
+                          }}
+                        >
+                          -
+                        </button>
+                        <div className="countBox">{count}</div>
 
-                      <button
-                        className="addMinus"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          newBehavior(behavior, "add");
-                        }}
-                      >
-                        +
-                      </button>
+                        <button
+                          className="addMinus"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            newBehavior(behavior, "add");
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )
@@ -191,73 +212,94 @@ const AddIntervalComp = ({ client }) => {
           )}
         </div>
         <div className="noteActivityRating">
-          <div className="narWrap">
-            <div className="behaviorsDiv2">
-              <label>Activity:</label>
-              <select
-                onChange={(e) => setCurrActivity(e.target.value)}
-                defaultValue="Choose an Activity"
+          <div className="activityRating">
+            <div className="activityDiv">
+              <label>Activity*</label>
+              <div className="behaviorsDiv">
+                <div id="activitySelect">
+                  <select
+                    onChange={(e) => setCurrActivity(e.target.value)}
+                    defaultValue="Choose an Activity"
+                  >
+                    <option value="">Choose an Activity</option>
+                    {activities &&
+                      activities?.map((activity) => {
+                        return <option key={activity}>{activity}</option>;
+                      })}
+                  </select>
+                  <div className="narWrap">
+                    {/* <div className="activityError"> */}
+                    {/* </div> */}
+                    {errors?.activity && (
+                      <p className="errorsPtag">{errors?.activity}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="currIntervalDiv">
+              <label>Current Interval Rating:</label>
+              <div
+                className="irDisplay"
+                style={{ color: `${currentRatingColor}` }}
               >
-                <option value="">Choose an Activity</option>
-                {activities &&
-                  activities?.map((activity) => {
-                    return <option key={activity}>{activity}</option>;
-                  })}
+                {intervalRating ? (
+                  intervalRating
+                ) : (
+                  <p id="notAvailable-msg">{"N/A"}</p>
+                )}
+              </div>
+              {/* </div> */}
+            </div>
+          </div>
+          <div className="intervalNotesDiv">
+            <label>Interval Notes*</label>
+            <textarea
+              className="intervalNotes"
+              rows="7"
+              value={currIntNotes}
+              onChange={(e) => setCurrIntNotes(e.target.value)}
+            ></textarea>
+            {errors?.intervalNotes && (
+              <p className="errorsPtag">{errors?.intervalNotes}</p>
+            )}
+          </div>
+          <LegendComponent />
+          <div id="intervalRatingLabel">
+            <div className="behaviorsDiv">
+              <label>Interval Rating:</label>
+              <select
+                onChange={(e) => {
+                  setIntervalRating(e.target.value);
+                  setCurrentRatingColor(returnColor(e.target.value));
+                }}
+                className="ratingDropDown"
+              >
+                <option value={""}>Select a rating</option>
+                <option value={0} style={{ backgroundColor: "red" }}>
+                  0
+                </option>
+                <option value={1} style={{ backgroundColor: "red" }}>
+                  1
+                </option>
+                <option value={2} style={{ backgroundColor: "orange" }}>
+                  2
+                </option>
+                <option value={3} style={{ backgroundColor: "yellow" }}>
+                  3
+                </option>
+                <option value={4} style={{ backgroundColor: "yellowgreen" }}>
+                  4
+                </option>
+                <option value={5} style={{ backgroundColor: "green" }}>
+                  5
+                </option>
               </select>
             </div>
-            <label>Current Interval Rating:</label>
-            <div
-              className="irDisplay"
-              style={{ color: `${currentRatingColor}` }}
-            >
-              {intervalRating}
-            </div>
+            {errors?.intervalRating && (
+              <p className="errorsPtag">{errors?.intervalRating}</p>
+            )}
           </div>
-          {errors?.activity && <p className="errorsPtag">{errors?.activity}</p>}
-          <label>Interval Notes:</label>
-          <textarea
-            className="intervalNotes"
-            rows="7"
-            value={currIntNotes}
-            onChange={(e) => setCurrIntNotes(e.target.value)}
-          ></textarea>
-          {errors?.intervalNotes && (
-            <p className="errorsPtag">{errors?.intervalNotes}</p>
-          )}
-          <LegendComponent />
-          <div className="ratingButtons">
-            <label>Interval Rating:</label>
-            <select
-              onChange={(e) => {
-                setIntervalRating(e.target.value);
-                setCurrentRatingColor(returnColor(e.target.value));
-              }}
-              className="ratingDropDown"
-            >
-              <option value={""}>Select a rating</option>
-              <option value={0} style={{ backgroundColor: "red" }}>
-                0
-              </option>
-              <option value={1} style={{ backgroundColor: "red" }}>
-                1
-              </option>
-              <option value={2} style={{ backgroundColor: "orange" }}>
-                2
-              </option>
-              <option value={3} style={{ backgroundColor: "yellow" }}>
-                3
-              </option>
-              <option value={4} style={{ backgroundColor: "yellowgreen" }}>
-                4
-              </option>
-              <option value={5} style={{ backgroundColor: "green" }}>
-                5
-              </option>
-            </select>
-          </div>
-          {errors?.intervalRating && (
-            <p className="errorsPtag">{errors?.intervalRating}</p>
-          )}
         </div>
         <button
           type="Submit"
@@ -271,7 +313,6 @@ const AddIntervalComp = ({ client }) => {
           Cancel
         </button>
       </div>
-    </>
   );
 };
 

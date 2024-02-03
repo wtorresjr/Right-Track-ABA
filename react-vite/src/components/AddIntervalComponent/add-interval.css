@@ -1,6 +1,6 @@
 .intervalCompContain {
   box-sizing: border-box;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 #outerCompContain {
@@ -8,6 +8,7 @@
   max-height: 80vh;
   border-radius: 10px;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .intervalNotes {
@@ -19,14 +20,9 @@
   padding: 5px;
 }
 
-.noteActivityRating {
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .timeDiv {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   flex-shrink: 1;
   flex-grow: 1;
   margin: 10px 0 0 0;
@@ -39,7 +35,16 @@
   align-items: center;
   padding: 5px;
   box-sizing: border-box;
-  font-size: 22px;
+  font-size: 18px;
+}
+
+.activityError {
+  width: 100%;
+}
+
+#delAddMinusBtn {
+  display: flex;
+  gap: 10px;
 }
 
 .addMinusBtns {
@@ -54,31 +59,34 @@
   font-size: 28px;
 }
 
-.behaviorsDiv select {
-  width: 50%;
+.behaviorsDiv p {
+  height: 100%;
 }
+
 .behaviorsDiv button {
   width: 50%;
   font-size: 18px;
   background-color: rgb(255, 153, 0);
   border: none;
+  cursor: pointer;
+}
+
+.countItem button {
+  cursor: pointer;
 }
 
 .behaviorsDiv {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
   padding: 0 0 10px 0;
   height: 40px;
   gap: 10px;
 }
 
-.behaviorsDiv2 {
+.activityRating {
   display: flex;
   justify-content: space-between;
-  padding: 0 0 10px 0;
-  height: 40px;
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .narWrap {
@@ -98,9 +106,33 @@
 }
 
 .behaviorsDiv select,
-.behaviorsDiv2 select {
+.activityRating select {
   font-size: 18px;
 }
+
+.activityRating label,
+select {
+  width: 100%;
+
+  display: flex;
+}
+
+#activitySelect select {
+  display: flex;
+  height: 40px;
+  gap: 10px;
+}
+
+#activitySelect {
+  width: 100%;
+}
+
+.activityDiv {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
 #addIntervalBtn {
   font-size: 26px;
   width: 100%;
@@ -111,23 +143,40 @@
   font-weight: bolder;
 }
 
+#intervalRatingLabel {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column nowrap;
+}
 .ratingButtons {
   display: flex;
-  flex-flow: row nowrap;
-  gap: 5px;
-  flex-grow: 1;
-  justify-content: center;
+  flex-flow: column nowrap;
+  /* gap: 5px; */
+
+  justify-content: space-around;
   align-items: center;
+  width: 50%;
 }
 
+#pbDeleteBtn {
+  width: auto;
+  /* height: 20px; */
+  font-size: 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* 
 .ratingBtn {
   width: 100%;
   padding: 20px;
   font-size: 1.9em;
-}
+} */
 
 .irDisplay {
-  width: 25%;
   font-size: 72px;
   display: flex;
   justify-content: center;
@@ -136,14 +185,31 @@
 
 .narWrap {
   display: flex;
-  flex-flow: row nowrap;
-}
-
-.ratingDropDown {
-  width: 100%;
-  height: 30px;
+  flex-flow: row wrap;
 }
 
 .ratingDropDown:hover {
   outline: none;
+}
+
+.noteActivityRating {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+}
+.intervalNotesDiv {
+  padding: 0 10px;
+}
+
+.intervalNotesDiv label {
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+.intervalNotesDiv textarea {
+  width: 100%;
+  /* border: 3px solid green; */
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }

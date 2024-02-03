@@ -194,6 +194,23 @@ const DailyChartDetail = () => {
             </div>
           );
         })}
+      <div className="chartDetailHeader">
+        <div>
+          <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
+        </div>
+        <div>
+          <NavLink
+            to={`/client/${clientInfo?.id}`}
+            className="navLinkStyle"
+            style={{ fontWeight: "bold" }}
+          >
+            <div>
+              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+              {clientInfo?.first_name}'s Detail Page
+            </div>
+          </NavLink>
+        </div>
+      </div>{" "}
     </div>
   );
 };
