@@ -25,6 +25,7 @@ const AddIntervalComp = ({ client }) => {
   const [errors, setErrors] = useState();
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
+  const [count, setCount] = useState();
 
   const resetAfterSubmit = () => {
     setStartTime();
@@ -90,6 +91,7 @@ const AddIntervalComp = ({ client }) => {
     }
   };
 
+
   const newBehavior = (behavior, addOrRemove) => {
     setCurrIntervalBehavior((prevBehaviors) => {
       const updatedBehaviors = { ...prevBehaviors };
@@ -97,7 +99,7 @@ const AddIntervalComp = ({ client }) => {
       if (updatedBehaviors[behavior]) {
         updatedBehaviors[behavior] += addOrRemove === "add" ? 1 : -1;
 
-        if (updatedBehaviors[behavior] === 0) {
+        if (updatedBehaviors[behavior] === 0 || addOrRemove === "delete") {
           delete updatedBehaviors[behavior];
         }
       } else {
@@ -167,27 +169,39 @@ const AddIntervalComp = ({ client }) => {
                 ([behavior, count]) => (
                   <div key={behavior} className="countItem">
                     {behavior}:
-                    <div className="addMinusBtns">
+                    <div id="delAddMinusBtn">
                       <button
+                        id="pbDeleteBtn"
                         className="addMinus"
                         onClick={(e) => {
                           e.stopPropagation();
-                          newBehavior(behavior, "remove");
+                          newBehavior(behavior, "delete");
                         }}
                       >
-                        -
+                        Delete
                       </button>
-                      <div className="countBox">{count}</div>
+                      <div className="addMinusBtns">
+                        <button
+                          className="addMinus"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            newBehavior(behavior, "remove");
+                          }}
+                        >
+                          -
+                        </button>
+                        <div className="countBox">{count}</div>
 
-                      <button
-                        className="addMinus"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          newBehavior(behavior, "add");
-                        }}
-                      >
-                        +
-                      </button>
+                        <button
+                          className="addMinus"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            newBehavior(behavior, "add");
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )
@@ -203,23 +217,22 @@ const AddIntervalComp = ({ client }) => {
               <label>Activity*</label>
               <div className="behaviorsDiv">
                 <div id="activitySelect">
-                <select
-                  onChange={(e) => setCurrActivity(e.target.value)}
-                  defaultValue="Choose an Activity"
-                >
-                  <option value="">Choose an Activity</option>
-                  {activities &&
-                    activities?.map((activity) => {
-                      return <option key={activity}>{activity}</option>;
-                    })}
-                </select>
-                      <div className="narWrap">
-                {/* <div className="activityError"> */}
-                {/* </div> */}
-              {errors?.activity && (
-                <p className="errorsPtag">{errors?.activity}</p>
-                  )}
-                    
+                  <select
+                    onChange={(e) => setCurrActivity(e.target.value)}
+                    defaultValue="Choose an Activity"
+                  >
+                    <option value="">Choose an Activity</option>
+                    {activities &&
+                      activities?.map((activity) => {
+                        return <option key={activity}>{activity}</option>;
+                      })}
+                  </select>
+                  <div className="narWrap">
+                    {/* <div className="activityError"> */}
+                    {/* </div> */}
+                    {errors?.activity && (
+                      <p className="errorsPtag">{errors?.activity}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -252,42 +265,41 @@ const AddIntervalComp = ({ client }) => {
             )}
           </div>
           <LegendComponent />
-          <div className="ratingButtons">
-            <label>Interval Rating:</label>
-            <select
-              onChange={(e) => {
-                setIntervalRating(e.target.value);
-                setCurrentRatingColor(returnColor(e.target.value));
-              }}
-              className="ratingDropDown"
-            >
-              <option value={""}>Select a rating</option>
-              <option value={0} style={{ backgroundColor: "red" }}>
-                0
-              </option>
-              <option value={1} style={{ backgroundColor: "red" }}>
-                1
-              </option>
-              <option value={2} style={{ backgroundColor: "orange" }}>
-                2
-              </option>
-              <option value={3} style={{ backgroundColor: "yellow" }}>
-                3
-              </option>
-              <option value={4} style={{ backgroundColor: "yellowgreen" }}>
-                4
-              </option>
-              <option value={5} style={{ backgroundColor: "green" }}>
-                5
-              </option>
-            </select>
+          <div id="intervalRatingLabel">
+            <div className="behaviorsDiv">
+              <label>Interval Rating:</label>
+              <select
+                onChange={(e) => {
+                  setIntervalRating(e.target.value);
+                  setCurrentRatingColor(returnColor(e.target.value));
+                }}
+                className="ratingDropDown"
+              >
+                <option value={""}>Select a rating</option>
+                <option value={0} style={{ backgroundColor: "red" }}>
+                  0
+                </option>
+                <option value={1} style={{ backgroundColor: "red" }}>
+                  1
+                </option>
+                <option value={2} style={{ backgroundColor: "orange" }}>
+                  2
+                </option>
+                <option value={3} style={{ backgroundColor: "yellow" }}>
+                  3
+                </option>
+                <option value={4} style={{ backgroundColor: "yellowgreen" }}>
+                  4
+                </option>
+                <option value={5} style={{ backgroundColor: "green" }}>
+                  5
+                </option>
+              </select>
+            </div>
+            {errors?.intervalRating && (
+              <p className="errorsPtag">{errors?.intervalRating}</p>
+            )}
           </div>
-          {errors?.intervalRating && (
-            <p className="errorsPtag">
-              {errors?.intervalRating}
-
-            </p>
-          )}
         </div>
         <button
           type="Submit"

@@ -19,11 +19,6 @@
   padding: 5px;
 }
 
-/* .noteActivityRating {
-  padding: 10px;
-  box-sizing: border-box;
-} */
-
 .timeDiv {
   display: flex;
   flex-flow: row wrap;
@@ -32,10 +27,6 @@
   margin: 10px 0 0 0;
 }
 
-/* .behaviorsDiv select {
-  width: 100%;
-} */
-
 .countItem {
   display: flex;
   flex-flow: row nowrap;
@@ -43,11 +34,16 @@
   align-items: center;
   padding: 5px;
   box-sizing: border-box;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .activityError {
   width: 100%;
+}
+
+#delAddMinusBtn {
+  display: flex;
+  gap: 10px;
 }
 
 .addMinusBtns {
@@ -63,9 +59,7 @@
 }
 
 .behaviorsDiv p {
-  /* width: 100%; */
   height: 100%;
-  /* border: 1px solid orange; */
 }
 
 .behaviorsDiv button {
@@ -77,8 +71,6 @@
 
 .behaviorsDiv {
   display: flex;
-  /* flex-flow: row nowrap; */
-  /* justify-content: space-between; */
   padding: 0 0 10px 0;
   height: 40px;
   gap: 10px;
@@ -87,9 +79,6 @@
 .activityRating {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
-  /* padding: 0 0 10px 0; */
-  /* height: 40px; */
   gap: 10px;
   box-sizing: border-box;
 }
@@ -120,50 +109,22 @@ select {
   width: 100%;
 
   display: flex;
-  /* align-items: center; */
 }
 
-#activitySelect {
-  /* display: flex; */
-  /* flex-flow: row nowrap; */
-  /* justify-content: space-between; */
-  /* padding: 0 0 10px 0; */
-  /* height: 40px; */
-  width: 100%;
-  gap: 10px;
-}
 #activitySelect select {
   display: flex;
-  /* flex-flow: row nowrap; */
-  /* justify-content: space-between; */
-  /* padding: 0 0 10px 0; */
   height: 40px;
   gap: 10px;
 }
 
-.activityDiv {
-  border: 1px solid red;
-
+#activitySelect {
+  width: 100%;
 }
 
 .activityDiv {
   display: flex;
   flex-flow: column wrap;
-
-
-  /* align-items: center; */
-  /* justify-content: space-around; */
-  /* border: 1px solid pink; */
-  /* position: relative; */
-  /* left: 0; */
-  /* top: 0; */
-
-  /* box-sizing: border-box; */
-  /* height: 150px; */
-}
-
-.activityDiv select {
-  width: 100%;
+  align-items: center;
 }
 
 #addIntervalBtn {
@@ -176,23 +137,40 @@ select {
   font-weight: bolder;
 }
 
+#intervalRatingLabel {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column nowrap;
+}
 .ratingButtons {
   display: flex;
-  flex-flow: row nowrap;
-  gap: 5px;
-  flex-grow: 1;
-  justify-content: center;
+  flex-flow: column nowrap;
+  /* gap: 5px; */
+
+  justify-content: space-around;
   align-items: center;
+  width: 50%;
 }
 
+#pbDeleteBtn {
+  width: auto;
+  /* height: 20px; */
+  font-size: 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* 
 .ratingBtn {
   width: 100%;
   padding: 20px;
   font-size: 1.9em;
-}
+} */
 
 .irDisplay {
-  /* width: 25%; */
   font-size: 72px;
   display: flex;
   justify-content: center;
@@ -201,12 +179,7 @@ select {
 
 .narWrap {
   display: flex;
-  flex-flow: row nowrap;
-}
-
-.ratingDropDown {
-  width: 100%;
-  height: 30px;
+  flex-flow: row wrap;
 }
 
 .ratingDropDown:hover {
@@ -214,19 +187,15 @@ select {
 }
 
 .noteActivityRating {
-  border: 1px solid red;
   display: flex;
   flex-flow: column wrap;
   width: 100%;
-  /* overflow:; */
 }
 .intervalNotesDiv {
-  /* border: 1px solid orange; */
   padding: 0 10px;
 }
 
 .intervalNotesDiv label {
-  /* border: 1px solid orange; */
   padding: 0;
   margin: 0 0 10px 0;
 }
@@ -237,8 +206,4 @@ select {
   display: flex;
   flex-flow: column;
   align-items: center;
-}
-
-.currIntervalDiv {
-  /* border: 1px solid purple; */
 }
