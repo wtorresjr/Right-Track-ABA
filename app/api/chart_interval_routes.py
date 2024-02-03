@@ -5,17 +5,12 @@ from app.models import Interval, Daily_Chart
 from datetime import time, datetime
 from sqlalchemy.orm import joinedload
 
+from collections import Counter
+from collections import defaultdict
+
 chart_interval_bp = Blueprint("interval", __name__)
 
-
-# Get interval by id
-
-# Get Interval by Client_Id
-
-from collections import Counter
-
-
-from collections import defaultdict
+# Get Intervals by Client_Id
 
 
 @chart_interval_bp.route("/<int:client_id>", methods=["GET"])
@@ -63,6 +58,9 @@ def get_intervals_by_client_id(client_id):
     return jsonify(sorted_behavior_counts)
 
 
+# Edit interval by ID
+
+
 @chart_interval_bp.route("/<int:interval_id>", methods=["PUT"])
 @login_required
 def edit_interval_by_id(interval_id):
@@ -74,10 +72,27 @@ def edit_interval_by_id(interval_id):
     found_interval = interval_to_edit.to_dict()
 
     if found_interval["therapist_id"] == current_user.id:
-        user_edit_data = request.get_json()
+        user_input_data = request.get_json()
 
-        for [key, item] in user_edit_data.items():
-            setattr(interval_to_edit, key, item)
+        start_time_str = user_input_data["start_interval"]
+        end_time_str = user_input_data["end_interval"]
+        start_interval = time.fromisoformat(start_time_str)
+        end_interval = time.fromisoformat(end_time_str)
+
+        interval_to_edit.start_interval = start_interval
+        interval_to_edit.end_interval = end_interval
+        interval_to_edit.activity = user_input_data.get(
+            "activity", interval_to_edit.activity
+        )
+        interval_to_edit.interval_notes = user_input_data.get(
+            "interval_notes", interval_to_edit.interval_notes
+        )
+        interval_to_edit.interval_rating = user_input_data.get(
+            "interval_rating", interval_to_edit.interval_rating
+        )
+        interval_to_edit.interval_tags = user_input_data.get(
+            "interval_tags", interval_to_edit.interval_tags
+        )
 
         db.session.commit()
 

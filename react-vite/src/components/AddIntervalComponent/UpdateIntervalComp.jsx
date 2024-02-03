@@ -2,40 +2,35 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
-import { useParams } from "react-router-dom";
-import { addIntervalToChart } from "../../redux/charts";
+import { editIntervalThunk, getChartByIdThunk } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
-import { activities } from "../helpers/dropdown-data";
 import { behaviors } from "../helpers/dropdown-data";
+import { activities } from "../helpers/dropdown-data";
 
-const AddIntervalComp = ({ client }) => {
-  const { chart_id } = useParams();
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
+const UpdateIntervalComp = ({ intervalToEdit }) => {
+  const [startTime, setStartTime] = useState(intervalToEdit.start_interval);
+  const [endTime, setEndTime] = useState(intervalToEdit.end_interval);
   const [currBehavior, setCurrBehavior] = useState(behaviors[0]);
-  const [currIntervalBehaviors, setCurrIntervalBehavior] = useState({});
+  const [currIntervalBehaviors, setCurrIntervalBehavior] = useState(
+    intervalToEdit?.interval_tags
+  );
   const [isDisabled, setDisabled] = useState(true);
-  const [currActivity, setCurrActivity] = useState();
-  const [intervalRating, setIntervalRating] = useState("");
-  const [currentRatingColor, setCurrentRatingColor] = useState("white");
-  const [currIntNotes, setCurrIntNotes] = useState("");
+  const [currActivity, setCurrActivity] = useState(intervalToEdit.activity);
+  const [intervalRating, setIntervalRating] = useState(
+    intervalToEdit.interval_rating
+  );
+  const [currentRatingColor, setCurrentRatingColor] = useState(
+    returnColor(intervalRating)
+  );
+  const [currIntNotes, setCurrIntNotes] = useState(
+    intervalToEdit.interval_notes
+  );
   const dispatch = useDispatch();
   const [errors, setErrors] = useState();
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
-
-  const resetAfterSubmit = () => {
-    setStartTime();
-    setEndTime(); 
-    setCurrBehavior();
-    setCurrIntervalBehavior({});
-    setCurrActivity();
-    setCurrIntNotes("");
-    setIntervalRating("");
-    setCurrentRatingColor("white");
-  };
 
   const errorCollector = {};
   useEffect(() => {
@@ -60,28 +55,38 @@ const AddIntervalComp = ({ client }) => {
       setDisabled(false);
     }
     setErrors(errorCollector);
-  }, [startTime, endTime, intervalRating, currIntNotes, currActivity]);
+  }, [
+    startTime,
+    endTime,
+    intervalRating,
+    currIntNotes,
+    currActivity,
+    currBehavior,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newIntervalData = {
+    const intervalUpdateData = {
       start_interval: startTime,
       end_interval: endTime,
       interval_tags: currIntervalBehaviors,
       interval_notes: currIntNotes,
       interval_rating: intervalRating,
-      chart_id: chart_id,
-      client_id: client?.id,
       activity: currActivity,
     };
 
-    const addIntv = dispatch(addIntervalToChart(newIntervalData));
-    if (addIntv) {
-      resetAfterSubmit();
+    const updateIntv = dispatch(
+      editIntervalThunk(
+        intervalUpdateData,
+        intervalToEdit.id,
+        intervalToEdit.chart_id
+      )
+    );
+    if (updateIntv) {
       closeModal();
       setModalContent(
-        <DeleteMessage message={"Interval Added Succesfully!"} />
+        <DeleteMessage message={"Interval Updated Succesfully!"} />
       );
     }
   };
@@ -111,13 +116,14 @@ const AddIntervalComp = ({ client }) => {
         style={{ border: `10px solid ${currentRatingColor}` }}
       >
         <div className="intervalCompContain">
-          <h1>Add New Interval</h1>
+          <h1>Edit Interval Number {intervalToEdit.id}</h1>
           <div className="timeDiv">
             <label>
               Start Time
               <input
                 type="time"
                 onChange={(e) => setStartTime(e.target.value)}
+                value={startTime}
               />
               {errors?.startTime && (
                 <p className="errorsPtag">{errors?.startTime}</p>
@@ -125,7 +131,11 @@ const AddIntervalComp = ({ client }) => {
             </label>
             <label>
               End Time
-              <input type="time" onChange={(e) => setEndTime(e.target.value)} />
+              <input
+                type="time"
+                onChange={(e) => setEndTime(e.target.value)}
+                value={endTime}
+              />
               {errors?.endTime && (
                 <p className="errorsPtag">{errors?.endTime}</p>
               )}
@@ -197,6 +207,7 @@ const AddIntervalComp = ({ client }) => {
               <select
                 onChange={(e) => setCurrActivity(e.target.value)}
                 defaultValue="Choose an Activity"
+                value={currActivity}
               >
                 <option value="">Choose an Activity</option>
                 {activities &&
@@ -232,6 +243,7 @@ const AddIntervalComp = ({ client }) => {
                 setIntervalRating(e.target.value);
                 setCurrentRatingColor(returnColor(e.target.value));
               }}
+              value={intervalRating}
               className="ratingDropDown"
             >
               <option value={""}>Select a rating</option>
@@ -265,7 +277,7 @@ const AddIntervalComp = ({ client }) => {
           onClick={handleSubmit}
           id="modalDelBtn"
         >
-          Add Interval
+          Update Interval
         </button>
         <button onClick={closeModal} id="modalCancelBtn">
           Cancel
@@ -275,4 +287,4 @@ const AddIntervalComp = ({ client }) => {
   );
 };
 
-export default AddIntervalComp;
+export default UpdateIntervalComp;
