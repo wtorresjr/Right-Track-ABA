@@ -6,6 +6,7 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 // import Paginator from "../PaginationComp";
 
 const DailyCharts = ({ clientCharts }) => {
@@ -14,6 +15,9 @@ const DailyCharts = ({ clientCharts }) => {
   const [filteredCharts, setFilteredCharts] = useState([]);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(7);
+  const numOfCharts = useSelector(
+    (state) => state?.clients?.client_by_id?.Num_Of_Charts
+  );
 
   //Use effect to get page or per_page after change
 
@@ -72,8 +76,8 @@ const DailyCharts = ({ clientCharts }) => {
         }}
       >
         <h2>
-          Total Charts: {filteredCharts.length}
-          {searchFilter ? " (Filtered)" : ""}
+          Total Charts: {numOfCharts}
+          {searchFilter ? ` (${filteredCharts.length} - Filtered)` : ""}
         </h2>
         <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
           Avg For All Charts: {clientCharts?.All_Charts_Avg}
@@ -90,8 +94,6 @@ const DailyCharts = ({ clientCharts }) => {
       </div> */}
 
       {/* <select onChange={(e) => set(e.target.value)}></select> */}
-
-      
 
       <div className="chartsContain">
         {filteredCharts &&
