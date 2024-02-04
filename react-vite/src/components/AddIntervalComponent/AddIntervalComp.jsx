@@ -48,14 +48,11 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
 
   const errorCollector = {};
   useEffect(() => {
-    console.log(intTimes, "Int Times");
     if (intTimes && startTime && endTime) {
       intTimes.forEach((startEnd) => {
         if (!(startTime >= startEnd.end || endTime <= startEnd.start)) {
           errorCollector["timeOverlap"] =
             "Start time or End Time overlaps existing interval time.";
-        } else {
-          console.log("ok");
         }
       });
     }
