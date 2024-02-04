@@ -88,7 +88,12 @@ const DailyChartDetail = () => {
   };
 
   const openAddIntModal = () => {
-    setModalContent(<AddIntervalComp client={clientInfo} />);
+    setModalContent(
+      <AddIntervalComp
+        client={clientInfo}
+        currentIntervals={currentIntervals}
+      />
+    );
   };
 
   return (
