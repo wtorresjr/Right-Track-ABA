@@ -49,7 +49,7 @@ const CreateDailyChart = () => {
     const nameChanger = clientList?.filter((client) => {
       return client?.id === +selectedClient;
     });
-    console.log(nameChanger, "Name Changer");
+    // console.log(nameChanger, "Name Changer");
     const firstLastName =
       nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
     setClientName(firstLastName);

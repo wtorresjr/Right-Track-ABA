@@ -18,12 +18,6 @@ export const ClientListComponent = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (startDay && endDay && clientCharts) {
-      console.log("Conditions met to filter charts");
-    }
-  }, [dispatch, startDay, endDay]);
-
-  useEffect(() => {
     const findClientCharts = async () => {
       const clientData = await dispatch(getClientByIDThunk(selectedClient));
       if (clientData.ok) {

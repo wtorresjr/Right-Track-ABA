@@ -55,7 +55,7 @@ const GraphComponent = ({
           dataPtLabels = "chart_date";
           dataPt1 = "behaviors";
           setChartData(behaviorData);
-          console.log(behaviorData);
+          // console.log(behaviorData);
         }
       };
       getTheData();

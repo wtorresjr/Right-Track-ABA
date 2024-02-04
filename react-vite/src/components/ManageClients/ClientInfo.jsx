@@ -7,16 +7,9 @@ import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 const ClientInfo = ({ client }) => {
   const { setModalContent } = useModal();
   const navigate = useNavigate();
-  const handleClick = (client_id, action) => {
-    if (action === "view") {
-      navigate(`/client/${client_id}`);
-    }
-    if (action === "edit") {
-      console.log(client_id, action);
-    }
-    if (action === "delete") {
-      console.log(client_id, action);
-    }
+
+  const handleClick = (client_id) => {
+    navigate(`/client/${client_id}`);
   };
 
   const openDeleteModal = () => {
@@ -56,7 +49,7 @@ const ClientInfo = ({ client }) => {
         <button
           id="viewBtn"
           onClick={() => {
-            handleClick(client.id, "view");
+            handleClick(client.id);
           }}
         >
           Client Data & Daily Charts
