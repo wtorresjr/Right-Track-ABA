@@ -119,3 +119,28 @@
   background-color: black;
   color: white;
 }
+
+.pagination {
+  display: flex;
+  gap: 5px;
+}
+
+.pagination button {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.perPageDropdown {
+  margin-top: 10px;
+}
+
+.perPageDropdown label {
+  margin-right: 5px;
+}

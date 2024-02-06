@@ -31,8 +31,6 @@ def get_client_by_id(client_id):
 
     all_chart_count = Daily_Chart.query.filter_by(client_id=client_id).all()
 
-    # print(len(all_chart_count), "<=================== Count")
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
@@ -47,7 +45,6 @@ def get_client_by_id(client_id):
     all_chart_avg_totals = 0
 
     if valid_client["therapist_id"] == current_user.id:
-        # Calculate total number of charts before pagination
         total_charts = len(found_client.daily_charts)
 
         start_idx = (page - 1) * per_page
@@ -56,7 +53,6 @@ def get_client_by_id(client_id):
 
         daily_charts = []
 
-        # for dc in found_client.daily_charts:
         for dc in paginated_charts:
             total_rating = 0
             chart_dict = dc.to_dict()
