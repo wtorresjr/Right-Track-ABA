@@ -23,7 +23,7 @@ const ClientDetails = () => {
     const getData = async () => {
       if (client_id) {
         try {
-          const data = await dispatch(getClientByIDThunk(client_id));
+          const data = await dispatch(getClientByIDThunk(client_id, 1, 5));
           if (data?.ok) {
             setLoaded(true);
           }
@@ -38,7 +38,7 @@ const ClientDetails = () => {
       }
     };
     getData();
-  }, [client_id, dispatch, message]);
+  }, [client_id, message]);
 
   const openDeleteModal = () => {
     setModalContent(<DeleteModal client={client} trigger={"ClientDetails"} />);

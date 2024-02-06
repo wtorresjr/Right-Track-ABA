@@ -13,8 +13,8 @@ const DailyCharts = ({ clientCharts }) => {
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
@@ -22,11 +22,10 @@ const DailyCharts = ({ clientCharts }) => {
   //Use effect to get page or per_page after change
 
   useEffect(() => {
-    setFilteredCharts(clientCharts);
-
-    const numOfPages = Math.ceil(clientCharts?.Daily_Charts?.length / perPage);
-    setPage(numOfPages);
-  }, [clientCharts]);
+    const startIdx = (currentPage - 1) * perPage;
+    const endIdx = startIdx + perPage;
+    setFilteredCharts(clientCharts?.Daily_Charts?.slice(startIdx, endIdx));
+  }, [currentPage, perPage, clientCharts]);
 
   useEffect(() => {
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
@@ -89,11 +88,33 @@ const DailyCharts = ({ clientCharts }) => {
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
-      {/* <div className="paginator-contain">
-        <Paginator charts={clientCharts} />
-      </div> */}
 
-      {/* <select onChange={(e) => set(e.target.value)}></select> */}
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from(
+          { length: Math.ceil(numOfCharts / perPage) },
+          (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => setCurrentPage(index + 1)}
+              className={currentPage === index + 1 ? "active" : ""}
+            >
+              {index + 1}
+            </button>
+          )
+        )}
+      </div>
+
+      <div className="perPageDropdown">
+        <label>Charts Per Page:</label>
+        <input
+          value={perPage}
+          onChange={(e) => setPerPage(parseInt(e.target.value))}
+          type="Number"
+        >
+          {/* Add more options as needed */}
+        </input>
+      </div>
 
       <div className="chartsContain">
         {filteredCharts &&
