@@ -29,8 +29,6 @@ def get_client_by_id(client_id):
     page = int(request.args.get("page"))
     per_page = int(request.args.get("per_page"))
 
-    all_chart_count = Daily_Chart.query.filter_by(client_id=client_id).all()
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
@@ -47,9 +45,16 @@ def get_client_by_id(client_id):
     if valid_client["therapist_id"] == current_user.id:
         total_charts = len(found_client.daily_charts)
 
+        # Sort all daily charts based on chart_date in descending order
+        sorted_daily_charts = sorted(
+            found_client.daily_charts,
+            key=lambda dc: dc.chart_date,
+            reverse=True
+        )
+
         start_idx = (page - 1) * per_page
         end_idx = start_idx + per_page
-        paginated_charts = found_client.daily_charts[start_idx:end_idx]
+        paginated_charts = sorted_daily_charts[start_idx:end_idx]
 
         daily_charts = []
 
@@ -78,10 +83,7 @@ def get_client_by_id(client_id):
             daily_charts.append(chart_dict)
 
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
-        valid_client["Daily_Charts"] = sorted(
-            daily_charts, key=lambda x: x["chart_date"], reverse=True
-        )
-
+        valid_client["Daily_Charts"] = daily_charts
         valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()

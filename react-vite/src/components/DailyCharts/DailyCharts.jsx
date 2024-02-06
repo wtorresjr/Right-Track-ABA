@@ -6,10 +6,13 @@ import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getClientByIDThunk } from "../../redux/clients";
+
 // import Paginator from "../PaginationComp";
 
 const DailyCharts = ({ clientCharts }) => {
+  const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
@@ -21,11 +24,25 @@ const DailyCharts = ({ clientCharts }) => {
 
   //Use effect to get page or per_page after change
 
-  useEffect(() => {
-    const startIdx = (currentPage - 1) * perPage;
-    const endIdx = startIdx + perPage;
-    setFilteredCharts(clientCharts?.Daily_Charts?.slice(startIdx, endIdx));
-  }, [currentPage, perPage, clientCharts]);
+useEffect(() => {
+  const getData = async () => {
+    try {
+      const data = await dispatch(
+        getClientByIDThunk(clientCharts?.id, currentPage, perPage)
+      );
+
+      if (data?.ok) {
+        setFilteredCharts(data?.payload?.Daily_Charts || []);
+      }
+    } catch (error) {
+      // Handle error if needed
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  getData();
+}, [currentPage, perPage, clientCharts?.id]);
+
 
   useEffect(() => {
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
@@ -111,9 +128,7 @@ const DailyCharts = ({ clientCharts }) => {
           value={perPage}
           onChange={(e) => setPerPage(parseInt(e.target.value))}
           type="Number"
-        >
-          {/* Add more options as needed */}
-        </input>
+        ></input>
       </div>
 
       <div className="chartsContain">
