@@ -23,7 +23,7 @@ const ClientDetails = () => {
     const getData = async () => {
       if (client_id) {
         try {
-          const data = await dispatch(getClientByIDThunk(client_id, 1, 5));
+          const data = await dispatch(getClientByIDThunk(client_id));
           if (data?.ok) {
             setLoaded(true);
           }
@@ -84,6 +84,7 @@ const ClientDetails = () => {
             </button>
           </div>
           <DailyCharts clientCharts={client} />
+          {/* <DailyCharts /> */}
           <DiscreetTrials clientDT={client} />
           <h1>
             {client?.last_name}, {client?.first_name}

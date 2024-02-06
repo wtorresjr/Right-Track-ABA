@@ -100,9 +100,18 @@ const get_by_id = (clientFound) => {
 export const getClientByIDThunk =
   (client_id, page, per_page) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `/api/my-clients/${client_id}?page=${page}&per_page=${per_page}`
-      );
+      let response;
+
+      if (page && per_page) {
+        response = await fetch(
+          `/api/my-clients/${client_id}?page=${page}&per_page=${per_page}`
+        );
+      } else {
+        response = await fetch(
+          `/api/my-clients/${client_id}?page=1&per_page=5`
+        );
+      }
+
       if (response.ok) {
         const data = await response.json();
         dispatch(get_by_id(data));
