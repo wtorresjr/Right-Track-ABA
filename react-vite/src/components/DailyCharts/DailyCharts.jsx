@@ -88,9 +88,7 @@ const DailyCharts = ({ clientCharts }) => {
       <div
         className="chartTotalsContain"
         style={{
-          border: `3px solid ${returnColor(
-            clientCharts?.Paginated_Charts_Avg
-          )}`,
+          border: `3px solid ${returnColor(clientCharts?.All_Charts_Avg)}`,
         }}
       >
         <h2>
@@ -98,15 +96,13 @@ const DailyCharts = ({ clientCharts }) => {
           {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
         </h2>
         <div>
-          <h2
-            style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}
-          >
+          <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
             Avg For All Charts: {clientCharts?.All_Charts_Avg}
           </h2>
           <h2
             style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}
           >
-            Avg For Selected Charts: {clientCharts?.Paginated_Charts_Avg}
+            Avg For Displayed Charts: {clientCharts?.Paginated_Charts_Avg}
           </h2>
         </div>
       </div>
