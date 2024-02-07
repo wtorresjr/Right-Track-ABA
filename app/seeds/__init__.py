@@ -16,10 +16,10 @@ seed_commands = AppGroup("seed")
 @seed_commands.command("all")
 def seed():
     if environment == "production":
-        # undo_therapists()
-        # undo_clients()
-        seed_therapists()
-        seed_clients()
+        undo_therapists()
+        undo_clients()
+    seed_therapists()
+    seed_clients()
     # Add other seed functions here
 
 
@@ -29,3 +29,4 @@ def undo():
     undo_therapists()
     undo_clients()
     # Add other undo functions here
+

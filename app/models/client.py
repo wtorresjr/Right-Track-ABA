@@ -25,14 +25,14 @@ class Client(db.Model, UserMixin):
     )
 
     therapist = db.relationship("Therapist", back_populates="clients")
-    daily_charts = db.relationship(
-        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
-    )
     discreet_trials = db.relationship(
         "Discreet_Trial", back_populates="client", cascade="all,delete-orphan"
     )
     trials = db.relationship(
         "Trial", back_populates="client", cascade="all,delete-orphan"
+    )
+    daily_charts = db.relationship(
+        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
     )
     intervals = db.relationship(
         "Interval",
