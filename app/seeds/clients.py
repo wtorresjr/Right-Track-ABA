@@ -16,7 +16,7 @@ import json
 
 
 def seed_clients():
-    for client_idx in range(1, 4):
+    for client_idx in range(1, 20):
         client = Client(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
@@ -37,7 +37,7 @@ def seed_clients():
         seed_discreet_trials(new_client)
 
         # def seed_daily_charts():
-        for _ in range(randint(90, 120)):
+        for _ in range(randint(10, 15)):
             chart = Daily_Chart(
                 client_id=client_idx,
                 chart_date=fake.date_between(
@@ -52,7 +52,7 @@ def seed_clients():
 
             # def seed_intervals():
             start_time = datetime(2023, 1, 1, 9, 15)
-            for _ in range(randint(5, 14)):
+            for _ in range(randint(5, 11)):
                 interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
 
                 int_tags = {}
