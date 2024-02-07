@@ -49,8 +49,11 @@ def get_client_by_id(client_id):
 
     valid_client = found_client.to_dict()
 
-    all_chart_avg_sum = sum(interval.interval_rating for interval in clients_intervals)
-    all_chart_avg = round(all_chart_avg_sum / len(clients_intervals), 2)
+    if clients_intervals:
+        all_chart_avg_sum = sum(
+            interval.interval_rating for interval in clients_intervals
+        )
+        all_chart_avg = round(all_chart_avg_sum / len(clients_intervals), 2)
 
     paginated_charts_avg_totals = 0
 

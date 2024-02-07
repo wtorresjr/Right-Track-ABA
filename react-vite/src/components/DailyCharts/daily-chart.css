@@ -120,19 +120,17 @@
   color: white;
 }
 
-.pagination {
+.paginationDiv {
   display: flex;
-  flex-flow: row wrap;
+  /* flex-flow: row wrap; */
   align-items: center;
-  justify-content: right;
-  margin: 10px 0;
+  /* justify-content: space-between; */
+  /* margin: 10px 0; */
   width: 100%;
+  border-bottom: 1px solid grey;
 }
 
-.chartsPerPageDiv input {
-  width: 80px;
-}
-
-.chartsPerPageDiv label {
-  width: 100%;
+.perPageInput {
+  width: 100px;
+  margin: 0;
 }
