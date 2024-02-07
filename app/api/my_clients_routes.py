@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client, Daily_Chart
+from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from datetime import date
@@ -35,19 +35,22 @@ def get_client_by_id(client_id):
         .first()
     )
 
-    clients_charts = Daily_Chart.query.filter_by(client_id=client_id).all()
-
-    print(
-        clients_charts[0],
-        "<+++++++++++++++++++++++++++++++++++++++",
+    clients_intervals = (
+        db.session.query(Interval)
+        .join(Daily_Chart, Interval.chart_id == Daily_Chart.id)
+        .filter(Daily_Chart.client_id == client_id)
+        .all()
     )
+
+    # print(clients_intervals_dict, "<====================================")
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
 
     valid_client = found_client.to_dict()
 
-    # all_chart_avg_sum =
+    all_chart_avg_sum = sum(interval.interval_rating for interval in clients_intervals)
+    all_chart_avg = round(all_chart_avg_sum / len(clients_intervals), 2)
 
     paginated_charts_avg_totals = 0
 
@@ -104,7 +107,7 @@ def get_client_by_id(client_id):
             valid_client["Paginated_Charts_Avg"] = round(
                 paginated_charts_avg_totals / len(daily_charts), 2
             )
-            valid_client["All_Charts_Avg"] = 0
+            valid_client["All_Charts_Avg"] = all_chart_avg
         else:
             valid_client["Paginated_Charts_Avg"] = 0
             valid_client["All_Charts_Avg"] = 0

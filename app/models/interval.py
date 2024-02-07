@@ -45,5 +45,5 @@ class Interval(db.Model, UserMixin):
             "interval_rating": self.interval_rating,
             "therapist_id": self.therapist_id,
             "chart_id": self.chart_id,
-            "client_id": self.chart.client_id,  # Access client_id through chart relationship
+            "client_id": self.chart.client_id,  
         }
