@@ -30,7 +30,6 @@ class Daily_Chart(db.Model, UserMixin):
     )
 
     therapist = db.relationship("Therapist", back_populates="daily_charts")
-    client = db.relationship("Client", back_populates="daily_charts")
 
     def to_dict(self):
         return {
