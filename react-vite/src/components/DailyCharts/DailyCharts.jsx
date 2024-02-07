@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
@@ -5,11 +6,10 @@ import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
-
-// import Paginator from "../PaginationComp";
+import Pagination from "react-bootstrap/Pagination";
+import "../PaginationComp/bootstrap.css";
 
 const DailyCharts = ({ clientCharts }) => {
   const dispatch = useDispatch();
@@ -22,27 +22,23 @@ const DailyCharts = ({ clientCharts }) => {
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
 
-  //Use effect to get page or per_page after change
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await dispatch(
+          getClientByIDThunk(clientCharts?.id, currentPage, perPage)
+        );
 
-useEffect(() => {
-  const getData = async () => {
-    try {
-      const data = await dispatch(
-        getClientByIDThunk(clientCharts?.id, currentPage, perPage)
-      );
-
-      if (data?.ok) {
-        setFilteredCharts(data?.payload?.Daily_Charts || []);
+        if (data?.ok) {
+          setFilteredCharts(data?.payload?.Daily_Charts || []);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    } catch (error) {
-      // Handle error if needed
-      console.error("Error fetching data:", error);
-    }
-  };
+    };
 
-  getData();
-}, [currentPage, perPage, clientCharts?.id]);
-
+    getData();
+  }, [currentPage, perPage, clientCharts?.id]);
 
   useEffect(() => {
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
@@ -71,6 +67,10 @@ useEffect(() => {
   };
 
   let dayColorRating;
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="chartsContain">
@@ -106,29 +106,40 @@ useEffect(() => {
         onChange={(e) => setSearchFilter(e.target.value)}
       />
 
-      {/* Pagination */}
       <div className="pagination">
-        {Array.from(
-          { length: Math.ceil(numOfCharts / perPage) },
-          (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => setCurrentPage(index + 1)}
-              className={currentPage === index + 1 ? "active" : ""}
-            >
-              {index + 1}
-            </button>
-          )
-        )}
-      </div>
-
-      <div className="perPageDropdown">
-        <label>Charts Per Page:</label>
-        <input
-          value={perPage}
-          onChange={(e) => setPerPage(parseInt(e.target.value))}
-          type="Number"
-        ></input>
+        {/* Pagination */}
+        <div>
+          <label>Page:</label>
+          <Pagination>
+            {Array.from(
+              { length: Math.ceil(numOfCharts / perPage) },
+              (_, index) => (
+                <Pagination.Item
+                  key={index + 1}
+                  active={currentPage === index + 1}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </Pagination.Item>
+              )
+            )}
+          </Pagination>
+        </div>
+        <div className="chartsPerPageDiv">
+          {/* <label>Charts Per Page:</label> */}
+          <input
+            value={perPage}
+            onChange={(e) => setPerPage(parseInt(e.target.value))}
+            type="Number"
+          ></input>
+          {/* <select>
+            <option>7</option>
+            <option>14</option>
+            <option>21</option>
+            <option>31</option>
+            <option>All</option>
+          </select> */}
+        </div>
       </div>
 
       <div className="chartsContain">

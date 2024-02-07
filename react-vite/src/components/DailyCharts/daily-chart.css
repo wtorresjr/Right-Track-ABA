@@ -122,25 +122,17 @@
 
 .pagination {
   display: flex;
-  gap: 5px;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: right;
+  margin: 10px 0;
+  width: 100%;
 }
 
-.pagination button {
-  cursor: pointer;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+.chartsPerPageDiv input {
+  width: 80px;
 }
 
-.pagination button.active {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.perPageDropdown {
-  margin-top: 10px;
-}
-
-.perPageDropdown label {
-  margin-right: 5px;
+.chartsPerPageDiv label {
+  width: 100%;
 }
