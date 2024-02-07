@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./daily-chart.css";
 import LegendComponent from "./LegendComponent";
@@ -5,28 +6,40 @@ import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-// import Paginator from "../PaginationComp";
+import { useSelector, useDispatch } from "react-redux";
+import { getClientByIDThunk } from "../../redux/clients";
+import Pagination from "react-bootstrap/Pagination";
+import Paginator from "../PaginationComp/Paginator";
+import "../PaginationComp/bootstrap.css";
 
 const DailyCharts = ({ clientCharts }) => {
+  const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
   const [filteredCharts, setFilteredCharts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(7);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
 
-  //Use effect to get page or per_page after change
-
   useEffect(() => {
-    setFilteredCharts(clientCharts);
+    const getData = async () => {
+      try {
+        const data = await dispatch(
+          getClientByIDThunk(clientCharts?.id, currentPage, perPage)
+        );
 
-    const numOfPages = Math.ceil(clientCharts?.Daily_Charts?.length / perPage);
-    setPage(numOfPages);
-  }, [clientCharts]);
+        if (data?.ok) {
+          setFilteredCharts(data?.payload?.Daily_Charts || []);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getData();
+  }, [currentPage, perPage, clientCharts?.id]);
 
   useEffect(() => {
     const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
@@ -56,6 +69,10 @@ const DailyCharts = ({ clientCharts }) => {
 
   let dayColorRating;
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="chartsContain">
       <h1>
@@ -79,9 +96,16 @@ const DailyCharts = ({ clientCharts }) => {
           Total Charts: {numOfCharts}
           {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
         </h2>
-        <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
-          Avg For All Charts: {clientCharts?.All_Charts_Avg}
-        </h2>
+        <div>
+          <h2 style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
+            Avg For All Charts: {clientCharts?.All_Charts_Avg}
+          </h2>
+          <h2
+            style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}
+          >
+            Avg For Displayed Charts: {clientCharts?.Paginated_Charts_Avg}
+          </h2>
+        </div>
       </div>
       <input
         type="text"
@@ -89,11 +113,23 @@ const DailyCharts = ({ clientCharts }) => {
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
       />
-      {/* <div className="paginator-contain">
-        <Paginator charts={clientCharts} />
-      </div> */}
 
-      {/* <select onChange={(e) => set(e.target.value)}></select> */}
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={numOfCharts}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Charts Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
+      </div>
 
       <div className="chartsContain">
         {filteredCharts &&

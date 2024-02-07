@@ -2,26 +2,56 @@ import "./paginator.css";
 import Pagination from "react-bootstrap/Pagination";
 import "./bootstrap.css";
 
-const Paginator = ({ charts }) => {
+
+const Paginator = ({
+  numOfCharts,
+  perPage,
+  currentPage,
+  handlePageChange,
+}) => {
+  const totalPages = Math.ceil(numOfCharts / perPage);
+
+  const renderPageItems = () => {
+    const pagesToShow = perPage;
+    const halfPagesToShow = Math.floor(pagesToShow / 2);
+
+    let startPage = Math.max(currentPage - halfPagesToShow, 1);
+    let endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+    if (totalPages - endPage < halfPagesToShow) {
+      startPage = Math.max(endPage - pagesToShow + 1, 1);
+    }
+
+    const pageItems = [];
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageItems.push(
+        <Pagination.Item
+          key={i}
+          active={currentPage === i}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+
+    return pageItems;
+  };
+
   return (
     <Pagination>
-      <Pagination.First />
-      <Pagination.Prev />
-      <Pagination.Item>{1}</Pagination.Item>
-      <Pagination.Ellipsis />
-
-      <Pagination.Item>{10}</Pagination.Item>
-      <Pagination.Item>{11}</Pagination.Item>
-      <Pagination.Item active>{12}</Pagination.Item>
-      <Pagination.Item>{13}</Pagination.Item>
-      <Pagination.Item disabled>{14}</Pagination.Item>
-
-      <Pagination.Ellipsis />
-      <Pagination.Item>{20}</Pagination.Item>
-      <Pagination.Next />
-      <Pagination.Last />
+      <Pagination.First onClick={() => handlePageChange(1)} />
+      <Pagination.Prev
+        onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+      />
+      {renderPageItems()}
+      <Pagination.Next
+        onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+      />
+      <Pagination.Last onClick={() => handlePageChange(totalPages)} />
     </Pagination>
   );
 };
 
-export default Paginator;
+export default Paginator

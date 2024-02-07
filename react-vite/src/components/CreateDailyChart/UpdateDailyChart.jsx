@@ -3,10 +3,10 @@ import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-import { getChartByIdThunk, updateTheChartThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
+import ConfirmModal from "./ConfirmModal";
 
 const UpdateDailyChart = ({ dc }) => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const UpdateDailyChart = ({ dc }) => {
   const [selectedClient, setSelectedClient] = useState(client_id);
   const [isDisabled, setIsDisabled] = useState(true);
   const [todaysDate, setTodaysDate] = useState(dc?.chart_date);
-  const [newChartCompleted, setNewChartCompleted] = useState(null);
+
   const [errors, setErrors] = useState({});
   const [clientName, setClientName] = useState();
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
@@ -48,7 +48,6 @@ const UpdateDailyChart = ({ dc }) => {
     }
   }, [dispatch, todaysDate]);
 
-  
   useEffect(() => {
     const nameChanger = clientList?.filter((client) => {
       return client.id === +selectedClient;
@@ -69,24 +68,20 @@ const UpdateDailyChart = ({ dc }) => {
       client_id: selectedClient,
     };
 
-    const newChartResult = await dispatch(
-      updateTheChartThunk(startNewChart, dc?.id)
+    setModalContent(
+      <ConfirmModal
+        infoToUpdate={startNewChart}
+        dc={dc}
+        clientList={clientList}
+      />
     );
-    setNewChartCompleted(newChartResult);
   };
 
   const openMessageDiag = () => {
     setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
   };
 
-  useEffect(() => {
-    if (newChartCompleted) {
-      closeModal();
-      openMessageDiag();
-      dispatch(getChartByIdThunk(dc?.id));
-      navigate(`/daily-chart/${dc?.id}`);
-    }
-  }, [newChartCompleted, navigate]);
+
 
   return (
     <div className="newChartModal">

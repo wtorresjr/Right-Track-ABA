@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client, Daily_Chart
+from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from datetime import date
@@ -29,34 +29,48 @@ def get_client_by_id(client_id):
     page = int(request.args.get("page"))
     per_page = int(request.args.get("per_page"))
 
-    all_chart_count = Daily_Chart.query.filter_by(client_id=client_id).all()
-
-    # print(len(all_chart_count), "<=================== Count")
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
         .first()
     )
 
+    clients_intervals = (
+        db.session.query(Interval)
+        .join(Daily_Chart, Interval.chart_id == Daily_Chart.id)
+        .filter(Daily_Chart.client_id == client_id)
+        .all()
+    )
+
+    # print(clients_intervals_dict, "<====================================")
+
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
 
     valid_client = found_client.to_dict()
 
-    all_chart_avg_totals = 0
+    if clients_intervals:
+        all_chart_avg_sum = sum(
+            interval.interval_rating for interval in clients_intervals
+        )
+        all_chart_avg = round(all_chart_avg_sum / len(clients_intervals), 2)
+
+    paginated_charts_avg_totals = 0
 
     if valid_client["therapist_id"] == current_user.id:
-        # Calculate total number of charts before pagination
         total_charts = len(found_client.daily_charts)
+
+        # Sort all daily charts based on chart_date in descending order
+        sorted_daily_charts = sorted(
+            found_client.daily_charts, key=lambda dc: dc.chart_date, reverse=True
+        )
 
         start_idx = (page - 1) * per_page
         end_idx = start_idx + per_page
-        paginated_charts = found_client.daily_charts[start_idx:end_idx]
+        paginated_charts = sorted_daily_charts[start_idx:end_idx]
 
         daily_charts = []
 
-        # for dc in found_client.daily_charts:
         for dc in paginated_charts:
             total_rating = 0
             chart_dict = dc.to_dict()
@@ -77,15 +91,13 @@ def get_client_by_id(client_id):
 
             chart_dict["avgForChart"] = round(avg_rating, 2)
 
-            all_chart_avg_totals += chart_dict["avgForChart"]
+            paginated_charts_avg_totals += chart_dict["avgForChart"]
+            # all_chart_avg_sum += chart_dict["avgForChart"]
 
             daily_charts.append(chart_dict)
 
         discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
-        valid_client["Daily_Charts"] = sorted(
-            daily_charts, key=lambda x: x["chart_date"], reverse=True
-        )
-
+        valid_client["Daily_Charts"] = daily_charts
         valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()
@@ -95,10 +107,12 @@ def get_client_by_id(client_id):
         valid_client["Num_Of_Charts"] = total_charts  # Display total number of charts
 
         if total_charts != 0:
-            valid_client["All_Charts_Avg"] = round(
-                all_chart_avg_totals / total_charts, 2
+            valid_client["Paginated_Charts_Avg"] = round(
+                paginated_charts_avg_totals / len(daily_charts), 2
             )
+            valid_client["All_Charts_Avg"] = all_chart_avg
         else:
+            valid_client["Paginated_Charts_Avg"] = 0
             valid_client["All_Charts_Avg"] = 0
 
         return jsonify(valid_client)
