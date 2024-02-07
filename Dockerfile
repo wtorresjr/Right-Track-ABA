@@ -22,5 +22,5 @@ COPY . .
 # CMD flask db upgrade && flask seed all && gunicorn app:app
 
 RUN flask db upgrade
-RUN flask seed all --verbose
+RUN flask seed all
 CMD gunicorn app:app
