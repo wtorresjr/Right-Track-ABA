@@ -20,7 +20,7 @@ class Interval(db.Model, UserMixin):
         db.Integer,
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
         nullable=False,
-    )
+    )    
 
     therapist_id = db.Column(db.Integer, nullable=False)
 
