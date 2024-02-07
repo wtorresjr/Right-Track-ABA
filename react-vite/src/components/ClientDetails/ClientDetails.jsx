@@ -38,7 +38,7 @@ const ClientDetails = () => {
       }
     };
     getData();
-  }, [client_id, dispatch, message]);
+  }, [client_id, message]);
 
   const openDeleteModal = () => {
     setModalContent(<DeleteModal client={client} trigger={"ClientDetails"} />);
@@ -84,6 +84,7 @@ const ClientDetails = () => {
             </button>
           </div>
           <DailyCharts clientCharts={client} />
+          {/* <DailyCharts /> */}
           <DiscreetTrials clientDT={client} />
           <h1>
             {client?.last_name}, {client?.first_name}
