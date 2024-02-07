@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, environment, SCHEMA, add_prefix_for_prod, Daily_Chart
 from flask_login import UserMixin
 from datetime import datetime
 
@@ -32,10 +32,13 @@ class Client(db.Model, UserMixin):
         "Trial", back_populates="client", cascade="all,delete-orphan"
     )
     intervals = db.relationship(
-        "Interval",
-        secondary="daily_charts",
-        back_populates="client",
+        "Interval", secondary=Daily_Chart.__table__, back_populates="client"
     )
+    # intervals = db.relationship(
+    #     "Interval",
+    #     secondary="daily_charts",
+    #     back_populates="client",
+    # )
     daily_charts = db.relationship(
         "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
     )
