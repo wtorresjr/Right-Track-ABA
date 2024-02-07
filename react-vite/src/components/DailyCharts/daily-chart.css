@@ -119,3 +119,18 @@
   background-color: black;
   color: white;
 }
+
+.paginationDiv {
+  display: flex;
+  /* flex-flow: row wrap; */
+  align-items: center;
+  /* justify-content: space-between; */
+  /* margin: 10px 0; */
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+
+.perPageInput {
+  width: 100px;
+  margin: 0;
+}
