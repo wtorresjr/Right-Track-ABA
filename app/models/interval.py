@@ -30,9 +30,9 @@ class Interval(db.Model, UserMixin):
     )
 
     chart = db.relationship("Daily_Chart", back_populates="intervals")
-    client = db.relationship(
-        "Client", secondary="daily_charts", back_populates="intervals"
-    )
+    # client = db.relationship(
+    #     "Client", secondary="daily_charts", back_populates="intervals"
+    # )
 
     def to_dict(self):
         return {
