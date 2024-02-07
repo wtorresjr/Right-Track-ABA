@@ -38,7 +38,6 @@ class Client(db.Model, UserMixin):
         "Interval",
         secondary="daily_charts",
         back_populates="client",
-        viewonly=True,
     )
 
     def to_dict(self):
