@@ -13,24 +13,24 @@ seed_commands = AppGroup("seed")
 
 
 # Creates the `flask seed all` command
-# @seed_commands.command("all")
-# def seed():
-#     if environment == "production":
-#         undo_therapists()
-#         undo_clients()
-#     seed_therapists()
-#     seed_clients()
-#     # Add other seed functions here
-
-
-@seed_commands.command("therapists")
-def seed_therapists_command():
+@seed_commands.command("all")
+def seed():
+    # if environment == "production":
+        # undo_therapists()
+        # undo_clients()
     seed_therapists()
-
-
-@seed_commands.command("clients")
-def seed_clients_command():
     seed_clients()
+    # Add other seed functions here
+
+
+# @seed_commands.command("therapists")
+# def seed_therapists_command():
+#     seed_therapists()
+
+
+# @seed_commands.command("clients")
+# def seed_clients_command():
+#     seed_clients()
 
 
 # Creates the `flask seed undo` command
