@@ -9,6 +9,7 @@ import returnColor from "../helpers/returnColor";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
 import Pagination from "react-bootstrap/Pagination";
+import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
 const DailyCharts = ({ clientCharts }) => {
@@ -113,40 +114,21 @@ const DailyCharts = ({ clientCharts }) => {
         onChange={(e) => setSearchFilter(e.target.value)}
       />
 
-      <div className="pagination">
-        {/* Pagination */}
-        <div>
-          <label>Page:</label>
-          <Pagination>
-            {Array.from(
-              { length: Math.ceil(numOfCharts / perPage) },
-              (_, index) => (
-                <Pagination.Item
-                  key={index + 1}
-                  active={currentPage === index + 1}
-                  onClick={() => handlePageChange(index + 1)}
-                >
-                  {index + 1}
-                </Pagination.Item>
-              )
-            )}
-          </Pagination>
-        </div>
-        <div className="chartsPerPageDiv">
-          {/* <label>Charts Per Page:</label> */}
-          <input
-            value={perPage}
-            onChange={(e) => setPerPage(parseInt(e.target.value))}
-            type="Number"
-          ></input>
-          {/* <select>
-            <option>7</option>
-            <option>14</option>
-            <option>21</option>
-            <option>31</option>
-            <option>All</option>
-          </select> */}
-        </div>
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={numOfCharts}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Charts Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
       </div>
 
       <div className="chartsContain">
