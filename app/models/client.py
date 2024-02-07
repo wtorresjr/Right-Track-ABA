@@ -31,13 +31,13 @@ class Client(db.Model, UserMixin):
     trials = db.relationship(
         "Trial", back_populates="client", cascade="all,delete-orphan"
     )
-    daily_charts = db.relationship(
-        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
-    )
     intervals = db.relationship(
         "Interval",
         secondary="daily_charts",
         back_populates="client",
+    )
+    daily_charts = db.relationship(
+        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
     )
 
     def to_dict(self):
