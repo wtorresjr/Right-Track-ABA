@@ -8,6 +8,11 @@ def seed_therapists():
     # Create the table if it doesn't exist
     db.create_all()
 
+    # Explicitly create the therapists table
+    db.session.execute(
+        f"CREATE TABLE IF NOT EXISTS {SCHEMA}.therapists (LIKE public.therapists INCLUDING ALL);"
+    )
+
     demouser = Therapist(
         first_name="Demo",
         last_name="User",
