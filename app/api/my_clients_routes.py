@@ -11,7 +11,7 @@ my_clients = Blueprint("my-clients", __name__)
 # Get all clients for logged in therapist
 
 
-@my_clients.route("/", methods=["GET"])
+@my_clients.route("/", methods=["GET"]) 
 @login_required
 def get_clients():
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
