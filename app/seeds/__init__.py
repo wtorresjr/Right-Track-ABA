@@ -23,10 +23,19 @@ def seed():
     # Add other seed functions here
 
 
+# @seed_commands.command("therapists")
+# def seed_therapists_command():
+#     seed_therapists()
+
+
+# @seed_commands.command("clients")
+# def seed_clients_command():
+#     seed_clients()
+
+
 # Creates the `flask seed undo` command
 @seed_commands.command("undo")
 def undo():
     undo_therapists()
     undo_clients()
     # Add other undo functions here
-
