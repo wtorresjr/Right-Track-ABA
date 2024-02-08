@@ -23,22 +23,27 @@ class Client(db.Model, UserMixin):
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
-
+    
+    
     therapist = db.relationship("Therapist", back_populates="clients")
+
+    daily_charts = db.relationship(
+        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
+    )
     discreet_trials = db.relationship(
         "Discreet_Trial", back_populates="client", cascade="all,delete-orphan"
     )
     trials = db.relationship(
         "Trial", back_populates="client", cascade="all,delete-orphan"
     )
-    daily_charts = db.relationship(
-        "Daily_Chart", back_populates="client", cascade="all,delete-orphan"
-    )
-    intervals = db.relationship(
-        "Interval",
-        secondary="daily_charts",
-        back_populates="client",
-    )
+    # intervals = db.relationship(
+    #     "Interval", secondary=Daily_Chart.__table__, back_populates="client"
+    # )
+    # intervals = db.relationship(
+    #     "Interval",
+    #     secondary="daily_charts",
+    #     back_populates="client",
+    # )
 
     def to_dict(self):
         return {
