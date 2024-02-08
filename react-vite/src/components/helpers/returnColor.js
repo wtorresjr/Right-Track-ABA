@@ -6,11 +6,11 @@ export const returnColor = (ratingVal, valType) => {
   }
 
   const colorValue =
-    parseRating >= 4.5
+    parseRating >= 4.0
       ? "green"
-      : parseRating >= 3.5
+      : parseRating >= 3.0
       ? "yellowgreen"
-      : parseRating >= 2.5
+      : parseRating >= 2.0
       ? "yellow"
       : parseRating >= 1.5
       ? "orange"
