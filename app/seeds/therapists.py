@@ -5,6 +5,7 @@ from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
 def seed_therapists():
+    # Create the table if it doesn't exist
     demouser = Therapist(
         first_name="Demo",
         last_name="User",
@@ -12,6 +13,7 @@ def seed_therapists():
         password="password",
     )
     db.session.add(demouser)
+
     # for _ in range(2):
     #     demo = Therapist(
     #         first_name=fake.first_name(),
@@ -20,6 +22,7 @@ def seed_therapists():
     #         password="password",
     #     )
     #     db.session.add(demo)
+
     db.session.commit()
 
 
