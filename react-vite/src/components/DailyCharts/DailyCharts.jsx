@@ -57,7 +57,6 @@ const DailyCharts = ({ clientCharts }) => {
         avgTotals += chart.avgForChart;
       }
       let filtChartAvg = (avgTotals / dateResults.length).toFixed(2);
-      console.log(+filtChartAvg, "Filtered Chart Avg");
       isNaN(filtChartAvg) ? setFilteredAvg("No Charts") : setFilteredAvg(filtChartAvg);
       setFilteredCharts(dateResults);
     }

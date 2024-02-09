@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
-import { editIntervalThunk, getChartByIdThunk } from "../../redux/charts";
+import { editIntervalThunk } from "../../redux/charts";
 import returnColor from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
@@ -19,7 +19,7 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
   const [isDisabled, setDisabled] = useState(true);
   const [currActivity, setCurrActivity] = useState(intervalToEdit.activity);
   const [intervalRating, setIntervalRating] = useState(
-    intervalToEdit.interval_rating
+    intervalToEdit?.interval_rating
   );
   const [currentRatingColor, setCurrentRatingColor] = useState(
     returnColor(intervalRating)
@@ -112,7 +112,7 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
       style={{ border: `10px solid ${currentRatingColor}` }}
     >
       <div className="intervalCompContain">
-        <h1>Add New Interval</h1>
+        <h1>Update Interval</h1>
         <div className="timeDiv">
           <label>
             Start Time*
@@ -240,11 +240,7 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
               className="irDisplay"
               style={{ color: `${currentRatingColor}` }}
             >
-              {intervalRating ? (
-                intervalRating
-              ) : (
-                <p id="notAvailable-msg">{"N/A"}</p>
-              )}
+              {intervalRating}
             </div>
           </div>
         </div>
