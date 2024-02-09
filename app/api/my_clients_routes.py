@@ -26,6 +26,7 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
+    
     page = int(request.args.get("page"))
     per_page = int(request.args.get("per_page"))
 
@@ -41,8 +42,6 @@ def get_client_by_id(client_id):
         .filter(Daily_Chart.client_id == client_id)
         .all()
     )
-
-    # print(clients_intervals_dict, "<====================================")
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
@@ -65,10 +64,17 @@ def get_client_by_id(client_id):
             found_client.daily_charts, key=lambda dc: dc.chart_date, reverse=True
         )
 
-        start_idx = (page - 1) * per_page
-        end_idx = start_idx + per_page
-        paginated_charts = sorted_daily_charts[start_idx:end_idx]
+        start_idx = 0
+        end_idx = 0
+        paginated_charts = []
 
+        if page and per_page:
+            start_idx = (page - 1) * per_page
+            end_idx = start_idx + per_page
+            paginated_charts = sorted_daily_charts[start_idx:end_idx]
+        else:
+            paginated_charts = sorted_daily_charts
+          
         daily_charts = []
 
         for dc in paginated_charts:
@@ -92,7 +98,6 @@ def get_client_by_id(client_id):
             chart_dict["avgForChart"] = round(avg_rating, 2)
 
             paginated_charts_avg_totals += chart_dict["avgForChart"]
-            # all_chart_avg_sum += chart_dict["avgForChart"]
 
             daily_charts.append(chart_dict)
 
