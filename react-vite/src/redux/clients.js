@@ -108,7 +108,7 @@ export const getClientByIDThunk =
         );
       } else {
         response = await fetch(
-          `/api/my-clients/${client_id}?page=1&per_page=5`
+          `/api/my-clients/${client_id}?page=1&per_page=365`
         );
       }
 

@@ -8,7 +8,6 @@ import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
 import returnColor from "../helpers/returnColor";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
-import Pagination from "react-bootstrap/Pagination";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
@@ -19,6 +18,8 @@ const DailyCharts = ({ clientCharts }) => {
   const [filteredCharts, setFilteredCharts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const [filteredAvg, setFilteredAvg] = useState();
+
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
@@ -51,6 +52,12 @@ const DailyCharts = ({ clientCharts }) => {
     );
 
     if (dateResults) {
+      let avgTotals = 0;
+      for (let chart of dateResults) {
+        avgTotals += chart.avgForChart;
+      }
+      let filtChartAvg = (avgTotals / dateResults.length).toFixed(2);
+      isNaN(filtChartAvg) ? setFilteredAvg("No Charts") : setFilteredAvg(filtChartAvg);
       setFilteredCharts(dateResults);
     }
   }, [searchFilter, clientCharts]);
@@ -103,7 +110,8 @@ const DailyCharts = ({ clientCharts }) => {
           <h2
             style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}
           >
-            Avg For Displayed Charts: {clientCharts?.Paginated_Charts_Avg}
+            Avg For Displayed Charts:{" "}
+            {filteredAvg || clientCharts?.Paginated_Charts_Avg}
           </h2>
         </div>
       </div>
