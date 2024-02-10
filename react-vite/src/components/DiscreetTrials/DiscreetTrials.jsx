@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "../DailyCharts/daily-chart.css";
+
+
 const DiscreetTrials = ({ clientDT }) => {
   return (
     <div className="chartsContain">
