@@ -4,24 +4,22 @@ import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import { useModal } from "../../context/Modal";
 import "../ClientDetails/client-details.css";
-import { DailyCharts } from "../DailyCharts";
-import DiscreetTrials from "../DiscreetTrials";
-import DeleteModal from "../DeleteModal/DeleteModal";
-import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
+// import DeleteModal from "../DeleteModal/DeleteModal";
+// import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
 const DiscreetTrialDetail = () => {
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("Loading...");
-  const { client_id } = useParams();
+  // const { client_id } = useParams();
   const client = useSelector((state) => state?.clients?.client_by_id);
 
   useEffect(() => {
     setLoaded(false);
     let data = "";
     const getData = async () => {
-      if (client_id) {
+      if (client.id) {
         try {
           const data = await dispatch(getClientByIDThunk(client.id));
           if (data?.ok) {
@@ -38,16 +36,7 @@ const DiscreetTrialDetail = () => {
       }
     };
     getData();
-  }, [client_id, message]);
-
-  const openDeleteModal = () => {
-    setModalContent(<DeleteModal client={client} trigger={"ClientDetails"} />);
-  };
-  const openEditModal = () => {
-    setModalContent(
-      <UpdateClientModal client={client} trigger={"ClientDetails"} />
-    );
-  };
+  }, [client.id, message]);
 
   return (
     <>
@@ -55,42 +44,19 @@ const DiscreetTrialDetail = () => {
         <div className="mainDisplayContain" id="clientDetails">
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
+            <NavLink to={`/client/${client.id}`} className="navLinkStyle">
+              <i className="fa-solid fa-arrow-left fa-xl"></i>
+              {` Back To ${client.first_name}'s Detail Page`}
             </NavLink>
           </h1>
+          Test
 
-          <div className="clientDetailsContain">
-            <div>
-              <label className="detailsLabels">Guardian Email:</label>
-              {client?.guardian_email}
-            </div>
-            <div>
-              <label className="detailsLabels">DOB:</label>
-              {client?.dob}
-            </div>
-            <div>
-              <label className="detailsLabels">Notes:</label>
-              {client?.client_notes}
-            </div>
-          </div>
-          <div className="btnsContain">
-            <button id="editBtn" onClick={openEditModal}>
-              Edit Client Data
-            </button>
-            <button id="delBtn" onClick={openDeleteModal}>
-              Delete Client
-            </button>
-          </div>
-          <DailyCharts clientCharts={client} />
-          {/* <DailyCharts /> */}
-          <DiscreetTrials clientDT={client} />
+          <div className="clientDetailsContain"></div>
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
+            <NavLink to={`/client/${client.id}`} className="navLinkStyle">
+              <i className="fa-solid fa-arrow-left fa-xl"></i>
+              {` Back To ${client.first_name}'s Detail Page`}
             </NavLink>
           </h1>
         </div>
