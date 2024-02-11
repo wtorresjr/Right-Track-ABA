@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
-import { getClientByIDThunk } from "../../redux/clients";
+// import { getClientByIDThunk } from "../../redux/clients";
 import { useModal } from "../../context/Modal";
 import "../ClientDetails/client-details.css";
 // import DeleteModal from "../DeleteModal/DeleteModal";
@@ -10,33 +10,27 @@ import "../ClientDetails/client-details.css";
 const DiscreetTrialDetail = () => {
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
+  const { dt_id } = useParams();
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("Loading...");
-  // const { client_id } = useParams();
+  const [dtData, setDtData] = useState();
+
   const client = useSelector((state) => state?.clients?.client_by_id);
+  const discreetTrial = useSelector(
+    (state) => state?.clients?.client_by_id?.Discreet_Trials
+  );
 
   useEffect(() => {
     setLoaded(false);
-    let data = "";
-    const getData = async () => {
-      if (client.id) {
-        try {
-          const data = await dispatch(getClientByIDThunk(client.id));
-          if (data?.ok) {
-            setLoaded(true);
-          }
-          if (data?.payload?.message) {
-            setMessage(data?.payload?.message);
-            setLoaded(false);
-          }
-        } catch (error) {
-          setMessage(data?.payload?.message);
-          setLoaded(false);
-        }
-      }
-    };
-    getData();
-  }, [client.id, message]);
+
+    const selectedDT = discreetTrial.filter((dt) => dt.id === +dt_id);
+
+    if (selectedDT.length) {
+      console.log(selectedDT, "DT filtered");
+      setDtData(selectedDT[0]);
+      setLoaded(true);
+    }
+  }, [client.id, message, dt_id]);
 
   return (
     <>
@@ -44,19 +38,19 @@ const DiscreetTrialDetail = () => {
         <div className="mainDisplayContain" id="clientDetails">
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to={`/client/${client.id}`} className="navLinkStyle">
+            <NavLink to={`/client/${client?.id}`} className="navLinkStyle">
               <i className="fa-solid fa-arrow-left fa-xl"></i>
               {` Back To ${client.first_name}'s Detail Page`}
             </NavLink>
           </h1>
-          Test
+          <div>{dtData?.program_name}</div>
 
           <div className="clientDetailsContain"></div>
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to={`/client/${client.id}`} className="navLinkStyle">
+            <NavLink to={`/client/${client?.id}`} className="navLinkStyle">
               <i className="fa-solid fa-arrow-left fa-xl"></i>
-              {` Back To ${client.first_name}'s Detail Page`}
+              {` Back To ${client?.first_name}'s Detail Page`}
             </NavLink>
           </h1>
         </div>

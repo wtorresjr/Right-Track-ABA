@@ -1,3 +1,4 @@
 import DiscreetTrials from "./DiscreetTrials";
+import DiscreetTrialDetail from "./DiscreetTrialDetail";
 
-export default DiscreetTrials;
+export { DiscreetTrials, DiscreetTrialDetail };
