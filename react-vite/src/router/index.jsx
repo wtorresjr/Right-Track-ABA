@@ -11,6 +11,7 @@ import DailyChartDetail from "../components/DailyChartDetail/DailyChartDetail";
 import CreateDailyChart from "../components/CreateDailyChart/CreateDailyChart";
 import { DailyCharts } from "../components/DailyCharts";
 import DailyChartAll from "../components/ReportViewer";
+import DiscreetTrialDetail from "../components/DiscreetTrials/DiscreetTrialDetail";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CreateDailyChart />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/discreet-trial/:dt_id",
+        element: (
+          <PrivateRoute>
+            <DiscreetTrialDetail />
           </PrivateRoute>
         ),
       },
