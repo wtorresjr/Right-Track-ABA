@@ -16,7 +16,6 @@
 
 .dtDeets {
   border: 1px solid white;
-  /* display: flex; */
   justify-content: space-between;
   width: 100%;
   background-color: black;
@@ -37,4 +36,8 @@
 .dtDeets div:last-child {
   border-bottom: none;
   padding: 5px 0 0 0;
+}
+
+.trialDeets label {
+  padding: 0;
 }
