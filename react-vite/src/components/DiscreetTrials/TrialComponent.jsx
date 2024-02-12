@@ -18,8 +18,8 @@ const TrialComponent = ({ trial }) => {
     <div className="trialDeets" style={{ border: `3px solid ${passOrFail}` }}>
       <div>Trial Target: {trial.trial_target}</div>
       <div>
-        Trial Score: {trial.trial_score} out of {trial.trial_count} -{" "}
-        {trialPercent}%
+        Trial Score: <br></br>
+        {trial.trial_score} / {trial.trial_count} - {trialPercent}%
       </div>
       <div>Trial Count: {trial.trial_count}</div>
       <div>Trial Notes: {trial.trial_notes}</div>
