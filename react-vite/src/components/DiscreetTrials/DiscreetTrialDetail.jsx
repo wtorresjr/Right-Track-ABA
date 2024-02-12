@@ -1,10 +1,11 @@
+import "./dt-comp-styles.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
-// import { getClientByIDThunk } from "../../redux/clients";
 import { useModal } from "../../context/Modal";
 import "../ClientDetails/client-details.css";
 import { getDiscreetTrialThunk } from "../../redux/dts";
+import TrialComponent from "./TrialComponent";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -18,9 +19,9 @@ const DiscreetTrialDetail = () => {
   const [trialsData, setTrialsData] = useState();
 
   const client = useSelector((state) => state?.clients?.client_by_id);
-  const discreetTrial = useSelector(
-    (state) => state?.clients?.client_by_id?.Discreet_Trials
-  );
+  // const discreetTrial = useSelector(
+  //   (state) => state?.clients?.client_by_id?.Discreet_Trials
+  // );
 
   useEffect(() => {
     setLoaded(false);
@@ -34,14 +35,6 @@ const DiscreetTrialDetail = () => {
       }
     };
     getData();
-
-    // const selectedDT = discreetTrial.filter((dt) => dt.id === +dt_id);
-
-    // if (selectedDT.length) {
-    //   console.log(selectedDT, "DT filtered");
-    //   setDtData(selectedDT[0]);
-    //   setLoaded(true);
-    // }
   }, [client.id, message, dt_id]);
 
   return (
@@ -55,18 +48,15 @@ const DiscreetTrialDetail = () => {
               {` Back To ${client.first_name}'s Detail Page`}
             </NavLink>
           </h1>
-          <div>{dtData?.trial_date}</div>
-          <div>{dtData?.program_name}</div>
-          <div>{dtData?.program_notes}</div>
+          <div className="dtDeets">
+            <div>Program: {dtData?.program_name}</div>
+            <div>Program Description: {dtData?.program_notes}</div>
+            <div>Date: {dtData?.trial_date}</div>
+          </div>
 
           {trialsData ? (
             trialsData.map((trial) => {
-              return (
-                <div key={trial.id}>
-                  <div>Trial Target: {trial.trial_target}</div>
-                  <div>{trial.trial_notes}</div>
-                </div>
-              );
+              return <TrialComponent trial={trial} key={trial.id} />;
             })
           ) : (
             <>{"No Trials Yet."}</>
