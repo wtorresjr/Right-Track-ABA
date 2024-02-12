@@ -34,4 +34,8 @@ export const activities = [
   "Lunch",
   "Snack",
   "P.E.",
+  "Social Studies",
+  "Music",
+  "S.T.E.M.",
+  "Assembly"
 ];
