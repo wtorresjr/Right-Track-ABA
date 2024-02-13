@@ -37,5 +37,13 @@ export const activities = [
   "Social Studies",
   "Music",
   "S.T.E.M.",
-  "Assembly"
+  "Assembly",
+];
+
+export const dt_programs = [
+  "Identify Shapes",
+  "Identify Colors",
+  "Identify Numbers",
+  "Sorting Sizes",
+  "Sequencing Numbers",
 ];
