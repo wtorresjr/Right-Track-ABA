@@ -26,7 +26,7 @@ def get_clients():
 @my_clients.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_client_by_id(client_id):
-    
+
     page = int(request.args.get("page"))
     per_page = int(request.args.get("per_page"))
 
@@ -74,7 +74,9 @@ def get_client_by_id(client_id):
             paginated_charts = sorted_daily_charts[start_idx:end_idx]
         else:
             paginated_charts = sorted_daily_charts
-          
+            
+            
+
         daily_charts = []
 
         for dc in paginated_charts:

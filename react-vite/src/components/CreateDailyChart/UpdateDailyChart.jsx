@@ -24,7 +24,7 @@ const UpdateDailyChart = ({ dc }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClientByIDThunk(client_id));
+    // dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
   }, [client_id]);
 

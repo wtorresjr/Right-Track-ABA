@@ -109,6 +109,7 @@ export const getClientByIDThunk =
       } else {
         response = await fetch(
           `/api/my-clients/${client_id}?page=1&per_page=365`
+          // `/api/my-clients/${client_id}`
         );
       }
 

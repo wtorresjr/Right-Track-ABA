@@ -84,7 +84,7 @@ const ClientDetails = () => {
             </button>
           </div>
           <DailyCharts clientCharts={client} />
-          {/* <DailyCharts /> */}
+          <h1></h1>
           <DiscreetTrials clientDT={client} />
           <h1>
             {client?.last_name}, {client?.first_name}
