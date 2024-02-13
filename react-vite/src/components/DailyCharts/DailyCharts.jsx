@@ -19,12 +19,27 @@ const DailyCharts = ({ clientCharts }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
   const [filteredAvg, setFilteredAvg] = useState();
+  const [allCharts, setAllCharts] = useState();
 
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
 
   useEffect(() => {
+    const getAllCharts = async () => {
+      const allData = await dispatch(
+        getClientByIDThunk(clientCharts?.id, 1, 1000)
+      );
+
+      if (allData?.ok) {
+        setAllCharts(allData?.payload);
+      }
+    };
+
+    if (searchFilter.length) {
+      getAllCharts();
+    }
+
     const getData = async () => {
       try {
         const data = await dispatch(
@@ -39,11 +54,11 @@ const DailyCharts = ({ clientCharts }) => {
       }
     };
 
-    getData();
-  }, [currentPage, perPage, clientCharts?.id]);
+    if (!searchFilter.length) {
+      getData();
+    }
 
-  useEffect(() => {
-    const dateResults = clientCharts?.Daily_Charts?.filter((charts) =>
+    const dateResults = allCharts?.Daily_Charts?.filter((charts) =>
       Object.values(charts).some(
         (value) =>
           typeof value === "string" &&
@@ -53,14 +68,35 @@ const DailyCharts = ({ clientCharts }) => {
 
     if (dateResults) {
       let avgTotals = 0;
+
       for (let chart of dateResults) {
         avgTotals += chart.avgForChart;
       }
+
       let filtChartAvg = (avgTotals / dateResults.length).toFixed(2);
-      isNaN(filtChartAvg) ? setFilteredAvg("No Charts") : setFilteredAvg(filtChartAvg);
+
+      isNaN(filtChartAvg)
+        ? setFilteredAvg("No Charts")
+        : setFilteredAvg(filtChartAvg);
+
       setFilteredCharts(dateResults);
     }
-  }, [searchFilter, clientCharts]);
+  }, [searchFilter, currentPage, perPage, clientCharts?.id]);
+  
+
+  useEffect(() => {
+    let avgTotals = 0;
+
+    if (filteredCharts) {
+      for (let chart of filteredCharts) {
+        avgTotals += chart.avgForChart;
+      }
+      let filtChartAvg = (avgTotals / filteredCharts.length).toFixed(2);
+      isNaN(filtChartAvg)
+        ? setFilteredAvg("No Charts")
+        : setFilteredAvg(filtChartAvg);
+    }
+  }, [filteredCharts]);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} />);
