@@ -19,9 +19,6 @@ const DiscreetTrialDetail = () => {
   const [trialsData, setTrialsData] = useState();
 
   const client = useSelector((state) => state?.clients?.client_by_id);
-  // const discreetTrial = useSelector(
-  //   (state) => state?.clients?.client_by_id?.Discreet_Trials
-  // );
 
   useEffect(() => {
     setLoaded(false);
