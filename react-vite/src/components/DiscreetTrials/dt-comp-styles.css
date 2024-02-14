@@ -29,7 +29,11 @@
   width: 100%;
   background-color: black;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 10px;;
+}
+
+.dtPercent {
+  width: 30%;
 }
 
 .dtDeets div {
