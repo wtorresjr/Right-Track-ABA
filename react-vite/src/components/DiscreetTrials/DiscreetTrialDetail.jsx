@@ -6,6 +6,7 @@ import { useModal } from "../../context/Modal";
 import "../ClientDetails/client-details.css";
 import { getDiscreetTrialThunk } from "../../redux/dts";
 import TrialComponent from "./TrialComponent";
+import { returnPercentColor } from "../helpers/returnColor";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -53,7 +54,9 @@ const DiscreetTrialDetail = () => {
     }
   }, [trialsData, trialScore, trialCount]);
 
-  useEffect(() => {}, [percentMastered]);
+  useEffect(() => {
+    setPassOrFail(returnPercentColor(percentMastered));
+  }, [percentMastered]);
 
   return (
     <>
@@ -73,19 +76,17 @@ const DiscreetTrialDetail = () => {
               <div>{dtData?.program_notes}</div>
               <div>{dtData?.trial_date}</div>
             </div>
-            <div className="trialScoreDiv">
+            <div
+              className="trialScoreDiv"
+              style={{ border: `5px solid ${passOrFail}` }}
+            >
               <div className="trialAttempts">
-                Trial Scores:
+                Mastery:
                 <br></br>
                 {trialScore} / {trialCount}
               </div>
+              <div className="percent">{percentMastered}%</div>
             </div>
-              <div
-                className="percent"
-                style={{ backgroundColor: `${passOrFail}` }}
-              >
-                {percentMastered}%
-              </div>
           </div>
 
           {trialsData ? (
