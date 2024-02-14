@@ -1,4 +1,4 @@
-export const returnColor = (ratingVal, valType) => {
+const returnColor = (ratingVal, valType) => {
   const parseRating = valType === "float" ? parseFloat(ratingVal) : ratingVal;
 
   if (parseRating === 0) {
@@ -19,4 +19,19 @@ export const returnColor = (ratingVal, valType) => {
   return colorValue;
 };
 
-export default returnColor;
+const returnPercentColor = (percent) => {
+  const colorValue =
+    percent >= 100
+      ? "green"
+      : percent >= 75
+      ? "yellowgreen"
+      : percent >= 50
+      ? "yellow"
+      : percent >= 25
+      ? "orange"
+      : "red";
+
+  return colorValue;
+};
+
+export { returnColor, returnPercentColor };
