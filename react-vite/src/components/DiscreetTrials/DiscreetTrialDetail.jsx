@@ -46,9 +46,9 @@ const DiscreetTrialDetail = () => {
             </NavLink>
           </h1>
           <div className="dtDeets">
-            <div>Program: {dtData?.program_name}</div>
-            <div>Program Description: {dtData?.program_notes}</div>
-            <div>Date: {dtData?.trial_date}</div>
+            <div>{dtData?.program_name}</div>
+            <div>{dtData?.program_notes}</div>
+            <div>{dtData?.trial_date}</div>
           </div>
 
           {trialsData ? (
