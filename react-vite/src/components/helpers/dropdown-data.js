@@ -44,6 +44,7 @@ export const dt_programs = [
   "Identify Shapes",
   "Identify Colors",
   "Identify Numbers",
+  "Identify Sizes",
   "Sorting Sizes",
   "Sequencing Numbers",
 ];
