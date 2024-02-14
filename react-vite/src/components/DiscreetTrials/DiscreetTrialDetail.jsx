@@ -7,6 +7,7 @@ import "../ClientDetails/client-details.css";
 import { getDiscreetTrialThunk } from "../../redux/dts";
 import TrialComponent from "./TrialComponent";
 import { returnPercentColor } from "../helpers/returnColor";
+import { LegendComponent } from "../DailyCharts";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -70,7 +71,11 @@ const DiscreetTrialDetail = () => {
             </NavLink>
           </h1>
 
-          <div className="trialDeets">
+          <LegendComponent />
+          <div
+            className="trialDeets"
+            style={{ border: `3px solid ${passOrFail}` }}
+          >
             <div className="trialInfo">
               <div>{dtData?.program_name}</div>
               <div>{dtData?.program_notes}</div>

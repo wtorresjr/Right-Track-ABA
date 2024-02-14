@@ -7,7 +7,7 @@ import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 import { useNavigate } from "react-router-dom";
 import { LegendComponent } from "../DailyCharts";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";

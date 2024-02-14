@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
 import { editIntervalThunk } from "../../redux/charts";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { behaviors } from "../helpers/dropdown-data";
