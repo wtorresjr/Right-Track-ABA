@@ -5,7 +5,7 @@ import LegendComponent from "./LegendComponent";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
 import Paginator from "../PaginationComp/Paginator";
@@ -82,7 +82,6 @@ const DailyCharts = ({ clientCharts }) => {
       setFilteredCharts(dateResults);
     }
   }, [searchFilter, currentPage, perPage, clientCharts?.id]);
-  
 
   useEffect(() => {
     let avgTotals = 0;
