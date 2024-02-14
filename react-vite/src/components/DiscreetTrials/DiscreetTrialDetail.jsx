@@ -17,6 +17,10 @@ const DiscreetTrialDetail = () => {
   const [message, setMessage] = useState("Loading...");
   const [dtData, setDtData] = useState();
   const [trialsData, setTrialsData] = useState();
+  const [percentMastered, setMastered] = useState(0);
+  const [trialCount, setTrialCount] = useState(0);
+  const [trialScore, setTrialScore] = useState(0);
+  const [passOrFail, setPassOrFail] = useState("red");
 
   const client = useSelector((state) => state?.clients?.client_by_id);
 
@@ -34,6 +38,23 @@ const DiscreetTrialDetail = () => {
     getData();
   }, [client.id, message, dt_id]);
 
+  useEffect(() => {
+    if (trialsData) {
+      let trialsNum = trialsData.reduce(
+        (acc, trial) => acc + trial.trial_count,
+        0
+      );
+
+      let score = trialsData.reduce((acc, trial) => acc + trial.trial_score, 0);
+      setTrialCount(trialsNum);
+      setTrialScore(score);
+
+      setMastered(((100 / trialCount) * trialScore).toFixed(1));
+    }
+  }, [trialsData, trialScore, trialCount]);
+
+  useEffect(() => {}, [percentMastered]);
+
   return (
     <>
       {loaded ? (
@@ -45,10 +66,26 @@ const DiscreetTrialDetail = () => {
               {` Back To ${client.first_name}'s Detail Page`}
             </NavLink>
           </h1>
-          <div className="dtDeets">
-            <div>{dtData?.program_name}</div>
-            <div>{dtData?.program_notes}</div>
-            <div>{dtData?.trial_date}</div>
+
+          <div className="trialDeets">
+            <div className="trialInfo">
+              <div>{dtData?.program_name}</div>
+              <div>{dtData?.program_notes}</div>
+              <div>{dtData?.trial_date}</div>
+            </div>
+            <div className="trialScoreDiv">
+              <div className="trialAttempts">
+                Trial Scores:
+                <br></br>
+                {trialScore} / {trialCount}
+              </div>
+            </div>
+              <div
+                className="percent"
+                style={{ backgroundColor: `${passOrFail}` }}
+              >
+                {percentMastered}%
+              </div>
           </div>
 
           {trialsData ? (
