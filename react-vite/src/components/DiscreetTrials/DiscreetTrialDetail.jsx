@@ -71,7 +71,6 @@ const DiscreetTrialDetail = () => {
             </NavLink>
           </h1>
 
-          <LegendComponent legendType={"Performance Legend"} />
           <div
             className="trialDeets"
             style={{ border: `3px solid white` }}
@@ -93,6 +92,7 @@ const DiscreetTrialDetail = () => {
               <div className="percent">{percentMastered}%</div>
             </div>
           </div>
+          <LegendComponent legendType={"Performance Legend"} />
 
           {trialsData ? (
             trialsData.map((trial) => {
