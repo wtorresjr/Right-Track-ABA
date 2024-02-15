@@ -8,7 +8,7 @@ import { returnPercentColor } from "../helpers/returnColor";
 const DiscreetTrials = () => {
   const { client_id } = useParams();
   const dispatch = useDispatch();
-  const clientDT = useSelector((state) => state?.dt?.Discreet_Trial);
+  const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
 
   useEffect(() => {
     dispatch(getAllDTsThunk(client_id));
