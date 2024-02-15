@@ -1,11 +1,13 @@
 import { NavLink, useParams } from "react-router-dom";
 import "../DailyCharts/daily-chart.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllDTsThunk } from "../../redux/dts";
+import { returnPercentColor } from "../helpers/returnColor";
 
 const DiscreetTrials = () => {
   const { client_id } = useParams();
+  const [dtMastery, setDtMastery] = useState();
   const dispatch = useDispatch();
   const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
 
@@ -29,10 +31,15 @@ const DiscreetTrials = () => {
                 to={`/discreet-trial/${dt.id}`}
                 className="navLinkStyleDC"
               >
-                <div className="dcButtons">
+                <div
+                  className="dcButtons"
+                  style={{
+                    border: `3px solid ${returnPercentColor(dt?.trials_avg)}`,
+                  }}
+                >
                   <div> {dt?.trial_date}</div>
                   <div>{dt?.program_name}</div>
-                  <div>{dt?.trials_avg}</div>
+                  <div>Mastery: {dt?.trials_avg}%</div>
                   View Trial(s)
                 </div>
               </NavLink>
