@@ -71,7 +71,7 @@ const DiscreetTrialDetail = () => {
             </NavLink>
           </h1>
 
-          <LegendComponent />
+          <LegendComponent legendType={"Performance Legend"} />
           <div
             className="trialDeets"
             style={{ border: `3px solid ${passOrFail}` }}

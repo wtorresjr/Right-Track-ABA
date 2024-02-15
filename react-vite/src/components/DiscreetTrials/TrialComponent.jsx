@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./dt-comp-styles.css";
+import { returnPercentColor } from "../helpers/returnColor";
 
 const TrialComponent = ({ trial }) => {
   const [trialPercent, setTrialPercent] = useState(0);
@@ -7,11 +8,7 @@ const TrialComponent = ({ trial }) => {
   useEffect(() => {
     const result = (100 / trial.trial_count) * trial.trial_score;
     setTrialPercent(result.toFixed(2));
-    if (result < 100) {
-      setPassOrFail("red");
-    } else {
-      setPassOrFail("green");
-    }
+    setPassOrFail(returnPercentColor(trialPercent));
   }, [trial]);
 
   return (
@@ -32,7 +29,7 @@ const TrialComponent = ({ trial }) => {
       </div>
       <div
         className="trialScoreDiv"
-        style={{ backgroundColor: `${passOrFail}` }}
+        style={{ border: `5px solid ${passOrFail}` }}
       >
         <div className="trialAttempts">
           Trial Score:
