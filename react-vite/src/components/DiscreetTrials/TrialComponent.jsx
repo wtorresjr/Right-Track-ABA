@@ -6,10 +6,10 @@ const TrialComponent = ({ trial }) => {
   const [trialPercent, setTrialPercent] = useState(0);
   const [passOrFail, setPassOrFail] = useState();
   useEffect(() => {
-    const result = (100 / trial.trial_count) * trial.trial_score;
+    const result = (100 / trial?.trial_count) * trial?.trial_score;
     setTrialPercent(result.toFixed(2));
     setPassOrFail(returnPercentColor(trialPercent));
-  }, [trial]);
+  }, [trial, trialPercent]);
 
   return (
     <div className="trialDeets" style={{ border: `3px solid ${passOrFail}` }}>
