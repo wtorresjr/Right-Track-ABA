@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
 from app.models import Discreet_Trial
 from datetime import time, datetime
+from sqlalchemy.orm import joinedload
 
 
 discreet_trials_bp = Blueprint("my-discreet-trials", __name__)
@@ -32,9 +33,13 @@ def get_all_discreet_trials():
 @discreet_trials_bp.route("/client/<int:client_id>", methods=["GET"])
 @login_required
 def get_dt_by_client_id(client_id):
-    found_client_dts = Discreet_Trial.query.filter_by(
-        client_id=client_id, therapist_id=current_user.id
-    ).all()
+    found_client_dts = (
+        Discreet_Trial.query.filter_by(
+            client_id=client_id, therapist_id=current_user.id
+        )
+        .options(joinedload(Discreet_Trial.trials))
+        .all()
+    )
 
     if not found_client_dts:
         return (
@@ -46,9 +51,26 @@ def get_dt_by_client_id(client_id):
             404,
         )
 
-    client_dts = [dt.to_dict() for dt in found_client_dts]
+    client_dts = []
+    for dt in found_client_dts:
 
-    return jsonify({"Client_DTs": client_dts}), 200
+        dt_dict = dt.to_dict()
+        trials_info = [trial.to_dict() for trial in dt.trials]
+
+        dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
+        dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
+
+        dt_dict["trials_avg"] = round(
+            100
+            / sum(trial["trial_count"] for trial in trials_info)
+            * sum(trial["trial_score"] for trial in trials_info),
+            1,
+        )
+
+        dt_dict["trials"] = trials_info
+        client_dts.append(dt_dict)
+
+    return jsonify(client_dts), 200
 
 
 # Get discreet trial and trials by DT ID
