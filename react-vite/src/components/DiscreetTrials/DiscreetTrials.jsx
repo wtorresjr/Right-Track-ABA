@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import "../DailyCharts/daily-chart.css";
 
 const DiscreetTrials = ({ clientDT }) => {
+  console.log(clientDT, "Client DTs");
   return (
     <div className="chartsContain">
       <h1>
