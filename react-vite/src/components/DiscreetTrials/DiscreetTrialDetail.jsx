@@ -74,7 +74,7 @@ const DiscreetTrialDetail = () => {
           <LegendComponent legendType={"Performance Legend"} />
           <div
             className="trialDeets"
-            style={{ border: `3px solid ${passOrFail}` }}
+            style={{ border: `3px solid white` }}
           >
             <div className="trialInfo">
               <div>{dtData?.program_name}</div>
