@@ -4,7 +4,7 @@ import "./add-interval.css";
 import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
 import { addIntervalToChart } from "../../redux/charts";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { activities } from "../helpers/dropdown-data";

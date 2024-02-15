@@ -17,7 +17,7 @@ import {
 import "./graph-component.css";
 // import { useEffect, useState } from "react";
 // import { useDispatch } from "react-redux";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 
 const GraphComponentV2 = ({
   clientCharts,
