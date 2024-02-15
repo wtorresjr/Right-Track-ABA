@@ -7,7 +7,6 @@ import { returnPercentColor } from "../helpers/returnColor";
 
 const DiscreetTrials = () => {
   const { client_id } = useParams();
-  const [dtMastery, setDtMastery] = useState();
   const dispatch = useDispatch();
   const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
 
@@ -24,7 +23,6 @@ const DiscreetTrials = () => {
 
       {clientDT &&
         clientDT?.map((dt) => {
-          console.log(dt, "Client DTs");
           return (
             <div key={dt.id}>
               <NavLink
