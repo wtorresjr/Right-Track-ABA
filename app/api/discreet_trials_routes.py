@@ -67,7 +67,7 @@ def get_dt_by_client_id(client_id):
             1,
         )
 
-        dt_dict["trials"] = trials_info
+        # dt_dict["trials"] = trials_info
         client_dts.append(dt_dict)
 
     return jsonify(client_dts), 200
