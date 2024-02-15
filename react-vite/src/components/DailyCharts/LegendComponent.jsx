@@ -1,10 +1,10 @@
 import "./daily-chart.css";
 
-const LegendComponent = () => {
+const LegendComponent = ({ legendType }) => {
   return (
     <div className="legendCompContain">
       <div id="legend">
-        <h3>Behavior Legend</h3>
+        <h3>{legendType || "Behavior Legend"}</h3>
       </div>
       <div id="colors">
         <div

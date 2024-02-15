@@ -13,7 +13,7 @@ import {
 import "./graph-component.css";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import returnColor from "../helpers/returnColor";
+import { returnColor } from "../helpers/returnColor";
 import { getAllIntervalsThunk } from "../../redux/charts";
 
 const GraphComponent = ({

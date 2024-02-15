@@ -103,9 +103,13 @@ def get_client_by_id(client_id):
 
             daily_charts.append(chart_dict)
 
-        discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
+        # discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
+        # valid_client["Discreet_Trials"] = discreet_trials
+        
+        
+
+        
         valid_client["Daily_Charts"] = daily_charts
-        valid_client["Discreet_Trials"] = discreet_trials
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()
             for incChart in found_client.daily_charts
