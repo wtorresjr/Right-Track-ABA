@@ -36,10 +36,11 @@
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 20px;
   background-color: rgb(0, 0, 0);
   border-radius: 10px;
+  padding: 10px;
 }
 
 .dcButtons {
