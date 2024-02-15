@@ -81,7 +81,7 @@ const DailyCharts = ({ clientCharts }) => {
 
       setFilteredCharts(dateResults);
     }
-  }, [searchFilter, currentPage, perPage, clientCharts?.id]);
+  }, [searchFilter, currentPage, perPage, clientCharts?.id, numOfCharts]);
 
   useEffect(() => {
     let avgTotals = 0;
