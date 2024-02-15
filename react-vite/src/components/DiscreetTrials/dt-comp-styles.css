@@ -13,14 +13,24 @@
   /* border-bottom: 1px solid rgb(150, 150, 150); */
   width: 100%;
 }
+
 .trialDeets div:last-child {
   border-bottom: none;
-  padding: 0px 0 5px 5px;
 }
 
 .trialInfo {
   display: flex;
   flex-flow: column nowrap;
+}
+
+.trialInfo div {
+  padding: 0 10px 0 0;
+  box-sizing: border-box;
+}
+
+.trialInfo :last-child {
+  box-sizing: border-box;
+  padding: 0 10px 0 0;
 }
 
 .dtDeets {
@@ -29,7 +39,7 @@
   width: 100%;
   background-color: black;
   padding: 20px;
-  border-radius: 10px;;
+  border-radius: 10px;
 }
 
 .dtPercent {
