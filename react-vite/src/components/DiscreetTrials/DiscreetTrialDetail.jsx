@@ -26,12 +26,12 @@ const DiscreetTrialDetail = () => {
   const [passOrFail, setPassOrFail] = useState("red");
 
   let client = useSelector((state) => state?.clients?.client_by_id);
-
+  // const dtObject = useSelector((state) => state?.dt?.DiscreetTrial?.Trials);
+  let data;
   useEffect(() => {
     setLoaded(false);
     const getData = async () => {
-      const data = await dispatch(getDiscreetTrialThunk(+dt_id));
-
+      data = await dispatch(getDiscreetTrialThunk(+dt_id));
       if (data) {
         setLoaded(true);
         setDtData(data?.Discreet_Trial);
@@ -39,7 +39,7 @@ const DiscreetTrialDetail = () => {
       }
     };
     getData();
-  }, [client?.id, message, dt_id]);
+  }, [client?.id, message, dt_id, client]);
 
   useEffect(() => {
     if (trialsData) {

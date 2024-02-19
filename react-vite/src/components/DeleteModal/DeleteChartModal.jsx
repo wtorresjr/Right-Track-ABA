@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 import DeleteMessage from "./DeletingMessage";
 import { delDailyChartThunk } from "../../redux/charts";
 import { getClientByIDThunk } from "../../redux/clients";
-import { deleteDTThunk, deleteTrialThunk } from "../../redux/dts";
+import {
+  deleteDTThunk,
+  deleteTrialThunk,
+  getDiscreetTrialThunk,
+} from "../../redux/dts";
 
 const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
   const dispatch = useDispatch();
@@ -35,7 +39,6 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
     let successDelete;
 
     if (typeToDelete === "TRIAL") {
-      // console.log(chartInfo, "Chart Info for Trial");
       successDelete = await dispatch(
         deleteTrialThunk(chartInfo.id, chartInfo.dt_id)
       );
@@ -46,15 +49,16 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
         deleteDTThunk(chartInfo.id, chartInfo.client_id)
       );
     }
-    
+
     if (!typeToDelete) {
       successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
     }
 
     if (successDelete) {
+      // console.log(chartInfo.dt_id, "DT ID");
       closeModal();
       openDeleteMessage();
-      dispatch(getClientByIDThunk(chartInfo?.client_id));
+      await dispatch(getClientByIDThunk(chartInfo?.client_id));
     } else {
       throw new Error("Error deleting chart...");
     }
