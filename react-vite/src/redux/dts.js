@@ -7,7 +7,7 @@ const getDiscreetTrial = (foundTrial) => {
   return {
     type: GET_DT,
     payload: foundTrial,
-  }; 
+  };
 };
 
 export const getDiscreetTrialThunk = (dt_id) => async (dispatch) => {

@@ -15,7 +15,7 @@ const DiscreetTrials = () => {
 
   useEffect(() => {
     const getDTdata = async () => {
-      await dispatch(getAllDTsThunk(client_id));
+      await dispatch(getAllDTsThunk(+client_id));
     };
     getDTdata();
   }, []);
@@ -32,7 +32,7 @@ const DiscreetTrials = () => {
       </h1>
 
       {clientDT && clientDT?.length
-        ? clientDT.map((dt) => {
+        ? clientDT?.map((dt) => {
             return (
               <div key={dt.id}>
                 <NavLink
@@ -60,7 +60,6 @@ const DiscreetTrials = () => {
                     Edit DT
                   </button>
                   <button
-                    // onClick={() => alert("Clicked DT")}
                     onClick={() => {
                       openDeleteModal(dt);
                     }}
