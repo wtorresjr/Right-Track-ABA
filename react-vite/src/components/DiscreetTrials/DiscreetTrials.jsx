@@ -14,7 +14,10 @@ const DiscreetTrials = () => {
   const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
 
   useEffect(() => {
-    dispatch(getAllDTsThunk(client_id));
+    const getDTdata = async () => {
+      await dispatch(getAllDTsThunk(client_id));
+    };
+    getDTdata();
   }, []);
 
   const openDeleteModal = (chart) => {
