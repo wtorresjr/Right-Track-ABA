@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import "./dt-comp-styles.css";
 import { returnPercentColor } from "../helpers/returnColor";
+import { useModal } from "../../context/Modal";
+import { DeleteChartModal } from "../DeleteModal";
 
 const TrialComponent = ({ trial }) => {
+  const { setModalContent } = useModal();
   const [trialPercent, setTrialPercent] = useState(0);
   const [passOrFail, setPassOrFail] = useState();
+
   useEffect(() => {
     const result = (100 / trial?.trial_count) * trial?.trial_score;
     setTrialPercent(result.toFixed(2));
     setPassOrFail(returnPercentColor(trialPercent));
   }, [trial, trialPercent]);
+
+  const openDeleteModal = (chart) => {
+    setModalContent(
+      <DeleteChartModal chartInfo={chart} typeToDelete={"TRIAL"} />
+    );
+  };
 
   return (
     <div className="trialDeets" style={{ border: `3px solid ${passOrFail}` }}>
