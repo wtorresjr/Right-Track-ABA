@@ -1,6 +1,7 @@
 const GET_DT = "dt/getDT";
 const GET_ALL_DTS = "dt/getAllDts";
 const DELETE_DT = "dt/deleteDT";
+const DELETE_TRIAL = "dt/deleteTrial";
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -73,6 +74,30 @@ export const deleteDTThunk = (dt_id, client_id) => async (dispatch) => {
     throw new Error(error);
   }
 };
+
+const deleteDTTrial = (dtTrialToDelete) => {
+  return {
+    type: DELETE_TRIAL,
+    payload: dtTrialToDelete,
+  };
+};
+
+export const deleteTrialThunk = (trial_id, client_id) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-trials/${trial_id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      const deleteTrial = await response.json();
+      await dispatch(deleteDTTrial(deleteTrial));
+      return deleteTrial;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+
 
 const initialState = {
   DiscreetTrial: {},

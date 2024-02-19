@@ -33,13 +33,17 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
 
   const deleteChart = async () => {
     let successDelete;
+
+    if (typeToDelete === "TRIAL") {
+      alert("Deleting TRIAL reached");
+    }
+
     if (typeToDelete === "DT") {
-      // alert("Deleting DT reached");
-      // console.log(chartInfo?.client_id, "CHART INFO");
       successDelete = await dispatch(
         deleteDTThunk(chartInfo.id, chartInfo.client_id)
       );
-    } else {
+    }
+    if (!typeToDelete) {
       successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
     }
     if (successDelete) {
@@ -55,8 +59,8 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
     <div className="deleteModalContain">
       <h1>Delete This Chart ?</h1>
       <p>
-        To delete chart number {chartInfo?.id} and all related data, please
-        enter the text below into the input:
+        To delete {typeToDelete || "Chart"} number {chartInfo?.id} and all
+        related data, please enter the text below into the input:
       </p>
       <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
         {confirmDelText}
