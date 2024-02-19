@@ -55,17 +55,23 @@ def get_dt_by_client_id(client_id):
     for dt in found_client_dts:
 
         dt_dict = dt.to_dict()
+
         trials_info = [trial.to_dict() for trial in dt.trials]
 
-        dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
-        dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
+        if not len(trials_info):
+            dt_dict["trials_score"] = 0
+            dt_dict["trials_count"] = 0
+            dt_dict["trials_avg"] = 0
+        else:
+            dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
+            dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
 
-        dt_dict["trials_avg"] = round(
-            100
-            / sum(trial["trial_count"] for trial in trials_info)
-            * sum(trial["trial_score"] for trial in trials_info),
-            1,
-        )
+            dt_dict["trials_avg"] = round(
+                100
+                / sum(trial["trial_count"] for trial in trials_info)
+                * sum(trial["trial_score"] for trial in trials_info),
+                1,
+            )
 
         # dt_dict["trials"] = trials_info
         client_dts.append(dt_dict)
