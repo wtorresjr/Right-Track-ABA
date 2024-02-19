@@ -72,8 +72,7 @@ def get_dt_by_client_id(client_id):
                 * sum(trial["trial_score"] for trial in trials_info),
                 1,
             )
-
-        # dt_dict["trials"] = trials_info
+            
         client_dts.append(dt_dict)
 
     return jsonify(client_dts), 200

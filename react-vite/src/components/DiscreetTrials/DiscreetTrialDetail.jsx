@@ -106,7 +106,11 @@ const DiscreetTrialDetail = () => {
           </div>
           <LegendComponent legendType={"Performance Legend"} />
 
-          {trialsData ? (
+          <h1>
+            Trials
+            <button id="createNewChartBtn">Add New Trial</button>
+          </h1>
+          {trialsData && trialsData.length ? (
             trialsData?.map((trial) => {
               return <TrialComponent trial={trial} key={trial.id} />;
             })
