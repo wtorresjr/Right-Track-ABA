@@ -1,5 +1,6 @@
 const GET_DT = "dt/getDT";
 const GET_ALL_DTS = "dt/getAllDts";
+const DELETE_DT = "dt/deleteDT";
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -12,7 +13,7 @@ export const getDiscreetTrialThunk = (dt_id) => async (dispatch) => {
   try {
     const response = await fetch(`/api/my-discreet-trials/dt-id/${dt_id}`, {
       method: "GET",
-      headers: { "Content-Type": "appliation/json" },
+      headers: { "Content-Type": "application/json" },
     });
     if (response.ok) {
       const foundTrial = await response.json();
@@ -50,6 +51,29 @@ export const getAllDTsThunk = (client_id) => async (dispatch) => {
   }
 };
 
+const deleteTheDT = (dtToDelete) => {
+  return {
+    type: DELETE_DT,
+    payload: dtToDelete,
+  };
+};
+
+export const deleteDTThunk = (dt_id, client_id) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-discreet-trials/dt-id/${dt_id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      const deleteITDT = await response.json();
+      await dispatch(deleteTheDT(deleteITDT));
+      await dispatch(getAllDTsThunk(client_id));
+      return deleteITDT;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const initialState = {
   DiscreetTrial: {},
   Discreet_Trials: {},
@@ -61,6 +85,14 @@ function dtReducer(state = initialState, action) {
       return { ...state, DiscreetTrial: action.payload };
     case GET_ALL_DTS:
       return { ...state, Discreet_Trials: action.payload };
+    case DELETE_DT:
+      return {
+        ...state,
+        Discreet_Trials: state.Discreet_Trials.filter(
+          (DT) => DT.id !== action.payload.id
+        ),
+      };
+
     default:
       return state;
   }

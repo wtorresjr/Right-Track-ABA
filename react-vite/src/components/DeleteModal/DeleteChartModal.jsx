@@ -2,14 +2,13 @@ import "./delete-modal.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
 import { delDailyChartThunk } from "../../redux/charts";
 import { getClientByIDThunk } from "../../redux/clients";
+import { deleteDTThunk } from "../../redux/dts";
 
-const DeleteChartModal = ({ chartInfo }) => {
+const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const { closeModal } = useModal();
   const [isDisabled, setIsDisabled] = useState(true);
   const [confirmDelText, setConfirmDelText] = useState("");
@@ -33,7 +32,16 @@ const DeleteChartModal = ({ chartInfo }) => {
   };
 
   const deleteChart = async () => {
-    const successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
+    let successDelete;
+    if (typeToDelete === "DT") {
+      // alert("Deleting DT reached");
+      // console.log(chartInfo?.client_id, "CHART INFO");
+      successDelete = await dispatch(
+        deleteDTThunk(chartInfo.id, chartInfo.client_id)
+      );
+    } else {
+      successDelete = await dispatch(delDailyChartThunk(chartInfo?.id));
+    }
     if (successDelete) {
       closeModal();
       openDeleteMessage();
