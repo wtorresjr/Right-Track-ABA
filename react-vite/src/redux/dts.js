@@ -7,7 +7,7 @@ const getDiscreetTrial = (foundTrial) => {
   return {
     type: GET_DT,
     payload: foundTrial,
-  };
+  }; 
 };
 
 export const getDiscreetTrialThunk = (dt_id) => async (dispatch) => {
@@ -18,7 +18,7 @@ export const getDiscreetTrialThunk = (dt_id) => async (dispatch) => {
     });
     if (response.ok) {
       const foundTrial = await response.json();
-      dispatch(getDiscreetTrial(foundTrial));
+      await dispatch(getDiscreetTrial(foundTrial));
       return foundTrial;
     }
   } catch (error) {
@@ -44,7 +44,7 @@ export const getAllDTsThunk = (client_id) => async (dispatch) => {
     );
     if (response.ok) {
       const foundDTs = await response.json();
-      dispatch(getAllDiscreetTrial(foundDTs));
+      await dispatch(getAllDiscreetTrial(foundDTs));
       return foundDTs;
     }
   } catch (error) {
@@ -90,7 +90,7 @@ export const deleteTrialThunk = (trial_id, dt_id) => async (dispatch) => {
     if (response.ok) {
       const deleteTrial = await response.json();
       await dispatch(deleteDTTrial(deleteTrial));
-      await dispatch(getDiscreetTrialThunk(dt_id));
+      // await dispatch(getDiscreetTrial(+dt_id));
       return deleteTrial;
     }
   } catch (error) {
@@ -99,8 +99,11 @@ export const deleteTrialThunk = (trial_id, dt_id) => async (dispatch) => {
 };
 
 const initialState = {
-  DiscreetTrial: {},
-  Discreet_Trials: {},
+  DiscreetTrial: {
+    Discreet_Trial: {},
+    Trials: [],
+  },
+  Discreet_Trials: [],
 };
 
 function dtReducer(state = initialState, action) {
