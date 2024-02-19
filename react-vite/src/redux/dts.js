@@ -82,7 +82,7 @@ const deleteDTTrial = (dtTrialToDelete) => {
   };
 };
 
-export const deleteTrialThunk = (trial_id, client_id) => async (dispatch) => {
+export const deleteTrialThunk = (trial_id, dt_id) => async (dispatch) => {
   try {
     const response = await fetch(`/api/my-trials/${trial_id}`, {
       method: "DELETE",
@@ -90,14 +90,13 @@ export const deleteTrialThunk = (trial_id, client_id) => async (dispatch) => {
     if (response.ok) {
       const deleteTrial = await response.json();
       await dispatch(deleteDTTrial(deleteTrial));
+      await dispatch(getDiscreetTrialThunk(dt_id));
       return deleteTrial;
     }
   } catch (error) {
     throw new Error(error);
   }
 };
-
-
 
 const initialState = {
   DiscreetTrial: {},
@@ -116,6 +115,16 @@ function dtReducer(state = initialState, action) {
         Discreet_Trials: state.Discreet_Trials.filter(
           (DT) => DT.id !== action.payload.id
         ),
+      };
+    case DELETE_TRIAL:
+      return {
+        ...state,
+        DiscreetTrial: {
+          ...state.DiscreetTrial,
+          Trials: state.DiscreetTrial.Trials.filter(
+            (trial) => trial.id !== action.payload.id
+          ),
+        },
       };
 
     default:
