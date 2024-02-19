@@ -37,18 +37,18 @@ const TrialComponent = ({ trial }) => {
         >
           <button
             onClick={() => {
-              openUpdateChartModal(dc);
+              openUpdateChartModal(trial);
             }}
           >
-            Edit Chart
+            Edit Trial
           </button>
           <button
             style={{ padding: "0 5px" }}
             onClick={() => {
-              openDeleteModal(dc);
+              openDeleteModal(trial);
             }}
           >
-            Delete Chart
+            Delete Trial
           </button>
         </div>
       </div>
