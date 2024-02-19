@@ -26,6 +26,31 @@ const TrialComponent = ({ trial }) => {
           <label>Trial Notes:</label>
           {trial.trial_notes}
         </div>
+
+        <div
+          className="chartCrudBtns"
+          style={{
+            display: "flex",
+            justifyContent: "left",
+            margin: "15px 0 0 0",
+          }}
+        >
+          <button
+            onClick={() => {
+              openUpdateChartModal(dc);
+            }}
+          >
+            Edit Chart
+          </button>
+          <button
+            style={{ padding: "0 5px" }}
+            onClick={() => {
+              openDeleteModal(dc);
+            }}
+          >
+            Delete Chart
+          </button>
+        </div>
       </div>
       <div
         className="trialScoreDiv"

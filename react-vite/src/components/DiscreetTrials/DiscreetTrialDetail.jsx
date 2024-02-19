@@ -71,10 +71,7 @@ const DiscreetTrialDetail = () => {
             </NavLink>
           </h1>
 
-          <div
-            className="trialDeets"
-            style={{ border: `3px solid white` }}
-          >
+          <div className="trialDeets" style={{ border: `3px solid white` }}>
             <div className="trialInfo">
               <div>{dtData?.program_name}</div>
               <div>{dtData?.program_notes}</div>
