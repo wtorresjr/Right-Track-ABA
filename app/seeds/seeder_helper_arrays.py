@@ -11,6 +11,10 @@ activities = [
     "Lunch",
     "Snack",
     "P.E.",
+    "Social Studies",
+    "Music",
+    "S.T.E.M.",
+    "Assembly",
 ]
 
 
@@ -38,34 +42,39 @@ behaviors = [
 ]
 
 program_names = [
-    "Indentifying Colors",
-    "Identifying Numbers",
-    "Identifying Shapes",
-    "Sequencing Numbers",
+    "Identify Shapes",
+    "Identify Colors",
+    "Identify Numbers",
+    "Identify Sizes",
     "Sorting Sizes",
+    "Sequencing Numbers",
+    "Identify Letters",
 ]
 
 field_count = [2, 3, 4, 5]
 
 color_choices = [
-    "Red",
-    "Green",
-    "Blue",
-    "Yellow",
-    "Orange",
     "White",
     "Black",
-    "Purple",
+    "Yellow",
+    "Red",
+    "Blue",
+    "Green",
     "Pink",
+    "Purple",
+    "Orange",
+    "Brown",
+    "Gray",
 ]
 
 shape_choices = [
     "Square",
-    "Triangle",
     "Circle",
+    "Triangle",
     "Oval",
-    "Heart",
-    "Rectangle",
+    "Reactangle",
+    "Star",
     "Diamond",
-    "Half Circle",
+    "Ellipse",
+    "Heart",
 ]
