@@ -3,6 +3,7 @@ const GET_ALL_DTS = "dt/getAllDts";
 const DELETE_DT = "dt/deleteDT";
 const DELETE_TRIAL = "dt/deleteTrial";
 
+
 const getDiscreetTrial = (foundTrial) => {
   return {
     type: GET_DT,

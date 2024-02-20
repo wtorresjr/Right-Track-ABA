@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import "./create-daily-chart.css";
 import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { dt_programs } from "../helpers/dropdown-data";
+import "./create-daily-chart.css";
 
 const CreateDailyChart = ({ isDT }) => {
   const navigate = useNavigate();
@@ -17,13 +18,13 @@ const CreateDailyChart = ({ isDT }) => {
     new Date().toISOString().split("T")[0]
   );
   const [errors, setErrors] = useState({});
-
+  const [selectedProgram, setProgram] = useState(dt_programs[0]);
+  const [programNotes, setProgramNotes] = useState(1);
   const [newChartCompleted, setNewChartCompleted] = useState(null);
-
-  const currentClient = useSelector((state) => state?.clients?.client_by_id);
-  const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const [clientName, setClientName] = useState();
   const dispatch = useDispatch();
+  const currentClient = useSelector((state) => state?.clients?.client_by_id);
+  const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
   const errorCollector = {};
   useEffect(() => {
@@ -62,16 +63,42 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, client_id]);
 
+  // useEffect(() => {
+  //   console.log(selectedProgram, "Selected Program");
+  //   console.log(currentClient.id, "Client ID");
+  //   console.log(programNotes, "<-- Field Size");
+  //   console.log(todaysDate, "Date Selected");
+  // }, [selectedProgram, programNotes, todaysDate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const startNewChart = {
-      chart_date: todaysDate,
-      client_id: selectedClient,
-    };
+    if (!isDT) {
 
-    const newChartResult = await dispatch(createNewChartThunk(startNewChart));
-    setNewChartCompleted(newChartResult);
+
+      const startNewChart = {
+        chart_date: todaysDate,
+        client_id: selectedClient,
+      };
+      const newChartResult = await dispatch(createNewChartThunk(startNewChart));
+      setNewChartCompleted(newChartResult);
+
+
+    } else {
+
+
+      const startNewDT = {
+        trial_date: todaysDate,
+        client_id: currentClient.id,
+        program_name: selectedProgram,
+        program_notes:`${selectedProgram} in a field of ${programNotes}`
+      };
+
+      const newDTResult = await dispatch()
+
+      
+
+    }
   };
 
   useEffect(() => {
@@ -113,21 +140,48 @@ const CreateDailyChart = ({ isDT }) => {
                 value={todaysDate}
                 onChange={(e) => setTodaysDate(e.target.value)}
               />
-              <select
-                id="clientSelector"
-                value={selectedClient || "Select Client"}
-                onChange={(e) => setSelectedClient(e.target.value)}
-              >
-                {clientList &&
-                  clientList.map((client) => {
-                    return (
-                      <option key={client?.id} value={client?.id}>
-                        {client?.first_name} {client?.last_name} --- DOB:{" "}
-                        {client?.dob}
-                      </option>
-                    );
-                  })}
-              </select>
+
+              {isDT ? (
+                <>
+                  <select
+                    id="clientSelector"
+                    value={selectedProgram || "Select Program"}
+                    onChange={(e) => setProgram(e.target.value)}
+                  >
+                    {dt_programs &&
+                      dt_programs.map((program) => {
+                        return (
+                          <option key={program} value={program}>
+                            {program}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  <p>{"In a field of"}</p>
+                  <input
+                    id="dateInput"
+                    type="Number"
+                    value={programNotes}
+                    onChange={(e) => setProgramNotes(e.target.value)}
+                  />
+                </>
+              ) : (
+                <select
+                  id="clientSelector"
+                  value={selectedClient || "Select Client"}
+                  onChange={(e) => setSelectedClient(e.target.value)}
+                >
+                  {clientList &&
+                    clientList.map((client) => {
+                      return (
+                        <option key={client?.id} value={client?.id}>
+                          {client?.first_name} {client?.last_name} --- DOB:{" "}
+                          {client?.dob}
+                        </option>
+                      );
+                    })}
+                </select>
+              )}
               <button id="createChartBtn" disabled={isDisabled}>
                 {isDT ? "Create DT" : "Create Chart"}
               </button>
