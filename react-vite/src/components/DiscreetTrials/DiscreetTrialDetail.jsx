@@ -108,7 +108,12 @@ const DiscreetTrialDetail = () => {
 
           <h1>
             Trials
-            <button id="createNewChartBtn">Add New Trial</button>
+            <button
+              id="createNewChartBtn"
+              onClick={() => alert("Add New Trial Clicked")}
+            >
+              Add New Trial
+            </button>
           </h1>
           {trialsData && trialsData.length ? (
             trialsData?.map((trial) => {
