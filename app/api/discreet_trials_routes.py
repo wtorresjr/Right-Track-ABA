@@ -165,3 +165,21 @@ def create_new_dt():
     db.session.commit()
 
     return jsonify({"New_Discreet_Trial": new_dt.to_dict()}), 201
+
+
+# Add New Trial to DT
+
+
+@discreet_trials_bp.route("/add-trial/dt-id/<int:dt_id>", methods=["POST"])
+@login_required
+def add_trial_to_dt(dt_id):
+    dt_to_add_to = Discreet_Trial.query.get(dt_id)
+
+    user_input = request.get_json()
+
+    if not dt_to_add_to:
+        return jsonify({"message": f"Discreet Trial {dt_id} not found"})
+
+    found_dt = dt_to_add_to.to_dict()
+
+    return jsonify(user_input)
