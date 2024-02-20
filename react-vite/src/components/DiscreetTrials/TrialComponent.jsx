@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import "./dt-comp-styles.css";
 import { returnPercentColor } from "../helpers/returnColor";
+import { useModal } from "../../context/Modal";
+import { DeleteChartModal } from "../DeleteModal";
 
 const TrialComponent = ({ trial }) => {
+  const { setModalContent } = useModal();
   const [trialPercent, setTrialPercent] = useState(0);
   const [passOrFail, setPassOrFail] = useState();
+
   useEffect(() => {
     const result = (100 / trial?.trial_count) * trial?.trial_score;
     setTrialPercent(result.toFixed(2));
     setPassOrFail(returnPercentColor(trialPercent));
   }, [trial, trialPercent]);
+
+  const openDeleteModal = (chart) => {
+    setModalContent(
+      <DeleteChartModal chartInfo={chart} typeToDelete={"TRIAL"} />
+    );
+  };
 
   return (
     <div className="trialDeets" style={{ border: `3px solid ${passOrFail}` }}>
@@ -25,6 +35,31 @@ const TrialComponent = ({ trial }) => {
         <div>
           <label>Trial Notes:</label>
           {trial.trial_notes}
+        </div>
+
+        <div
+          className="chartCrudBtns"
+          style={{
+            display: "flex",
+            justifyContent: "left",
+            margin: "15px 0 0 0",
+          }}
+        >
+          <button
+            onClick={() => {
+              openUpdateChartModal(trial);
+            }}
+          >
+            Edit Trial
+          </button>
+          <button
+            style={{ padding: "0 5px" }}
+            onClick={() => {
+              openDeleteModal(trial);
+            }}
+          >
+            Delete Trial
+          </button>
         </div>
       </div>
       <div
