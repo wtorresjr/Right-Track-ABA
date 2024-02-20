@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "../AddIntervalComponent/add-interval.css";
-import { LegendComponent } from "../DailyCharts";
+// import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
-import { addIntervalToChart } from "../../redux/charts";
-import { returnColor } from "../helpers/returnColor";
+// import { addIntervalToChart } from "../../redux/charts";
+// import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
-import { DeleteMessage } from "../DeleteModal";
-import { activities } from "../helpers/dropdown-data";
-import { behaviors } from "../helpers/dropdown-data";
+// import { DeleteMessage } from "../DeleteModal";
+// import { activities } from "../helpers/dropdown-data";
+// import { behaviors } from "../helpers/dropdown-data";
 import {
   trial_target_shapes,
   trial_target_colors,
-  trial_target_sizes,
-  trial_target_letter,
+  // trial_target_sizes,
+  // trial_target_letter,
 } from "../helpers/dropdown-data";
 
 const AddTrialComponent = ({ dtInfo }) => {
@@ -28,10 +28,11 @@ const AddTrialComponent = ({ dtInfo }) => {
   const [errors, setErrors] = useState();
 
   useEffect(() => {
-    if (dtInfo.program_name === "Identifying Shapes") {
+    console.log(dtInfo, "INFO");
+    if (dtInfo?.program_name === "Identify Shapes") {
       setProgramDD(trial_target_shapes);
     }
-    if (dtInfo.program_name === "Identifying Colors") {
+    if (dtInfo?.program_name === "Identify Colors") {
       setProgramDD(trial_target_colors);
     }
   }, [dtInfo]);

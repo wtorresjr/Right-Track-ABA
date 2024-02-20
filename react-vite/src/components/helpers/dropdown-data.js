@@ -41,8 +41,8 @@ export const activities = [
 ];
 
 export const dt_programs = [
-  "Identify Shapes",
-  "Identify Colors",
+  "Identifying Shapes",
+  "Identifying Colors",
   "Identify Numbers",
   "Identify Sizes",
   "Sorting Sizes",
