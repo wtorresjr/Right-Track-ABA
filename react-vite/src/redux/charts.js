@@ -134,7 +134,7 @@ export const createNewChartThunk = (chartData) => async (dispatch) => {
 export const getChartByIdThunk = (chart_id) => async (dispatch) => {
   const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
     method: "GET",
-    header: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
   });
   if (response.ok) {
     const chart = await response.json();
