@@ -74,7 +74,7 @@ const DiscreetTrialDetail = () => {
   }, [dtData]);
 
   const openAddTrialModal = async () => {
-    setModalContent(<AddTrialComponent />);
+    setModalContent(<AddTrialComponent dtInfo={dtData} />);
     // console.log(+dt_id, "Add New Trial Clicked");
   };
 
