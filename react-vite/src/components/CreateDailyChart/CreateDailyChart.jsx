@@ -2,12 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import "./create-daily-chart.css";
 import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { dt_programs } from "../helpers/dropdown-data";
+import "./create-daily-chart.css";
+import { addNewDTThunk, getDiscreetTrialThunk } from "../../redux/dts";
 
-const CreateDailyChart = () => {
+const CreateDailyChart = ({ isDT }) => {
   const navigate = useNavigate();
   const { client_id } = useParams();
   const { closeModal } = useModal();
@@ -17,13 +19,13 @@ const CreateDailyChart = () => {
     new Date().toISOString().split("T")[0]
   );
   const [errors, setErrors] = useState({});
-
+  const [selectedProgram, setProgram] = useState(dt_programs[0]);
+  const [programNotes, setProgramNotes] = useState(1);
   const [newChartCompleted, setNewChartCompleted] = useState(null);
-
-  const currentClient = useSelector((state) => state?.clients?.client_by_id);
-  const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const [clientName, setClientName] = useState();
   const dispatch = useDispatch();
+  const currentClient = useSelector((state) => state?.clients?.client_by_id);
+  const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
   const errorCollector = {};
   useEffect(() => {
@@ -44,15 +46,20 @@ const CreateDailyChart = () => {
     }
   }, [dispatch, todaysDate]);
 
-  
+
   useEffect(() => {
-    const nameChanger = clientList?.filter((client) => {
-      return client?.id === +selectedClient;
-    });
-    // console.log(nameChanger, "Name Changer");
-    const firstLastName =
-      nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
-    setClientName(firstLastName);
+    if (!isDT) {
+      const nameChanger = clientList?.filter((client) => {
+        return client?.id === +selectedClient;
+      });
+      const firstLastName =
+        nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+      setClientName(firstLastName);
+    } else {
+      const firstLastName =
+        currentClient.first_name + " " + currentClient.last_name;
+      setClientName(firstLastName);
+    }
   }, [selectedClient]);
 
 
@@ -64,29 +71,51 @@ const CreateDailyChart = () => {
     }
   }, [dispatch, client_id]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const startNewChart = {
-      chart_date: todaysDate,
-      client_id: selectedClient,
-    };
+    if (!isDT) {
+      const startNewChart = {
+        chart_date: todaysDate,
+        client_id: selectedClient,
+      };
+      const newChartResult = await dispatch(createNewChartThunk(startNewChart));
+      setNewChartCompleted(newChartResult);
+    }
+    if (isDT) {
+      const startNewDT = {
+        trial_date: todaysDate,
+        client_id: currentClient?.id,
+        program_name: selectedProgram,
+        program_notes: `${selectedProgram} in a field of ${programNotes}`,
+      };
 
-    const newChartResult = await dispatch(createNewChartThunk(startNewChart));
-    setNewChartCompleted(newChartResult);
+      const newDTResult = await dispatch(addNewDTThunk(startNewDT));
+      setNewChartCompleted(newDTResult);
+    }
   };
 
   useEffect(() => {
-    if (newChartCompleted) {
+    if (newChartCompleted && !isDT) {
       closeModal();
       dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
       navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
+    }
+    if (newChartCompleted && isDT) {
+      closeModal();
+      dispatch(
+        getDiscreetTrialThunk(newChartCompleted?.New_Discreet_Trial?.id)
+      );
+      navigate(`/discreet-trial/${newChartCompleted?.New_Discreet_Trial?.id}`);
     }
   }, [newChartCompleted, navigate]);
 
   return (
     <div className="newChartModal">
-      <h1>Create Daily Chart For {clientName}</h1>
+      <h1>
+        Create {isDT ? "Discreet Trial" : "Daily Chart"} For {clientName}
+      </h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
           return (
@@ -113,23 +142,50 @@ const CreateDailyChart = () => {
                 value={todaysDate}
                 onChange={(e) => setTodaysDate(e.target.value)}
               />
-              <select
-                id="clientSelector"
-                value={selectedClient || "Select Client"}
-                onChange={(e) => setSelectedClient(e.target.value)}
-              >
-                {clientList &&
-                  clientList.map((client) => {
-                    return (
-                      <option key={client?.id} value={client?.id}>
-                        {client?.first_name} {client?.last_name} --- DOB:{" "}
-                        {client?.dob}
-                      </option>
-                    );
-                  })}
-              </select>
+
+              {isDT ? (
+                <>
+                  <select
+                    id="clientSelector"
+                    value={selectedProgram || "Select Program"}
+                    onChange={(e) => setProgram(e.target.value)}
+                  >
+                    {dt_programs &&
+                      dt_programs?.map((program) => {
+                        return (
+                          <option key={program} value={program}>
+                            {program}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  <p>{"In a field of"}</p>
+                  <input
+                    id="dateInput"
+                    type="Number"
+                    value={programNotes}
+                    onChange={(e) => setProgramNotes(e.target.value)}
+                  />
+                </>
+              ) : (
+                <select
+                  id="clientSelector"
+                  value={selectedClient || "Select Client"}
+                  onChange={(e) => setSelectedClient(e.target.value)}
+                >
+                  {clientList &&
+                    clientList?.map((client) => {
+                      return (
+                        <option key={client?.id} value={client?.id}>
+                          {client?.first_name} {client?.last_name} --- DOB:{" "}
+                          {client?.dob}
+                        </option>
+                      );
+                    })}
+                </select>
+              )}
               <button id="createChartBtn" disabled={isDisabled}>
-                Create Chart
+                {isDT ? "Create DT" : "Create Chart"}
               </button>
               <button id="cancelBtn" onClick={() => closeModal()}>
                 Cancel
