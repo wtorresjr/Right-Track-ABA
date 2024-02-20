@@ -43,12 +43,8 @@ def get_dt_by_client_id(client_id):
 
     if not found_client_dts:
         return (
-            jsonify(
-                {
-                    "message": "Either client does not exist or does not belong to logged in user."
-                }
-            ),
-            404,
+            jsonify([]),
+            200,
         )
 
     client_dts = []
@@ -164,7 +160,7 @@ def create_new_dt():
         program_notes=user_input["program_notes"],
         therapist_id=current_user.id,
     )
-    
+
     db.session.add(new_dt)
     db.session.commit()
 
