@@ -31,6 +31,9 @@ const AddTrialComponent = ({ dtInfo }) => {
     if (dtInfo.program_name === "Identifying Shapes") {
       setProgramDD(trial_target_shapes);
     }
+    if (dtInfo.program_name === "Identifying Colors") {
+      setProgramDD(trial_target_colors);
+    }
   }, [dtInfo]);
 
   const errorCollector = {};
