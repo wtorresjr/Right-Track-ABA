@@ -47,6 +47,7 @@ export const dt_programs = [
   "Identify Sizes",
   "Sorting Sizes",
   "Sequencing Numbers",
+  "Identify Letters",
 ];
 
 export const trial_target_shapes = [
@@ -58,6 +59,7 @@ export const trial_target_shapes = [
   "Star",
   "Diamond",
   "Ellipse",
+  "Heart",
 ];
 
 export const trial_target_colors = [
@@ -76,4 +78,31 @@ export const trial_target_colors = [
 
 export const trial_target_sizes = ["Tiny", "Small", "Medium", "Large", "Huge"];
 
-
+export const trial_target_letters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];

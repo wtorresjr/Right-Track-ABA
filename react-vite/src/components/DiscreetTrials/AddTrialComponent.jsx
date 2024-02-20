@@ -9,16 +9,29 @@ import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { activities } from "../helpers/dropdown-data";
 import { behaviors } from "../helpers/dropdown-data";
+import {
+  trial_target_shapes,
+  trial_target_colors,
+  trial_target_sizes,
+  trial_target_letter,
+} from "../helpers/dropdown-data";
 
-const AddTrialComponent = () => {
+const AddTrialComponent = ({ dtInfo }) => {
   const { dt_id } = useParams();
-
   const [isDisabled, setDisabled] = useState(true);
+  const [programDD, setProgramDD] = useState();
+  const [targetItem, setTargetItem] = useState();
 
   const dispatch = useDispatch();
-  const [errors, setErrors] = useState();
   const { closeModal } = useModal();
   const { setModalContent } = useModal();
+  const [errors, setErrors] = useState();
+
+  useEffect(() => {
+    if (dtInfo.program_name === "Identifying Shapes") {
+      setProgramDD(trial_target_shapes);
+    }
+  }, [dtInfo]);
 
   const errorCollector = {};
 
@@ -31,6 +44,20 @@ const AddTrialComponent = () => {
     >
       <div className="intervalCompContain">
         <h1>Add New Trial</h1>
+
+        <select
+          onChange={(e) => setTargetItem(e.target.value)}
+          value={targetItem}
+        >
+          {programDD &&
+            programDD?.map((progOption) => {
+              return (
+                <option key={progOption} value={progOption}>
+                  {progOption}
+                </option>
+              );
+            })}
+        </select>
 
         <button
           type="Submit"
