@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { dt_programs } from "../helpers/dropdown-data";
 import "./create-daily-chart.css";
+import { addNewDTThunk, getDiscreetTrialThunk } from "../../redux/dts";
 
 const CreateDailyChart = ({ isDT }) => {
   const navigate = useNavigate();
@@ -45,15 +46,22 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, todaysDate]);
 
+
   useEffect(() => {
-    const nameChanger = clientList?.filter((client) => {
-      return client?.id === +selectedClient;
-    });
-    // console.log(nameChanger, "Name Changer");
-    const firstLastName =
-      nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
-    setClientName(firstLastName);
+    if (!isDT) {
+      const nameChanger = clientList?.filter((client) => {
+        return client?.id === +selectedClient;
+      });
+      const firstLastName =
+        nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
+      setClientName(firstLastName);
+    } else {
+      const firstLastName =
+        currentClient.first_name + " " + currentClient.last_name;
+      setClientName(firstLastName);
+    }
   }, [selectedClient]);
+
 
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
@@ -63,49 +71,43 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, client_id]);
 
-  // useEffect(() => {
-  //   console.log(selectedProgram, "Selected Program");
-  //   console.log(currentClient.id, "Client ID");
-  //   console.log(programNotes, "<-- Field Size");
-  //   console.log(todaysDate, "Date Selected");
-  // }, [selectedProgram, programNotes, todaysDate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isDT) {
-
-
       const startNewChart = {
         chart_date: todaysDate,
         client_id: selectedClient,
       };
       const newChartResult = await dispatch(createNewChartThunk(startNewChart));
       setNewChartCompleted(newChartResult);
-
-
-    } else {
-
-
+    }
+    if (isDT) {
       const startNewDT = {
         trial_date: todaysDate,
-        client_id: currentClient.id,
+        client_id: currentClient?.id,
         program_name: selectedProgram,
-        program_notes:`${selectedProgram} in a field of ${programNotes}`
+        program_notes: `${selectedProgram} in a field of ${programNotes}`,
       };
 
-      const newDTResult = await dispatch()
-
-      
-
+      const newDTResult = await dispatch(addNewDTThunk(startNewDT));
+      setNewChartCompleted(newDTResult);
     }
   };
 
   useEffect(() => {
-    if (newChartCompleted) {
+    if (newChartCompleted && !isDT) {
       closeModal();
       dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
       navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
+    }
+    if (newChartCompleted && isDT) {
+      closeModal();
+      dispatch(
+        getDiscreetTrialThunk(newChartCompleted?.New_Discreet_Trial?.id)
+      );
+      navigate(`/discreet-trial/${newChartCompleted?.New_Discreet_Trial?.id}`);
     }
   }, [newChartCompleted, navigate]);
 
@@ -149,7 +151,7 @@ const CreateDailyChart = ({ isDT }) => {
                     onChange={(e) => setProgram(e.target.value)}
                   >
                     {dt_programs &&
-                      dt_programs.map((program) => {
+                      dt_programs?.map((program) => {
                         return (
                           <option key={program} value={program}>
                             {program}
@@ -172,7 +174,7 @@ const CreateDailyChart = ({ isDT }) => {
                   onChange={(e) => setSelectedClient(e.target.value)}
                 >
                   {clientList &&
-                    clientList.map((client) => {
+                    clientList?.map((client) => {
                       return (
                         <option key={client?.id} value={client?.id}>
                           {client?.first_name} {client?.last_name} --- DOB:{" "}
