@@ -49,7 +49,7 @@ export const dt_programs = [
   "Sequencing Numbers",
 ];
 
-export const trial_targets_shapes = [
+export const trial_target_shapes = [
   "Square",
   "Circle",
   "Triangle",
@@ -58,4 +58,22 @@ export const trial_targets_shapes = [
   "Star",
   "Diamond",
   "Ellipse",
-]
+];
+
+export const trial_target_colors = [
+  "White",
+  "Black",
+  "Yellow",
+  "Red",
+  "Blue",
+  "Green",
+  "Pink",
+  "Purple",
+  "Orange",
+  "Brown",
+  "Gray",
+];
+
+export const trial_target_sizes = ["Tiny", "Small", "Medium", "Large", "Huge"];
+
+
