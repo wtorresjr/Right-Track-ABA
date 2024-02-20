@@ -9,6 +9,7 @@ import TrialComponent from "./TrialComponent";
 import { returnPercentColor } from "../helpers/returnColor";
 import { LegendComponent } from "../DailyCharts";
 import { getClientByIDThunk } from "../../redux/clients";
+import AddTrialComponent from "./AddTrialComponent";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -72,8 +73,9 @@ const DiscreetTrialDetail = () => {
     }
   }, [dtData]);
 
-  const addNewTrial = async () => {
-    console.log(+dt_id, "Add New Trial Clicked");
+  const openAddTrialModal = async () => {
+    setModalContent(<AddTrialComponent />);
+    // console.log(+dt_id, "Add New Trial Clicked");
   };
 
   return (
@@ -113,7 +115,7 @@ const DiscreetTrialDetail = () => {
 
           <h1>
             Trials
-            <button id="createNewChartBtn" onClick={addNewTrial}>
+            <button id="createNewChartBtn" onClick={openAddTrialModal}>
               Add New Trial
             </button>
           </h1>

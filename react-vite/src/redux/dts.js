@@ -171,7 +171,10 @@ const initialState = {
 function dtReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TRIAL:
-      return { ...state, DiscreetTrial: { Trials: action.payload } };
+      return {
+        ...state,
+        DiscreetTrial: { ...state.DiscreetTrial, Trials: action.payload },
+      };
     case ADD_NEW_DT:
       return { ...state, DiscreetTrial: action.payload };
     case GET_DT:
