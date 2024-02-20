@@ -8,6 +8,7 @@ import { getDiscreetTrialThunk } from "../../redux/dts";
 import TrialComponent from "./TrialComponent";
 import { returnPercentColor } from "../helpers/returnColor";
 import { LegendComponent } from "../DailyCharts";
+import { getClientByIDThunk } from "../../redux/clients";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -24,30 +25,33 @@ const DiscreetTrialDetail = () => {
   const [trialScore, setTrialScore] = useState(0);
   const [passOrFail, setPassOrFail] = useState("red");
 
-  const client = useSelector((state) => state?.clients?.client_by_id);
-
+  let client = useSelector((state) => state?.clients?.client_by_id);
+  // const dtObject = useSelector((state) => state?.dt?.DiscreetTrial?.Trials);
+  let data;
   useEffect(() => {
     setLoaded(false);
     const getData = async () => {
-      const data = await dispatch(getDiscreetTrialThunk(+dt_id));
-
+      data = await dispatch(getDiscreetTrialThunk(+dt_id));
       if (data) {
         setLoaded(true);
-        setDtData(data.Discreet_Trial);
-        setTrialsData(data.Trials);
+        setDtData(data?.Discreet_Trial);
+        setTrialsData(data?.Trials);
       }
     };
     getData();
-  }, [client.id, message, dt_id]);
+  }, [client?.id, message, dt_id, client]);
 
   useEffect(() => {
     if (trialsData) {
-      let trialsNum = trialsData.reduce(
-        (acc, trial) => acc + trial.trial_count,
+      let trialsNum = trialsData?.reduce(
+        (acc, trial) => acc + trial?.trial_count,
         0
       );
 
-      let score = trialsData.reduce((acc, trial) => acc + trial.trial_score, 0);
+      let score = trialsData?.reduce(
+        (acc, trial) => acc + trial?.trial_score,
+        0
+      );
       setTrialCount(trialsNum);
       setTrialScore(score);
 
@@ -59,6 +63,15 @@ const DiscreetTrialDetail = () => {
     setPassOrFail(returnPercentColor(percentMastered));
   }, [percentMastered]);
 
+  useEffect(() => {
+    const checkForClient = async () => {
+      client = await dispatch(getClientByIDThunk(dtData?.client_id));
+    };
+    if (!client?.id && dtData) {
+      checkForClient();
+    }
+  }, [dtData]);
+
   return (
     <>
       {loaded ? (
@@ -67,14 +80,11 @@ const DiscreetTrialDetail = () => {
             {client?.last_name}, {client?.first_name}
             <NavLink to={`/client/${client?.id}`} className="navLinkStyle">
               <i className="fa-solid fa-arrow-left fa-xl"></i>
-              {` Back To ${client.first_name}'s Detail Page`}
+              {` Back To ${client?.first_name}'s Detail Page`}
             </NavLink>
           </h1>
 
-          <div
-            className="trialDeets"
-            style={{ border: `3px solid white` }}
-          >
+          <div className="trialDeets" style={{ border: `3px solid white` }}>
             <div className="trialInfo">
               <div>{dtData?.program_name}</div>
               <div>{dtData?.program_notes}</div>
@@ -89,13 +99,24 @@ const DiscreetTrialDetail = () => {
                 <br></br>
                 {trialScore} / {trialCount}
               </div>
-              <div className="percent">{percentMastered}%</div>
+              <div className="percent">
+                {isNaN(percentMastered) ? 0 : percentMastered}%
+              </div>
             </div>
           </div>
           <LegendComponent legendType={"Performance Legend"} />
 
-          {trialsData ? (
-            trialsData.map((trial) => {
+          <h1>
+            Trials
+            <button
+              id="createNewChartBtn"
+              onClick={() => alert("Add New Trial Clicked")}
+            >
+              Add New Trial
+            </button>
+          </h1>
+          {trialsData && trialsData.length ? (
+            trialsData?.map((trial) => {
               return <TrialComponent trial={trial} key={trial.id} />;
             })
           ) : (

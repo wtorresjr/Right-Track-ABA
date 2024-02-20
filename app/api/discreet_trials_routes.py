@@ -43,31 +43,32 @@ def get_dt_by_client_id(client_id):
 
     if not found_client_dts:
         return (
-            jsonify(
-                {
-                    "message": "Either client does not exist or does not belong to logged in user."
-                }
-            ),
-            404,
+            jsonify([]),
+            200,
         )
 
     client_dts = []
     for dt in found_client_dts:
 
         dt_dict = dt.to_dict()
+
         trials_info = [trial.to_dict() for trial in dt.trials]
 
-        dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
-        dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
+        if not len(trials_info):
+            dt_dict["trials_score"] = 0
+            dt_dict["trials_count"] = 0
+            dt_dict["trials_avg"] = 0
+        else:
+            dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
+            dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
 
-        dt_dict["trials_avg"] = round(
-            100
-            / sum(trial["trial_count"] for trial in trials_info)
-            * sum(trial["trial_score"] for trial in trials_info),
-            1,
-        )
+            dt_dict["trials_avg"] = round(
+                100
+                / sum(trial["trial_count"] for trial in trials_info)
+                * sum(trial["trial_score"] for trial in trials_info),
+                1,
+            )
 
-        # dt_dict["trials"] = trials_info
         client_dts.append(dt_dict)
 
     return jsonify(client_dts), 200
@@ -151,13 +152,15 @@ def edit_dt_by_id(dt_id):
 @login_required
 def create_new_dt():
     user_input = request.get_json()
-    trial_date = datetime.strptime(user_input["trial_date"], "%Y,%m,%d").date()
-    user_input["trial_date"] = trial_date
 
     new_dt = Discreet_Trial(
-        **user_input,
+        trial_date=datetime.strptime(user_input["trial_date"], "%Y-%m-%d").date(),
+        client_id=user_input["client_id"],
+        program_name=user_input["program_name"],
+        program_notes=user_input["program_notes"],
         therapist_id=current_user.id,
     )
+
     db.session.add(new_dt)
     db.session.commit()
 
