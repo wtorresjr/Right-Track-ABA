@@ -86,6 +86,7 @@ const DiscreetTrialDetail = () => {
 
           <div className="trialDeets" style={{ border: `3px solid white` }}>
             <div className="trialInfo">
+            <h1>Discreet Trial</h1>
               <div>{dtData?.program_name}</div>
               <div>{dtData?.program_notes}</div>
               <div>{dtData?.trial_date}</div>
