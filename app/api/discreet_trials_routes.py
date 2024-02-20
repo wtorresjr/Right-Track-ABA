@@ -72,7 +72,7 @@ def get_dt_by_client_id(client_id):
                 * sum(trial["trial_score"] for trial in trials_info),
                 1,
             )
-            
+
         client_dts.append(dt_dict)
 
     return jsonify(client_dts), 200
@@ -156,13 +156,15 @@ def edit_dt_by_id(dt_id):
 @login_required
 def create_new_dt():
     user_input = request.get_json()
-    trial_date = datetime.strptime(user_input["trial_date"], "%Y,%m,%d").date()
-    user_input["trial_date"] = trial_date
 
     new_dt = Discreet_Trial(
-        **user_input,
+        trial_date=datetime.strptime(user_input["trial_date"], "%Y-%m-%d").date(),
+        client_id=user_input["client_id"],
+        program_name=user_input["program_name"],
+        program_notes=user_input["program_notes"],
         therapist_id=current_user.id,
     )
+    
     db.session.add(new_dt)
     db.session.commit()
 
