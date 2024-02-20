@@ -7,7 +7,7 @@ import { createNewChartThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 
-const CreateDailyChart = () => {
+const CreateDailyChart = ({ isDT }) => {
   const navigate = useNavigate();
   const { client_id } = useParams();
   const { closeModal } = useModal();
@@ -44,7 +44,6 @@ const CreateDailyChart = () => {
     }
   }, [dispatch, todaysDate]);
 
-  
   useEffect(() => {
     const nameChanger = clientList?.filter((client) => {
       return client?.id === +selectedClient;
@@ -54,7 +53,6 @@ const CreateDailyChart = () => {
       nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
     setClientName(firstLastName);
   }, [selectedClient]);
-
 
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
@@ -86,7 +84,9 @@ const CreateDailyChart = () => {
 
   return (
     <div className="newChartModal">
-      <h1>Create Daily Chart For {clientName}</h1>
+      <h1>
+        Create {isDT ? "Discreet Trial" : "Daily Chart"} For {clientName}
+      </h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
           return (
@@ -129,7 +129,7 @@ const CreateDailyChart = () => {
                   })}
               </select>
               <button id="createChartBtn" disabled={isDisabled}>
-                Create Chart
+                {isDT ? "Create DT" : "Create Chart"}
               </button>
               <button id="cancelBtn" onClick={() => closeModal()}>
                 Cancel

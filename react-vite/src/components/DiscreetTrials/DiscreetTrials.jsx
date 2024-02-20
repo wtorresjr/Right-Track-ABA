@@ -6,6 +6,7 @@ import { getAllDTsThunk } from "../../redux/dts";
 import { returnPercentColor } from "../helpers/returnColor";
 import { DeleteChartModal } from "../DeleteModal";
 import { useModal } from "../../context/Modal";
+import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 
 const DiscreetTrials = () => {
   const { setModalContent } = useModal();
@@ -24,11 +25,17 @@ const DiscreetTrials = () => {
     setModalContent(<DeleteChartModal chartInfo={chart} typeToDelete={"DT"} />);
   };
 
+  const openCreateDTModal = () => {
+    setModalContent(<CreateDailyChart isDT={"True"} />);
+  };
+
   return (
     <div className="chartsContain">
       <h1>
         Discreet Trials
-        <button id="createNewChartBtn">New Discreet Trial</button>
+        <button id="createNewChartBtn" onClick={openCreateDTModal}>
+          Create Discreet Trial
+        </button>
       </h1>
 
       {clientDT && clientDT?.length
