@@ -48,3 +48,14 @@ export const dt_programs = [
   "Sorting Sizes",
   "Sequencing Numbers",
 ];
+
+export const trial_targets_shapes = [
+  "Square",
+  "Circle",
+  "Triangle",
+  "Oval",
+  "Reactangle",
+  "Star",
+  "Diamond",
+  "Ellipse",
+]
