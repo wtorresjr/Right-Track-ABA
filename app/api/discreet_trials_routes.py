@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Discreet_Trial
+from app.models import Discreet_Trial, Trial
 from datetime import time, datetime
 from sqlalchemy.orm import joinedload
 
@@ -165,3 +165,27 @@ def create_new_dt():
     db.session.commit()
 
     return jsonify({"New_Discreet_Trial": new_dt.to_dict()}), 201
+
+
+# Add New Trial to DT
+
+
+@discreet_trials_bp.route("/add-trial/dt-id/<int:dt_id>", methods=["POST"])
+@login_required
+def add_trial_to_dt(dt_id):
+    dt_to_add_to = Discreet_Trial.query.get(dt_id)
+
+    user_input = request.get_json()
+
+    # print(user_input)
+    if not dt_to_add_to:
+        return jsonify({"message": f"Discreet Trial {dt_id} not found"})
+
+    new_trial = Trial(**user_input, dt_id=dt_id, therapist_id=current_user.id)
+
+    db.session.add(new_trial)
+    db.session.commit()
+
+    success_complete = new_trial.to_dict()
+
+    return jsonify(success_complete)

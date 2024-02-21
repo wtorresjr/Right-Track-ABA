@@ -71,3 +71,33 @@
   height: 100%;
   border-radius: 10px;
 }
+
+#trialScoreDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: row nowrap;
+}
+
+#trialScoreDiv div {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+#trialScoreDiv label {
+  /* margin: 0; */
+  position: absolute;
+}
+.trialNotesDiv .intervalNotes {
+  border-radius: 10px;
+}
+
+.trialNotesDiv {
+  margin: 10px 0 0 0;
+}
+
+.dividedDivs {
+  /* background-color: red; */
+  padding: 10px;
+}
