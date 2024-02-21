@@ -5,6 +5,7 @@ const GET_ALL_DTS = "dt/getAllDts";
 const DELETE_DT = "dt/deleteDT";
 const DELETE_TRIAL = "dt/deleteTrial";
 const ADD_NEW_DT = "dt/addNewDT";
+const ADD_TRIAL = "dt/addTrial";
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -138,6 +139,30 @@ export const addNewDTThunk = (dtData) => async (dispatch) => {
   }
 };
 
+const addTrial = (trialInfo) => {
+  return {
+    type: ADD_TRIAL,
+    payload: trialInfo,
+  };
+};
+
+export const addTrialThunk = (trialData, dt_id) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-discreet-trials/add-trial/dt-id/${dt_id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(trialData),
+    });
+    if (response.ok) {
+      const newTrial = await response.json();
+      await dispatch(addTrial(newTrial));
+      return newTrial;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const initialState = {
   DiscreetTrial: {},
   Discreet_Trials: [],
@@ -145,6 +170,11 @@ const initialState = {
 
 function dtReducer(state = initialState, action) {
   switch (action.type) {
+    case ADD_TRIAL:
+      return {
+        ...state,
+        DiscreetTrial: { ...state.DiscreetTrial, Trials: action.payload },
+      };
     case ADD_NEW_DT:
       return { ...state, DiscreetTrial: action.payload };
     case GET_DT:
