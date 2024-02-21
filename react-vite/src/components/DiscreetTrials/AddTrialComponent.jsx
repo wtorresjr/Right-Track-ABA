@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "../AddIntervalComponent/add-interval.css";
 import "../CreateDailyChart/create-daily-chart.css";
-// import { LegendComponent } from "../DailyCharts";
 import { useParams } from "react-router-dom";
-// import { addIntervalToChart } from "../../redux/charts";
-// import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
-// import { activities } from "../helpers/dropdown-data";
-// import { behaviors } from "../helpers/dropdown-data";
+
 import {
   trial_target_shapes,
   trial_target_colors,
@@ -17,7 +13,7 @@ import {
   trial_target_letters,
   trial_target_sorting_sizes,
 } from "../helpers/dropdown-data";
-import { addTrialThunk, getDiscreetTrialThunk } from "../../redux/dts";
+import { addTrialThunk } from "../../redux/dts";
 import { getClientByIDThunk } from "../../redux/clients";
 
 const AddTrialComponent = ({ dtInfo }) => {
@@ -36,7 +32,6 @@ const AddTrialComponent = ({ dtInfo }) => {
   const errorCollector = {};
 
   useEffect(() => {
-    console.log(dtInfo, "DT INFO");
     if (dtInfo?.program_name === "Identify Shapes") {
       setProgramDD(trial_target_shapes);
     }
@@ -54,6 +49,7 @@ const AddTrialComponent = ({ dtInfo }) => {
     }
   }, [dtInfo]);
 
+  
   useEffect(() => {
     setErrors();
     if (!trialScore) {
@@ -75,6 +71,7 @@ const AddTrialComponent = ({ dtInfo }) => {
     }
   }, [trialCount, trialScore]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newTrial = {
@@ -92,6 +89,7 @@ const AddTrialComponent = ({ dtInfo }) => {
       await dispatch(getClientByIDThunk(dtInfo.client_id));
     }
   };
+
 
   return (
     <div id="outerCompContain">
