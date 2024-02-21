@@ -9,6 +9,7 @@ import TrialComponent from "./TrialComponent";
 import { returnPercentColor } from "../helpers/returnColor";
 import { LegendComponent } from "../DailyCharts";
 import { getClientByIDThunk } from "../../redux/clients";
+import AddTrialComponent from "./AddTrialComponent";
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -26,8 +27,8 @@ const DiscreetTrialDetail = () => {
   const [passOrFail, setPassOrFail] = useState("red");
 
   let client = useSelector((state) => state?.clients?.client_by_id);
-  // const dtObject = useSelector((state) => state?.dt?.DiscreetTrial?.Trials);
   let data;
+
   useEffect(() => {
     setLoaded(false);
     const getData = async () => {
@@ -72,6 +73,11 @@ const DiscreetTrialDetail = () => {
     }
   }, [dtData]);
 
+  const openAddTrialModal = async () => {
+    setModalContent(<AddTrialComponent dtInfo={dtData} />);
+    // console.log(+dt_id, "Add New Trial Clicked");
+  };
+
   return (
     <>
       {loaded ? (
@@ -86,6 +92,7 @@ const DiscreetTrialDetail = () => {
 
           <div className="trialDeets" style={{ border: `3px solid white` }}>
             <div className="trialInfo">
+              <h1>Discreet Trial</h1>
               <div>{dtData?.program_name}</div>
               <div>{dtData?.program_notes}</div>
               <div>{dtData?.trial_date}</div>
@@ -108,10 +115,7 @@ const DiscreetTrialDetail = () => {
 
           <h1>
             Trials
-            <button
-              id="createNewChartBtn"
-              onClick={() => alert("Add New Trial Clicked")}
-            >
+            <button id="createNewChartBtn" onClick={openAddTrialModal}>
               Add New Trial
             </button>
           </h1>
