@@ -76,6 +76,12 @@ export const trial_target_colors = [
   "Gray",
 ];
 
+export const trial_target_sorting_sizes = [
+  "Small to Large",
+  "Large to Small",
+  "Sort Like Sizes",
+];
+
 export const trial_target_sizes = ["Tiny", "Small", "Medium", "Large", "Huge"];
 
 export const trial_target_letters = [
