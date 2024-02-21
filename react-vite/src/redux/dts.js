@@ -146,9 +146,9 @@ const addTrial = (trialInfo) => {
   };
 };
 
-export const addTrialThunk = (trialData) => async (dispatch) => {
+export const addTrialThunk = (trialData, dt_id) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/my-discreet-trials/`, {
+    const response = await fetch(`/api/my-discreet-trials/add-trial/dt-id/${dt_id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(trialData),
