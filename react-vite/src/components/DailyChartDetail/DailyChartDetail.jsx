@@ -41,7 +41,6 @@ const DailyChartDetail = () => {
     currentChart?.id,
     currentChart?.client_id,
     currentIntervals?.length,
-    // currentIntervals?.,
     ratingColor,
     currentChart?.Chart_Avg_Rating,
     refresh,

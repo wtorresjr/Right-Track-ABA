@@ -9,6 +9,7 @@ from .seeder_helper_arrays import (
     field_count,
     color_choices,
     shape_choices,
+    letter_choices,
 )
 
 # Adds a demo user, you can add other users here if you want
@@ -46,6 +47,8 @@ def seed_discreet_trials(client_data):
                 trial_target = randint(1, 10)
             if prog_note_txt[1] == "Sizes":
                 trial_target = choice(["Smaller", "Same", "Bigger"])
+            if prog_note_txt[1] == "Letters":
+                trial_target = choice(letter_choices)
 
             trial1 = Trial(
                 dt_id=new_dt["id"],
