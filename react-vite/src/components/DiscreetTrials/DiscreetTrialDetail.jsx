@@ -75,7 +75,6 @@ const DiscreetTrialDetail = () => {
 
   const openAddTrialModal = async () => {
     setModalContent(<AddTrialComponent dtInfo={dtData} />);
-    // console.log(+dt_id, "Add New Trial Clicked");
   };
 
   return (
@@ -121,7 +120,9 @@ const DiscreetTrialDetail = () => {
           </h1>
           {trialsData && trialsData.length ? (
             trialsData?.map((trial) => {
-              return <TrialComponent trial={trial} key={trial.id} />;
+              return (
+                <TrialComponent trial={trial} dtInfo={dtData} key={trial.id} />
+              );
             })
           ) : (
             <>{"No Trials Yet."}</>

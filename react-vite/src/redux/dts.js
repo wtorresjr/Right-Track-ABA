@@ -6,6 +6,7 @@ const DELETE_DT = "dt/deleteDT";
 const DELETE_TRIAL = "dt/deleteTrial";
 const ADD_NEW_DT = "dt/addNewDT";
 const ADD_TRIAL = "dt/addTrial";
+const EDIT_TRIAL = "dt/editTrial";
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -106,7 +107,6 @@ export const deleteTrialThunk = (trial_id, dt_id) => async (dispatch) => {
     if (response.ok) {
       const deleteTrial = await response.json();
       await dispatch(deleteDTTrial(deleteTrial));
-      // await dispatch(getDiscreetTrial(+dt_id));
       return deleteTrial;
     }
   } catch (error) {
@@ -128,7 +128,7 @@ export const addNewDTThunk = (dtData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dtData),
     });
-    console.log(response, "Response from Thunk");
+    console.log(response.status, "response body");
     if (response.ok) {
       const newDT = await response.json();
       await dispatch(addDT(newDT));
@@ -148,15 +148,42 @@ const addTrial = (trialInfo) => {
 
 export const addTrialThunk = (trialData, dt_id) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/my-discreet-trials/add-trial/dt-id/${dt_id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(trialData),
-    });
+    const response = await fetch(
+      `/api/my-discreet-trials/add-trial/dt-id/${dt_id}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(trialData),
+      }
+    );
     if (response.ok) {
       const newTrial = await response.json();
       await dispatch(addTrial(newTrial));
       return newTrial;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const editTrial = (editedTrial) => {
+  return {
+    type: EDIT_TRIAL,
+    payload: editedTrial,
+  };
+};
+
+export const editTrialThunk = (trialData, trial_id) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-trials/${trial_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(trialData),
+    });
+    if (response.ok) {
+      const editedTrial = await response.json();
+      await dispatch(editTrial(editedTrial));
+      return editedTrial;
     }
   } catch (error) {
     throw new Error(error);
@@ -170,6 +197,26 @@ const initialState = {
 
 function dtReducer(state = initialState, action) {
   switch (action.type) {
+    case EDIT_TRIAL:
+      const editedTrialIndex = state.DiscreetTrial.Trials.findIndex(
+        (trial) => trial.id === action.payload.id
+      );
+
+      if (editedTrialIndex !== -1) {
+        const updatedTrials = [...state.DiscreetTrial.Trials];
+        updatedTrials[editedTrialIndex] = action.payload;
+
+        return {
+          ...state,
+          DiscreetTrial: {
+            ...state.DiscreetTrial,
+            Trials: updatedTrials,
+          },
+        };
+      } else {
+        return state;
+      }
+
     case ADD_TRIAL:
       return {
         ...state,

@@ -13,10 +13,10 @@ import {
   trial_target_letters,
   trial_target_sorting_sizes,
 } from "../helpers/dropdown-data";
-import { addTrialThunk } from "../../redux/dts";
+import { addTrialThunk, editTrialThunk } from "../../redux/dts";
 import { getClientByIDThunk } from "../../redux/clients";
 
-const AddTrialComponent = ({ dtInfo }) => {
+const AddTrialComponent = ({ dtInfo, trialInfo }) => {
   const { dt_id } = useParams();
   const [isDisabled, setDisabled] = useState(true);
   const [programDD, setProgramDD] = useState();
@@ -49,7 +49,19 @@ const AddTrialComponent = ({ dtInfo }) => {
     }
   }, [dtInfo]);
 
-  
+  useEffect(() => {
+    console.log(trialInfo, "trial info");
+    const checkIfEditing = () => {
+      setTargetItem(trialInfo.trial_target);
+      setTrialCount(trialInfo.trial_count);
+      setTrialScore(trialInfo.trial_score);
+      setTrialNotes(trialInfo.trial_notes);
+    };
+    if (trialInfo) {
+      checkIfEditing();
+    }
+  }, []);
+
   useEffect(() => {
     setErrors();
     if (!trialScore) {
@@ -71,7 +83,6 @@ const AddTrialComponent = ({ dtInfo }) => {
     }
   }, [trialCount, trialScore]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newTrial = {
@@ -82,14 +93,28 @@ const AddTrialComponent = ({ dtInfo }) => {
       client_id: dtInfo.client_id,
     };
 
-    const trialAdded = await dispatch(addTrialThunk(newTrial, dt_id));
+    let trialAdded;
+
+    if (trialInfo) {
+      trialAdded = await dispatch(editTrialThunk(newTrial, trialInfo.id));
+    } else {
+      trialAdded = await dispatch(addTrialThunk(newTrial, dt_id));
+    }
+
     if (trialAdded) {
       closeModal();
-      setModalContent(<DeleteMessage message={"Trial Added Successfully!"} />);
+      setModalContent(
+        <DeleteMessage
+          message={
+            trialInfo
+              ? "Trial Updated Successfully!"
+              : "Trial Added Successfully!"
+          }
+        />
+      );
       await dispatch(getClientByIDThunk(dtInfo.client_id));
     }
   };
-
 
   return (
     <div id="outerCompContain">
@@ -169,7 +194,7 @@ const AddTrialComponent = ({ dtInfo }) => {
           onClick={handleSubmit}
           id="modalDelBtn"
         >
-          Add Trial
+          {trialInfo ? "Update Trial" : "Add Trial"}
         </button>
         <button onClick={closeModal} id="modalCancelBtn">
           Cancel
