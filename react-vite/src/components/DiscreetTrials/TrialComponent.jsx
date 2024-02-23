@@ -3,8 +3,9 @@ import "./dt-comp-styles.css";
 import { returnPercentColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
+import AddTrialComponent from "./AddTrialComponent";
 
-const TrialComponent = ({ trial }) => {
+const TrialComponent = ({ trial, dtInfo }) => {
   const { setModalContent } = useModal();
   const [trialPercent, setTrialPercent] = useState(0);
   const [passOrFail, setPassOrFail] = useState();
@@ -18,6 +19,12 @@ const TrialComponent = ({ trial }) => {
   const openDeleteModal = (chart) => {
     setModalContent(
       <DeleteChartModal chartInfo={chart} typeToDelete={"TRIAL"} />
+    );
+  };
+
+  const openUpdateTrialModal = () => {
+    setModalContent(
+      <AddTrialComponent dtInfo={dtInfo} trialInfo={trial} />
     );
   };
 
@@ -47,7 +54,7 @@ const TrialComponent = ({ trial }) => {
         >
           <button
             onClick={() => {
-              openUpdateChartModal(trial);
+              openUpdateTrialModal(trial);
             }}
           >
             Edit Trial
