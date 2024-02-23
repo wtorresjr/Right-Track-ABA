@@ -56,7 +56,7 @@ def get_trials_by_dt(trial_id):
             for [key, item] in edit_data.items():
                 setattr(found_trial, key, item)
 
-            db.session.commit()
+            db.session.commit() 
 
             return jsonify({"Edited_Trial": found_trial.to_dict()})
 
