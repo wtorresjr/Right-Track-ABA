@@ -7,9 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { dt_programs } from "../helpers/dropdown-data";
 import "./create-daily-chart.css";
-import { addNewDTThunk, getDiscreetTrialThunk } from "../../redux/dts";
+import {
+  addNewDTThunk,
+  editDTThunk,
+  getDiscreetTrialThunk,
+} from "../../redux/dts";
+import { DeleteMessage } from "../DeleteModal";
 
-const CreateDailyChart = ({ isDT }) => {
+const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
+  const { setModalContent } = useModal();
   const navigate = useNavigate();
   const { client_id } = useParams();
   const { closeModal } = useModal();
@@ -28,6 +34,16 @@ const CreateDailyChart = ({ isDT }) => {
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
   const errorCollector = {};
+
+  useEffect(() => {
+    if (isDTupdate && dtInfo) {
+      setTodaysDate(dtInfo?.trial_date);
+      setProgramNotes(dtInfo.program_notes.slice(-2).trimStart());
+      setProgram(dtInfo.program_name);
+      dispatch(getDiscreetTrialThunk(dtInfo.id));
+    }
+  }, [dtInfo]);
+
   useEffect(() => {
     const today = new Date();
     const selectedDate = new Date(todaysDate);
@@ -46,7 +62,6 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, todaysDate]);
 
-
   useEffect(() => {
     if (!isDT) {
       const nameChanger = clientList?.filter((client) => {
@@ -62,7 +77,6 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [selectedClient]);
 
-
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
@@ -71,11 +85,25 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, client_id]);
 
+  const openUpdateMessage = () => {
+    setModalContent(<DeleteMessage message={"Discreet Trial Updated!"} />);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isDT) {
+    if (isDTupdate) {
+      const updatedDTinfo = {
+        trial_date: todaysDate,
+        program_name: selectedProgram,
+        program_notes: `${selectedProgram} in a field of ${programNotes}`,
+      };
+
+      const updateChart = await dispatch(editDTThunk(updatedDTinfo, dtInfo.id));
+      setNewChartCompleted(updateChart);
+    }
+
+    if (!isDT && !isDTupdate) {
       const startNewChart = {
         chart_date: todaysDate,
         client_id: selectedClient,
@@ -97,7 +125,14 @@ const CreateDailyChart = ({ isDT }) => {
   };
 
   useEffect(() => {
-    if (newChartCompleted && !isDT) {
+    if (newChartCompleted && isDTupdate) {
+      closeModal();
+
+      dispatch(getClientByIDThunk(client_id));
+      openUpdateMessage();
+    }
+
+    if (newChartCompleted && !isDT && !isDTupdate) {
       closeModal();
       dispatch(getChartByIdThunk(newChartCompleted?.New_Chart?.id));
       navigate(`/daily-chart/${newChartCompleted?.New_Chart?.id}`);
@@ -143,7 +178,7 @@ const CreateDailyChart = ({ isDT }) => {
                 onChange={(e) => setTodaysDate(e.target.value)}
               />
 
-              {isDT ? (
+              {isDT || isDTupdate ? (
                 <>
                   <select
                     id="clientSelector"
@@ -185,7 +220,7 @@ const CreateDailyChart = ({ isDT }) => {
                 </select>
               )}
               <button id="createChartBtn" disabled={isDisabled}>
-                {isDT ? "Create DT" : "Create Chart"}
+                {isDT ? "Create DT" : isDTupdate ? "Update DT" : "Create Chart"}
               </button>
               <button id="cancelBtn" onClick={() => closeModal()}>
                 Cancel
