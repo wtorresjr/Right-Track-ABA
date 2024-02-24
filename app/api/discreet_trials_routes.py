@@ -47,8 +47,9 @@ def get_dt_by_client_id(client_id):
             200,
         )
 
+    sorted_dts = sorted(found_client_dts, key=lambda dt: dt.trial_date, reverse=True)
     client_dts = []
-    for dt in found_client_dts:
+    for dt in sorted_dts:
 
         dt_dict = dt.to_dict()
 
