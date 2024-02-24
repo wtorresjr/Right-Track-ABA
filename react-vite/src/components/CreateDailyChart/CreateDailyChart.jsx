@@ -28,6 +28,16 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
   const errorCollector = {};
+
+  useEffect(() => {
+    if (isDTupdate && dtInfo) {
+      setTodaysDate(dtInfo?.trial_date);
+      // setTodaysDate("2024-06-10");
+      console.log(dtInfo.trial_date, "DT INFO");
+      console.log(dtInfo, "DT INFO");
+    }
+  }, [dtInfo]);
+
   useEffect(() => {
     const today = new Date();
     const selectedDate = new Date(todaysDate);
@@ -182,7 +192,7 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
                 </select>
               )}
               <button id="createChartBtn" disabled={isDisabled}>
-                {isDT ? "Create DT" : "Create Chart"}
+                {isDT ? "Create DT" : isDTupdate ? "Update DT" : "Create Chart"}
               </button>
               <button id="cancelBtn" onClick={() => closeModal()}>
                 Cancel
