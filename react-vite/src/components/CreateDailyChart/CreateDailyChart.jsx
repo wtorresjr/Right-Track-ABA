@@ -9,7 +9,7 @@ import { dt_programs } from "../helpers/dropdown-data";
 import "./create-daily-chart.css";
 import { addNewDTThunk, getDiscreetTrialThunk } from "../../redux/dts";
 
-const CreateDailyChart = ({ isDT }) => {
+const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   const navigate = useNavigate();
   const { client_id } = useParams();
   const { closeModal } = useModal();
@@ -46,7 +46,6 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [dispatch, todaysDate]);
 
-
   useEffect(() => {
     if (!isDT) {
       const nameChanger = clientList?.filter((client) => {
@@ -62,7 +61,6 @@ const CreateDailyChart = ({ isDT }) => {
     }
   }, [selectedClient]);
 
-
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
@@ -70,7 +68,6 @@ const CreateDailyChart = ({ isDT }) => {
       setSelectedClient(clientList[0]?.id);
     }
   }, [dispatch, client_id]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -143,7 +140,7 @@ const CreateDailyChart = ({ isDT }) => {
                 onChange={(e) => setTodaysDate(e.target.value)}
               />
 
-              {isDT ? (
+              {isDT || isDTupdate ? (
                 <>
                   <select
                     id="clientSelector"
