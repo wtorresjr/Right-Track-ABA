@@ -7,6 +7,7 @@ const DELETE_TRIAL = "dt/deleteTrial";
 const ADD_NEW_DT = "dt/addNewDT";
 const ADD_TRIAL = "dt/addTrial";
 const EDIT_TRIAL = "dt/editTrial";
+const EDIT_DT = "dt/editDT";
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -190,6 +191,30 @@ export const editTrialThunk = (trialData, trial_id) => async (dispatch) => {
   }
 };
 
+const editDT = (editedDT) => {
+  return {
+    type: EDIT_DT,
+    payload: editedDT,
+  };
+};
+
+export const editDTThunk = (dtEditData, dt_id) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/my-discreet-trials/dt-id/${dt_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dtEditData),
+    });
+    if (response.ok) {
+      const editedDT = await response.json();
+      await dispatch(editDT(editedDT));
+      return editedDT;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const initialState = {
   DiscreetTrial: {},
   Discreet_Trials: [],
@@ -197,6 +222,42 @@ const initialState = {
 
 function dtReducer(state = initialState, action) {
   switch (action.type) {
+    // Inside dtReducer
+    case EDIT_DT:
+      const updateDiscreetTrials = state.Discreet_Trials.map((dt) =>
+        dt.id === action.payload.id ? { ...dt, ...action.payload } : dt
+      );
+
+      const updatedTrialsAvg = updateDiscreetTrials.find(
+        (dt) => dt.id === action.payload.id
+      )?.trials_avg;
+
+      return {
+        ...state,
+        Discreet_Trials: updateDiscreetTrials,
+        DiscreetTrial: {
+          ...state.DiscreetTrial,
+          Discreet_Trial: action.payload.Discreet_Trial,
+          Trials: {
+            ...state.DiscreetTrial.Trials,
+            trials_avg: updatedTrialsAvg,
+          },
+        },
+      };
+
+    // case EDIT_DT:
+    //   return {
+    //     ...state,
+    //     Discreet_Trials: state.Discreet_Trials.map((dt) =>
+    //       dt.id === action.payload.id ? action.payload : dt
+    //     ),
+    //     DiscreetTrial: {
+    //       ...state.DiscreetTrial,
+    //       Discreet_Trial: action.payload,
+    //       // Trials:
+    //     },
+    //   };
+
     case EDIT_TRIAL:
       const editedTrialIndex = state.DiscreetTrial.Trials.findIndex(
         (trial) => trial.id === action.payload.id
