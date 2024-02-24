@@ -136,7 +136,7 @@ def edit_dt_by_id(dt_id):
     if dt_found["therapist_id"] == current_user.id:
         user_edit_data = request.get_json()
 
-        trial_date = datetime.strptime(user_edit_data["trial_date"], "%Y,%m,%d").date()
+        trial_date = datetime.strptime(user_edit_data["trial_date"], "%Y-%m-%d").date()
 
         user_edit_data["trial_date"] = trial_date
 

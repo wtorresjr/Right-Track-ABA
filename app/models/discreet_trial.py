@@ -37,7 +37,7 @@ class Discreet_Trial(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "trial_date": self.trial_date.strftime("%Y-%b-%d"),
+            "trial_date": self.trial_date.strftime("%Y-%m-%d"),
             "client_id": self.client_id,
             "therapist_id": self.therapist_id,
             "program_name": self.program_name,
