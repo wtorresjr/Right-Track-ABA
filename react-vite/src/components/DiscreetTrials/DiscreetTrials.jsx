@@ -30,7 +30,9 @@ const DiscreetTrials = () => {
   };
 
   const openUpdateChartModal = (dt) => {
-    setModalContent(<CreateDailyChart isDTupdate={"True"} dtInfo={dt} />);
+    setModalContent(
+      <CreateDailyChart isDTupdate={"True"} dtInfo={dt} />
+    );
   };
 
   return (
