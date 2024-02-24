@@ -32,10 +32,8 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   useEffect(() => {
     if (isDTupdate && dtInfo) {
       setTodaysDate(dtInfo?.trial_date);
-      setProgramNotes(dtInfo.program_notes.slice(-1));
-  
-      // setTodaysDate("2024-06-10");
-      // console.log(fieldCount, "DT INFO");
+      setProgramNotes(dtInfo.program_notes.slice(-2).trimStart());
+      setProgram(dtInfo.program_name);
     }
   }, [dtInfo]);
 
