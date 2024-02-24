@@ -245,19 +245,6 @@ function dtReducer(state = initialState, action) {
         },
       };
 
-    // case EDIT_DT:
-    //   return {
-    //     ...state,
-    //     Discreet_Trials: state.Discreet_Trials.map((dt) =>
-    //       dt.id === action.payload.id ? action.payload : dt
-    //     ),
-    //     DiscreetTrial: {
-    //       ...state.DiscreetTrial,
-    //       Discreet_Trial: action.payload,
-    //       // Trials:
-    //     },
-    //   };
-
     case EDIT_TRIAL:
       const editedTrialIndex = state.DiscreetTrial.Trials.findIndex(
         (trial) => trial.id === action.payload.id
