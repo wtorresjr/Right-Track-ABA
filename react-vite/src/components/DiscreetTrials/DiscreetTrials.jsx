@@ -29,6 +29,12 @@ const DiscreetTrials = () => {
     setModalContent(<CreateDailyChart isDT={"True"} />);
   };
 
+  const openUpdateChartModal = (dt) => {
+    setModalContent(
+      <CreateDailyChart isDTupdate={"True"} dtInfo={dt} />
+    );
+  };
+
   return (
     <div className="chartsContain">
       <h1>
@@ -60,9 +66,9 @@ const DiscreetTrials = () => {
                 </NavLink>
                 <div className="chartCrudBtns">
                   <button
-                  // onClick={() => {
-                  //   openUpdateChartModal(dc);
-                  // }}
+                    onClick={() => {
+                      openUpdateChartModal(dt);
+                    }}
                   >
                     Edit DT
                   </button>
