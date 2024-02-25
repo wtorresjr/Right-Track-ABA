@@ -16,7 +16,7 @@ import json
 
 
 def seed_clients():
-    for client_idx in range(1, 4):
+    for client_idx in range(1, 10):
         client = Client(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
@@ -53,7 +53,7 @@ def seed_clients():
             # def seed_intervals():
             start_time = datetime(2023, 1, 1, 9, 15)
             for _ in range(randint(5, 11)):
-                interval_tags = [choice(behaviors) for _ in range(randint(0, 6))]
+                interval_tags = [choice(behaviors) for _ in range(randint(0, 4))]
 
                 int_tags = {}
                 for behavior in interval_tags:
@@ -62,9 +62,19 @@ def seed_clients():
                 interval_rating = 5
 
                 for [key, value] in int_tags.items():
-                    if key:
-                        interval_rating -= 1
-                    if interval_rating == 0:
+                    if (
+                        key == "Biting"
+                        or "Aggression"
+                        or "Kicking"
+                        or "Property Destruction"
+                        or "Spitting"
+                        or "Hitting"
+                    ):
+                        interval_rating -= value * 0.35
+                    else:
+                        interval_rating -= value * 0.10
+                    if interval_rating <= 0:
+                        interval_rating = 0
                         break
 
                 interval1 = Interval(

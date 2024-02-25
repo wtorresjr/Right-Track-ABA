@@ -12,7 +12,7 @@ const returnColor = (ratingVal, valType) => {
       ? "yellowgreen"
       : parseRating >= 2.0
       ? "yellow"
-      : parseRating >= 1.5
+      : parseRating >= 1.0
       ? "orange"
       : "red";
 

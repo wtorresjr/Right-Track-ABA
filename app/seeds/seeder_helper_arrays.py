@@ -19,16 +19,17 @@ activities = [
 
 
 behaviors = [
+    "Biting",
+    "Aggression",
+    "Kicking",
+    "Property Destruction",
+    "Spitting",
+    "Hitting",
     "Tantrums",
     "Throwing",
     "Self-Injurious Behiavior",
-    "Biting",
-    "Aggression",
     "Crying",
     "Vocal Stereotypy",
-    "Property Destruction",
-    "Kicking",
-    "Spitting",
     "Non-Compliance",
     "Elopement",
     "Task Refusal",
@@ -36,7 +37,6 @@ behaviors = [
     "Mouthing",
     "Negative Statements",
     "Inappropriate Language",
-    "Hitting",
     "PICA",
     "Food Refusal",
 ]
