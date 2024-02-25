@@ -128,7 +128,10 @@ export const getClientByIDThunk =
 
 export const getClientsThunk = () => async (dispatch) => {
   try {
-    const response = await fetch(`/api/my-clients/`);
+    const response = await fetch(`/api/my-clients/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
     if (response.ok) {
       const data = await response.json();
       dispatch(get_clients(data));

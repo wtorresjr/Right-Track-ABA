@@ -38,6 +38,20 @@ const ClientInfo = ({ client }) => {
           <label className="detailsLabels">DOB:</label>
           {client?.dob}
         </div>
+        <div className="manageClientInfoBar">
+          <div>
+            <label className="detailsLabels">Total Daily Charts:</label>
+            {client?.Daily_Chart_Count}
+          </div>
+          <div>
+            <label className="detailsLabels">Daily Charts Avg:</label>
+            {client?.Chart_Avg}
+          </div>
+          <div>
+            <label className="detailsLabels">Daily Charts Avg:</label>
+            {client?.Chart_Avg}
+          </div>
+        </div>
       </div>
       <div className="btnsContain">
         <button id="delBtn" onClick={openDeleteModal}>

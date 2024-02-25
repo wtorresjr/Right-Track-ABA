@@ -10,6 +10,7 @@ const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
+  // const clientChartInfo = useSelector((state) => state?.clients?.client_by_id);
   const [filteredClients, setFilteredClients] = useState([]);
 
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ const ManageClients = () => {
   }, [dispatch, searchFilter]);
 
   useEffect(() => {
+    console.log(clients, "CLIENTS DATA");
+    // console.log(clientChartInfo, "CLIENT CHART INFO");
+
     const results = clients?.filter((item) =>
       Object.values(item).some(
         (value) =>
