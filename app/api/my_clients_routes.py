@@ -14,9 +14,39 @@ my_clients = Blueprint("my-clients", __name__)
 @my_clients.route("/", methods=["GET"])
 @login_required
 def get_clients():
-    clients = Client.query.filter_by(therapist_id=current_user.id).all()
-    client_list = [client.to_dict() for client in clients]
-    client_list = sorted(client_list, key=lambda x: x["created_at"], reverse=True)
+    clients = (
+        Client.query.filter_by(therapist_id=current_user.id)
+        .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
+        .all()
+    )
+
+    client_info = []
+
+    for client in clients:
+        this_client = client.to_dict()
+        this_client["Daily_Chart_Count"] = len(client.daily_charts)
+        total_interval_ratings = (
+            sum(
+                interval.interval_rating
+                for daily_chart in client.daily_charts
+                for interval in daily_chart.intervals
+            )
+            if client.daily_charts
+            else 0
+        )
+        total_intervals = sum(
+            len(daily_chart.intervals) for daily_chart in client.daily_charts
+        )
+        avg_interval_p_chart = total_interval_ratings / total_intervals
+        this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        client_info.append(this_client)
+
+    # client_list = [client.to_dict() for client in client_info]
+
+    for client in client_info:
+        print("------------------>", client)
+
+    client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)
     return jsonify({"Clients": client_list}), 200
 
 
@@ -74,8 +104,6 @@ def get_client_by_id(client_id):
             paginated_charts = sorted_daily_charts[start_idx:end_idx]
         else:
             paginated_charts = sorted_daily_charts
-            
-            
 
         daily_charts = []
 
@@ -105,10 +133,7 @@ def get_client_by_id(client_id):
 
         # discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
         # valid_client["Discreet_Trials"] = discreet_trials
-        
-        
 
-        
         valid_client["Daily_Charts"] = daily_charts
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()

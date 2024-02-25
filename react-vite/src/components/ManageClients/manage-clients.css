@@ -5,7 +5,6 @@
   border-radius: 10px;
   justify-content: space-between;
   border-bottom: 1px solid rgb(156, 156, 156);
-  height: 100px;
 }
 
 .manageClientsHeader {
@@ -81,4 +80,9 @@
   background-color: rgb(0, 0, 0);
   color: white;
   border: 1px solid rgb(138, 138, 138);
+}
+.manageClientInfoBar {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
 }
