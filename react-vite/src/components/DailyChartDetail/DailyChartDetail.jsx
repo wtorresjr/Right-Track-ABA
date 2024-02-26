@@ -165,7 +165,10 @@ const DailyChartDetail = () => {
                   {interval?.end_interval}
                 </label>{" "}
                 |<label> Activity: {interval?.activity} </label>|
-                <label> Interval Rating: {interval?.interval_rating}</label>
+                <label>
+                  {" "}
+                  Interval Rating: {interval?.interval_rating.toFixed(2)}
+                </label>
               </div>
               <p>
                 <label>Interval Notes:</label> {interval?.interval_notes}
