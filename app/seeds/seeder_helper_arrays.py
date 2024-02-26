@@ -19,18 +19,18 @@ activities = [
 
 
 behaviors = [
-    "Biting",
-    "Aggression",
-    "Kicking",
-    "Property Destruction",
+    "Biting", 
+    "Aggression", 
+    "Kicking",  
+    "Property Destruction", 
     "Spitting",
-    "Hitting",
-    "Tantrums",
+    "Hitting", 
     "Throwing",
     "Self-Injurious Behiavior",
+    "Tantrums",
     "Crying",
-    "Vocal Stereotypy",
     "Non-Compliance",
+    "Vocal Stereotypy",
     "Elopement",
     "Task Refusal",
     "Outbursts",
@@ -40,6 +40,7 @@ behaviors = [
     "PICA",
     "Food Refusal",
 ]
+
 
 program_names = [
     "Identify Shapes",

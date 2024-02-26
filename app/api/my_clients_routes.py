@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client, Daily_Chart, Interval
+from app.models import Client, Daily_Chart, Interval, Discreet_Trial
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from datetime import date
@@ -17,6 +17,7 @@ def get_clients():
     clients = (
         Client.query.filter_by(therapist_id=current_user.id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
+        .options(joinedload(Client.discreet_trials))
         .all()
     )
 
@@ -39,6 +40,9 @@ def get_clients():
         )
         avg_interval_p_chart = total_interval_ratings / total_intervals
         this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+
+        this_client["DT_Count"] = len(client.discreet_trials)
+
         client_info.append(this_client)
 
     client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)

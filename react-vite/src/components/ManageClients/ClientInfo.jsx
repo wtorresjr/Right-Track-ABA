@@ -52,6 +52,10 @@ const ClientInfo = ({ client }) => {
             <label className="detailsLabels">Daily Charts Avg:</label>
             {client?.Chart_Avg}
           </div>
+          <div>
+            <label className="detailsLabels">Total Discreet Trials:</label>
+            {client?.DT_Count}
+          </div>
         </div>
       </div>
       <div className="btnsContain">
