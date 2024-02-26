@@ -41,11 +41,6 @@ def get_clients():
         this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
         client_info.append(this_client)
 
-    # client_list = [client.to_dict() for client in client_info]
-
-    for client in client_info:
-        print("------------------>", client)
-
     client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)
     return jsonify({"Clients": client_list}), 200
 
