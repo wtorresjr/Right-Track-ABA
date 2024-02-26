@@ -36,14 +36,6 @@ class Client(db.Model, UserMixin):
     trials = db.relationship(
         "Trial", back_populates="client", cascade="all,delete-orphan"
     )
-    # intervals = db.relationship(
-    #     "Interval", secondary=Daily_Chart.__table__, back_populates="client"
-    # )
-    # intervals = db.relationship(
-    #     "Interval",
-    #     secondary="daily_charts",
-    #     back_populates="client",
-    # )
 
     def to_dict(self):
         return {

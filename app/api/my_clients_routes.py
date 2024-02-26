@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client, Daily_Chart, Interval
+from app.models import Client, Daily_Chart, Interval, Discreet_Trial, Trial
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from datetime import date
@@ -14,9 +14,55 @@ my_clients = Blueprint("my-clients", __name__)
 @my_clients.route("/", methods=["GET"])
 @login_required
 def get_clients():
-    clients = Client.query.filter_by(therapist_id=current_user.id).all()
-    client_list = [client.to_dict() for client in clients]
-    client_list = sorted(client_list, key=lambda x: x["created_at"], reverse=True)
+
+    clients = (
+        Client.query.join(Client.daily_charts, aliased=True)
+        .join(Daily_Chart.intervals)
+        .join(Client.discreet_trials, aliased=True)
+        .join(Discreet_Trial.trials)
+        .filter_by(therapist_id=current_user.id)
+        .all()
+    )
+
+    client_info = []
+
+    for client in clients:
+        this_client = client.to_dict()
+        this_client["Daily_Chart_Count"] = len(client.daily_charts)
+        total_interval_ratings = (
+            sum(
+                interval.interval_rating
+                for daily_chart in client.daily_charts
+                for interval in daily_chart.intervals
+            )
+            if client.daily_charts
+            else 0
+        )
+        total_intervals = sum(
+            len(daily_chart.intervals) for daily_chart in client.daily_charts
+        )
+        avg_interval_p_chart = total_interval_ratings / total_intervals
+        this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+
+        this_client["DT_Count"] = len(client.discreet_trials)
+        total_trial_score = sum(
+            trial.trial_score
+            for discreet_trial in client.discreet_trials
+            for trial in discreet_trial.trials
+        )
+        total_trial_count = sum(
+            trial.trial_count
+            for discreet_trial in client.discreet_trials
+            for trial in discreet_trial.trials
+        )
+
+        this_client["DT_Avg_Mastery"] = round(
+            (100 / total_trial_count) * total_trial_score, 1
+        )
+
+        client_info.append(this_client)
+
+    client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)
     return jsonify({"Clients": client_list}), 200
 
 
@@ -74,8 +120,6 @@ def get_client_by_id(client_id):
             paginated_charts = sorted_daily_charts[start_idx:end_idx]
         else:
             paginated_charts = sorted_daily_charts
-            
-            
 
         daily_charts = []
 
@@ -105,10 +149,7 @@ def get_client_by_id(client_id):
 
         # discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
         # valid_client["Discreet_Trials"] = discreet_trials
-        
-        
 
-        
         valid_client["Daily_Charts"] = daily_charts
         valid_client["Incomplete_Charts"] = [
             incChart.to_dict()
