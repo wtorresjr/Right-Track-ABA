@@ -128,7 +128,10 @@ export const getClientByIDThunk =
 
 export const getClientsThunk = () => async (dispatch) => {
   try {
-    const response = await fetch(`/api/my-clients/`);
+    const response = await fetch(`/api/my-clients/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
     if (response.ok) {
       const data = await response.json();
       dispatch(get_clients(data));
@@ -159,8 +162,15 @@ export const clientsReducer = (state = initialState, action) => {
         client_by_id: action.payload,
       };
     case CREATE_CLIENT:
-      return { ...state, [action.payload.id]: action.payload };
-
+      return {
+        ...state,
+        clients: {
+          ...state.clients,
+          Clients: state.clients
+            ? [...state.clients.Clients, action.payload]
+            : [action.payload],
+        },
+      };
     case UPDATE_CLIENT:
       return {
         ...state,
