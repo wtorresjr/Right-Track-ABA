@@ -162,8 +162,15 @@ export const clientsReducer = (state = initialState, action) => {
         client_by_id: action.payload,
       };
     case CREATE_CLIENT:
-      return { ...state, [action.payload.id]: action.payload };
-
+      return {
+        ...state,
+        clients: {
+          ...state.clients,
+          Clients: state.clients
+            ? [...state.clients.Clients, action.payload]
+            : [action.payload],
+        },
+      };
     case UPDATE_CLIENT:
       return {
         ...state,

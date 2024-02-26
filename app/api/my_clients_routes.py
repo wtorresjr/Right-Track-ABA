@@ -15,14 +15,20 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
-    clients = (
-        Client.query.join(Client.daily_charts, aliased=True)
-        .join(Daily_Chart.intervals)
-        .join(Client.discreet_trials, aliased=True)
-        .join(Discreet_Trial.trials)
-        .filter_by(therapist_id=current_user.id)
-        .all()
-    )
+    # clients = (
+    #     Client.query.join(
+    #         Client.daily_charts,
+    #     )
+    #     .join(Daily_Chart.intervals)
+    #     .join(
+    #         Client.discreet_trials,
+    #     )
+    #     .join(Discreet_Trial.trials)
+    #     .filter_by(therapist_id=current_user.id)
+    #     .all()
+    # )
+
+    clients = Client.query.filter_by(therapist_id=current_user.id).all()
 
     client_info = []
 
@@ -38,13 +44,20 @@ def get_clients():
             if client.daily_charts
             else 0
         )
-        total_intervals = sum(
-            len(daily_chart.intervals) for daily_chart in client.daily_charts
+        total_intervals = (
+            sum(len(daily_chart.intervals) for daily_chart in client.daily_charts)
+            if client.daily_charts
+            else 0
         )
-        avg_interval_p_chart = total_interval_ratings / total_intervals
-        this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        if total_intervals == 0:
+            avg_interval_p_chart = 0
+            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        else:
+            avg_interval_p_chart = total_interval_ratings / total_intervals
+            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
 
         this_client["DT_Count"] = len(client.discreet_trials)
+
         total_trial_score = sum(
             trial.trial_score
             for discreet_trial in client.discreet_trials
@@ -56,9 +69,12 @@ def get_clients():
             for trial in discreet_trial.trials
         )
 
-        this_client["DT_Avg_Mastery"] = round(
-            (100 / total_trial_count) * total_trial_score, 1
-        )
+        if total_trial_count == 0:
+            this_client["DT_Avg_Mastery"] = 0
+        else:
+            this_client["DT_Avg_Mastery"] = round(
+                (100 / total_trial_count) * total_trial_score, 1
+            )
 
         client_info.append(this_client)
 
