@@ -85,4 +85,8 @@
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
+  border-top: 1px solid rgb(126, 126, 126);
+  border-bottom: 1px solid rgb(126, 126, 126);
+  margin: 5px 0 0 0;
+  /* padding: 0 10px; */
 }

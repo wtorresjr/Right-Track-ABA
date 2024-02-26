@@ -52,24 +52,52 @@ def seed_clients():
 
             # def seed_intervals():
             start_time = datetime(2023, 1, 1, 9, 15)
-            for _ in range(randint(5, 11)):
+            client_behavior_base = randint(1, 3)
+            client_behavior_max = randint(
+                client_behavior_base, client_behavior_base + client_behavior_base
+            )
+
+            for _ in range(randint(8, 32)):
                 interval_tags = [choice(behaviors) for _ in range(randint(0, 4))]
 
                 int_tags = {}
                 for behavior in interval_tags:
-                    int_tags[behavior] = randint(1, 5)
+                    int_tags[behavior] = randint(
+                        client_behavior_base, client_behavior_max
+                    )
 
                 interval_rating = 5
 
                 for [key, value] in int_tags.items():
-                    if key == "Aggression" or "Property Destruction":
-                        interval_rating -= value * 0.35
-
-                    if key == "Biting" or "Kicking" or "Spitting" or "Hitting":
+                    if (
+                        key == "Biting"
+                        or "Aggression"
+                        or "Kicking"
+                        or "Property Destruction"
+                        or "Spitting"
+                        or "Hitting"
+                        or "Throwing"
+                        or "Self-Injurious Behiavior"
+                        or "Tantrums"
+                        or "Elopement"
+                    ):
                         interval_rating -= value * 0.50
 
+                    if (
+                        key == "Biting"
+                        or "Crying"
+                        or "Non-Compliance"
+                        or "Negative Statements"
+                        or "Inappropriate Language"
+                        or "PICA"
+                        or "Food Refusal"
+                        or "Task Refusal"
+                        or "Outburts"
+                    ):
+                        interval_rating -= value * 0.25
+
                     else:
-                        interval_rating -= value * 0.10
+                        interval_rating -= value * 0.02
                     if interval_rating <= 0:
                         interval_rating = 0
                         break
