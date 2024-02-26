@@ -57,20 +57,17 @@ def seed_clients():
 
                 int_tags = {}
                 for behavior in interval_tags:
-                    int_tags[behavior] = randint(1, 9)
+                    int_tags[behavior] = randint(1, 5)
 
                 interval_rating = 5
 
                 for [key, value] in int_tags.items():
-                    if (
-                        key == "Biting"
-                        or "Aggression"
-                        or "Kicking"
-                        or "Property Destruction"
-                        or "Spitting"
-                        or "Hitting"
-                    ):
+                    if key == "Aggression" or "Property Destruction":
                         interval_rating -= value * 0.35
+
+                    if key == "Biting" or "Kicking" or "Spitting" or "Hitting":
+                        interval_rating -= value * 0.50
+
                     else:
                         interval_rating -= value * 0.10
                     if interval_rating <= 0:
