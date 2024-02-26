@@ -56,6 +56,10 @@ const ClientInfo = ({ client }) => {
             <label className="detailsLabels">Total Discreet Trials:</label>
             {client?.DT_Count}
           </div>
+          <div>
+            <label className="detailsLabels">DT AVG Mastery:</label>
+            {client?.DT_Avg_Mastery}%
+          </div>
         </div>
       </div>
       <div className="btnsContain">

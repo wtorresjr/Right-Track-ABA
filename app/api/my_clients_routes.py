@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import db
-from app.models import Client, Daily_Chart, Interval, Discreet_Trial
+from app.models import Client, Daily_Chart, Interval, Discreet_Trial, Trial
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func
 from datetime import date
@@ -14,10 +14,13 @@ my_clients = Blueprint("my-clients", __name__)
 @my_clients.route("/", methods=["GET"])
 @login_required
 def get_clients():
+
     clients = (
-        Client.query.filter_by(therapist_id=current_user.id)
-        .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
-        .options(joinedload(Client.discreet_trials))
+        Client.query.join(Client.daily_charts, aliased=True)
+        .join(Daily_Chart.intervals)
+        .join(Client.discreet_trials, aliased=True)
+        .join(Discreet_Trial.trials)
+        .filter_by(therapist_id=current_user.id)
         .all()
     )
 
@@ -42,6 +45,20 @@ def get_clients():
         this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
 
         this_client["DT_Count"] = len(client.discreet_trials)
+        total_trial_score = sum(
+            trial.trial_score
+            for discreet_trial in client.discreet_trials
+            for trial in discreet_trial.trials
+        )
+        total_trial_count = sum(
+            trial.trial_count
+            for discreet_trial in client.discreet_trials
+            for trial in discreet_trial.trials
+        )
+
+        this_client["DT_Avg_Mastery"] = round(
+            (100 / total_trial_count) * total_trial_score, 1
+        )
 
         client_info.append(this_client)
 
