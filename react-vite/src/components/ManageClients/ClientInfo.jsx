@@ -49,7 +49,7 @@ const ClientInfo = ({ client }) => {
               {client?.Daily_Chart_Count}
             </div>
             <div>
-              <label className="detailsLabels">Daily Charts Avg:</label>
+              <label className="detailsLabels">Daily Charts Avg Rating:</label>
               {client?.Chart_Avg}
             </div>
           </div>
