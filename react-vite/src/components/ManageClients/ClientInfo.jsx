@@ -3,7 +3,7 @@ import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
-import { returnColor } from "../helpers/returnColor";
+import { returnColor, returnPercentColor } from "../helpers/returnColor";
 
 const ClientInfo = ({ client }) => {
   const { setModalContent } = useModal();
@@ -21,11 +21,7 @@ const ClientInfo = ({ client }) => {
   };
 
   return (
-    <div
-      className="clientInfoContain"
-      key={client?.id}
-      style={{ border: `3px solid ${returnColor(client?.Chart_Avg)}` }}
-    >
+    <div className="clientInfoContain" key={client?.id}>
       <div className="clientData">
         <div>
           <label className="detailsLabels">First Name:</label>
@@ -44,21 +40,33 @@ const ClientInfo = ({ client }) => {
           {client?.dob}
         </div>
         <div className="manageClientInfoBar">
-          <div>
-            <label className="detailsLabels">Total Daily Charts:</label>
-            {client?.Daily_Chart_Count}
+          <div
+            className="infoBoxes"
+            style={{ border: `5px solid ${returnColor(client?.Chart_Avg)}` }}
+          >
+            <div>
+              <label className="detailsLabels">Total Daily Charts:</label>
+              {client?.Daily_Chart_Count}
+            </div>
+            <div>
+              <label className="detailsLabels">Daily Charts Avg:</label>
+              {client?.Chart_Avg}
+            </div>
           </div>
-          <div>
-            <label className="detailsLabels">Daily Charts Avg:</label>
-            {client?.Chart_Avg}
-          </div>
-          <div>
-            <label className="detailsLabels">Total Discreet Trials:</label>
-            {client?.DT_Count}
-          </div>
-          <div>
-            <label className="detailsLabels">DT AVG Mastery:</label>
-            {client?.DT_Avg_Mastery}%
+          <div
+            className="infoBoxes"
+            style={{
+              border: `5px solid ${returnPercentColor(client?.DT_Avg_Mastery)}`,
+            }}
+          >
+            <div>
+              <label className="detailsLabels">Total Discreet Trials:</label>
+              {client?.DT_Count}
+            </div>
+            <div>
+              <label className="detailsLabels">DT AVG Mastery:</label>
+              {client?.DT_Avg_Mastery}%
+            </div>
           </div>
         </div>
       </div>

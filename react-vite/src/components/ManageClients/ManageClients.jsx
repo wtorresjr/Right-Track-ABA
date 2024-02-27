@@ -5,6 +5,7 @@ import ClientInfo from "./ClientInfo";
 import CreateClient from "../CreateClientPage/CreateClientPage";
 import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
+import LegendComponent from "../DailyCharts/LegendComponent";
 
 const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
@@ -45,6 +46,7 @@ const ManageClients = () => {
           <i className="fa-regular fa-address-card fa-xl"></i>
           Add New Client <i className="fa-regular fa-address-card fa-xl"></i>
         </button>
+        <LegendComponent />
         <input
           type="text"
           placeholder="Search For A Client"
