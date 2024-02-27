@@ -23,7 +23,7 @@ const DailyChartDetail = () => {
   );
 
   const [ratingColor, setRatingColor] = useState("white");
-  const [isIncomplete, setIsIncomplete] = useState(false);
+  // const [isIncomplete, setIsIncomplete] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const { setModalContent } = useModal();
 
@@ -46,13 +46,13 @@ const DailyChartDetail = () => {
     refresh,
   ]);
 
-  useEffect(() => {
-    if (!currentChart?.chart_complete) {
-      setIsIncomplete(true);
-    } else {
-      setIsIncomplete(false);
-    }
-  }, [dispatch, chart_id, currentChart?.id]);
+  // useEffect(() => {
+  //   if (!currentChart?.chart_complete) {
+  //     setIsIncomplete(true);
+  //   } else {
+  //     setIsIncomplete(false);
+  //   }
+  // }, [dispatch, chart_id, currentChart?.id]);
 
   // const submitChart = async () => {
   //   const completedChartInfo = {
