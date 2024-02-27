@@ -54,18 +54,18 @@ const DailyChartDetail = () => {
     }
   }, [dispatch, chart_id, currentChart?.id]);
 
-  const submitChart = async () => {
-    const completedChartInfo = {
-      chart_complete: true,
-    };
+  // const submitChart = async () => {
+  //   const completedChartInfo = {
+  //     chart_complete: true,
+  //   };
 
-    const finished = await dispatch(
-      completeTheChartThunk(completedChartInfo, chart_id)
-    );
-    if (finished) {
-      navigate(`/client/${clientInfo?.id}`);
-    }
-  };
+  //   const finished = await dispatch(
+  //     completeTheChartThunk(completedChartInfo, chart_id)
+  //   );
+  //   if (finished) {
+  //     navigate(`/client/${clientInfo?.id}`);
+  //   }
+  // };
 
   const openDeleteModal = (interval) => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
@@ -134,13 +134,13 @@ const DailyChartDetail = () => {
         <div className="dcHeader">
           <LegendComponent />
         </div>
-        {isIncomplete && currentIntervals?.length > 0 ? (
+        {/* {isIncomplete && currentIntervals?.length > 0 ? (
           <button onClick={submitChart} id="setChartBtn">
             Set Chart As Complete
           </button>
         ) : (
           ""
-        )}
+        )} */}
       </div>
       <div style={{ display: "flex", justifyContent: "right" }}>
         <button id="createNewChartBtn" onClick={openAddIntModal}>
