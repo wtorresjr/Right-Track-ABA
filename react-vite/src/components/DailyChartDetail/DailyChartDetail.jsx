@@ -5,7 +5,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { LegendComponent } from "../DailyCharts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
@@ -15,7 +15,7 @@ import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
   const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
   const currentIntervals = useSelector(
@@ -23,7 +23,7 @@ const DailyChartDetail = () => {
   );
 
   const [ratingColor, setRatingColor] = useState("white");
-  const [isIncomplete, setIsIncomplete] = useState(false);
+  // const [isIncomplete, setIsIncomplete] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const { setModalContent } = useModal();
 
@@ -46,26 +46,26 @@ const DailyChartDetail = () => {
     refresh,
   ]);
 
-  useEffect(() => {
-    if (!currentChart?.chart_complete) {
-      setIsIncomplete(true);
-    } else {
-      setIsIncomplete(false);
-    }
-  }, [dispatch, chart_id, currentChart?.id]);
+  // useEffect(() => {
+  //   if (!currentChart?.chart_complete) {
+  //     setIsIncomplete(true);
+  //   } else {
+  //     setIsIncomplete(false);
+  //   }
+  // }, [dispatch, chart_id, currentChart?.id]);
 
-  const submitChart = async () => {
-    const completedChartInfo = {
-      chart_complete: true,
-    };
+  // const submitChart = async () => {
+  //   const completedChartInfo = {
+  //     chart_complete: true,
+  //   };
 
-    const finished = await dispatch(
-      completeTheChartThunk(completedChartInfo, chart_id)
-    );
-    if (finished) {
-      navigate(`/client/${clientInfo?.id}`);
-    }
-  };
+  //   const finished = await dispatch(
+  //     completeTheChartThunk(completedChartInfo, chart_id)
+  //   );
+  //   if (finished) {
+  //     navigate(`/client/${clientInfo?.id}`);
+  //   }
+  // };
 
   const openDeleteModal = (interval) => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
@@ -134,13 +134,13 @@ const DailyChartDetail = () => {
         <div className="dcHeader">
           <LegendComponent />
         </div>
-        {isIncomplete && currentIntervals?.length > 0 ? (
+        {/* {isIncomplete && currentIntervals?.length > 0 ? (
           <button onClick={submitChart} id="setChartBtn">
             Set Chart As Complete
           </button>
         ) : (
           ""
-        )}
+        )} */}
       </div>
       <div style={{ display: "flex", justifyContent: "right" }}>
         <button id="createNewChartBtn" onClick={openAddIntModal}>
@@ -167,7 +167,7 @@ const DailyChartDetail = () => {
                 |<label> Activity: {interval?.activity} </label>|
                 <label>
                   {" "}
-                  Interval Rating: {interval?.interval_rating.toFixed(2)}
+                  Interval Rating: {interval?.interval_rating}
                 </label>
               </div>
               <p>
