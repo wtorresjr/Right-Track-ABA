@@ -115,6 +115,8 @@ def get_client_by_id(client_id):
             interval.interval_rating for interval in clients_intervals
         )
         all_chart_avg = round(all_chart_avg_sum / len(clients_intervals), 2)
+    else:
+        all_chart_avg = 0
 
     paginated_charts_avg_totals = 0
 
