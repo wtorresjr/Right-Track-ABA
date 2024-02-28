@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { completeTheChartThunk, getChartByIdThunk } from "../../redux/charts";
+import { getChartByIdThunk } from "../../redux/charts";
 import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";

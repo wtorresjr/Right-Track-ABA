@@ -11,6 +11,9 @@ const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
+  const totalClients = useSelector(
+    (state) => state?.clients?.clients?.Total_Clients
+  );
   // const clientChartInfo = useSelector((state) => state?.clients?.client_by_id);
   const [filteredClients, setFilteredClients] = useState([]);
 
@@ -47,6 +50,14 @@ const ManageClients = () => {
           Add New Client <i className="fa-regular fa-address-card fa-xl"></i>
         </button>
         <LegendComponent />
+        <div
+          className="chartTotalsContain"
+          style={{
+            border: `3px solid white`,
+          }}
+        >
+          <div>Total Clients: {totalClients}</div>
+        </div>
         <input
           type="text"
           placeholder="Search For A Client"
