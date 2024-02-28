@@ -15,10 +15,18 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
-    page = 1
-    per_page = 5
+    source = request.args.get("source")
 
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
+
+    page = 1
+    per_page = 5
+    if source == "manage_clients":
+        page = 1
+        per_page = 5
+    if source == "graphs":
+        page = 1
+        per_page = len(clients)
 
     client_info = {"Total_Clients": 0, "Clients": []}
 

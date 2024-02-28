@@ -24,7 +24,7 @@ const ClientListComponent = () => {
   const [legendTitleTwo, setLegendTitleTwo] = useState();
 
   useEffect(() => {
-    dispatch(getClientsThunk());
+    dispatch(getClientsThunk("graphs"));
   }, [dispatch]);
 
   useEffect(() => {
