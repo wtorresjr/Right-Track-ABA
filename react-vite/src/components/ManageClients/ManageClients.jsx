@@ -24,9 +24,6 @@ const ManageClients = () => {
   }, [dispatch, searchFilter]);
 
   useEffect(() => {
-    // console.log(clients, "CLIENTS DATA");
-    // console.log(clientChartInfo, "CLIENT CHART INFO");
-
     const results = clients?.filter((item) =>
       Object.values(item).some(
         (value) =>
