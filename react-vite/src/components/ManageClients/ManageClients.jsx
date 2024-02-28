@@ -20,7 +20,7 @@ const ManageClients = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClientsThunk());
+    dispatch(getClientsThunk("manage_clients"));
   }, [dispatch, searchFilter]);
 
   useEffect(() => {
