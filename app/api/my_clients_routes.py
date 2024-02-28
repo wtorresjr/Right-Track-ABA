@@ -15,6 +15,9 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
+    page = 1
+    per_page = 5
+
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
 
     client_info = {"Total_Clients": 0, "Clients": []}
@@ -70,12 +73,27 @@ def get_clients():
         client_info["Clients"], key=lambda x: x["created_at"], reverse=True
     )
 
+    paginated_client_list = []
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+
+    paginated_client_list = client_list[start_idx:end_idx]
+
     return (
         jsonify(
-            {"Clients": client_list, "Total_Clients": client_info["Total_Clients"]}
+            {
+                "Clients": paginated_client_list,
+                "Total_Clients": client_info["Total_Clients"],
+            }
         ),
         200,
     )
+    # return (
+    #     jsonify(
+    #         {"Clients": client_list, "Total_Clients": client_info["Total_Clients"]}
+    #     ),
+    #     200,
+    # )
 
 
 # Get client for logged in therapist by client_id
