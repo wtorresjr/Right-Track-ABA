@@ -15,22 +15,9 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
-    # clients = (
-    #     Client.query.join(
-    #         Client.daily_charts,
-    #     )
-    #     .join(Daily_Chart.intervals)
-    #     .join(
-    #         Client.discreet_trials,
-    #     )
-    #     .join(Discreet_Trial.trials)
-    #     .filter_by(therapist_id=current_user.id)
-    #     .all()
-    # )
-
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
 
-    client_info = []
+    client_info = {"Total_Clients": 0, "Clients": []}
 
     for client in clients:
         this_client = client.to_dict()
@@ -76,10 +63,19 @@ def get_clients():
                 (100 / total_trial_count) * total_trial_score, 1
             )
 
-        client_info.append(this_client)
+        client_info["Clients"].append(this_client)
+        client_info["Total_Clients"] += 1
 
-    client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)
-    return jsonify({"Clients": client_list}), 200
+    client_list = sorted(
+        client_info["Clients"], key=lambda x: x["created_at"], reverse=True
+    )
+
+    return (
+        jsonify(
+            {"Clients": client_list, "Total_Clients": client_info["Total_Clients"]}
+        ),
+        200,
+    )
 
 
 # Get client for logged in therapist by client_id
