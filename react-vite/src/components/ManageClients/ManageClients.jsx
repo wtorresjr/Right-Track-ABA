@@ -6,6 +6,8 @@ import CreateClient from "../CreateClientPage/CreateClientPage";
 import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
 import LegendComponent from "../DailyCharts/LegendComponent";
+import Paginator from "../PaginationComp/Paginator";
+import "../PaginationComp/bootstrap.css";
 
 const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
@@ -62,6 +64,12 @@ const ManageClients = () => {
           onChange={(e) => setSearchFilter(e.target.value)}
         />
       </div>
+          <Paginator
+          // numOfCharts={numOfCharts}
+          // perPage={perPage}
+          // currentPage={currentPage}
+          // handlePageChange={handlePageChange}
+          />
       {filteredClients &&
         filteredClients?.map((client) => {
           return <ClientInfo key={client.id} client={client} />;

@@ -18,6 +18,7 @@ class Daily_Chart(db.Model, UserMixin):
     )
     chart_date = db.Column(db.String, nullable=False)
     chart_complete = db.Column(db.Boolean, default=True, nullable=False)
+    chart_avg_rating = db.Column(db.Float, default=0, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
@@ -38,4 +39,5 @@ class Daily_Chart(db.Model, UserMixin):
             "therapist_id": self.therapist_id,
             "chart_date": self.chart_date,
             "chart_complete": self.chart_complete,
+            "chart_avg_rating": self.chart_avg_rating,
         }
