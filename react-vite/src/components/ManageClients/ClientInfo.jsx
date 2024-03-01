@@ -74,7 +74,7 @@ const ClientInfo = ({ client }) => {
               {client?.DT_Count}
             </div>
             <div>
-              <label className="detailsLabels">DT AVG Mastery:</label>
+              <label className="detailsLabels">DT Avg Mastery:</label>
               {client?.DT_Avg_Mastery}%
             </div>
           </div>
