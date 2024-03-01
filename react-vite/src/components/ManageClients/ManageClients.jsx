@@ -11,6 +11,8 @@ import "../PaginationComp/bootstrap.css";
 
 const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
+  const [perPage, setPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
   const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
   const totalClients = useSelector(
@@ -22,8 +24,9 @@ const ManageClients = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClientsThunk("manage_clients"));
-  }, [dispatch, searchFilter]);
+    dispatch(getClientsThunk(currentPage, perPage));
+    // }, [searchFilter, currentPage, perPage]);
+  }, [currentPage, perPage]);
 
   useEffect(() => {
     const results = clients?.filter((item) =>
@@ -38,6 +41,10 @@ const ManageClients = () => {
 
   const openCreateClientModal = () => {
     setModalContent(<CreateClient />);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -64,12 +71,24 @@ const ManageClients = () => {
           onChange={(e) => setSearchFilter(e.target.value)}
         />
       </div>
-          <Paginator
-          // numOfCharts={numOfCharts}
-          // perPage={perPage}
-          // currentPage={currentPage}
-          // handlePageChange={handlePageChange}
-          />
+
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={totalClients}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Clients Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
+      </div>
+
       {filteredClients &&
         filteredClients?.map((client) => {
           return <ClientInfo key={client.id} client={client} />;

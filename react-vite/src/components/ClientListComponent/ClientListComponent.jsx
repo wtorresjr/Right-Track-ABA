@@ -25,7 +25,7 @@ const ClientListComponent = () => {
 
   useEffect(() => {
     dispatch(getClientsThunk("graphs"));
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (selectedClient && chartDataPoint && allIntervals) {

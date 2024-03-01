@@ -126,9 +126,15 @@ export const getClientByIDThunk =
     }
   };
 
-export const getClientsThunk = (source) => async (dispatch) => {
+export const getClientsThunk = (page, per_page) => async (dispatch) => {
+  let routeString;
+  if (page && per_page) {
+    routeString = `/api/my-clients/?page=${+page}&per_page=${+per_page}`;
+  } else {
+    routeString = `/api/my-clients/?page=1&per_page=${undefined}`;
+  }
   try {
-    const response = await fetch(`/api/my-clients/?source=${source}`, {
+    const response = await fetch(routeString, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

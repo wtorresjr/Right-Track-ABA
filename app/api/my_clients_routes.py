@@ -15,16 +15,17 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
-    source = request.args.get("source")
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
 
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
 
-    page = 1
-    per_page = 5
-    if source == "manage_clients":
-        per_page = 5
-    if source == "graphs":
+    if per_page == "undefined":
+        page = 1
         per_page = len(clients)
+    else:
+        page = int(page)
+        per_page = int(per_page)
 
     client_info = {"Total_Clients": 0, "Clients": []}
 
@@ -32,15 +33,15 @@ def get_clients():
         this_client = client.to_dict()
         this_client["Daily_Chart_Count"] = len(client.daily_charts)
 
-        
         total_interval_ratings = 0
         total_intervals = 0
 
         for daily_chart in client.daily_charts:
             total_intervals += len(daily_chart.intervals)
-            total_interval_ratings += sum(interval.interval_rating for interval in daily_chart.intervals)
-    
-        
+            total_interval_ratings += sum(
+                interval.interval_rating for interval in daily_chart.intervals
+            )
+
         if total_intervals == 0:
             avg_interval_p_chart = 0
             this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
