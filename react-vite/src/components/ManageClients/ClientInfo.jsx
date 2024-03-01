@@ -42,7 +42,13 @@ const ClientInfo = ({ client }) => {
         <div className="manageClientInfoBar">
           <div
             className="infoBoxes"
-            style={{ border: `5px solid ${returnColor(client?.Chart_Avg)}` }}
+            style={{
+              border: `5px solid ${
+                client?.Daily_Chart_Count > 0
+                  ? returnColor(client?.Chart_Avg)
+                  : "white"
+              }`,
+            }}
           >
             <div>
               <label className="detailsLabels">Total Daily Charts:</label>
@@ -56,7 +62,11 @@ const ClientInfo = ({ client }) => {
           <div
             className="infoBoxes"
             style={{
-              border: `5px solid ${returnPercentColor(client?.DT_Avg_Mastery)}`,
+              border: `5px solid ${
+                client?.DT_Count > 0
+                  ? returnPercentColor(client?.DT_Avg_Mastery)
+                  : "white"
+              }`,
             }}
           >
             <div>
