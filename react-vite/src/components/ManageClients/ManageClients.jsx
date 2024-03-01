@@ -13,6 +13,7 @@ const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { setModalContent } = useModal();
   const clients = useSelector((state) => state?.clients?.clients?.Clients);
   const totalClients = useSelector(
@@ -24,8 +25,14 @@ const ManageClients = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClientsThunk(currentPage, perPage));
-    // }, [searchFilter, currentPage, perPage]);
+    setIsLoaded(false);
+    const getData = async () => {
+      const dataLoaded = await dispatch(getClientsThunk(currentPage, perPage));
+      if (dataLoaded) {
+        setIsLoaded(true);
+      }
+    };
+    getData();
   }, [currentPage, perPage]);
 
   useEffect(() => {
@@ -89,10 +96,24 @@ const ManageClients = () => {
         />
       </div>
 
-      {filteredClients &&
+      {isLoaded ? (
+        filteredClients &&
         filteredClients?.map((client) => {
           return <ClientInfo key={client.id} client={client} />;
-        })}
+        })
+      ) : (
+        <h2
+          style={{
+            textAlign: "center",
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "15px",
+            padding: "10px 0",
+          }}
+        >
+          Loading Clients...
+        </h2>
+      )}
     </div>
   );
 };

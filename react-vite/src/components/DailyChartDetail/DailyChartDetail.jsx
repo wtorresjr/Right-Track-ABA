@@ -5,7 +5,6 @@ import { useParams, NavLink } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
-// import { useNavigate } from "react-router-dom";
 import { LegendComponent } from "../DailyCharts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
@@ -15,7 +14,6 @@ import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
   const { chart_id } = useParams();
-  // const navigate = useNavigate();
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
   const currentChart = useSelector((state) => state?.chart?.chart?.Chart);
   const currentIntervals = useSelector(
@@ -23,7 +21,6 @@ const DailyChartDetail = () => {
   );
 
   const [ratingColor, setRatingColor] = useState("white");
-  // const [isIncomplete, setIsIncomplete] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const { setModalContent } = useModal();
 
