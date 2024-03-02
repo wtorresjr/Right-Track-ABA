@@ -51,7 +51,7 @@ function LoginFormPage() {
       <DeletingMessage
         message={"Logging In..."}
         isVisible={isVisible}
-        origin={"loginPage"}
+        // origin={"loginPage"}
       />
     );
   };

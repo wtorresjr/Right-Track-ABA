@@ -15,40 +15,33 @@ my_clients = Blueprint("my-clients", __name__)
 @login_required
 def get_clients():
 
-    # clients = (
-    #     Client.query.join(
-    #         Client.daily_charts,
-    #     )
-    #     .join(Daily_Chart.intervals)
-    #     .join(
-    #         Client.discreet_trials,
-    #     )
-    #     .join(Discreet_Trial.trials)
-    #     .filter_by(therapist_id=current_user.id)
-    #     .all()
-    # )
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
 
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
 
-    client_info = []
+    if per_page == "undefined":
+        page = 1
+        per_page = len(clients)
+    else:
+        page = int(page)
+        per_page = int(per_page)
+
+    client_info = {"Total_Clients": 0, "Clients": []}
 
     for client in clients:
         this_client = client.to_dict()
         this_client["Daily_Chart_Count"] = len(client.daily_charts)
-        total_interval_ratings = (
-            sum(
-                interval.interval_rating
-                for daily_chart in client.daily_charts
-                for interval in daily_chart.intervals
+
+        total_interval_ratings = 0
+        total_intervals = 0
+
+        for daily_chart in client.daily_charts:
+            total_intervals += len(daily_chart.intervals)
+            total_interval_ratings += sum(
+                interval.interval_rating for interval in daily_chart.intervals
             )
-            if client.daily_charts
-            else 0
-        )
-        total_intervals = (
-            sum(len(daily_chart.intervals) for daily_chart in client.daily_charts)
-            if client.daily_charts
-            else 0
-        )
+
         if total_intervals == 0:
             avg_interval_p_chart = 0
             this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
@@ -76,10 +69,28 @@ def get_clients():
                 (100 / total_trial_count) * total_trial_score, 1
             )
 
-        client_info.append(this_client)
+        client_info["Clients"].append(this_client)
+        client_info["Total_Clients"] += 1
 
-    client_list = sorted(client_info, key=lambda x: x["created_at"], reverse=True)
-    return jsonify({"Clients": client_list}), 200
+    client_list = sorted(
+        client_info["Clients"], key=lambda x: x["created_at"], reverse=True
+    )
+
+    paginated_client_list = []
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+
+    paginated_client_list = client_list[start_idx:end_idx]
+
+    return (
+        jsonify(
+            {
+                "Clients": paginated_client_list,
+                "Total_Clients": client_info["Total_Clients"],
+            }
+        ),
+        200,
+    )
 
 
 # Get client for logged in therapist by client_id
@@ -164,9 +175,6 @@ def get_client_by_id(client_id):
             paginated_charts_avg_totals += chart_dict["avgForChart"]
 
             daily_charts.append(chart_dict)
-
-        # discreet_trials = [dt.to_dict() for dt in found_client.discreet_trials]
-        # valid_client["Discreet_Trials"] = discreet_trials
 
         valid_client["Daily_Charts"] = daily_charts
         valid_client["Incomplete_Charts"] = [

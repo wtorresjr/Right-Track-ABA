@@ -24,8 +24,8 @@ const ClientListComponent = () => {
   const [legendTitleTwo, setLegendTitleTwo] = useState();
 
   useEffect(() => {
-    dispatch(getClientsThunk());
-  }, [dispatch]);
+    dispatch(getClientsThunk("graphs"));
+  }, []);
 
   useEffect(() => {
     if (selectedClient && chartDataPoint && allIntervals) {
