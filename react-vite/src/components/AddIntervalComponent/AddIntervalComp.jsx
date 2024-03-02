@@ -100,7 +100,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
 
     const addIntv = dispatch(addIntervalToChart(newIntervalData));
     if (addIntv) {
-      resetAfterSubmit();
+      resetAfterSubmit(); 
       closeModal();
       setModalContent(
         <DeleteMessage message={"Interval Added Succesfully!"} />
