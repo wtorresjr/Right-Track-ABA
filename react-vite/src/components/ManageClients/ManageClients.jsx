@@ -114,6 +114,22 @@ const ManageClients = () => {
           Loading Clients...
         </h2>
       )}
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={totalClients}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Clients Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
+      </div>
     </div>
   );
 };
