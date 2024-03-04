@@ -39,24 +39,25 @@ const getAllDiscreetTrial = (allDTs) => {
   };
 };
 
-export const getAllDTsThunk = (client_id) => async (dispatch) => {
-  try {
-    const response = await fetch(
-      `/api/my-discreet-trials/client/${client_id}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+export const getAllDTsThunk =
+  (client_id, page, per_page) => async (dispatch) => {
+    try {
+      const response = await fetch(
+        `/api/my-discreet-trials/client/${client_id}?page=${page}&per_page=${per_page}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.ok) {
+        const foundDTs = await response.json();
+        await dispatch(getAllDiscreetTrial(foundDTs));
+        return foundDTs;
       }
-    );
-    if (response.ok) {
-      const foundDTs = await response.json();
-      await dispatch(getAllDiscreetTrial(foundDTs));
-      return foundDTs;
+    } catch (error) {
+      throw new Error(error);
     }
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+  };
 
 const deleteTheDT = (dtToDelete) => {
   return {
