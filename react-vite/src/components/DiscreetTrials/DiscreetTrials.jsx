@@ -27,7 +27,7 @@ const DiscreetTrials = () => {
       await dispatch(getAllDTsThunk(+client_id, currentPage, perPage));
     };
     getDTdata();
-  }, []);
+  }, [currentPage, perPage, dtCount]);
 
   useEffect(() => {
     const getTotalDTs = () => {
@@ -72,7 +72,7 @@ const DiscreetTrials = () => {
           currentPage={currentPage}
           handlePageChange={handlePageChange}
         />
-        <label>Charts Per Page:</label>
+        <label>Discreet Trials Per Page:</label>
         <input
           className="perPageInput"
           type="number"
@@ -121,6 +121,22 @@ const DiscreetTrials = () => {
             );
           })
         : "No Discreet Trials Yet"}
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={dtCount}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Discreet Trials Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
+      </div>
     </div>
   );
 };
