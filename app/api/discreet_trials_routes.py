@@ -33,16 +33,9 @@ def get_all_discreet_trials():
 @discreet_trials_bp.route("/client/<int:client_id>", methods=["GET"])
 @login_required
 def get_dt_by_client_id(client_id):
-    # found_client_dts = (
-    #     Discreet_Trial.query.filter_by(
-    #         client_id=client_id, therapist_id=current_user.id
-    #     )
-    #     .options(joinedload(Discreet_Trial.trials))
-    #     .all()
-    # )
 
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = int(request.args.get("page"))
+    per_page = int(request.args.get("per_page"))
 
     print(page, per_page, "<========================PERPAGE-PAGE")
 
@@ -81,7 +74,10 @@ def get_dt_by_client_id(client_id):
 
         client_dts.append(dt_dict)
 
-    return jsonify(client_dts), 200
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+
+    return jsonify(client_dts[start_idx:end_idx]), 200
 
 
 # Get discreet trial and trials by DT ID
