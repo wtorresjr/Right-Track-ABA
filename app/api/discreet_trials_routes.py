@@ -37,8 +37,6 @@ def get_dt_by_client_id(client_id):
     page = int(request.args.get("page"))
     per_page = int(request.args.get("per_page"))
 
-    print(page, per_page, "<========================PERPAGE-PAGE")
-
     found_client_dts = Discreet_Trial.query.filter_by(
         client_id=client_id, therapist_id=current_user.id
     )
@@ -49,9 +47,9 @@ def get_dt_by_client_id(client_id):
             200,
         )
 
-    sorted_dts = sorted(found_client_dts, key=lambda dt: dt.trial_date, reverse=True)
     client_dts = []
-    for dt in sorted_dts:
+
+    for dt in found_client_dts:
 
         dt_dict = dt.to_dict()
 
@@ -74,10 +72,18 @@ def get_dt_by_client_id(client_id):
 
         client_dts.append(dt_dict)
 
+    sorted_dts = sorted(client_dts, key=lambda dt: dt["trial_date"], reverse=True)
+
+    paginated_dts = []
+
     start_idx = (page - 1) * per_page
     end_idx = start_idx + per_page
+    paginated_dts = sorted_dts[start_idx:end_idx]
 
-    return jsonify(client_dts[start_idx:end_idx]), 200
+    return (
+        jsonify(paginated_dts),
+        200,
+    )
 
 
 # Get discreet trial and trials by DT ID
