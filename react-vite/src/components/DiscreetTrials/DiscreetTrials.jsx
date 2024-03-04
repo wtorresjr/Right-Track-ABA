@@ -16,7 +16,7 @@ const DiscreetTrials = () => {
 
   useEffect(() => {
     const getDTdata = async () => {
-      await dispatch(getAllDTsThunk(+client_id));
+      await dispatch(getAllDTsThunk(+client_id, 1, 5));
     };
     getDTdata();
   }, []);
@@ -30,9 +30,7 @@ const DiscreetTrials = () => {
   };
 
   const openUpdateChartModal = (dt) => {
-    setModalContent(
-      <CreateDailyChart isDTupdate={"True"} dtInfo={dt} />
-    );
+    setModalContent(<CreateDailyChart isDTupdate={"True"} dtInfo={dt} />);
   };
 
   return (
