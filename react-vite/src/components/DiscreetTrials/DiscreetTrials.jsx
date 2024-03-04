@@ -7,18 +7,36 @@ import { returnPercentColor } from "../helpers/returnColor";
 import { DeleteChartModal } from "../DeleteModal";
 import { useModal } from "../../context/Modal";
 import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
+import Paginator from "../PaginationComp/Paginator";
+import "../PaginationComp/bootstrap.css";
 
 const DiscreetTrials = () => {
   const { setModalContent } = useModal();
   const { client_id } = useParams();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [dtCount, setDTCount] = useState();
+
   const dispatch = useDispatch();
   const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
+  const clientInfo = useSelector((state) => state?.clients?.clients?.Clients);
 
   useEffect(() => {
     const getDTdata = async () => {
-      await dispatch(getAllDTsThunk(+client_id, 1, 5));
+      await dispatch(getAllDTsThunk(+client_id, currentPage, perPage));
     };
     getDTdata();
+  }, []);
+
+  useEffect(() => {
+    const getTotalDTs = () => {
+      const totalDts = clientInfo?.find((client) => +client.id === +client_id);
+      setDTCount(totalDts?.DT_Count);
+    };
+    if (clientInfo) {
+      getTotalDTs();
+    }
   }, []);
 
   const openDeleteModal = (chart) => {
@@ -33,6 +51,10 @@ const DiscreetTrials = () => {
     setModalContent(<CreateDailyChart isDTupdate={"True"} dtInfo={dt} />);
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="chartsContain">
       <h1>
@@ -41,6 +63,23 @@ const DiscreetTrials = () => {
           Create Discreet Trial
         </button>
       </h1>
+
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={dtCount}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Charts Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
+      </div>
 
       {clientDT && clientDT?.length
         ? clientDT?.map((dt) => {
