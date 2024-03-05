@@ -33,12 +33,12 @@ def get_all_discreet_trials():
 @discreet_trials_bp.route("/client/<int:client_id>", methods=["GET"])
 @login_required
 def get_dt_by_client_id(client_id):
-    found_client_dts = (
-        Discreet_Trial.query.filter_by(
-            client_id=client_id, therapist_id=current_user.id
-        )
-        .options(joinedload(Discreet_Trial.trials))
-        .all()
+
+    page = int(request.args.get("page"))
+    per_page = int(request.args.get("per_page"))
+
+    found_client_dts = Discreet_Trial.query.filter_by(
+        client_id=client_id, therapist_id=current_user.id
     )
 
     if not found_client_dts:
@@ -47,9 +47,9 @@ def get_dt_by_client_id(client_id):
             200,
         )
 
-    sorted_dts = sorted(found_client_dts, key=lambda dt: dt.trial_date, reverse=True)
     client_dts = []
-    for dt in sorted_dts:
+
+    for dt in found_client_dts:
 
         dt_dict = dt.to_dict()
 
@@ -72,7 +72,18 @@ def get_dt_by_client_id(client_id):
 
         client_dts.append(dt_dict)
 
-    return jsonify(client_dts), 200
+    sorted_dts = sorted(client_dts, key=lambda dt: dt["trial_date"], reverse=True)
+
+    paginated_dts = []
+
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+    paginated_dts = sorted_dts[start_idx:end_idx]
+
+    return (
+        jsonify(paginated_dts),
+        200,
+    )
 
 
 # Get discreet trial and trials by DT ID
