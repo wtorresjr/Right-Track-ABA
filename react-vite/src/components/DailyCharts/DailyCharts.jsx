@@ -151,7 +151,7 @@ const DailyCharts = ({ clientCharts }) => {
           onChange={(e) => setPerPage(e.target.value)}
         />
       </div>
-      
+
       <div
         className="chartTotalsContain"
         style={{
@@ -224,6 +224,22 @@ const DailyCharts = ({ clientCharts }) => {
 
             return null;
           })}
+      </div>
+      <div className="paginationDiv">
+        <label>Page:</label>
+        <Paginator
+          numOfCharts={numOfCharts}
+          perPage={perPage}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <label>Charts Per Page:</label>
+        <input
+          className="perPageInput"
+          type="number"
+          value={perPage}
+          onChange={(e) => setPerPage(e.target.value)}
+        />
       </div>
     </div>
   );
