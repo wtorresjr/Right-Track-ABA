@@ -16,9 +16,9 @@ const DeleteMessage = ({ message, isVisible, origin }) => {
       const intervalId = setInterval(() => {
         if (window.location.pathname === "/home") {
           closeModal();
-          clearInterval(intervalId); // stop the interval once you've done what you need
+          clearInterval(intervalId);
         }
-      }, 500); // check every 3 seconds, you can adjust the interval as needed
+      }, 500);
 
       return () => clearInterval(intervalId);
     } else {
