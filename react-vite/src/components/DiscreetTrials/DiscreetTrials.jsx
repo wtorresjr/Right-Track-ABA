@@ -9,6 +9,7 @@ import { useModal } from "../../context/Modal";
 import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
+import InfoBar from "../InfoBarComponent";
 
 const DiscreetTrials = () => {
   const { setModalContent } = useModal();
@@ -80,6 +81,7 @@ const DiscreetTrials = () => {
           onChange={(e) => setPerPage(e.target.value)}
         />
       </div>
+      <InfoBar numOfCharts={dtCount} type={"discreetTrials"} />
 
       {clientDT && clientDT?.length
         ? clientDT?.map((dt) => {
