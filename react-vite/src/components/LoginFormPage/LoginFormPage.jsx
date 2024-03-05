@@ -8,14 +8,14 @@ import { useModal } from "../../context/Modal";
 import DeletingMessage from "../DeleteModal/DeletingMessage";
 
 function LoginFormPage() {
-  const { setModalContent } = useModal();
+  const { setModalContent, closeModal } = useModal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [isVisible, setIsVisible] = useState(false);
+  // const [isVisible, setIsVisible] = useState(false);
 
   if (sessionUser) return <Navigate to="/home" replace={true} />;
 
@@ -32,11 +32,13 @@ function LoginFormPage() {
       );
 
       if (serverResponse) {
+        console.log("Errors");
         setErrors(serverResponse);
-        setIsVisible(true);
+        // setIsVisible(true);
       } else {
+        console.log("No Errors");
         navigate("/home");
-        setIsVisible(false);
+        // setIsVisible(false);
       }
     } catch (error) {
       // Handle errors, if any, from the thunkLogin action
@@ -45,14 +47,9 @@ function LoginFormPage() {
     }
   };
 
-
   const openLoggingInMessage = () => {
     setModalContent(
-      <DeletingMessage
-        message={"Logging In..."}
-        isVisible={isVisible}
-        // origin={"loginPage"}
-      />
+      <DeletingMessage message={"Logging In..."} origin={"loginPage"} />
     );
   };
 
@@ -63,12 +60,21 @@ function LoginFormPage() {
   const demoLogIn = async (e) => {
     e.preventDefault();
     openLoggingInMessage();
-    dispatch(
-      thunkLogin({
-        email: "demo@demo.com",
-        password: "password",
-      })
-    );
+    try {
+      const loginDemo = await dispatch(
+        thunkLogin({
+          email: "demo@demo.com",
+          password: "password",
+        })
+      );
+      if (loginDemo) {
+        setErrors(serverResponse);
+      } else {
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
