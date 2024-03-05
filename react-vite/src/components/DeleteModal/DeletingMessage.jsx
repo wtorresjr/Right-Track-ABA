@@ -1,20 +1,30 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./delete-modal.css";
+
 const DeleteMessage = ({ message, isVisible, origin }) => {
   const { closeModal } = useModal();
+  const dispatch = useDispatch();
 
   const closeTheMessage = () => {
     closeModal();
   };
 
   useEffect(() => {
-    if (!isVisible && origin === "loginPage") {
-      closeModal();
+    if (origin === "loginPage") {
+      const intervalId = setInterval(() => {
+        if (window.location.pathname === "/home") {
+          closeModal();
+          clearInterval(intervalId); // stop the interval once you've done what you need
+        }
+      }, 500); // check every 3 seconds, you can adjust the interval as needed
+
+      return () => clearInterval(intervalId);
     } else {
       setTimeout(closeTheMessage, 1500);
     }
-  }, [isVisible]);
+  }, [dispatch, closeModal]);
 
   return (
     <div className="deleteMessageContain">
