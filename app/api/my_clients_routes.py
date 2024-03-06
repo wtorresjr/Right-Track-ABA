@@ -14,11 +14,10 @@ my_clients = Blueprint("my-clients", __name__)
 @my_clients.route("/", methods=["GET"])
 @login_required
 def get_clients():
-
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
-
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
+
+    page = request.args.get("page", default=1)
+    per_page = request.args.get("per_page", default=len(clients))
 
     if per_page == "undefined":
         page = 1
@@ -100,21 +99,20 @@ def get_clients():
 @login_required
 def get_client_by_id(client_id):
 
-    page = int(request.args.get("page"))
-    per_page = int(request.args.get("per_page"))
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
         .first()
     )
-
     clients_intervals = (
         db.session.query(Interval)
         .join(Daily_Chart, Interval.chart_id == Daily_Chart.id)
         .filter(Daily_Chart.client_id == client_id)
         .all()
     )
+
+    page = int(request.args.get("page", default=1))
+    per_page = int(request.args.get("per_page", default=len(clients_intervals)))
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
