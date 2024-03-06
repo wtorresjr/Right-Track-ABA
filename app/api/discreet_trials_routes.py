@@ -59,6 +59,7 @@ def get_dt_by_client_id(client_id):
             dt_dict["trials_score"] = 0
             dt_dict["trials_count"] = 0
             dt_dict["trials_avg"] = 0
+
         else:
             dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
             dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
@@ -68,6 +69,7 @@ def get_dt_by_client_id(client_id):
                 * sum(trial["trial_score"] for trial in trials_info),
                 1,
             )
+            dt_dict["total_DTs"] = len(found_client_dts)
 
         client_dts.append(dt_dict)
 
@@ -79,10 +81,7 @@ def get_dt_by_client_id(client_id):
     end_idx = start_idx + per_page
     paginated_dts = sorted_dts[start_idx:end_idx]
 
-    return (
-        jsonify({"Total_DTs": len(found_client_dts), "Discreet_Trials": paginated_dts}),
-        200,
-    )
+    return jsonify(paginated_dts), 200
 
 
 # Get discreet trial and trials by DT ID
