@@ -6,6 +6,7 @@ const InfoBar = ({
   numOfCharts,
   searchFilter,
   filteredAvg,
+  filteredCharts,
   type,
 }) => {
   const [barType, setBarType] = useState();
@@ -23,7 +24,7 @@ const InfoBar = ({
       setAllAvg("Avg For All Trials:");
       setFilteredAvgType("Avg For Displayed DTs:");
     }
-  }, [barType]);
+  }, []);
 
   return (
     <div

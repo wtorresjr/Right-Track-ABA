@@ -158,6 +158,7 @@ const DailyCharts = ({ clientCharts }) => {
         numOfCharts={numOfCharts}
         searchFilter={searchFilter}
         filteredAvg={filteredAvg}
+        filteredCharts={filteredCharts}
         type={"dailyCharts"}
       />
 
