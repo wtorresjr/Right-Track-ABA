@@ -161,7 +161,7 @@ const DailyCharts = ({ clientCharts }) => {
         filteredCharts={filteredCharts}
         type={"dailyCharts"}
       />
-
+      {filteredCharts ? "Loaded" : "Loading...."}
       <div className="chartsContain">
         {filteredCharts &&
           filteredCharts?.map((dc) => {

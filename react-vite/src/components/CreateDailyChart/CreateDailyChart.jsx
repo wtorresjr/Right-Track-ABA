@@ -149,7 +149,8 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   return (
     <div className="newChartModal">
       <h1>
-        Create {isDT ? "Discreet Trial" : "Daily Chart"} For {clientName}
+        {isDTupdate ? "Update" : "Create"}{" "}
+        {isDT ? "Discreet Trial" : "Daily Chart"} For {clientName}
       </h1>
       {currentClient?.Incomplete_Charts &&
         currentClient?.Incomplete_Charts?.map((incChart) => {
@@ -220,7 +221,7 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
                 </select>
               )}
               <button id="createChartBtn" disabled={isDisabled}>
-                {isDT ? "Create DT" : isDTupdate ? "Update DT" : "Create Chart"}
+                {isDTupdate ? "Update DT" : isDT ? "Create DT" : "Create Chart"}
               </button>
               <button id="cancelBtn" onClick={() => closeModal()}>
                 Cancel
