@@ -17,6 +17,9 @@ const DiscreetTrials = () => {
   const { client_id } = useParams();
   const dispatch = useDispatch();
   const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
+  const dtCount = useSelector(
+    (state) => state?.clients?.client_by_id?.Total_DTs
+  );
   const [totalDTs, setTotalDTs] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,8 +34,8 @@ const DiscreetTrials = () => {
   }, [currentPage, perPage, client_id]);
 
   useEffect(() => {
-    setTotalDTs(clientDT[0]?.total_DTs);
-  }, [client_id, clientDT]);
+    setTotalDTs(dtCount);
+  }, [dtCount]);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} typeToDelete={"DT"} />);

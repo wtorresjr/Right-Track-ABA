@@ -191,6 +191,13 @@ def get_client_by_id(client_id):
             valid_client["Paginated_Charts_Avg"] = 0
             valid_client["All_Charts_Avg"] = 0
 
+        discreet_trials = found_client.discreet_trials
+
+        if len(discreet_trials):
+            valid_client["Total_DTs"] = len(discreet_trials)
+        else:
+            valid_client["Total_DTs"] = 0
+            
         return jsonify(valid_client)
 
     else:
