@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getClientByIDThunk } from "../../redux/clients";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
+import InfoBar from "../InfoBarComponent";
 
 const DailyCharts = ({ clientCharts }) => {
   const dispatch = useDispatch();
@@ -152,25 +153,14 @@ const DailyCharts = ({ clientCharts }) => {
         />
       </div>
 
-      <div
-        className="chartTotalsContain"
-        style={{
-          border: `3px solid ${returnColor(clientCharts?.All_Charts_Avg)}`,
-        }}
-      >
-        <div>
-          Total Charts: {numOfCharts}
-          {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
-        </div>
-
-        <div style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
-          Avg For All Charts: {clientCharts?.All_Charts_Avg}
-        </div>
-        <div style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}>
-          Avg For Displayed Charts:{" "}
-          {filteredAvg || clientCharts?.Paginated_Charts_Avg}
-        </div>
-      </div>
+      <InfoBar
+        clientCharts={clientCharts}
+        numOfCharts={numOfCharts}
+        searchFilter={searchFilter}
+        filteredAvg={filteredAvg}
+        filteredCharts={filteredCharts}
+        type={"dailyCharts"}
+      />
 
       <div className="chartsContain">
         {filteredCharts &&

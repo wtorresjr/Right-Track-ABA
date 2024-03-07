@@ -34,12 +34,12 @@ def get_all_discreet_trials():
 @login_required
 def get_dt_by_client_id(client_id):
 
-    page = int(request.args.get("page"))
-    per_page = int(request.args.get("per_page"))
-
     found_client_dts = Discreet_Trial.query.filter_by(
         client_id=client_id, therapist_id=current_user.id
-    )
+    ).all()
+
+    page = int(request.args.get("page", default=1))
+    per_page = int(request.args.get("per_page", default=5))
 
     if not found_client_dts:
         return (
@@ -59,16 +59,17 @@ def get_dt_by_client_id(client_id):
             dt_dict["trials_score"] = 0
             dt_dict["trials_count"] = 0
             dt_dict["trials_avg"] = 0
+
         else:
             dt_dict["trials_score"] = sum(trial["trial_score"] for trial in trials_info)
             dt_dict["trials_count"] = sum(trial["trial_count"] for trial in trials_info)
-
             dt_dict["trials_avg"] = round(
                 100
                 / sum(trial["trial_count"] for trial in trials_info)
                 * sum(trial["trial_score"] for trial in trials_info),
                 1,
             )
+            # dt_dict["total_DTs"] = len(found_client_dts)
 
         client_dts.append(dt_dict)
 
@@ -80,10 +81,7 @@ def get_dt_by_client_id(client_id):
     end_idx = start_idx + per_page
     paginated_dts = sorted_dts[start_idx:end_idx]
 
-    return (
-        jsonify(paginated_dts),
-        200,
-    )
+    return jsonify(paginated_dts), 200
 
 
 # Get discreet trial and trials by DT ID

@@ -1,7 +1,7 @@
 import { NavLink, useParams } from "react-router-dom";
 import "../DailyCharts/daily-chart.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { getAllDTsThunk } from "../../redux/dts";
 import { returnPercentColor } from "../helpers/returnColor";
 import { DeleteChartModal } from "../DeleteModal";
@@ -10,34 +10,32 @@ import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
+import InfoBar from "../InfoBarComponent";
+
 const DiscreetTrials = () => {
   const { setModalContent } = useModal();
   const { client_id } = useParams();
+  const dispatch = useDispatch();
+  const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
+  const dtCount = useSelector(
+    (state) => state?.clients?.client_by_id?.Total_DTs
+  );
+  const [totalDTs, setTotalDTs] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
-  const [dtCount, setDTCount] = useState();
-
-  const dispatch = useDispatch();
-  const clientDT = useSelector((state) => state?.dt?.Discreet_Trials);
-  const clientInfo = useSelector((state) => state?.clients?.clients?.Clients);
 
   useEffect(() => {
     const getDTdata = async () => {
       await dispatch(getAllDTsThunk(+client_id, currentPage, perPage));
     };
+
     getDTdata();
-  }, [currentPage, perPage, dtCount]);
+  }, [currentPage, perPage, client_id]);
 
   useEffect(() => {
-    const getTotalDTs = () => {
-      const totalDts = clientInfo?.find((client) => +client.id === +client_id);
-      setDTCount(totalDts?.DT_Count);
-    };
-    if (clientInfo) {
-      getTotalDTs();
-    }
-  }, []);
+    setTotalDTs(dtCount);
+  }, [dtCount]);
 
   const openDeleteModal = (chart) => {
     setModalContent(<DeleteChartModal chartInfo={chart} typeToDelete={"DT"} />);
@@ -66,12 +64,14 @@ const DiscreetTrials = () => {
 
       <div className="paginationDiv">
         <label>Page:</label>
+
         <Paginator
-          numOfCharts={dtCount}
+          numOfCharts={totalDTs}
           perPage={perPage}
           currentPage={currentPage}
           handlePageChange={handlePageChange}
         />
+
         <label>Discreet Trials Per Page:</label>
         <input
           className="perPageInput"
@@ -80,11 +80,12 @@ const DiscreetTrials = () => {
           onChange={(e) => setPerPage(e.target.value)}
         />
       </div>
+      <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
 
       {clientDT && clientDT?.length
         ? clientDT?.map((dt) => {
             return (
-              <div key={dt.id}>
+              <div key={dt.id} className="dtItemsDiv">
                 <NavLink
                   to={`/discreet-trial/${dt.id}`}
                   className="navLinkStyleDC"
@@ -123,12 +124,14 @@ const DiscreetTrials = () => {
         : "No Discreet Trials Yet"}
       <div className="paginationDiv">
         <label>Page:</label>
+
         <Paginator
-          numOfCharts={dtCount}
+          numOfCharts={totalDTs}
           perPage={perPage}
           currentPage={currentPage}
           handlePageChange={handlePageChange}
         />
+
         <label>Discreet Trials Per Page:</label>
         <input
           className="perPageInput"

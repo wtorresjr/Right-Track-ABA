@@ -14,11 +14,10 @@ my_clients = Blueprint("my-clients", __name__)
 @my_clients.route("/", methods=["GET"])
 @login_required
 def get_clients():
-
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
-
     clients = Client.query.filter_by(therapist_id=current_user.id).all()
+
+    page = request.args.get("page", default=1)
+    per_page = request.args.get("per_page", default=len(clients))
 
     if per_page == "undefined":
         page = 1
@@ -31,43 +30,16 @@ def get_clients():
 
     for client in clients:
         this_client = client.to_dict()
-        this_client["Daily_Chart_Count"] = len(client.daily_charts)
 
-        total_interval_ratings = 0
-        total_intervals = 0
-
-        for daily_chart in client.daily_charts:
-            total_intervals += len(daily_chart.intervals)
-            total_interval_ratings += sum(
-                interval.interval_rating for interval in daily_chart.intervals
-            )
-
-        if total_intervals == 0:
-            avg_interval_p_chart = 0
-            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        if len(client.daily_charts):
+            this_client["Daily_Chart_Count"] = len(client.daily_charts)
         else:
-            avg_interval_p_chart = total_interval_ratings / total_intervals
-            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+            this_client["Daily_Chart_Count"] = 0
 
-        this_client["DT_Count"] = len(client.discreet_trials)
-
-        total_trial_score = sum(
-            trial.trial_score
-            for discreet_trial in client.discreet_trials
-            for trial in discreet_trial.trials
-        )
-        total_trial_count = sum(
-            trial.trial_count
-            for discreet_trial in client.discreet_trials
-            for trial in discreet_trial.trials
-        )
-
-        if total_trial_count == 0:
-            this_client["DT_Avg_Mastery"] = 0
+        if len(client.discreet_trials):
+            this_client["Discreet_Trial_Count"] = len(client.discreet_trials)
         else:
-            this_client["DT_Avg_Mastery"] = round(
-                (100 / total_trial_count) * total_trial_score, 1
-            )
+            this_client["Discreet_Trial_Count"] = 0
 
         client_info["Clients"].append(this_client)
         client_info["Total_Clients"] += 1
@@ -100,21 +72,20 @@ def get_clients():
 @login_required
 def get_client_by_id(client_id):
 
-    page = int(request.args.get("page"))
-    per_page = int(request.args.get("per_page"))
-
     found_client = (
         Client.query.filter_by(id=client_id)
         .options(joinedload(Client.daily_charts).joinedload(Daily_Chart.intervals))
         .first()
     )
-
     clients_intervals = (
         db.session.query(Interval)
         .join(Daily_Chart, Interval.chart_id == Daily_Chart.id)
         .filter(Daily_Chart.client_id == client_id)
         .all()
     )
+
+    page = int(request.args.get("page", default=1))
+    per_page = int(request.args.get("per_page", default=len(clients_intervals)))
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
@@ -192,6 +163,13 @@ def get_client_by_id(client_id):
         else:
             valid_client["Paginated_Charts_Avg"] = 0
             valid_client["All_Charts_Avg"] = 0
+
+        discreet_trials = found_client.discreet_trials
+
+        if len(discreet_trials):
+            valid_client["Total_DTs"] = len(discreet_trials)
+        else:
+            valid_client["Total_DTs"] = 0
 
         return jsonify(valid_client)
 
