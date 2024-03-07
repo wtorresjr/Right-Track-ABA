@@ -21,12 +21,14 @@ const DailyCharts = ({ clientCharts }) => {
   const [perPage, setPerPage] = useState(5);
   const [filteredAvg, setFilteredAvg] = useState();
   const [allCharts, setAllCharts] = useState();
+  const [pagLoading, setPagLoading] = useState(false);
 
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
 
   useEffect(() => {
+    setPagLoading(false);
     const getAllCharts = async () => {
       const allData = await dispatch(
         getClientByIDThunk(clientCharts?.id, 1, 1000)
@@ -49,6 +51,7 @@ const DailyCharts = ({ clientCharts }) => {
 
         if (data?.ok) {
           setFilteredCharts(data?.payload?.Daily_Charts || []);
+          setPagLoading(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -161,60 +164,67 @@ const DailyCharts = ({ clientCharts }) => {
         filteredCharts={filteredCharts}
         type={"dailyCharts"}
       />
+      {pagLoading ? (
+        <div className="chartsContain">
+          {filteredCharts &&
+            filteredCharts?.map((dc) => {
+              dayColorRating = returnColor(dc?.avgForChart, "float");
 
-      <div className="chartsContain">
-        {filteredCharts &&
-          filteredCharts?.map((dc) => {
-            dayColorRating = returnColor(dc?.avgForChart, "float");
+              if (dc) {
+                dc?.chart_complete === false
+                  ? (dayColorRating = "white")
+                  : null;
 
-            if (dc) {
-              dc?.chart_complete === false ? (dayColorRating = "white") : null;
-
-              return (
-                <div key={dc?.id} className="clientDCdata">
-                  <Link
-                    to={`/daily-chart/${dc?.id}`}
-                    className="navLinkStyleDC"
-                  >
-                    <div
-                      className="dcButtons"
-                      style={{
-                        border: `5px solid ${dayColorRating}`,
-                      }}
+                return (
+                  <div key={dc?.id} className="clientDCdata">
+                    <Link
+                      to={`/daily-chart/${dc?.id}`}
+                      className="navLinkStyleDC"
                     >
-                      <div className="folderText">
-                        <p>
-                          <label>Date: {dc?.chart_date}</label>
-                        </p>
-                        <div>Total Intervals: {dc?.interval_count}</div>
-                        <div>Avg Rating: {dc?.avgForChart}</div>
-                        <p>View Chart</p>
+                      <div
+                        className="dcButtons"
+                        style={{
+                          border: `5px solid ${dayColorRating}`,
+                        }}
+                      >
+                        <div className="folderText">
+                          <p>
+                            <label>Date: {dc?.chart_date}</label>
+                          </p>
+                          <div>Total Intervals: {dc?.interval_count}</div>
+                          <div>Avg Rating: {dc?.avgForChart}</div>
+                          <p>View Chart</p>
+                        </div>
                       </div>
+                    </Link>
+                    <div className="chartCrudBtns">
+                      <button
+                        onClick={() => {
+                          openUpdateChartModal(dc);
+                        }}
+                      >
+                        Edit Chart
+                      </button>
+                      <button
+                        onClick={() => {
+                          openDeleteModal(dc);
+                        }}
+                      >
+                        Delete Chart
+                      </button>
                     </div>
-                  </Link>
-                  <div className="chartCrudBtns">
-                    <button
-                      onClick={() => {
-                        openUpdateChartModal(dc);
-                      }}
-                    >
-                      Edit Chart
-                    </button>
-                    <button
-                      onClick={() => {
-                        openDeleteModal(dc);
-                      }}
-                    >
-                      Delete Chart
-                    </button>
                   </div>
-                </div>
-              );
-            }
+                );
+              }
 
-            return null;
-          })}
-      </div>
+              return null;
+            })}
+        </div>
+      ) : (
+        <div className="pagLoadingDiv">
+          <h2>Loading Charts...</h2>
+        </div>
+      )}
       <div className="paginationDiv">
         <label>Page:</label>
         <Paginator
