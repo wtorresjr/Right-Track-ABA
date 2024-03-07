@@ -69,7 +69,7 @@ def get_dt_by_client_id(client_id):
                 * sum(trial["trial_score"] for trial in trials_info),
                 1,
             )
-            dt_dict["total_DTs"] = len(found_client_dts)
+            # dt_dict["total_DTs"] = len(found_client_dts)
 
         client_dts.append(dt_dict)
 
