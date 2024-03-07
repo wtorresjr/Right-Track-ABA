@@ -139,3 +139,11 @@
 .dtItemsDiv {
   margin: 30px 0 0 0;
 }
+
+.pagLoadingDiv {
+  display: flex;
+  justify-content: center;
+  /* background-color: black; */
+  width: 100%;
+}
+
