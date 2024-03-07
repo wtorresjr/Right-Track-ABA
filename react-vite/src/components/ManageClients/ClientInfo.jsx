@@ -43,39 +43,23 @@ const ClientInfo = ({ client }) => {
           <div
             className="infoBoxes"
             style={{
-              border: `5px solid ${
-                client?.Daily_Chart_Count > 0
-                  ? returnColor(client?.Chart_Avg)
-                  : "white"
-              }`,
+              border: `5px solid white`,
             }}
           >
             <div>
               <label className="detailsLabels">Total Daily Charts:</label>
               {client?.Daily_Chart_Count}
             </div>
-            <div>
-              <label className="detailsLabels">Daily Charts Avg Rating:</label>
-              {client?.Chart_Avg}
-            </div>
           </div>
           <div
             className="infoBoxes"
             style={{
-              border: `5px solid ${
-                client?.DT_Count > 0
-                  ? returnPercentColor(client?.DT_Avg_Mastery)
-                  : "white"
-              }`,
+              border: `5px solid white`,
             }}
           >
             <div>
               <label className="detailsLabels">Total Discreet Trials:</label>
               {client?.Discreet_Trial_Count}
-            </div>
-            <div>
-              <label className="detailsLabels">DT Avg Mastery:</label>
-              {client?.DT_Avg_Mastery}%
             </div>
           </div>
         </div>
