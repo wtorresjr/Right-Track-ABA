@@ -2,14 +2,9 @@ import "./paginator.css";
 import Pagination from "react-bootstrap/Pagination";
 import "./bootstrap.css";
 
-
-const Paginator = ({
-  numOfCharts,
-  perPage,
-  currentPage,
-  handlePageChange,
-}) => {
+const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
   const totalPages = Math.ceil(numOfCharts / perPage);
+  const pageItems = [];
 
   const renderPageItems = () => {
     const pagesToShow = perPage;
@@ -22,7 +17,6 @@ const Paginator = ({
       startPage = Math.max(endPage - pagesToShow + 1, 1);
     }
 
-    const pageItems = [];
 
     for (let i = startPage; i <= endPage; i++) {
       pageItems.push(
@@ -54,4 +48,4 @@ const Paginator = ({
   );
 };
 
-export default Paginator
+export default Paginator;
