@@ -30,20 +30,31 @@ const InfoBar = ({
     <div
       className="chartTotalsContain"
       style={{
-        border: `3px solid ${returnColor(clientCharts?.All_Charts_Avg)}`,
+        border: `3px solid ${
+          type === "dailyCharts"
+            ? returnColor(clientCharts?.All_Charts_Avg)
+            : "white"
+        }`,
       }}
     >
       <div>
         {barType} {numOfCharts}
         {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
       </div>
-
-      <div style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
-        {allAvg} {clientCharts?.All_Charts_Avg}
-      </div>
-      <div style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}>
-        {filteredAvgType} {filteredAvg || clientCharts?.Paginated_Charts_Avg}
-      </div>
+      {type === "dailyCharts" ? (
+        <div style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
+          {allAvg} {clientCharts?.All_Charts_Avg}
+        </div>
+      ) : (
+        ""
+      )}
+      {type === "dailyCharts" ? (
+        <div style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}>
+          {filteredAvgType} {filteredAvg || clientCharts?.Paginated_Charts_Avg}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
