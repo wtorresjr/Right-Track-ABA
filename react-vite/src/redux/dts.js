@@ -8,6 +8,11 @@ const ADD_NEW_DT = "dt/addNewDT";
 const ADD_TRIAL = "dt/addTrial";
 const EDIT_TRIAL = "dt/editTrial";
 const EDIT_DT = "dt/editDT";
+const RESET_DT_STATE = "dt/resetDTState";
+
+export const resetDTState = () => ({
+  type: RESET_DT_STATE,
+});
 
 const getDiscreetTrial = (foundTrial) => {
   return {
@@ -224,6 +229,8 @@ const initialState = {
 function dtReducer(state = initialState, action) {
   switch (action.type) {
     // Inside dtReducer
+    case RESET_DT_STATE:
+      return { ...state, DiscreetTrial: null, Discreet_Trials: null };
     case EDIT_DT:
       const updateDiscreetTrials = state.Discreet_Trials.map((dt) =>
         dt.id === action.payload.id ? { ...dt, ...action.payload } : dt

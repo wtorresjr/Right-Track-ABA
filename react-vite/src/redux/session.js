@@ -1,4 +1,5 @@
 import { resetState } from "./clients";
+import { resetDTState } from "./dts";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -63,6 +64,7 @@ export const thunkLogout = () => async (dispatch) => {
   await fetch("/api/auth/logout");
   dispatch(removeUser());
   dispatch(resetState());
+  dispatch(resetDTState());
 };
 
 const initialState = { user: null };
