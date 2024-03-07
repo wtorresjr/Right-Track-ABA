@@ -271,12 +271,16 @@ function dtReducer(state = initialState, action) {
         ...state,
         DiscreetTrial: { ...state.DiscreetTrial, Trials: action.payload },
       };
+
     case ADD_NEW_DT:
       return { ...state, DiscreetTrial: action.payload };
+
     case GET_DT:
       return { ...state, DiscreetTrial: action.payload };
+
     case GET_ALL_DTS:
       return { ...state, Discreet_Trials: action.payload };
+
     case DELETE_DT:
       const updatedDiscreetTrials = state.Discreet_Trials.filter(
         (DT) => DT.id !== action.payload.id
