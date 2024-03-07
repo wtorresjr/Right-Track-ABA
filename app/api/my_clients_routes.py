@@ -30,43 +30,56 @@ def get_clients():
 
     for client in clients:
         this_client = client.to_dict()
-        this_client["Daily_Chart_Count"] = len(client.daily_charts)
 
-        total_interval_ratings = 0
-        total_intervals = 0
-
-        for daily_chart in client.daily_charts:
-            total_intervals += len(daily_chart.intervals)
-            total_interval_ratings += sum(
-                interval.interval_rating for interval in daily_chart.intervals
-            )
-
-        if total_intervals == 0:
-            avg_interval_p_chart = 0
-            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        if len(client.daily_charts):
+            # avg_for_charts = sum(dc.avgForChart for dc in client.daily_charts)
+            for dc in client.daily_charts:
+                print(dc.to_dict(), "<---------------------------AVG FOR CHART")
+            this_client["Daily_Chart_Count"] = len(client.daily_charts)
+            # this_client["Chart_Avg"] = avg_for_charts
         else:
-            avg_interval_p_chart = total_interval_ratings / total_intervals
-            this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+            this_client["Daily_Chart_Count"] = 0
 
-        this_client["DT_Count"] = len(client.discreet_trials)
-
-        total_trial_score = sum(
-            trial.trial_score
-            for discreet_trial in client.discreet_trials
-            for trial in discreet_trial.trials
-        )
-        total_trial_count = sum(
-            trial.trial_count
-            for discreet_trial in client.discreet_trials
-            for trial in discreet_trial.trials
-        )
-
-        if total_trial_count == 0:
-            this_client["DT_Avg_Mastery"] = 0
+        if len(client.discreet_trials):
+            this_client["Discreet_Trial_Count"] = len(client.discreet_trials)
         else:
-            this_client["DT_Avg_Mastery"] = round(
-                (100 / total_trial_count) * total_trial_score, 1
-            )
+            this_client["Discreet_Trial_Count"] = 0
+
+        # total_interval_ratings = 0
+        # total_intervals = 0
+
+        # for daily_chart in client.daily_charts:
+        #     total_intervals += len(daily_chart.intervals)
+        #     total_interval_ratings += sum(
+        #         interval.interval_rating for interval in daily_chart.intervals
+        #     )
+
+        # if total_intervals == 0:
+        #     avg_interval_p_chart = 0
+        #     this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+        # else:
+        #     avg_interval_p_chart = total_interval_ratings / total_intervals
+        #     this_client["Chart_Avg"] = round(avg_interval_p_chart, 2)
+
+        # this_client["DT_Count"] = len(client.discreet_trials)
+
+        # total_trial_score = sum(
+        #     trial.trial_score
+        #     for discreet_trial in client.discreet_trials
+        #     for trial in discreet_trial.trials
+        # )
+        # total_trial_count = sum(
+        #     trial.trial_count
+        #     for discreet_trial in client.discreet_trials
+        #     for trial in discreet_trial.trials
+        # )
+
+        # if total_trial_count == 0:
+        #     this_client["DT_Avg_Mastery"] = 0
+        # else:
+        #     this_client["DT_Avg_Mastery"] = round(
+        #         (100 / total_trial_count) * total_trial_score, 1
+        #     )
 
         client_info["Clients"].append(this_client)
         client_info["Total_Clients"] += 1
@@ -197,7 +210,7 @@ def get_client_by_id(client_id):
             valid_client["Total_DTs"] = len(discreet_trials)
         else:
             valid_client["Total_DTs"] = 0
-            
+
         return jsonify(valid_client)
 
     else:
