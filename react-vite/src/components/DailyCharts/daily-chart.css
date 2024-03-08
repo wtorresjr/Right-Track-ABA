@@ -66,6 +66,24 @@
   .legendCompContain {
     width: 100%;
   }
+
+  .chartTotalsContain {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .mainDisplayContain h1 {
+    width: 100%;
+    display: flex;
+    /* background-color: red; */
+    flex-flow: column nowrap;
+  }
 }
 
 /* Small devices (tablets) */
@@ -111,6 +129,17 @@
     align-items: center;
     box-sizing: border-box;
   }
+
+  .chartTotalsContain {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 10px;
+  }
 }
 
 .clientDCdata {
@@ -138,17 +167,6 @@
 .chartCrudBtns button:hover {
   background-color: white;
   color: black;
-}
-
-.chartTotalsContain {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  gap: 20px;
-  background-color: rgb(0, 0, 0);
-  border-radius: 10px;
-  padding: 10px;
 }
 
 .dcButtons {
