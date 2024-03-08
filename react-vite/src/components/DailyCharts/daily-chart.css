@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     flex-flow: column wrap;
-    /* border-bottom: 1px solid grey; */
     margin: 0;
   }
 
@@ -28,6 +27,24 @@
     padding: 0;
     margin: 0;
   }
+  .chartsContain {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    width: 100%;
+    /* padding: 20px 0 0 0; */
+  }
+  #createNewChartBtn {
+    /* width: 20vw; */
+    height: 50px;
+    background-color: #881600;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 
 /* Small devices (tablets) */
@@ -39,19 +56,30 @@
     width: 100%;
     /* border-bottom: 1px solid grey; */
   }
+  .chartsContain {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px 0 0 0;
+  }
+
+  #createNewChartBtn {
+    width: 20vw;
+    height: 50px;
+    background-color: #881600;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 
 .clientDCdata {
   display: flex;
   flex-flow: column nowrap;
   margin: 10px 0 10px 0;
-}
-
-.chartsContain {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 20px 0 0 0;
 }
 
 .chartCrudBtns {
@@ -145,18 +173,6 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-}
-
-#createNewChartBtn {
-  width: 20vw;
-  height: 50px;
-  background-color: #881600;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 #createNewChartBtn:hover {
