@@ -1,3 +1,46 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+  .paginationDiv {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    /* border-bottom: 1px solid grey; */
+    margin: 0;
+  }
+
+  .paginationDiv input {
+    width: 5ch;
+    margin: 0 0 10px 0;
+    text-align: center;
+  }
+
+  .paginationDiv label {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0 0 0;
+    padding: 0 0 10px 0;
+  }
+  .pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .paginationDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* border-bottom: 1px solid grey; */
+  }
+}
+
 .clientDCdata {
   display: flex;
   flex-flow: column nowrap;
@@ -121,16 +164,6 @@
   color: white;
 }
 
-.paginationDiv {
-  display: flex;
-  /* flex-flow: row wrap; */
-  align-items: center;
-  /* justify-content: space-between; */
-  /* margin: 10px 0; */
-  width: 100%;
-  border-bottom: 1px solid grey;
-}
-
 .perPageInput {
   width: 100px;
   margin: 0;
@@ -146,4 +179,3 @@
   /* background-color: black; */
   width: 100%;
 }
-

@@ -32,18 +32,15 @@ function LoginFormPage() {
       );
 
       if (serverResponse) {
-        console.log("Errors");
+        closeModal();
         setErrors(serverResponse);
-        // setIsVisible(true);
       } else {
-        console.log("No Errors");
         navigate("/home");
-        // setIsVisible(false);
       }
     } catch (error) {
       // Handle errors, if any, from the thunkLogin action
       console.error("Error during login:", error);
-      setIsVisible(false); // Make sure to hide the message on error as well
+      setIsVisible(false);
     }
   };
 
