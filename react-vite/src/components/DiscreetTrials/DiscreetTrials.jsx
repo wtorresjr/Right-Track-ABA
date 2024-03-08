@@ -21,13 +21,19 @@ const DiscreetTrials = () => {
     (state) => state?.clients?.client_by_id?.Total_DTs
   );
   const [totalDTs, setTotalDTs] = useState();
-
+  const [pagLoaded, setPagLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
 
   useEffect(() => {
+    setPagLoaded(false);
     const getDTdata = async () => {
-      await dispatch(getAllDTsThunk(+client_id, currentPage, perPage));
+      const thunkLoaded = await dispatch(
+        getAllDTsThunk(+client_id, currentPage, perPage)
+      );
+      if (thunkLoaded) {
+        setPagLoaded(true);
+      }
     };
 
     getDTdata();
@@ -84,49 +90,45 @@ const DiscreetTrials = () => {
       </div>
       <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
 
-      {clientDT && clientDT?.length
-        ? clientDT?.map((dt) => {
-            return (
-              <div key={dt.id} className="dtItemsDiv">
-                <NavLink
-                  to={`/discreet-trial/${dt.id}`}
-                  className="navLinkStyleDC"
+      {pagLoaded ? (
+        clientDT && clientDT.length ? (
+          clientDT.map((dt) => (
+            <div key={dt.id} className="dtItemsDiv">
+              <NavLink
+                to={`/discreet-trial/${dt.id}`}
+                className="navLinkStyleDC"
+              >
+                <div
+                  className="dcButtons"
+                  style={{
+                    border: `3px solid ${returnPercentColor(dt?.trials_avg)}`,
+                  }}
                 >
-                  <div
-                    className="dcButtons"
-                    style={{
-                      border: `3px solid ${returnPercentColor(dt?.trials_avg)}`,
-                    }}
-                  >
-                    <div> {dt?.trial_date}</div>
-                    <div>{dt?.program_name}</div>
-                    <div>Mastery: {dt?.trials_avg}%</div>
-                    View Trial(s)
-                  </div>
-                </NavLink>
-                <div className="chartCrudBtns">
-                  <button
-                    onClick={() => {
-                      openUpdateChartModal(dt);
-                    }}
-                  >
-                    Edit DT
-                  </button>
-                  <button
-                    onClick={() => {
-                      openDeleteModal(dt);
-                    }}
-                  >
-                    Delete DT
-                  </button>
+                  <div>{dt?.trial_date}</div>
+                  <div>{dt?.program_name}</div>
+                  <div>Mastery: {dt?.trials_avg}%</div>
+                  View Trial(s)
                 </div>
+              </NavLink>
+              <div className="chartCrudBtns">
+                <button onClick={() => openUpdateChartModal(dt)}>
+                  Edit DT
+                </button>
+                <button onClick={() => openDeleteModal(dt)}>Delete DT</button>
               </div>
-            );
-          })
-        : "No Discreet Trials Yet"}
+            </div>
+          ))
+        ) : (
+          "No Discreet Trials Yet"
+        )
+      ) : (
+        <div className="pagLoadingDiv">
+          <h2>Discreet Trials Loading...</h2>
+        </div>
+      )}
+
       <div className="paginationDiv">
         <label>Page:</label>
-
         <Paginator
           numOfCharts={totalDTs}
           perPage={perPage}
