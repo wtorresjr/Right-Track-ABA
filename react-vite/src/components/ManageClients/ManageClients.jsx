@@ -59,8 +59,8 @@ const ManageClients = () => {
       <div className="manageClientsHeader">
         <h1>Manage Clients</h1>
         <button id="addNewClientBtn" onClick={openCreateClientModal}>
+          <i className="fa-regular fa-address-card fa-xl"></i>+ Add New Client +{" "}
           <i className="fa-regular fa-address-card fa-xl"></i>
-          Add New Client <i className="fa-regular fa-address-card fa-xl"></i>
         </button>
         <LegendComponent />
         <div
