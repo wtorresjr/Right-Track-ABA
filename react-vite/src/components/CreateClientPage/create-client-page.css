@@ -1,12 +1,32 @@
-.createClient {
-  min-width:50vw;
-  max-width: 80vw;
-  padding: 20px;
-  border-radius: 10px;
+@media only screen and (max-width: 600px) {
+  .createClient {
+    width: 100%;
+    border-radius: 10px;
+    /* background-color: red; */
+    display: flex;
+  }
+  .createClient .mainDisplayContain {
+    display: flex;
+    /* box-sizing: border-box; */
+    /* margin: 0; */
+    /* padding: 0; */
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .createClient {
+    width: 100%;
+    /* min-width: 50vw;
+    max-width: 80vw; */
+    display: flex;
+    padding: 20px;
+    border-radius: 10px;
+  }
 }
 
 #clientNotes {
-  width: 100%;
+  /* width: 100%; */
   font-size: 16px;
   resize: none;
 }
