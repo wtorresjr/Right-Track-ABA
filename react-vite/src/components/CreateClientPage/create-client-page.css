@@ -2,14 +2,20 @@
   .createClient {
     width: 100%;
     border-radius: 10px;
-    /* background-color: red; */
-    display: flex;
+    padding: 0;
+    margin: 0;
   }
+
   .createClient .mainDisplayContain {
     display: flex;
-    /* box-sizing: border-box; */
-    /* margin: 0; */
-    /* padding: 0; */
+    margin: 0;
+  }
+
+  #closeBtn {
+    position: absolute;
+    right: 10px;
+    top: 25px;
+    cursor: pointer;
   }
 }
 
@@ -17,11 +23,15 @@
 @media only screen and (min-width: 601px) {
   .createClient {
     width: 100%;
-    /* min-width: 50vw;
-    max-width: 80vw; */
     display: flex;
     padding: 20px;
     border-radius: 10px;
+  }
+  #closeBtn {
+    position: absolute;
+    right: 35px;
+    top: 70px;
+    cursor: pointer;
   }
 }
 
@@ -76,13 +86,6 @@
 .newClientForm label {
   width: 100%;
   padding: 10px 0 0 0;
-}
-
-#closeBtn {
-  position: absolute;
-  right: 35px;
-  top: 70px;
-  cursor: pointer;
 }
 
 #closeBtn:hover {
