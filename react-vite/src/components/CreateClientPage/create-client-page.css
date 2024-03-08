@@ -1,12 +1,42 @@
-.createClient {
-  min-width:50vw;
-  max-width: 80vw;
-  padding: 20px;
-  border-radius: 10px;
+@media only screen and (max-width: 600px) {
+  .createClient {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .createClient .mainDisplayContain {
+    display: flex;
+    margin: 0;
+  }
+
+  #closeBtn {
+    position: absolute;
+    right: 10px;
+    top: 25px;
+    cursor: pointer;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .createClient {
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  #closeBtn {
+    position: absolute;
+    right: 35px;
+    top: 70px;
+    cursor: pointer;
+  }
 }
 
 #clientNotes {
-  width: 100%;
+  /* width: 100%; */
   font-size: 16px;
   resize: none;
 }
@@ -56,13 +86,6 @@
 .newClientForm label {
   width: 100%;
   padding: 10px 0 0 0;
-}
-
-#closeBtn {
-  position: absolute;
-  right: 35px;
-  top: 70px;
-  cursor: pointer;
 }
 
 #closeBtn:hover {

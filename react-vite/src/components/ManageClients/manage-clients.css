@@ -1,10 +1,112 @@
-.clientInfoContain {
-  background-color: rgba(0, 0, 0, 0.417);
-  display: flex;
-  padding: 20px 20px;
-  border-radius: 10px;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(156, 156, 156);
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+  .manageClientsHeader h1 {
+    width: 100%;
+    padding: 0 0 20px 0;
+  }
+
+  #addNewClientBtn {
+    height: 60px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: orange;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 20px; */
+  }
+
+  .clientInfoContain {
+    background-color: rgba(0, 0, 0, 0.417);
+    display: flex;
+    flex-flow: column wrap;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(156, 156, 156);
+  }
+
+  .btnsContain {
+    /* background-color: red; */
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 50px;
+  }
+
+  .clientData {
+    /* width: 100%; */
+    /* padding: 2px 10px; */
+    color: rgb(255, 255, 255);
+  }
+
+  #viewBtn,
+  #delBtn,
+  #editBtn {
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    border: none;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .manageClientsHeader h1 {
+    width: 50%;
+    padding: 0 0 20px 0;
+  }
+
+  #addNewClientBtn {
+    width: 50%;
+    height: 60px;
+    background-color: orange;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .clientInfoContain {
+    background-color: rgba(0, 0, 0, 0.417);
+    display: flex;
+    padding: 20px 20px;
+    border-radius: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(156, 156, 156);
+  }
+
+  .btnsContain {
+    /* width: 30%; */
+    display: flex;
+    flex-flow: column nowrap;
+    height: 50px;
+  }
+  .clientData {
+    /* width: 70%; */
+    padding: 2px 10px;
+    color: rgb(255, 255, 255);
+  }
+
+  #viewBtn,
+  #delBtn,
+  #editBtn {
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    border: none;
+    margin: 5px 0;
+  }
 }
 
 .manageClientsHeader {
@@ -12,32 +114,6 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-}
-
-.manageClientsHeader h1 {
-  width: 50%;
-}
-
-.clientData {
-  width: 70%;
-  padding: 2px 10px;
-  color: rgb(255, 255, 255);
-}
-.btnsContain {
-  width: 30%;
-  display: flex;
-  flex-flow: column nowrap;
-  height: 50px;
-}
-
-#viewBtn,
-#delBtn,
-#editBtn {
-  height: 50%;
-  cursor: pointer;
-  font-weight: bolder;
-  border: none;
-  margin: 5px 0;
 }
 
 #viewBtn {
@@ -55,23 +131,14 @@
   color: white;
 }
 
-#addNewClientBtn {
-  width: 50%;
-  height: 60px;
-  background-color: orange;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bolder;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
-
 #addNewClientBtn:hover {
   background-color: black;
   color: white;
+}
+
+#addNewClientBtn i {
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 #delBtn:hover,
