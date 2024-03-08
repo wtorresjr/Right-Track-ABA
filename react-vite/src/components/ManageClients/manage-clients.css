@@ -19,6 +19,42 @@
     align-items: center;
     /* padding: 0 20px; */
   }
+
+  .clientInfoContain {
+    background-color: rgba(0, 0, 0, 0.417);
+    display: flex;
+    flex-flow: column wrap;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(156, 156, 156);
+  }
+
+  .btnsContain {
+    /* background-color: red; */
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 50px;
+  }
+
+  .clientData {
+    /* width: 100%; */
+    /* padding: 2px 10px; */
+    color: rgb(255, 255, 255);
+  }
+
+  #viewBtn,
+  #delBtn,
+  #editBtn {
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    border: none;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
 }
 
 /* Small devices (tablets) */
@@ -41,15 +77,36 @@
     align-items: center;
     padding: 0 20px;
   }
-}
+  .clientInfoContain {
+    background-color: rgba(0, 0, 0, 0.417);
+    display: flex;
+    padding: 20px 20px;
+    border-radius: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(156, 156, 156);
+  }
 
-.clientInfoContain {
-  background-color: rgba(0, 0, 0, 0.417);
-  display: flex;
-  padding: 20px 20px;
-  border-radius: 10px;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(156, 156, 156);
+  .btnsContain {
+    /* width: 30%; */
+    display: flex;
+    flex-flow: column nowrap;
+    height: 50px;
+  }
+  .clientData {
+    /* width: 70%; */
+    padding: 2px 10px;
+    color: rgb(255, 255, 255);
+  }
+
+  #viewBtn,
+  #delBtn,
+  #editBtn {
+    height: 50%;
+    cursor: pointer;
+    font-weight: bolder;
+    border: none;
+    margin: 5px 0;
+  }
 }
 
 .manageClientsHeader {
@@ -57,28 +114,6 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-}
-
-.clientData {
-  width: 70%;
-  padding: 2px 10px;
-  color: rgb(255, 255, 255);
-}
-.btnsContain {
-  width: 30%;
-  display: flex;
-  flex-flow: column nowrap;
-  height: 50px;
-}
-
-#viewBtn,
-#delBtn,
-#editBtn {
-  height: 50%;
-  cursor: pointer;
-  font-weight: bolder;
-  border: none;
-  margin: 5px 0;
 }
 
 #viewBtn {
