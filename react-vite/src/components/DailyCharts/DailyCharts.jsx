@@ -120,6 +120,7 @@ const DailyCharts = ({ clientCharts }) => {
   };
 
   return (
+
     <div className="chartsContain">
       <h1>
         Daily Performance Charts
