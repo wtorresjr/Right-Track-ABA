@@ -1,3 +1,63 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+  .manageClientsHeader h1 {
+    width: 100%;
+    padding: 0 0 20px 0;
+  }
+
+  #addNewClientBtn {
+    width: 100%;
+    height: 60px;
+    background-color: orange;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .manageClientsHeader h1 {
+    width: 50%;
+    padding: 0 0 20px 0;
+  }
+
+  #addNewClientBtn {
+    width: 50%;
+    height: 60px;
+    background-color: orange;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+}
+
+/* Medium devices (laptops) */
+/* @media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .manageClientsHeader h1 {
+    width: 50%;
+    padding: 0 0 20px 0;
+  }
+} */
+
+/* Large devices (desktops) */
+/* @media only screen and (min-width: 1025px) {
+  .manageClientsHeader h1 {
+    width: 50%;
+    padding: 0 0 20px 0;
+  }
+} */
+
 .clientInfoContain {
   background-color: rgba(0, 0, 0, 0.417);
   display: flex;
@@ -12,10 +72,6 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-}
-
-.manageClientsHeader h1 {
-  width: 50%;
 }
 
 .clientData {
@@ -53,20 +109,6 @@
 #delBtn {
   background-color: #881600;
   color: white;
-}
-
-#addNewClientBtn {
-  width: 50%;
-  height: 60px;
-  background-color: orange;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bolder;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
 }
 
 #addNewClientBtn:hover {
