@@ -7,7 +7,7 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
   const pageItems = [];
 
   const renderPageItems = () => {
-    const pagesToShow = perPage;
+    const pagesToShow = 5;
     const halfPagesToShow = Math.floor(pagesToShow / 2);
 
     let startPage = Math.max(currentPage - halfPagesToShow, 1);
@@ -16,7 +16,6 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
     if (totalPages - endPage < halfPagesToShow) {
       startPage = Math.max(endPage - pagesToShow + 1, 1);
     }
-
 
     for (let i = startPage; i <= endPage; i++) {
       pageItems.push(

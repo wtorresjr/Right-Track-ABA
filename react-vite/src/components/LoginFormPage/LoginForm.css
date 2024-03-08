@@ -1,6 +1,19 @@
-.loginFormModal {
-  padding: 50px;
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
 }
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+}
+
+/* Medium devices (laptops) */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+/* Large devices (desktops) */
+@media only screen and (min-width: 1025px) {
+}
+
 
 .loginForm {
   display: flex;
@@ -52,5 +65,3 @@ label {
   box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, 0.4);
   border: 5px solid green;
 }
-
-

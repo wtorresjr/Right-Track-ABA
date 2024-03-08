@@ -27,8 +27,8 @@ h1 {
 }
 
 .deleteMessageContain {
-  width: 30vw;
-  height: 10vh;
+  max-width: 80vw;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -87,6 +87,7 @@ const ManageClients = () => {
           currentPage={currentPage}
           handlePageChange={handlePageChange}
         />
+
         <label>Clients Per Page:</label>
         <input
           className="perPageInput"

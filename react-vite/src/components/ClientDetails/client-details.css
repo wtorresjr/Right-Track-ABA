@@ -29,7 +29,7 @@
 }
 
 .btnsContain {
-  width: 50%;
+  /* width: 50%; */
   /* height: 110px; */
   display: flex;
   flex-flow: row;

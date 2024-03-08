@@ -1,3 +1,11 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+}
+
 .mainDisplayContain .button-comp-container {
   border-radius: 10px;
   box-sizing: border-box;
