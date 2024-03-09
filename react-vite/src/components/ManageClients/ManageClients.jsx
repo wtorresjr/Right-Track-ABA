@@ -62,7 +62,7 @@ const ManageClients = () => {
           <i className="fa-regular fa-address-card fa-xl"></i>+ Add New Client +{" "}
           <i className="fa-regular fa-address-card fa-xl"></i>
         </button>
-        <LegendComponent />
+
         <div
           className="chartTotalsContain"
           style={{
