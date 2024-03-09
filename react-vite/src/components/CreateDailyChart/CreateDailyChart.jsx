@@ -220,12 +220,18 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
                     })}
                 </select>
               )}
-              <button id="createChartBtn" disabled={isDisabled}>
-                {isDTupdate ? "Update DT" : isDT ? "Create DT" : "Create Chart"}
-              </button>
-              <button id="cancelBtn" onClick={() => closeModal()}>
-                Cancel
-              </button>
+              <div className="createBtnsDiv">
+                <button id="createChartBtn" disabled={isDisabled}>
+                  {isDTupdate
+                    ? "Update DT"
+                    : isDT
+                    ? "Create DT"
+                    : "Create Chart"}
+                </button>
+                <button id="cancelBtn" onClick={() => closeModal()}>
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
           {errors && errors.date && <p className="errorsPtag">{errors.date}</p>}

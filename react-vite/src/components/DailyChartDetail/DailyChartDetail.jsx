@@ -134,10 +134,7 @@ const DailyChartDetail = () => {
                   {interval?.end_interval}
                 </label>{" "}
                 |<label> Activity: {interval?.activity} </label>|
-                <label>
-                  {" "}
-                  Interval Rating: {interval?.interval_rating}
-                </label>
+                <label> Interval Rating: {interval?.interval_rating}</label>
               </div>
               <p>
                 <label>Interval Notes:</label> {interval?.interval_notes}
@@ -150,7 +147,7 @@ const DailyChartDetail = () => {
                     ([behavior, count]) => (
                       <div key={behavior}>
                         <div>
-                          {behavior}: {count}
+                          {<strong>{behavior}</strong>}: {count}
                         </div>
                       </div>
                     )
