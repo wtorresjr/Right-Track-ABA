@@ -1,11 +1,20 @@
-.behaviorsTag {
-  display: flex;
-  /* background-color: rgb(196, 22, 22); */
-  border: 2px solid rgb(133, 133, 133);
-  border-radius: 10px;
-  padding: 5px;
-  justify-content: space-around;
-  margin: 15px 0 0 0;
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .behaviorsTag {
+    display: flex;
+    flex-flow: row wrap;
+    gap:0 20px;
+    /* background-color: rgb(196, 22, 22); */
+    /* border: 2px solid rgb(133, 133, 133);
+    border-radius: 10px;
+    padding: 5px;
+    justify-content: space-around;
+    margin: 15px 0 0 0; */
+  }
 }
 
 .intervalInfoContain label {
