@@ -86,6 +86,54 @@
     /* background-color: red; */
     flex-flow: column nowrap;
   }
+
+  .dcButtons {
+    border: 1px solid rgb(113, 113, 113);
+    padding: 0px 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    background-image: url("../FolderImage.png");
+    background-blend-mode: color-burn;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 8px 0 0 0;
+    width: 100%;
+  }
+  .clientDCdata {
+    width: 50%;
+  }
+  .chartCrudBtns {
+    display: flex;
+    gap: 5px;
+    margin: 5px 0 0 0;
+    justify-content: center;
+  }
+
+  .chartCrudBtns button {
+    background-color: black;
+    color: white;
+    height: 40px;
+    border: 1px solid rgb(136, 136, 136);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .dtItemsDiv {
+    margin: 8px 0 0 0;
+    width: 50%;
+  }
+
+  .folderText {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  .folderText label {
+    font-size: 15px;
+  }
 }
 
 /* Small devices (tablets) */
@@ -98,9 +146,10 @@
   }
   .chartsContain {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     width: 100%;
     padding: 20px 0 0 0;
+    justify-content: center;
   }
 
   #createNewChartBtn {
@@ -142,50 +191,50 @@
     border-radius: 10px;
     padding: 10px;
   }
-}
+  .dcButtons {
+    border: 1px solid rgb(113, 113, 113);
+    padding: 0px 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    background-image: url("../FolderImage.png");
+    background-blend-mode: color-burn;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    flex: 1 1 calc((100% - 16px) / 3);
+    max-width: calc((100% - 16px) / 3);
+    min-width: 200px;
+    box-sizing: border-box;
+    margin: 8px;
+  }
+  .clientDCdata {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 10px 0 10px 0;
+  }
+  .chartCrudBtns {
+    display: flex;
+    gap: 5px;
+    margin: 5px 0 0 0;
+    justify-content: center;
+  }
 
-.clientDCdata {
-  display: flex;
-  flex-flow: column nowrap;
-  margin: 10px 0 10px 0;
-}
-
-.chartCrudBtns {
-  display: flex;
-  gap: 5px;
-  margin: 5px 0 0 0;
-  justify-content: center;
-}
-
-.chartCrudBtns button {
-  background-color: black;
-  color: white;
-  height: 30px;
-  border: 1px solid rgb(136, 136, 136);
-  border-radius: 10px;
-  cursor: pointer;
+  .chartCrudBtns button {
+    background-color: black;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(136, 136, 136);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .dtItemsDiv {
+    margin: 30px 0 0 0;
+  }
 }
 
 .chartCrudBtns button:hover {
   background-color: white;
   color: black;
-}
-
-.dcButtons {
-  border: 1px solid rgb(113, 113, 113);
-  padding: 0px 10px;
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.6);
-  background-image: url("../FolderImage.png");
-  background-blend-mode: color-burn;
-  background-size: cover;
-  background-repeat: no-repeat;
-  text-align: center;
-  flex: 1 1 calc((100% - 16px) / 3);
-  max-width: calc((100% - 16px) / 3);
-  min-width: 200px;
-  box-sizing: border-box;
-  margin: 8px;
 }
 
 .navLinkStyleDC {
@@ -222,10 +271,6 @@
 .perPageInput {
   width: 100px;
   margin: 0;
-}
-
-.dtItemsDiv {
-  margin: 30px 0 0 0;
 }
 
 .pagLoadingDiv {
