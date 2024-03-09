@@ -80,8 +80,6 @@ const UpdateDailyChart = ({ dc }) => {
     setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
   };
 
-
-
   return (
     <div className="newChartModal">
       <h1>Update Daily Chart For {clientName}</h1>
@@ -125,12 +123,14 @@ const UpdateDailyChart = ({ dc }) => {
                     );
                   })}
               </select>
-              <button id="createChartBtn" disabled={isDisabled}>
-                Update Chart
-              </button>
-              <button id="cancelBtn" onClick={() => closeModal()}>
-                Cancel
-              </button>
+              <div className="createBtnsDiv">
+                <button id="createChartBtn" disabled={isDisabled}>
+                  Update Chart
+                </button>
+                <button id="cancelBtn" onClick={() => closeModal()}>
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
           {errors && errors.date && <p className="errorsPtag">{errors.date}</p>}
