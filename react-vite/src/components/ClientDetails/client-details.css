@@ -34,6 +34,10 @@
     gap: 10px;
   }
 
+  #delBtn {
+    background-color: rgb(219, 0, 0);
+  }
+
   .btnsContain #editBtn,
   #viewBtn,
   #delBtn {

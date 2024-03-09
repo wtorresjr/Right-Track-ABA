@@ -23,7 +23,8 @@ h1 {
 }
 
 #modalDelBtn {
-  background-color: red;
+  /* background-color: red; */
+  background-color: rgb(219, 0, 0);
   color: wblackhite;
 }
 
