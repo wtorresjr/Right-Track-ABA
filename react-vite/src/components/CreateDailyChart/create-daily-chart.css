@@ -38,6 +38,10 @@
   #cancelBtn {
     border-radius: 10px;
   }
+  .newChartMenu p {
+    text-align: center;
+  }
+
   .createBtnsDiv {
     height: 50px;
     display: flex;
