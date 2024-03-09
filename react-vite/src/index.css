@@ -25,6 +25,7 @@ html {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   height: 100%;
   font-size: 16px;
+  /* margin: 0 0 100px 0; */
 }
 
 body {
@@ -37,6 +38,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: auto;
+  /* margin: 0 0 100px 0; */
 }
 body::-webkit-scrollbar {
   width: 0;

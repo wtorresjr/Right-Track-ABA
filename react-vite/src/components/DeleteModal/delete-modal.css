@@ -22,12 +22,20 @@ h1 {
   margin: 0px;
 }
 
+#modalDelBtn {
+  /* background-color: red; */
+  background-color: rgb(219, 0, 0);
+  color: wblackhite;
+}
+
 #modalDelBtn,
 #modalCancelBtn {
   padding: 10px 0 10px 0;
   width: 50%;
   cursor: pointer;
   margin: 20px 0 0 0;
+  border-radius: 10px;
+  border: none;
 }
 
 #modalDelBtn:disabled {

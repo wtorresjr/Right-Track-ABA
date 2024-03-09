@@ -113,7 +113,9 @@ const DailyChartDetail = () => {
       </div>
       <div style={{ display: "flex", justifyContent: "right" }}>
         <button id="createNewChartBtn" onClick={openAddIntModal}>
+          <i class="fa-solid fa-file-circle-plus"></i>
           Add New Interval
+          <i class="fa-solid fa-file-circle-plus"></i>
         </button>
       </div>
       {currentIntervals &&
