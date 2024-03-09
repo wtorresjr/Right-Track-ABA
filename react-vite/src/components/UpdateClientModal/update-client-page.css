@@ -1,7 +1,41 @@
-.createClient {
-  width: 30vw;
-  padding: 20px;
-  border-radius: 10px;
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+  .createClient .mainDisplayContain {
+    display: flex;
+    margin: 0;
+  }
+
+  .modalHeading {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modalHeading i {
+    cursor: pointer;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .createClient .mainDisplayContain {
+    /* width: 100%;
+    display: flex; */
+    padding: 30px;
+    margin: 0;
+    border-radius: 10px;
+  }
+
+  .modalHeading {
+    /* background-color:red; */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modalHeading i {
+    cursor: pointer;
+  }
 }
 
 #clientNotes {
@@ -53,7 +87,7 @@
 }
 
 .newClientForm label {
-  width: 100%;
+  /* width: 100%; */
   padding: 10px 0 0 0;
 }
 
