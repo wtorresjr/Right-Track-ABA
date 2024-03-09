@@ -1,32 +1,113 @@
-.newChartModal {
-  padding: 10px;
-  border: 5px solid orange;
-  border-radius: 10px;
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+  .newChartModal {
+    padding: 10px;
+    border: 5px solid orange;
+    border-radius: 10px;
+  }
+
+  .newChartMenu {
+    padding: 20px 0 0 0;
+  }
+  .newChartMenu #clientSelector {
+    text-align: center;
+    cursor: pointer;
+    height: 50px;
+    margin: 0 0 10px 0;
+  }
+
+  .newChartMenu #dateInput {
+    margin: 0;
+    text-align: center;
+    margin: 0 0 10px 0;
+  }
+
+  .newChartMenu #cancelBtn {
+    background-color: black;
+    color: white;
+    height: 100%;
+  }
+  .newChartMenu #createChartBtn {
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    background-color: orange;
+  }
+  .newChartMenu #createChartBtn,
+  #dateInput,
+  #cancelBtn {
+    border-radius: 10px;
+  }
+  .createBtnsDiv {
+    height: 50px;
+    display: flex;
+  }
+  .createBtnsDiv button {
+    flex: 1;
+  }
 }
 
-.newChartMenu {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-  padding: 20px 0 0 0;
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+  .newChartModal {
+    padding: 10px;
+    border: 5px solid orange;
+    border-radius: 10px;
+  }
+
+  .newChartMenu {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px 0 0 0;
+  }
+
+  .newChartMenu form {
+    justify-content: space-between;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+  }
+  .newChartMenu #clientSelector {
+    width: 60%;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .newChartMenu #dateInput {
+    width: 20%;
+    margin: 0;
+  }
+
+  .newChartMenu #cancelBtn {
+    background-color: black;
+    color: white;
+    height: 100%;
+  }
+
+  .newChartMenu #createChartBtn {
+    /* width: 20%; */
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    background-color: orange;
+    color: wblackhite;
+  }
+  .newChartMenu #createChartBtn,
+  #dateInput,
+  #cancelBtn {
+    border-radius: 10px;
+  }
+  .createBtnsDiv {
+    height: 50px;
+  }
 }
 
-.newChartMenu form {
-  justify-content: space-between;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  height: 50px;
-}
-.newChartMenu #clientSelector {
-  width: 60%;
-  text-align: center;
-  cursor: pointer;
-}
 #dcClientSelect {
   width: 100%;
   text-align: center;
@@ -35,31 +116,6 @@
   border: 2px solid orange;
   border-radius: 15px;
   font-size: 18px;
-}
-
-.newChartMenu #dateInput {
-  width: 20%;
-  margin: 0;
-}
-
-.newChartMenu #cancelBtn {
-  background-color: black;
-  color: white;
-  height: 100%;
-}
-
-.newChartMenu #createChartBtn {
-  /* width: 20%; */
-  height: 100%;
-  cursor: pointer;
-  border: none;
-  background-color: orange;
-  color: wblackhite;
-}
-.newChartMenu #createChartBtn,
-#dateInput,
-#cancelBtn {
-  border-radius: 10px;
 }
 
 #clientSelector {
