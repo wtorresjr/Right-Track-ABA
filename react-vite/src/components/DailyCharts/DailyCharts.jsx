@@ -120,12 +120,13 @@ const DailyCharts = ({ clientCharts }) => {
   };
 
   return (
-
     <div className="chartsContain">
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
+          <i class="fa-solid fa-folder-plus"></i>
           Create New Chart
+          <i class="fa-solid fa-folder-plus"></i>
         </button>
       </h1>
 
