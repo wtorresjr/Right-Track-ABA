@@ -43,6 +43,10 @@ const DailyChartDetail = () => {
     refresh,
   ]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const openDeleteModal = (interval) => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
   };
