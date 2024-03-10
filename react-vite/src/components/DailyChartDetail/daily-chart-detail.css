@@ -112,7 +112,7 @@
   display: flex;
   flex-flow: row wrap;
   border-radius: 10px;
-  gap: 20px;
+  /* gap: 20px; */
   align-items: center;
   justify-content: space-between;
 }

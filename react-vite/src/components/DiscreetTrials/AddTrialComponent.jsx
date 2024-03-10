@@ -16,7 +16,7 @@ import {
 import { addTrialThunk, editTrialThunk } from "../../redux/dts";
 import { getClientByIDThunk } from "../../redux/clients";
 
-const AddTrialComponent = ({ dtInfo, trialInfo }) => {
+const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   const { dt_id } = useParams();
   const [isDisabled, setDisabled] = useState(true);
   const [programDD, setProgramDD] = useState();
@@ -119,9 +119,16 @@ const AddTrialComponent = ({ dtInfo, trialInfo }) => {
   return (
     <div id="outerCompContain">
       <div className="intervalCompContain">
-        <h1 style={{ padding: "0 0 20px 0" }}>
-          Add New Trial for {dtInfo.program_name}
-        </h1>
+        <div className="modalHeading">
+          <h1>
+            {isEdit ? "Edit" : "Add New"} Trial for {dtInfo.program_name}
+          </h1>
+          <i
+            className="fa-solid fa-circle-xmark fa-2xl"
+            // id="closeBtn"
+            onClick={closeModal}
+          ></i>
+        </div>
         <>
           <div className="dividedDivs">
             <label>Target *</label>
