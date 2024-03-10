@@ -14,14 +14,12 @@ function Navigation() {
     <>
       {sessionUser && (
         <div className="navContainer">
-          {/* <NavLink to="/"> */}
           <img
             className="logo-image"
             src="../right-track-aba-logo.png"
             alt="Logo"
             onClick={goHome}
           />
-          {/* </NavLink> */}
           <ProfileButton />
         </div>
       )}
