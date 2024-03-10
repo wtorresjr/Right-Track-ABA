@@ -277,7 +277,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
             <p className="errorsPtag">{errors?.intervalNotes}</p>
           )}
         </div>
-        <LegendComponent />
+        {/* <LegendComponent /> */}
         <div id="intervalRatingLabel">
           <div className="behaviorsDiv">
             <label>Interval Rating:</label>
