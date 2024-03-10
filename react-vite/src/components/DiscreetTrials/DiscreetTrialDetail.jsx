@@ -115,7 +115,9 @@ const DiscreetTrialDetail = () => {
           <h1>
             Trials
             <button id="createNewChartBtn" onClick={openAddTrialModal}>
+              <i className="fa-solid fa-circle-plus fa-xl"></i>
               Add New Trial
+              <i className="fa-solid fa-circle-plus fa-xl"></i>
             </button>
           </h1>
           {trialsData && trialsData.length ? (

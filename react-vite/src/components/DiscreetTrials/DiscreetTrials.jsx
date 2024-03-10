@@ -66,7 +66,9 @@ const DiscreetTrials = () => {
       <h1>
         Discreet Trials
         <button id="createNewChartBtn" onClick={openCreateDTModal}>
+          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
           Create Discreet Trial
+          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
         </button>
       </h1>
 
