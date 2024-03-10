@@ -25,7 +25,7 @@ h1 {
 #modalDelBtn {
   /* background-color: red; */
   background-color: rgb(219, 0, 0);
-  color: wblackhite;
+  color: white;
 }
 
 #modalDelBtn,
@@ -40,6 +40,7 @@ h1 {
 
 #modalDelBtn:disabled {
   cursor: auto;
+  color:rgb(143, 0, 0);
 }
 
 #confirmInput {

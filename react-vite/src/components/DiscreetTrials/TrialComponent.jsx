@@ -23,7 +23,9 @@ const TrialComponent = ({ trial, dtInfo }) => {
   };
 
   const openUpdateTrialModal = () => {
-    setModalContent(<AddTrialComponent dtInfo={dtInfo} trialInfo={trial} />);
+    setModalContent(
+      <AddTrialComponent dtInfo={dtInfo} trialInfo={trial} isEdit={"True"} />
+    );
   };
 
   return (
