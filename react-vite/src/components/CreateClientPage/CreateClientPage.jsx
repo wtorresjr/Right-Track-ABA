@@ -87,12 +87,14 @@ const CreateClient = () => {
     <div className="createClient">
       <div className="mainDisplayContain">
         <form onSubmit={handleSubmit} className="newClientForm">
-          <i
-            className="fa-solid fa-circle-xmark fa-2xl"
-            id="closeBtn"
-            onClick={closeModal}
-          ></i>
-          <h1>Create A New Client</h1>
+          <div className="modalHeading">
+            <h1>Create A New Client</h1>
+            <i
+              className="fa-solid fa-circle-xmark fa-2xl"
+              // id="closeBtn"
+              onClick={closeModal}
+            ></i>
+          </div>
           <label>
             First Name:
             <input

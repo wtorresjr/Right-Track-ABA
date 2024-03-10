@@ -1,4 +1,4 @@
-import "./create-client-page.css";
+import "./update-client-page.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
@@ -97,12 +97,13 @@ const UpdateClientModal = ({ client }) => {
     <div className="createClient">
       <div className="mainDisplayContain">
         <form onSubmit={handleSubmit} className="newClientForm">
-          <i
-            className="fa-solid fa-circle-xmark fa-2xl"
-            id="closeBtn"
-            onClick={closeModal}
-          ></i>
-          <h1>Update Client Info</h1>
+          <div className="modalHeading">
+            <h1>Update Client Info</h1>
+            <i
+              className="fa-solid fa-circle-xmark fa-2xl"
+              onClick={closeModal}
+            ></i>
+          </div>
           <label>
             First Name:
             <input
@@ -159,9 +160,6 @@ const UpdateClientModal = ({ client }) => {
             ></textarea>
           </label>
           <div className="formBtnsContain">
-            <button onClick={closeModal} className="formButton" id="cancelBtn">
-              Cancel
-            </button>
             <button
               type="submit"
               className={isDisabled ? "formButtonDisabled" : "formButton"}
@@ -169,6 +167,9 @@ const UpdateClientModal = ({ client }) => {
               disabled={isDisabled}
             >
               Update
+            </button>
+            <button onClick={closeModal} className="formButton" id="cancelBtn">
+              Cancel
             </button>
           </div>
         </form>

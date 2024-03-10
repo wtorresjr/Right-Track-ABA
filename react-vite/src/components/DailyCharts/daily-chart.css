@@ -45,7 +45,7 @@
   }
 
   #createNewChartBtn {
-    margin:11px 0 0 0;
+    margin: 11px 0 0 0;
     width: 100%;
     height: 50px;
     background-color: #881600;
@@ -55,13 +55,11 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     justify-content: space-around;
   }
-
-
 
   .dcHeader {
     display: flex;
@@ -107,7 +105,11 @@
     text-align: center;
     box-sizing: border-box;
     margin: 8px 0 0 0;
-    width: 100%;
+    /* flex: 1 1 calc((100% - 16px) / 3);
+    max-width: calc((100% - 16px) / 3); */
+    /* min-width: 200px; */
+    /* width: 100%; */
+    height: auto;
   }
   .clientDCdata {
     width: 50%;
@@ -142,6 +144,9 @@
   .folderText label {
     font-size: 15px;
   }
+  .dcButtons :nth-child(2) {
+    font-size: 0.9em;
+  }
 }
 
 /* Small devices (tablets) */
@@ -161,7 +166,7 @@
   }
 
   #createNewChartBtn {
-    margin:12px 0 0 0;
+    margin: 12px 0 0 0;
     width: 50%;
     height: 50px;
     background-color: #881600;
@@ -171,7 +176,7 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     justify-content: space-around;
@@ -220,6 +225,7 @@
     box-sizing: border-box;
     margin: 8px;
   }
+
   .clientDCdata {
     display: flex;
     flex-flow: column nowrap;

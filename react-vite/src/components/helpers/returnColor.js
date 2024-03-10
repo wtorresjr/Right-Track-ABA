@@ -6,13 +6,13 @@ const returnColor = (ratingVal, valType) => {
   }
 
   const colorValue =
-    parseRating >= 4.0
+    parseRating >= 5.0
       ? "green"
-      : parseRating >= 3.0
+      : parseRating >= 4.0
       ? "yellowgreen"
-      : parseRating >= 2.0
+      : parseRating >= 3.0
       ? "yellow"
-      : parseRating >= 1.0
+      : parseRating >= 2.0
       ? "orange"
       : "red";
 

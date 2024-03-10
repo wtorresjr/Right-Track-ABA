@@ -23,9 +23,7 @@ const TrialComponent = ({ trial, dtInfo }) => {
   };
 
   const openUpdateTrialModal = () => {
-    setModalContent(
-      <AddTrialComponent dtInfo={dtInfo} trialInfo={trial} />
-    );
+    setModalContent(<AddTrialComponent dtInfo={dtInfo} trialInfo={trial} />);
   };
 
   return (
@@ -46,19 +44,12 @@ const TrialComponent = ({ trial, dtInfo }) => {
 
         <div
           className="chartCrudBtns"
-          style={{
-            display: "flex",
-            justifyContent: "left",
-            margin: "15px 0 0 0",
-          }}
+          // style={{
+          //   display: "flex",
+          //   justifyContent: "left",
+          //   margin: "15px 0 0 0",
+          // }}
         >
-          <button
-            onClick={() => {
-              openUpdateTrialModal(trial);
-            }}
-          >
-            Edit Trial
-          </button>
           <button
             style={{ padding: "0 5px" }}
             onClick={() => {
@@ -66,6 +57,13 @@ const TrialComponent = ({ trial, dtInfo }) => {
             }}
           >
             Delete Trial
+          </button>
+          <button
+            onClick={() => {
+              openUpdateTrialModal(trial);
+            }}
+          >
+            Edit Trial
           </button>
         </div>
       </div>

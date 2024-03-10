@@ -124,9 +124,9 @@ const DailyCharts = ({ clientCharts }) => {
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
-          <i class="fa-solid fa-folder-plus"></i>
+          <i className="fa-solid fa-folder-plus fa-xl"></i>
           Create New Chart
-          <i class="fa-solid fa-folder-plus"></i>
+          <i className="fa-solid fa-folder-plus fa-xl"></i>
         </button>
       </h1>
 
