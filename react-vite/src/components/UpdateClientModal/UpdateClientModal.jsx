@@ -4,11 +4,13 @@ import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { getClientByIDThunk, updateClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
+import { DeleteMessage } from "../DeleteModal";
 
 const UpdateClientModal = ({ client }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setModalContent } = useModal();
 
   const stringDob = new Date(client?.dob);
   const formatDate = stringDob.toISOString().slice(0, 10);
@@ -88,6 +90,9 @@ const UpdateClientModal = ({ client }) => {
       navigate(`/client/${client?.id}`);
       dispatch(getClientByIDThunk(client?.id));
       closeModal();
+      setModalContent(
+        <DeleteMessage message={"Updated Client Successfully!"} />
+      );
     } else {
       throw new Error("Error Updating client");
     }
