@@ -17,6 +17,7 @@
   #outerCompContain .modalHeading i {
     margin: -60px 0 0 0;
   }
+
 }
 
 /* Small devices (tablets) */
@@ -32,7 +33,7 @@
   }
   #outerCompContain h1 {
     margin: 0 0 0 10px;
-    width:80%;
+    width: 80%;
   }
   #outerCompContain .modalHeading i {
     margin: -60px 0 0 0;
