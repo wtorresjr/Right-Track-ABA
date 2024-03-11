@@ -150,16 +150,11 @@ const CreateClient = () => {
               placeholder="Optional"
             ></textarea>
           </label>
-          <div className="formBtnsContain">
-            <button onClick={closeModal} className="formButton" id="cancelBtn">
+          <div className="createBtnsDiv">
+            <button onClick={closeModal} id="cancelBtn">
               Cancel
             </button>
-            <button
-              type="submit"
-              className={isDisabled ? "formButtonDisabled" : "formButton"}
-              id={isDisabled ? "submitBtnDisabled" : "submitBtn"}
-              disabled={isDisabled}
-            >
+            <button type="submit" id="createChartBtn" disabled={isDisabled}>
               Submit
             </button>
           </div>

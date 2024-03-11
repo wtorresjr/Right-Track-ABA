@@ -67,7 +67,7 @@
 
 #cancelBtn {
   border-radius: 8px;
-  background-color: red;
+  /* background-color: red; */
   border: none;
   cursor: pointer;
 }

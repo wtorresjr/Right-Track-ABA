@@ -80,12 +80,14 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button disabled={isDisabled} onClick={deleteChart} id="modalDelBtn">
-        Delete
-      </button>
-      <button onClick={closeModal} id="modalCancelBtn">
-        Cancel
-      </button>
+      <div className="createBtnsDiv">
+        <button disabled={isDisabled} onClick={deleteChart} id="createChartBtn">
+          Delete
+        </button>
+        <button onClick={closeModal} id="cancelBtn">
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

@@ -39,16 +39,20 @@
   #cancelBtn {
     border-radius: 10px;
   }
-  .newChartMenu p {
-    text-align: center;
-  }
 
   .createBtnsDiv {
+    margin: 20px 0 0 0;
     height: 50px;
     display: flex;
+    width: 100%;
+    justify-items: space-between;
   }
+
   .createBtnsDiv button {
     flex: 1;
+  }
+  .newChartMenu p {
+    text-align: center;
   }
 }
 
@@ -101,9 +105,13 @@
   }
 
   .createBtnsDiv {
+    margin: 20px 0 0 0;
     height: 50px;
     display: flex;
+    width: 100%;
+    justify-items: space-between;
   }
+
   .createBtnsDiv button {
     flex: 1;
   }

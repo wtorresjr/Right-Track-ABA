@@ -294,17 +294,19 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
           )}
         </div>
       </div>
-      <button
-        type="Submit"
-        disabled={isDisabled}
-        onClick={handleSubmit}
-        id="modalDelBtn"
-      >
-        Update Interval
-      </button>
-      <button onClick={closeModal} id="modalCancelBtn">
-        Cancel
-      </button>
+      <div className="createBtnsDiv">
+        <button
+          type="Submit"
+          disabled={isDisabled}
+          onClick={handleSubmit}
+          id="createChartBtn"
+        >
+          Update Interval
+        </button>
+        <button onClick={closeModal} id="cancelBtn">
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };
