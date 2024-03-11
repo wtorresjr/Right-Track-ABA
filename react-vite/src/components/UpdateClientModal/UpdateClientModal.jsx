@@ -164,16 +164,16 @@ const UpdateClientModal = ({ client }) => {
               placeholder="Optional"
             ></textarea>
           </label>
-          <div className="formBtnsContain">
+          <div className="createBtnsDiv">
             <button
               type="submit"
-              className={isDisabled ? "formButtonDisabled" : "formButton"}
-              id={isDisabled ? "submitBtnDisabled" : "submitBtn"}
+              id="createChartBtn"
+              // id={isDisabled ? "submitBtnDisabled" : "submitBtn"}
               disabled={isDisabled}
             >
               Update
             </button>
-            <button onClick={closeModal} className="formButton" id="cancelBtn">
+            <button onClick={closeModal} id="cancelBtn">
               Cancel
             </button>
           </div>

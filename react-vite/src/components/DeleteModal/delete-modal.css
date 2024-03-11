@@ -5,6 +5,32 @@
     padding: 20px;
     text-align: center;
   }
+  #cancelBtn {
+    background-color: black;
+    color: white;
+    height: 100%;
+  }
+  #createChartBtn {
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    background-color: orange;
+  }
+  #createChartBtn,
+  #cancelBtn {
+    border-radius: 10px;
+  }
+
+  .createBtnsDiv {
+    margin: 20px 0 0 0;
+    height: 50px;
+    display: flex;
+    width: 100%;
+    justify-items: space-between;
+  }
+  .createBtnsDiv button {
+    flex: 1;
+  }
 }
 
 /* Small devices (tablets) */
@@ -14,6 +40,32 @@
     height: auto;
     padding: 20px;
     text-align: center;
+  }
+  #cancelBtn {
+    background-color: black;
+    color: white;
+    height: 100%;
+  }
+  #createChartBtn {
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    background-color: orange;
+  }
+  #createChartBtn,
+  #cancelBtn {
+    border-radius: 10px;
+  }
+
+  .createBtnsDiv {
+    margin: 20px 0 0 0;
+    height: 50px;
+    display: flex;
+    width: 100%;
+    justify-items: space-between;
+  }
+  .createBtnsDiv button {
+    flex: 1;
   }
 }
 
@@ -40,7 +92,7 @@ h1 {
 
 #modalDelBtn:disabled {
   cursor: auto;
-  color:rgb(143, 0, 0);
+  color: rgb(143, 0, 0);
 }
 
 #confirmInput {
