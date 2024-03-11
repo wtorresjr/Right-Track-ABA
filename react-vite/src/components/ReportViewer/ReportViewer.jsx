@@ -14,8 +14,8 @@ const ReportViewer = () => {
 
   return (
     <div className="mainDisplayContain">
-      <h1>Report Viewer</h1>
       <div className="addGraphButton">
+        <h1>Report Viewer</h1>
         <button onClick={addGraph}>Add New Graph</button>
       </div>
 
