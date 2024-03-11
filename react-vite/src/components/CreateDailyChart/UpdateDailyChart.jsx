@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getClientByIDThunk, getClientsThunk } from "../../redux/clients";
+import { getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { DeleteMessage } from "../DeleteModal";
+// import { DeleteMessage } from "../DeleteModal";
 import ConfirmModal from "./ConfirmModal";
 
 const UpdateDailyChart = ({ dc }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { setModalContent } = useModal();
   const { client_id } = useParams();
   const { closeModal } = useModal();
@@ -18,7 +18,7 @@ const UpdateDailyChart = ({ dc }) => {
   const [todaysDate, setTodaysDate] = useState(dc?.chart_date);
 
   const [errors, setErrors] = useState({});
-  const [clientName, setClientName] = useState();
+  // const [clientName, setClientName] = useState();
   const currentClient = useSelector((state) => state?.clients?.client_by_id);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const dispatch = useDispatch();
@@ -47,18 +47,6 @@ const UpdateDailyChart = ({ dc }) => {
     }
   }, [dispatch, todaysDate]);
 
-  // useEffect(() => {
-  //   const nameChanger = clientList?.filter((client) => {
-  //     return client.id === +selectedClient;
-  //   });
-  //   const firstLastName =
-  //     nameChanger?.length > 0
-  //       ? `${nameChanger[0]?.first_name} ${nameChanger[0]?.last_name}`
-  //       : "";
-
-  //   setClientName(firstLastName);
-  // }, [dispatch, selectedClient]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -76,9 +64,9 @@ const UpdateDailyChart = ({ dc }) => {
     );
   };
 
-  const openMessageDiag = () => {
-    setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
-  };
+  // const openMessageDiag = () => {
+  //   setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
+  // };
 
   return (
     <div className="newChartModal">
