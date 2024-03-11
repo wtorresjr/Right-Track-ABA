@@ -68,8 +68,9 @@
   }
 
   .newChartMenu {
-    padding: 20px 0 0 0;
+    /* padding: 20px 0 0 0; */
   }
+  
   .newChartMenu #clientSelector {
     text-align: center;
     cursor: pointer;
