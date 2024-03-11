@@ -1,11 +1,40 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 601px) {
+}
+
+.chartOptions {
+  display: flex;
+  /* flex-flow: row wrap; */
+  width: 100%;
+  gap: 10px;
+}
+
+.chartOptions #createChartBtn {
+  margin: 10px 0 0 5px;
+}
+
+.chartOptions label {
+  padding: 0px;
+}
+
 .chartDisplayArea {
-  /* flex-grow: 1; */
   width: 100%;
 }
-.chartOptions {
-  width: 30%;
-  /* flex-grow: 1; */
-  /* width: 40%; */
+
+.clientNDp {
+  /* border: 1px solid white; */
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.newChartMenu {
+  display: flex;
+  flex-flow: row wrap;
+  /* border: 1px solid red; */
 }
 
 .chartView {
@@ -34,19 +63,10 @@
   margin: 20px 0 20px 0;
 }
 
-.dateDivider label,
-.chartTypeContain label {
-  padding: 0 20px 0 0;
-  width: auto;
-}
-
 .dateDivider {
   display: flex;
-  gap: 20px;
+  flex-flow:row wrap;
   align-items: center;
-  width: 100%;
-  flex-flow: row nowrap;
-  margin: 20px 0 0 0;
 }
 
 .dateDivider input {
@@ -57,11 +77,10 @@
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  gap: 20px;
-  margin: 20px 0 0 0;
 }
 
 .chartTypeContain button {
   flex-grow: 1;
-  height: 30px;
+  height: 50px;
+  border-radius: 10px;
 }

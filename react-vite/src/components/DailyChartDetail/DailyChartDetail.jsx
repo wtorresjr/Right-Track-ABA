@@ -163,11 +163,11 @@ const DailyChartDetail = () => {
                 "None."
               )}
               <div className="intervalCrudBtns">
-                <button onClick={() => handleCrudClick(interval, "edit")}>
-                  Edit Interval
-                </button>
                 <button onClick={() => handleCrudClick(interval, "delete")}>
                   Delete Interval
+                </button>
+                <button onClick={() => handleCrudClick(interval, "edit")}>
+                  Edit Interval
                 </button>
               </div>
             </div>

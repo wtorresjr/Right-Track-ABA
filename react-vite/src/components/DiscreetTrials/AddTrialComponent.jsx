@@ -195,17 +195,19 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
           </div>
         </>
 
-        <button
-          type="Submit"
-          disabled={isDisabled}
-          onClick={handleSubmit}
-          id="modalDelBtn"
-        >
-          {trialInfo ? "Update Trial" : "Add Trial"}
-        </button>
-        <button onClick={closeModal} id="modalCancelBtn">
-          Cancel
-        </button>
+        <div className="createBtnsDiv">
+          <button
+            type="Submit"
+            disabled={isDisabled}
+            onClick={handleSubmit}
+            id="createChartBtn"
+          >
+            {trialInfo ? "Update Trial" : "Add Trial"}
+          </button>
+          <button onClick={closeModal} id="cancelBtn">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
