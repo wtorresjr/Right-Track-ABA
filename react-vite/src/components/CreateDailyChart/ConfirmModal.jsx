@@ -16,7 +16,7 @@ const ConfirmModal = ({ infoToUpdate, dc, clientList }) => {
   const openMessageDiag = () => {
     setModalContent(<DeleteMessage message={"Updated Chart Data...."} />);
   };
-    
+
   useEffect(() => {
     if (newChartCompleted) {
       closeModal();
@@ -47,12 +47,14 @@ const ConfirmModal = ({ infoToUpdate, dc, clientList }) => {
       <p>Please confirm the changes below are correct</p>
       <p>Updated Date: {infoToUpdate.chart_date}</p>
       <p>For Client: {clientName}</p>
-      <button id="modalDelBtn" onClick={handleConfirm}>
-        Confirm
-      </button>
-      <button onClick={closeModal} id="modalCancelBtn">
-        Cancel
-      </button>
+      <div className="createBtnsDiv">
+        <button id="createChartBtn" onClick={handleConfirm}>
+          Confirm
+        </button>
+        <button onClick={closeModal} id="cancelBtn">
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };
