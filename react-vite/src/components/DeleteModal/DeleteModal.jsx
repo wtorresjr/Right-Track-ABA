@@ -1,4 +1,5 @@
 import "./delete-modal.css";
+import "../CreateDailyChart/create-daily-chart.css";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
@@ -60,12 +61,18 @@ const DeleteModal = ({ client }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button disabled={isDisabled} onClick={deleteClient} id="modalDelBtn">
-        Delete
-      </button>
-      <button onClick={closeModal} id="modalCancelBtn">
-        Cancel
-      </button>
+      <div className="createBtnsDiv">
+        <button
+          disabled={isDisabled}
+          onClick={deleteClient}
+          id="createChartBtn"
+        >
+          Delete
+        </button>
+        <button onClick={closeModal} id="cancelBtn">
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };
