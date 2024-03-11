@@ -10,8 +10,8 @@
     top: 0px;
   }
   .logo-image {
-    min-width: 35%;
-    max-width: 45%;
+    height: 5vh;
+    cursor: pointer;
   }
 }
 
@@ -23,8 +23,8 @@
     color: orange;
   }
   .logo-image {
-    min-width: 15%;
-    max-width: 25%;
+    height: 6vh;
+    cursor: pointer;
   }
 }
 

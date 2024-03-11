@@ -79,37 +79,38 @@ const ClientListComponent = () => {
   }, [startDay, endDay, clientCharts]);
 
   return (
-    <div className="chartView">
+    <>
       <div className="chartOptions">
-        <label>
-          Client:
-          <select
-            id="dcClientSelect"
-            onChange={(e) => setSelectedClient(e.target.value)}
-          >
-            <option>View Charts For...</option>
-            {clientList &&
-              clientList.map((client) => (
-                <option key={client?.id} value={client?.id}>
-                  {client?.first_name} {client?.last_name} --- DOB:{" "}
-                  {client?.dob}
-                </option>
-              ))}
-          </select>
-        </label>
-        <label>
-          Data Points:
-          <select
-            id="dcClientSelect"
-            onChange={(e) => setChartDataPoint(e.target.value)}
-          >
-            <option>Choose Data Points</option>
-            <option value="AVG">Average Chart Rating</option>
-            {/* <option value="PB">Problem Behaviors</option> */}
-            {/* <option value="PB">Problem Behaviors</option> */}
-          </select>
-        </label>
-
+        <div className="clientNDp">
+          <label>
+            Client:
+            <select
+              id="dcClientSelect"
+              onChange={(e) => setSelectedClient(e.target.value)}
+            >
+              <option>View Charts For...</option>
+              {clientList &&
+                clientList.map((client) => (
+                  <option key={client?.id} value={client?.id}>
+                    {client?.first_name} {client?.last_name} --- DOB:{" "}
+                    {client?.dob}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <label>
+            Data Points:
+            <select
+              id="dcClientSelect"
+              onChange={(e) => setChartDataPoint(e.target.value)}
+            >
+              <option>Choose Data Points</option>
+              <option value="AVG">Average Chart Rating</option>
+              {/* <option value="PB">Problem Behaviors</option> */}
+              {/* <option value="PB">Problem Behaviors</option> */}
+            </select>
+          </label>
+        </div>
         <div className="newChartMenu">
           <div className="dateDivider">
             <label>
@@ -128,47 +129,53 @@ const ClientListComponent = () => {
                 onChange={(e) => setEndDay(e.target.value)}
               ></input>
             </label>
+            <button
+              onClick={(e) => {
+                setStartDay(""), setEndDay("");
+              }}
+              id="createChartBtn"
+              style={{ height: "50px" }}
+            >
+              Clear Date Filters
+            </button>
           </div>
-        </div>
-        <p style={{ justifyContent: "right", display: "flex" }}>
-          <button
-            onClick={(e) => {
-              setStartDay(""), setEndDay("");
-            }}
-          >
-            Clear Date Filters
-          </button>
-        </p>
-        <div className="chartTypeContain">
-          <label>Chart Type:</label>
-          <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
-          <button onClick={() => setSelectedChartType("Line")}>Line</button>
-          {/* <button onClick={() => setSelectedChartType("Scatter")}>
+          <label>
+            Chart Type:
+            <div className="chartTypeContain">
+              <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
+              <button onClick={() => setSelectedChartType("Line")}>Line</button>
+              {/* <button onClick={() => setSelectedChartType("Scatter")}>
             Scatter
-          </button>
+            </button>
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button> */}
-        </div>
-      </div>{" "}
-      {selectedClient && chartDataPoint && (filteredCharts || clientCharts) ? (
-        <div className="chartDisplayArea">
-          <GraphComponentV2
-            selectedChartType={selectedChartType}
-            clientCharts={filteredCharts || clientCharts}
-            selectedClient={selectedClient}
-            dataPoint={dataPoint}
-            dataPointTwo={dataPointTwo || ""}
-            dataLabels={dataLabels}
-            legendTitle={legendTitle}
-            legendTitleTwo={legendTitleTwo}
-            chartDataPoint={chartDataPoint}
-          />
-        </div>
-      ) : (
-        <div className="chartDisplayArea">
-          <p className="errorsPtag">Choose a client & Data Point</p>
-        </div>
-      )}
-    </div>
+            </div>
+          </label>
+        </div>{" "}
+      </div>
+      <div className="chartView">
+        {selectedClient &&
+        chartDataPoint &&
+        (filteredCharts || clientCharts) ? (
+          <div className="chartDisplayArea">
+            <GraphComponentV2
+              selectedChartType={selectedChartType}
+              clientCharts={filteredCharts || clientCharts}
+              selectedClient={selectedClient}
+              dataPoint={dataPoint}
+              dataPointTwo={dataPointTwo || ""}
+              dataLabels={dataLabels}
+              legendTitle={legendTitle}
+              legendTitleTwo={legendTitleTwo}
+              chartDataPoint={chartDataPoint}
+            />
+          </div>
+        ) : (
+          <div className="chartDisplayArea">
+            <p className="errorsPtag">Choose a client & Data Point</p>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
