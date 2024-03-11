@@ -11,6 +11,7 @@
   /* flex-flow: row wrap; */
   width: 100%;
   gap: 10px;
+  margin: 10px 0 0 0;
 }
 
 .chartOptions #createChartBtn {
@@ -65,7 +66,7 @@
 
 .dateDivider {
   display: flex;
-  flex-flow:row wrap;
+  flex-flow: row wrap;
   align-items: center;
 }
 
