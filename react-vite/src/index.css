@@ -13,6 +13,18 @@
     height: 5vh;
     cursor: pointer;
   }
+  body {
+    padding: 20px 0px;
+    max-width: 90%;
+    min-width: 60%;
+    margin: 0 auto;
+    background-image: url("../asd-puzzle.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: auto;
+    /* margin: 0 0 100px 0; */
+  }
 }
 
 /* Small devices (tablets) */
@@ -26,6 +38,18 @@
     height: 6vh;
     cursor: pointer;
   }
+  body {
+    padding: 20px 0px;
+    max-width: 65%;
+    min-width: 60%;
+    margin: 0 auto;
+    background-image: url("../asd-puzzle.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: auto;
+    /* margin: 0 0 100px 0; */
+  }
 }
 
 html {
@@ -36,18 +60,6 @@ html {
   /* margin: 0 0 100px 0; */
 }
 
-body {
-  padding: 20px 0px;
-  max-width: 90%;
-  min-width: 60%;
-  margin: 0 auto;
-  background-image: url("../asd-puzzle.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  overflow: auto;
-  /* margin: 0 0 100px 0; */
-}
 body::-webkit-scrollbar {
   width: 0;
 }

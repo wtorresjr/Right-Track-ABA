@@ -64,13 +64,14 @@
     border-radius: 10px;
     max-height: 50vh;
     overflow: auto;
-    /* width: 80vw; */
   }
 
   .newChartMenu {
-    /* padding: 20px 0 0 0; */
+    display: flex;
+    justify-content: center;
+    margin:20px 0 0 0;
   }
-  
+
   .newChartMenu #clientSelector {
     text-align: center;
     cursor: pointer;
