@@ -33,7 +33,7 @@
   flex-flow: column wrap;
 }
 
-.newChartMenu {
+.chartOptions .newChartMenu {
   display: flex;
   flex-flow: row wrap;
   /* border: 1px solid red; */
