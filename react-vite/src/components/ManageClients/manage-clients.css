@@ -1,5 +1,5 @@
 /* Extra small devices (phones) */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 840px) {
   .manageClientsHeader h1 {
     width: 100%;
     padding: 0 0 20px 0;
@@ -16,7 +16,7 @@
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
-    margin:0 0 8px 0;
+    margin: 0 0 8px 0;
     align-items: center;
     /* padding: 0 20px; */
   }
@@ -54,12 +54,12 @@
     font-weight: bolder;
     border: none;
     margin: 5px 0;
-    box-sizing: border-box;
+    font-size: 0.7em;
   }
 }
 
 /* Small devices (tablets) */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 841px) {
   .manageClientsHeader h1 {
     width: 50%;
     padding: 0 0 20px 0;
@@ -88,13 +88,11 @@
   }
 
   .btnsContain {
-    /* width: 30%; */
     display: flex;
     flex-flow: column nowrap;
     height: 50px;
   }
   .clientData {
-    /* width: 70%; */
     padding: 2px 10px;
     color: rgb(255, 255, 255);
   }
@@ -107,6 +105,7 @@
     font-weight: bolder;
     border: none;
     margin: 5px 0;
+    font-size: 0.7em;
   }
 }
 

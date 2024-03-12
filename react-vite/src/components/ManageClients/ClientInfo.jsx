@@ -3,7 +3,7 @@ import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
-import { returnColor, returnPercentColor } from "../helpers/returnColor";
+// import { returnColor, returnPercentColor } from "../helpers/returnColor";
 
 const ClientInfo = ({ client }) => {
   const { setModalContent } = useModal();
@@ -77,7 +77,7 @@ const ClientInfo = ({ client }) => {
             handleClick(client.id);
           }}
         >
-          Client Data & Daily Charts
+          Chart & Trial Data
         </button>
       </div>
     </div>
