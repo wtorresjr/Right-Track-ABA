@@ -1,6 +1,7 @@
 # Welcome to Right Track ABA!
 
 ## Navigation
+
 - [About the project](#about-section)
 - [Technologies Used](#technologies-used-section)
 - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema)
@@ -12,76 +13,85 @@
 - [Features](#features-section)
 - [Acknowledgments](#acknowledgments-section)
 
-
 <h2 id="about-section">About The Project</h2>
 
-_Right Track ABA_ is a, an app designed to connect consumers with sellers of handcrafted and vintage goods. 
+_Right Track ABA_ is an app designed to help behavior therapists and analyst collect daily data to better serve their clients.
 
 <h2 id="technologies-used-section">Technologies Used</h2>
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
 <h2 id="screenshots-section">Screenshots</h2>
 
+### Login Page
+
+![login page](image-1.png)
+
 ### Sign up
 
-<img width="1715" alt="sign-up" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/92bbdec6-267c-4f91-bc8f-182424464696">
+![sign up modal](image-2.png)
 
 ### Homepage
 
-<img width="1715" alt="homepage" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/bc99b60f-6939-4bf7-b4ee-033af1ab1321">
+![homepage](image-3.png)
 
+### Manage Clients
 
-### Search
+![manage clients page](image-4.png)
 
-<img width="1715" alt="search" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/d98e6843-4ef1-4e01-a8d5-1c950238747f">
+### Client Details Page
 
+![client details page](image-6.png)
+![client details page lower half](image-8.png)
 
-### Product detail
+### Client Daily Chart
 
-<img width="1715" alt="product-detail" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/531e973d-7acc-42af-9032-30fc820b30d9">
+![client daily chart](image-9.png)
 
+### Client Discreet Trial
 
-### Favorites
+![client discreet trial](image-10.png)
 
-<img width="1715" alt="favorites" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/e4813561-e9a0-4af9-b2a1-657bd948369b">
+### Client Graph Data
 
-### Cart
-
-<img width="1715" alt="cart" src="https://github.com/wtorresjr/Craftsy-Etsy-Clone/assets/121524927/e88dacb1-c1a7-4dfc-8aa7-d572fe3985aa">
-
+![client graph data](image-11.png)
 
 <h2 id="getting-started-section">Getting Started</h2>
 
 ### I. Clone the repository:
+
 `git clone https://github.com/wtorresjr/Craftsy-Etsy-Clone.git`
+
 ### II. Install the dependencies (in root directory):
+
 `pipenv install -r requirements.txt`
+
 ### III. Set up your environmental variables:
+
 1. Run: `echo > ".env"`
 2. Open the _.env.example_ file and copy its contents into your newly created _.env_ file
-3.  Replace placeholder values with actual values for S3-related keys (See the [AWS S3 Setup Instructions](#https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/AWS-S3-Setup-Instructions) page)
+3. Replace placeholder values with actual values for S3-related keys (See the [AWS S3 Setup Instructions](#https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/AWS-S3-Setup-Instructions) page)
 
 ### IV. Run the following commands:
+
 #### To run the backend server of application:
+
 1. Enter your virtual environment: `pipenv shell`
 2. Migrate your database: `flask db upgrade`
 3. Seed your database: `flask seed all`
 4. Run your server: `flask run`
 
 #### To run the frontend of application:
+
 5. In another terminal, change directory into _react-app_: `cd react-app`
 6. Install node modules: `npm install`
 7. Run your application: `npm start`
-
 
 <h2 id="helpful-commands-section">Helpful Commands</h2>
 <table>
@@ -128,10 +138,10 @@ _Right Track ABA_ is a, an app designed to connect consumers with sellers of han
   </tbody>
 </table>
 
-
 <h2 id="features-section">Features</h2>
 
 ### New account creation Log in, log out, and guest/demo login:
+
 - Users can sign up, log in, and log out.
 - Users can use a demo log in to try the site.
 - Users can't use certain features without logging in (like Creating Products, leaving reviews, etc.)
@@ -139,38 +149,48 @@ _Right Track ABA_ is a, an app designed to connect consumers with sellers of han
 - Logged out users are redirected to home page.
 
 ## Products
+
 ### All Users:
+
 - Should be able to view all Products.
 
 ### Authenticated & Authorized Users:
+
 - Should be able to create a Product.
 - Should be able to update their Product(s).
 - Should be able to delete their Product(s).
 
 ## Reviews
+
 ### All Users:
+
 - Should be able to view all reviews on a Product.
 
 ### Authenticated & Authorized Users:
+
 - Should be able to create a review for a Product.
 - Should be able to update their review for a Product.
 - Should be able to delete their review from a Product.
 
 ## Shopping Cart
+
 ### All Users:
+
 - Should be able to view all products added to their cart.
 - Should be able to add products to their shopping cart.
 - Should be able to remove products from their shopping cart.
 
 ### Authenticated Users:
+
 - Should be able to preform a "transaction" to complete their purchase.
 
 ## Favorites
+
 ### Authenticated & Authorized Users:
+
 - Should be able to view all of their favorite products.
 - Should be able to favorite products.
 - Should be able to delete products from their favorites.
-
 
 <h4 id="acknowledgments-section">Acknowledgments</h4>
 

@@ -15,7 +15,7 @@
   .newChartMenu {
     display: flex;
     justify-content: center;
-    margin: 20px 0 0 0;
+    /* margin: 20px 0 0 0; */
     align-items: center;
   }
 
@@ -82,7 +82,7 @@
   .newChartMenu {
     display: flex;
     justify-content: center;
-    margin: 20px 0 0 0;
+    /* margin: 20px 0 0 0; */
   }
 
   .newChartMenu #clientSelector {
