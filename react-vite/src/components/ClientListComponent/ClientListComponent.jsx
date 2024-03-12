@@ -138,7 +138,6 @@ const ClientListComponent = () => {
             >
               Clear Date Filters
             </button>
-          </div>
           <label>
             Chart Type:
             <div className="chartTypeContain">
@@ -150,6 +149,7 @@ const ClientListComponent = () => {
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button> */}
             </div>
           </label>
+          </div>
         </div>{" "}
       </div>
       <div className="chartView">
