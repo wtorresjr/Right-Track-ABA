@@ -14,8 +14,8 @@
     cursor: pointer;
   }
   body {
-    padding: 20px 0px;
-    max-width: 90%;
+    padding: 20px 10px;
+    max-width: 100%;
     min-width: 60%;
     margin: 0 auto;
     background-image: url("../asd-puzzle.jpg");

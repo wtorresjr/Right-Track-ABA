@@ -9,6 +9,16 @@
     width: 80vw;
   }
 
+  .newChartModal h1 {
+    text-align: center;
+  }
+  .newChartMenu {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 0 0;
+    align-items: center;
+  }
+
   .newChartMenu #clientSelector {
     text-align: center;
     cursor: pointer;
@@ -65,11 +75,14 @@
     max-height: 50vh;
     overflow: auto;
   }
+  .newChartModal h1 {
+    text-align: center;
+  }
 
   .newChartMenu {
     display: flex;
     justify-content: center;
-    margin:20px 0 0 0;
+    margin: 20px 0 0 0;
   }
 
   .newChartMenu #clientSelector {
