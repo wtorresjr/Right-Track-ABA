@@ -198,7 +198,7 @@ As an ABA therapist I wanted to create a specialized application tailored for be
     <tr>
       <th scope="row">Homepage</th>
       <td>/home</td>
-      <td></td>
+      <td>X</td>
     </tr>
     <tr>
       <th scope="row">Manage Clients</th>
