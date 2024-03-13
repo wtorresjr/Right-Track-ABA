@@ -4,14 +4,14 @@
 
 - [About the project](#about-section)
 - [Technologies Used](#technologies-used-section)
-- [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema)
-- [Routes](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Frontend-Routes)
+- [Routes](#frontend-routes)
 - [Screenshots](#screenshots-section)
 - [Getting Started](#getting-started-section)
 - [Helpful Commands](#helpful-commands-section)
-- [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories)
 - [Features](#features-section)
 - [Acknowledgments](#acknowledgments-section)
+<!-- - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema) -->
+<!-- - [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories) -->
 
 <h2 id="about-section">About The Project</h2>
 
@@ -184,6 +184,49 @@ As an ABA therapist I wanted to create a specialized application tailored for be
 - Should be able to view discreet trial details.
 - Should be able to add a new trial to the selected discreet trial.
 - Should be able to edit or delete trials.
+
+<h2 id="frontend-routes">Frontend Routes</h2>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Page</th>
+      <th scope="col">Path</th>
+      <th scope="col">Requires Authentication?</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Homepage</th>
+      <td>/home</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Manage Clients</th>
+      <td>/manage-clients</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Client Details Page</th>
+      <td>/client/:client_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Daily Chart Details</th>
+      <td>/daily-chart/:chart_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Discreet Trial Details</th>
+      <td>/discreet-trial/:dt_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Reports Page</th>
+      <td>/view-reports</td>
+      <td align="center">X</td>
+    </tr>
+  </tbody>
+</table>
 
 <h4 id="acknowledgments-section">Acknowledgments</h4>
 
