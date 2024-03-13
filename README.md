@@ -169,27 +169,22 @@ As an ABA therapist I wanted to create a specialized application tailored for be
 - Should be able to create a new Discreet Trial.
 - Should be able to edit or delete a Discreet Trial.
 
-## Shopping Cart
-
-### All Users:
-
-- Should be able to view all products added to their cart.
-- Should be able to add products to their shopping cart.
-- Should be able to remove products from their shopping cart.
+## Daily Chart Detail Page
 
 ### Authenticated Users:
 
-- Should be able to preform a "transaction" to complete their purchase.
+- Should be able to view daily chart details.
+- Should be able to add a new interval to the selected chart.
+- Should be able to edit or delete intervals.
 
-## Favorites
+## Discreet Trial Detail Page
 
 ### Authenticated & Authorized Users:
 
-- Should be able to view all of their favorite products.
-- Should be able to favorite products.
-- Should be able to delete products from their favorites.
+- Should be able to view discreet trial details.
+- Should be able to add a new trial to the selected discreet trial.
+- Should be able to edit or delete trials.
 
 <h4 id="acknowledgments-section">Acknowledgments</h4>
 
-- Inspired by [_Etsy_](https://www.etsy.com/)
 - Icons by [_Font Awesome_](https://fontawesome.com/icons)
