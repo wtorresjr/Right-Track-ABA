@@ -1,5 +1,5 @@
 /* Extra small devices (phones) */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 840px) {
   #clientDetails {
     display: flex;
     flex-flow: row wrap;
@@ -49,7 +49,7 @@
 }
 
 /* Small devices (tablets) */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 841px) {
   #clientDetails {
     display: flex;
     flex-flow: row wrap;

@@ -123,11 +123,6 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
           <h1>
             {isEdit ? "Edit" : "Add New"} Trial for {dtInfo.program_name}
           </h1>
-          <i
-            className="fa-solid fa-circle-xmark fa-2xl"
-            // id="closeBtn"
-            onClick={closeModal}
-          ></i>
         </div>
         <>
           <div className="dividedDivs">
