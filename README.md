@@ -3,6 +3,7 @@
 ## Navigation
 
 - [About the project](#about-section)
+- [Future features](#onthehorizon)
 - [Technologies Used](#technologies-used-section)
 - [Routes](#frontend-routes)
 - [Screenshots](#screenshots-section)
@@ -10,12 +11,22 @@
 - [Helpful Commands](#helpful-commands-section)
 - [Features](#features-section)
 - [Acknowledgments](#acknowledgments-section)
-<!-- - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema) -->
-<!-- - [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories) -->
+  <!-- - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema) -->
+  <!-- - [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories) -->
 
 <h2 id="about-section">About Right Track ABA</h2>
 
 As an ABA therapist I wanted to create a specialized application tailored for behavior therapists and analysts to enhance client support through efficient data collection. _Right Track ABA_ facilitates the logging of various data points crucial for analysis and intervention planning. These include daily performance data categorized by class activities, documentation of problem behaviors, and discrete trial data. _Right Track ABA_ empowers professionals in the field to optimize client care and intervention strategies effectively.
+
+<div id="onthehorizon"></div>
+
+### Future Features...
+
+- Export / Email report data
+- More report data points
+- Customization of daily chart point system
+- Customization of discreet trial types
+- Machine Learning integration for suggested intervention strategies
 
 <h2 id="technologies-used-section">Technologies Used</h2>
 
