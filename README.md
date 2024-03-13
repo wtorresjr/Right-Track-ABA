@@ -13,7 +13,7 @@
 <!-- - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema) -->
 <!-- - [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories) -->
 
-<h2 id="about-section">About The Project</h2>
+<h2 id="about-section">About Right Track ABA</h2>
 
 As an ABA therapist I wanted to create a specialized application tailored for behavior therapists and analysts to enhance client support through efficient data collection. _Right Track ABA_ facilitates the logging of various data points crucial for analysis and intervention planning. These include daily performance data categorized by class activities, documentation of problem behaviors, and discrete trial data. _Right Track ABA_ empowers professionals in the field to optimize client care and intervention strategies effectively.
 
