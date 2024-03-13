@@ -1,5 +1,5 @@
 /* Extra small devices (phones) */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 840px) {
   .newChartModal {
     padding: 10px;
     border: 5px solid orange;
@@ -7,6 +7,16 @@
     max-height: 50vh;
     overflow: auto;
     width: 80vw;
+  }
+
+  .newChartModal h1 {
+    text-align: center;
+  }
+  .newChartMenu {
+    display: flex;
+    justify-content: center;
+    /* margin: 20px 0 0 0; */
+    align-items: center;
   }
 
   .newChartMenu #clientSelector {
@@ -57,20 +67,24 @@
 }
 
 /* Small devices (tablets) */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 841px) {
   .newChartModal {
     padding: 10px;
     border: 5px solid orange;
     border-radius: 10px;
     max-height: 50vh;
     overflow: auto;
-    /* width: 80vw; */
+  }
+  .newChartModal h1 {
+    text-align: center;
   }
 
   .newChartMenu {
-    /* padding: 20px 0 0 0; */
+    display: flex;
+    justify-content: center;
+    /* margin: 20px 0 0 0; */
   }
-  
+
   .newChartMenu #clientSelector {
     text-align: center;
     cursor: pointer;

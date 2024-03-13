@@ -1,1411 +1,233 @@
-# Right-Track-ABA
+# Welcome to Right Track ABA!
 
-## Database Schema Design
+## Navigation
 
+- [About the project](#about-section)
+- [Technologies Used](#technologies-used-section)
+- [Routes](#frontend-routes)
+- [Screenshots](#screenshots-section)
+- [Getting Started](#getting-started-section)
+- [Helpful Commands](#helpful-commands-section)
+- [Features](#features-section)
+- [Acknowledgments](#acknowledgments-section)
+<!-- - [Database Schema](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/Database-Schema) -->
+<!-- - [User Stories](https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/User-Stories) -->
 
-![image](https://github.com/wtorresjr/Right-Track-ABA/assets/114450647/42aff82c-892c-4954-b07c-0738d6c18277)
+<h2 id="about-section">About The Project</h2>
 
-## API Documentation
+As an ABA therapist I wanted to create a specialized application tailored for behavior therapists and analysts to enhance client support through efficient data collection. _Right Track ABA_ facilitates the logging of various data points crucial for analysis and intervention planning. These include daily performance data categorized by class activities, documentation of problem behaviors, and discrete trial data. _Right Track ABA_ empowers professionals in the field to optimize client care and intervention strategies effectively.
 
-## USER AUTHENTICATION/AUTHORIZATION
+<h2 id="technologies-used-section">Technologies Used</h2>
 
-### All endpoints that require authentication
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-All endpoints that require a current user to be logged in.
+<h2 id="screenshots-section">Screenshots</h2>
 
-- Request: endpoints that require authentication
-- Error Response: Require authentication
+### Login Page
 
-  - Status Code: 401
-  - Headers:
-    - Content-Type: application/json
-  - Body:
+![login page](image-1.png)
 
-    ```json
-    {
-      "message": "Authentication required"
-    }
-    ```
+### Sign up
 
-### All endpoints that require proper authorization
+![sign up modal](image-2.png)
 
-All endpoints that require authentication and the current user does not have the
-correct role(s) or permission(s).
+### Homepage
 
-- Request: endpoints that require proper authorization
-- Error Response: Require proper authorization
+![homepage](image-3.png)
 
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
+### Manage Clients
 
-    ```json
-    {
-      "message": "Forbidden"
-    }
-    ```
+![manage clients page](image-4.png)
 
-### Get the Current User
+### Client Details Page
 
-Returns the information about the current user that is logged in.
+![client details page](image-6.png)
+![client details page lower half](image-8.png)
 
-- Require Authentication: true
-- Request
+### Client Daily Chart
 
-  - Method: GET
-  - URL: /api/current-user
-  - Body: none
-
-- Successful Response when there is a logged in user
+![client daily chart](image-9.png)
 
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
+### Client Discreet Trial
 
-    ```json
-    {
-      "Therapist": {
-        "id": 1,
-        "first_name": "John",
-        "last_name": "Smith",
-        "email": "john.smith@gmail.com"
-      }
-    }
-    ```
+![client discreet trial](image-10.png)
 
-- Successful Response when there is no logged in user
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "user": null
-    }
-    ```
-
-### Log In a User
-
-Logs in a current user with valid credentials and returns the current user's
-information.
-
-- Require Authentication: false
-- Request
-
-  - Method: POST
-  - URL: /api/login
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "credential": "john.smith@gmail.com",
-      "password": "secret password"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "user": {
-        "id": 1,
-        "first_name": "John",
-        "last_name": "Smith",
-        "email": "john.smith@gmail.com"
-      }
-    }
-    ```
-
-- Error Response: Invalid credentials
-
-  - Status Code: 401
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Invalid credentials"
-    }
-    ```
-
-- Error response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "credential": "Email is required",
-        "password": "Password is required"
-      }
-    }
-    ```
-
-### Sign Up a User
-
-Creates a new user, logs them in as the current user, and returns the current
-user's information.
-
-- Require Authentication: false
-- Request
-
-  - Method: POST
-  - URL: /signup
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "password": "secret password"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Therapist": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com"
-      }
-    }
-    ```
-
-- Error response: User already exists with the specified email
-
-  - Status Code: 500
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "User already exists",
-      "errors": {
-        "email": "User with that email already exists"
-      }
-    }
-    ```
-
-- Error response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "email": "Invalid email",
-        "first_name": "First Name is required",
-        "last_name": "Last Name is required"
-      }
-    }
-    ```
-
-## Clients
-
-### Get all Clients
-
-Returns all clients created by therapist.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /my-clients
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Clients": [
-        {
-          "id": 1,
-          "first_name": "Jane",
-          "last_name": "Doe",
-          "guardian_email": "janesparents@aa.io",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-### Get details of a client by id
-
-Returns the details of a client specified by their id.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /my_clients/< int:client_id >
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-        ```json
-        {
-          "id": 2,
-          "first_name": "Jane",
-          "last_name": "Doe",
-          "guardian_email": "janesparents@aa.io",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "DailyCharts": [
-            {
-              "id": 1,
-              "created_at": "2023-12-6",
-              "Intervals": [
-                {
-                  "id": 3,
-                  "start_interval": "9:00 AM",
-                  "end_interval": "9:30 AM",
-                  "interval_notes": "Client completed task with no prompts needed.",
-                  "interval_tags": ["Completed Independently, No Task Refusal"],
-                  "interval_rating": 3 // 1 to 3, 3 being the best
-                },
-                {
-                  "id": 4,
-                  "start_interval": "9:30 AM",
-                  "end_interval": "10:00 AM",
-                  "interval_notes": "Task refusal for 23 minutes of the interval. Reading assignment",
-                  "interval_tags": ["Task Refusal, Non-Preferred Task, Tantrum"],
-                  "interval_rating": 1 // 1 to 3, 3 being the best
-                }
-              ]
-            },
-          ],
-          "DiscreetTrials":[
-            {
-               "id": 5,
-               "client_id":2,
-               "Trials":[
-               {
-                  "id":10,
-                  "trial_type":"Color ID",
-                  "trial_count": 5,
-                  "trial_score": 3,
-                  "trial_notes": "Identified color red 3 out of 5 times in a field of 3 colors",
-               },
-               {
-                  "id":11,
-                  "trial_type":"Sequence Numbers 1 - 10",
-                  "trial_count": 3,
-                  "trial_score": 2,
-                  "trial_notes": "Completed successfully 2 times, out of order on 3rd attempt",
-               }
-            ]
-         }
-
-    ],
-    "Therapist": {
-    "id": 1,
-    "first_name": "John",
-    "last_name": "Smith"
-    }
-    }
-
-    ```
-
-    ```
-
-- Error response: Couldn't find a client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-### Create a Client
-
-Creates and returns a new Client.
-
-- Require Authentication: true
-- Request
-
-  - Method: POST
-  - URL: /my-clients
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "first_name": "Jimmy",
-      "last_name": "Doe",
-      "guardian_email": "jimmydoesparents@aa.io"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 201
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 5,
-      "first_name": "Jimmy",
-      "last_name": "Doe",
-      "guardian_email": "jimmydoesparents@aa.io",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "first_name": "First name is required",
-        "last_name": "Last name is required",
-        "guardian_email": "Email is required"
-      }
-    }
-    ```
-
-### Edit a Client
-
-Updates and returns an existing Client.
-
-- Require Authentication: true
-- Require proper authorization: Client must belong to the current user
-- Request
-
-  - Method: PUT
-  - URL: /my-clients/< int:cliend_id >
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "first_name": "Jimmy",
-      "last_name": "Doe",
-      "guardian_email": "jimmydoesparents@aa.io"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 5,
-      "first_name": "Jimmy",
-      "last_name": "Doe",
-      "guardian_email": "jimmydoesparents@aa.io",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "first_name": "First name is required",
-        "last_name": "Last name is required",
-        "guardian_email": "Email is required"
-      }
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-### Delete a Client
-
-Deletes an existing Client.
-
-- Require Authentication: true
-- Require proper authorization: Client must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: /my-clients/< int :client_id >
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-
-
-## REVIEWS
-
-### Get all Reviews of the Current User
-
-Returns all the reviews written by the current user.
-
-- Require Authentication: true
-- Request
-
-  - Method: GET
-  - URL: / current-user / reviews
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "ClientId": 1,
-          "review": "This was an awesome Client!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "Client": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
-        }
-      ]
-    }
-    ```
-
-### Get all Reviews by a Client's id
-
-Returns all the reviews that belong to a Client specified by id.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: / Clients / :ClientId / reviews
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "ClientId": 1,
-          "review": "This was an awesome Client!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
-        }
-      ]
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-### Create a Review for a Client based on the Client's id
-
-Create and return a new review for a Client specified by id.
-
-- Require Authentication: true
-- Request
-
-  - Method: POST
-  - URL: / Clients / :ClientId / reviews
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "review": "This was an awesome Client!",
-      "stars": 5
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 201
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "ClientId": 1,
-      "review": "This was an awesome Client!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-- Error Response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5"
-      }
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-- Error response: Review from the current user already exists for the Client
-
-  - Status Code: 500
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "User already has a review for this Client"
-    }
-    ```
-
-### Add an Image to a Review based on the Review's id
-
-Create and return a new image for a review specified by id.
-
-- Require Authentication: true
-- Require proper authorization: Review must belong to the current user
-- Request
-
-  - Method: POST
-  - URL: / reviews / :reviewId / review-images
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "url": "image url"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url"
-    }
-    ```
-
-- Error response: Couldn't find a Review with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-- Error response: Cannot add any more images because there is a maximum of 10
-  images per resource
-
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Maximum number of images for this resource was reached"
-    }
-    ```
-
-### Edit a Review
-
-Update and return an existing review.
-
-- Require Authentication: true
-- Require proper authorization: Review must belong to the current user
-- Request
-
-  - Method: PUT
-  - URL: / reviews / :reviewId
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "review": "This was an awesome Client!",
-      "stars": 5
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "ClientId": 1,
-      "review": "This was an awesome Client!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error Response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5"
-      }
-    }
-    ```
-
-- Error response: Couldn't find a Review with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-### Delete a Review
-
-Delete an existing review.
-
-- Require Authentication: true
-- Require proper authorization: Review must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: / reviews / :reviewId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Review with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found"
-    }
-    ```
-
-## BOOKINGS
-
-### Get all of the Current User's Bookings
-
-Return all the bookings that the current user has made.
-
-- Require Authentication: true
-- Request
-
-  - Method: GET
-  - URL: / current-user / bookings
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "id": 1,
-          "ClientId": 1,
-          "Client": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-### Get all Bookings for a Client based on the Client's id
-
-Return all the bookings for a Client specified by id.
-
-- Require Authentication: true
-- Request
-
-  - Method: GET
-  - URL: / Clients / :ClientId / bookings
-  - Body: none
-
-- Successful Response: If you ARE NOT the owner of the Client.
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "ClientId": 1,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20"
-        }
-      ]
-    }
-    ```
-
-- Successful Response: If you ARE the owner of the Client.
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "User": {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "id": 1,
-          "ClientId": 1,
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-### Create a Booking from a Client based on the Client's id
-
-Create and return a new booking from a Client specified by id.
-
-- Require Authentication: true
-- Require proper authorization: Client must NOT belong to the current user
-- Request
-
-  - Method: POST
-  - URL: / Clients / :ClientId / bookings
-  - Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "ClientId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-- Error response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-- Error response: Couldn't find a Client with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client couldn't be found"
-    }
-    ```
-
-- Error response: Booking conflict
-
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Sorry, this Client is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Edit a Booking
-
-Update and return an existing booking.
-
-- Require Authentication: true
-- Require proper authorization: Booking must belong to the current user
-- Request
-
-  - Method: PUT
-  - URL: / bookings / :bookingId
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "ClientId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-- Error response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "endDate": "endDate cannot come before startDate"
-      }
-    }
-    ```
-
-- Error response: Couldn't find a Booking with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-- Error response: Can't edit a booking that's past the end date
-
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Past bookings can't be modified"
-    }
-    ```
-
-- Error response: Booking conflict
-
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Sorry, this Client is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Delete a Booking
-
-Delete an existing booking.
-
-- Require Authentication: true
-- Require proper authorization: Booking must belong to the current user or the
-  Client must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: / bookings / :bookingId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Booking with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found"
-    }
-    ```
-
-- Error response: Bookings that have been started can't be deleted
-
-  - Status Code: 403
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bookings that have been started can't be deleted"
-    }
-    ```
-
-## IMAGES
-
-### Delete a Client Image
-
-Delete an existing image for a Client.
-
-- Require Authentication: true
-- Require proper authorization: Client must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: / Clients / :ClientId / Client-images / :imageId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Client Image with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Client Image couldn't be found"
-    }
-    ```
-
-### Delete a Review Image
-
-Delete an existing image for a Review.
-
-- Require Authentication: true
-- Require proper authorization: Review must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: / reviews / :reviewId / review-images / :reviewImgId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted"
-    }
-    ```
-
-- Error response: Couldn't find a Review Image with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Review Image couldn't be found"
-    }
-    ```
-
-## Add Query Filters to Get All Clients
-
-Return Clients filtered by query parameters.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: / Clients
-  - Query Parameters
-    - page: integer, minimum: 1, maximum: 10, default: 1
-    - size: integer, minimum: 1, maximum: 20, default: 20
-    - minLat: decimal, optional
-    - maxLat: decimal, optional
-    - minLng: decimal, optional
-    - maxLng: decimal, optional
-    - minPrice: decimal, optional, minimum: 0
-    - maxPrice: decimal, optional, minimum: 0
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Clients": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ],
-      "page": 2,
-      "size": 25
-    }
-    ```
-
-- Error Response: Query parameter validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "page": "Page must be greater than or equal to 1",
-        "size": "Size must be greater than or equal to 1",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
-        "minPrice": "Minimum price must be greater than or equal to 0",
-        "maxPrice": "Maximum price must be greater than or equal to 0"
-      }
-    }
-    ```
+### Client Graph Data
+
+![client graph data](image-11.png)
+
+<h2 id="getting-started-section">Getting Started</h2>
+
+### I. Clone the repository:
+
+`git clone https://github.com/wtorresjr/Craftsy-Etsy-Clone.git`
+
+### II. Install the dependencies (in root directory):
+
+`pipenv install -r requirements.txt`
+
+### III. Set up your environmental variables:
+
+1. Run: `echo > ".env"`
+2. Open the _.env.example_ file and copy its contents into your newly created _.env_ file
+
+### IV. Run the following commands:
+
+#### To run the backend server of application:
+
+1. Enter your virtual environment: `pipenv shell`
+2. Migrate your database: `flask db upgrade`
+3. Seed your database: `flask seed all`
+4. Run your server: `flask run`
+
+#### To run the frontend of application:
+
+5. In another terminal, change directory into _react-vite_: `cd react-vite`
+6. Install node modules: `npm install`
+7. Run your application: `npm start`
+
+<h2 id="helpful-commands-section">Helpful Commands</h2>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Command</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr>
+      <th scope="row">pipenv shell</th>
+      <td>Automatically activates a virtual environment specifically for your project, keeping any dependencies installed isolated.
+      <br>
+      <br>
+      Run <b>deactivate</b> to exit the virtual environment and return to your shell environment.
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">pipenv run</th>
+      <td>Can activate a virtual environment and run commands like the <b>pipenv shell</b> command; however flask commands must be prepended with this command (e.g., <i>pipenv run flask db upgrade</i> and <i>pipenv run flask run</i>).
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">flask run</th>
+      <td>When prepended with <b>pipenv run</b>, it activates a virtual environment for your project.
+      <br>
+      <br>
+      Press <b>CTRL + C</b> to exit the virtual envrionment and return to your shell environment.
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">flask db upgrade</th>
+      <td>Syncs the database schema.</td>
+    </tr>
+    <tr>
+      <th scope="row">flask db downgrade</th>
+      <td>Reverts the database schema to the previous state. This is run, followed by <b>flask db upgrade</b> to update the application with any schema changes.</td>
+    </tr>
+    <tr>
+      <th scope="row">flask seed all</th>
+      <td>Populates the database with seed file data.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="features-section">Features</h2>
+
+### New account creation Log in, log out, and guest/demo login:
+
+- Users can sign up, log in, and log out.
+- Users can use a demo log in to try the site.
+- Users can't use any features without logging in.
+- Users who log in are redirected to the home page.
+- Users who log are redirected to the login page.
+
+## Manage Clients
+
+### Authenticated Users:
+
+- Should be able to view current client(s).
+- Should be able to click client's detail page.
+- Should be able to create new client(s).
+- Should be able to update client(s) infomation.
+- Should be able to delete client(s).
+- Should be able to search for client(s).
+
+## Client Details Page
+
+### Authenticated & Authorized Users:
+
+- Should be able to view selected client's details. (Daily Charts, Discreet Trials).
+- Should be able to edit or delete current client.
+- Should be able to create a new Daily Chart.
+- Should be able to edit or delete a Daily Chart.
+- Should be able to create a new Discreet Trial.
+- Should be able to edit or delete a Discreet Trial.
+
+## Daily Chart Detail Page
+
+### Authenticated Users:
+
+- Should be able to view daily chart details.
+- Should be able to add a new interval to the selected chart.
+- Should be able to edit or delete intervals.
+
+## Discreet Trial Detail Page
+
+### Authenticated & Authorized Users:
+
+- Should be able to view discreet trial details.
+- Should be able to add a new trial to the selected discreet trial.
+- Should be able to edit or delete trials.
+
+<h2 id="frontend-routes">Frontend Routes</h2>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Page</th>
+      <th scope="col">Path</th>
+      <th scope="col">Requires Authentication?</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr>
+      <th scope="row">Homepage</th>
+      <td>/home</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Manage Clients</th>
+      <td>/manage-clients</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Client Details Page</th>
+      <td>/client/:client_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Daily Chart Details</th>
+      <td>/daily-chart/:chart_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Discreet Trial Details</th>
+      <td>/discreet-trial/:dt_id</td>
+      <td align="center">X</td>
+    </tr>
+    <tr>
+      <th scope="row">Reports Page</th>
+      <td>/view-reports</td>
+      <td align="center">X</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="acknowledgments-section">Acknowledgments</h4>
+
+- Icons by [_Font Awesome_](https://fontawesome.com/icons)
