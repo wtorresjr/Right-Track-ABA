@@ -15,7 +15,7 @@
 
 <h2 id="about-section">About The Project</h2>
 
-_Right Track ABA_ is an app designed to help behavior therapists and analyst collect daily data to better serve their clients.
+As an ABA therapist I wanted to create a specialized application tailored for behavior therapists and analysts to enhance client support through efficient data collection. _Right Track ABA_ facilitates the logging of various data points crucial for analysis and intervention planning. These include daily performance data categorized by class activities, documentation of problem behaviors, and discrete trial data. _Right Track ABA_ empowers professionals in the field to optimize client care and intervention strategies effectively.
 
 <h2 id="technologies-used-section">Technologies Used</h2>
 
@@ -76,7 +76,6 @@ _Right Track ABA_ is an app designed to help behavior therapists and analyst col
 
 1. Run: `echo > ".env"`
 2. Open the _.env.example_ file and copy its contents into your newly created _.env_ file
-3. Replace placeholder values with actual values for S3-related keys (See the [AWS S3 Setup Instructions](#https://github.com/wtorresjr/Craftsy-Etsy-Clone/wiki/AWS-S3-Setup-Instructions) page)
 
 ### IV. Run the following commands:
 
@@ -89,7 +88,7 @@ _Right Track ABA_ is an app designed to help behavior therapists and analyst col
 
 #### To run the frontend of application:
 
-5. In another terminal, change directory into _react-app_: `cd react-app`
+5. In another terminal, change directory into _react-vite_: `cd react-vite`
 6. Install node modules: `npm install`
 7. Run your application: `npm start`
 
@@ -144,33 +143,31 @@ _Right Track ABA_ is an app designed to help behavior therapists and analyst col
 
 - Users can sign up, log in, and log out.
 - Users can use a demo log in to try the site.
-- Users can't use certain features without logging in (like Creating Products, leaving reviews, etc.)
-- Users who log in while browsing a product will be redirected to the home page.
-- Logged out users are redirected to home page.
+- Users can't use any features without logging in.
+- Users who log in are redirected to the home page.
+- Users who log are redirected to the login page.
 
-## Products
+## Manage Clients
 
-### All Users:
+### Authenticated Users:
 
-- Should be able to view all Products.
+- Should be able to view current client(s).
+- Should be able to click client's detail page.
+- Should be able to create new client(s).
+- Should be able to update client(s) infomation.
+- Should be able to delete client(s).
+- Should be able to search for client(s).
 
-### Authenticated & Authorized Users:
-
-- Should be able to create a Product.
-- Should be able to update their Product(s).
-- Should be able to delete their Product(s).
-
-## Reviews
-
-### All Users:
-
-- Should be able to view all reviews on a Product.
+## Client Details Page
 
 ### Authenticated & Authorized Users:
 
-- Should be able to create a review for a Product.
-- Should be able to update their review for a Product.
-- Should be able to delete their review from a Product.
+- Should be able to view selected client's details. (Daily Charts, Discreet Trials).
+- Should be able to edit or delete current client.
+- Should be able to create a new Daily Chart.
+- Should be able to edit or delete a Daily Chart.
+- Should be able to create a new Discreet Trial.
+- Should be able to edit or delete a Discreet Trial.
 
 ## Shopping Cart
 
