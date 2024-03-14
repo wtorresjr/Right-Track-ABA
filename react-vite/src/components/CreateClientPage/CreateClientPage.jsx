@@ -65,7 +65,6 @@ const CreateClient = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Clicked Submit");
     const newClient = {
       first_name: firstName,
       last_name: lastName,

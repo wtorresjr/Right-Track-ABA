@@ -140,7 +140,6 @@ export const addNewDTThunk = (dtData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dtData),
     });
-    console.log(response.status, "response body");
     if (response.ok) {
       const newDT = await response.json();
       await dispatch(addDT(newDT));
