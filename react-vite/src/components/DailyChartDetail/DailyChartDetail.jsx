@@ -19,19 +19,41 @@ const DailyChartDetail = () => {
   const currentIntervals = useSelector(
     (state) => state?.chart?.chart?.Chart_Intervals
   );
+  const errorObject = useSelector((state) => state?.chart?.error);
 
   const [ratingColor, setRatingColor] = useState("white");
   const [refresh, setRefresh] = useState(true);
+  const [message, setMessage] = useState("Loading...");
+  const [loaded, setLoaded] = useState(false);
   const { setModalContent } = useModal();
 
   useEffect(() => {
-    dispatch(getClientByIDThunk(currentChart?.client_id));
-    dispatch(getChartByIdThunk(chart_id));
+    setLoaded(false);
+    const getData = async () => {
+      try {
+        const clientData = await dispatch(getChartByIdThunk(chart_id));
+        const data = await dispatch(
+          getClientByIDThunk(currentChart?.client_id)
+        );
 
-    if (currentChart) {
-      const chartColor = returnColor(currentChart?.Chart_Avg_Rating, "float");
-      setRatingColor(chartColor);
-    }
+        if (errorObject) {
+          setLoaded(false);
+          setMessage(errorObject);
+        }
+        if (data && clientData) {
+          setLoaded(true);
+        }
+      } catch (error) {
+        setMessage(errorObject);
+        setLoaded(false);
+      }
+
+      if (currentChart) {
+        const chartColor = returnColor(currentChart?.Chart_Avg_Rating, "float");
+        setRatingColor(chartColor);
+      }
+    };
+    getData();
   }, [
     dispatch,
     chart_id,
@@ -41,6 +63,7 @@ const DailyChartDetail = () => {
     ratingColor,
     currentChart?.Chart_Avg_Rating,
     refresh,
+    errorObject,
   ]);
 
   useEffect(() => {
@@ -76,121 +99,141 @@ const DailyChartDetail = () => {
   };
 
   return (
-    <div className="mainDisplayContain">
-      <div className="chartDetailHeader">
-        <div>
-          <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-        </div>
-        <div>
-          <NavLink
-            to={`/client/${clientInfo?.id}`}
-            className="navLinkStyle"
-            style={{ fontWeight: "bold" }}
-          >
+    <>
+      {loaded ? (
+        <div className="mainDisplayContain">
+          <div className="chartDetailHeader">
             <div>
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
-              {clientInfo?.first_name}'s Detail Page
+              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
             </div>
-          </NavLink>
-        </div>
-      </div>{" "}
-      <div id="chartOptionsDiv">
-        <h2>
-          Client: {clientInfo?.first_name} {clientInfo?.last_name}
-        </h2>
-
-        <h2
-          style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
-          id="ratingBg"
-        >
-          <div>
-            Number of Intervals:{" "}
-            {currentChart?.Num_Intervals ? currentChart?.Num_Intervals : 0}
-          </div>
-          Average Interval Rating:{" "}
-          {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-        </h2>
-
-        <div className="dcHeader">
-          <LegendComponent />
-        </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "right" }}>
-        <button id="createNewChartBtn" onClick={openAddIntModal}>
-          <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-          Add New Interval
-          <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-        </button>
-      </div>
-      {currentIntervals &&
-        currentIntervals?.map((interval) => {
-          return (
-            <div
-              key={interval?.id - interval?.chart_id}
-              className="intervalInfoContain"
-            >
-              <div
-                className="intervalHeader"
-                style={{
-                  borderColor: returnColor(interval?.interval_rating, "whole"),
-                }}
+            <div>
+              <NavLink
+                to={`/client/${clientInfo?.id}`}
+                className="navLinkStyle"
+                style={{ fontWeight: "bold" }}
               >
-                <label>
-                  Interval Time: {interval?.start_interval} -{" "}
-                  {interval?.end_interval}
-                </label>{" "}
-                |<label> Activity: {interval?.activity} </label>|
-                <label> Interval Rating: {interval?.interval_rating}</label>
-              </div>
-              <p>
-                <label>Interval Notes:</label> {interval?.interval_notes}
-              </p>
-              <label>Problem Behaviors: </label>
-
-              {Object.keys(interval?.interval_tags ?? {}).length ? (
-                <div className="behaviorsTag">
-                  {Object.entries(interval?.interval_tags || {}).map(
-                    ([behavior, count]) => (
-                      <div key={behavior}>
-                        <div>
-                          {<strong>{behavior}</strong>}: {count}
-                        </div>
-                      </div>
-                    )
-                  )}
+                <div>
+                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+                  {clientInfo?.first_name}'s Detail Page
                 </div>
-              ) : (
-                "None."
-              )}
-              <div className="intervalCrudBtns">
-                <button onClick={() => handleCrudClick(interval, "delete")}>
-                  Delete Interval
-                </button>
-                <button onClick={() => handleCrudClick(interval, "edit")}>
-                  Edit Interval
-                </button>
+              </NavLink>
+            </div>
+          </div>{" "}
+          <div id="chartOptionsDiv">
+            <h2>
+              Client: {clientInfo?.first_name} {clientInfo?.last_name}
+            </h2>
+
+            <h2
+              style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
+              id="ratingBg"
+            >
+              <div>
+                Number of Intervals:{" "}
+                {currentChart?.Num_Intervals ? currentChart?.Num_Intervals : 0}
               </div>
+              Average Interval Rating:{" "}
+              {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+            </h2>
+
+            <div className="dcHeader">
+              <LegendComponent />
             </div>
-          );
-        })}
-      <div className="chartDetailHeader">
-        <div>
-          <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-        </div>
-        <div>
-          <NavLink
-            to={`/client/${clientInfo?.id}`}
-            className="navLinkStyle"
-            style={{ fontWeight: "bold" }}
-          >
+          </div>
+          <div style={{ display: "flex", justifyContent: "right" }}>
+            <button id="createNewChartBtn" onClick={openAddIntModal}>
+              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
+              Add New Interval
+              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
+            </button>
+          </div>
+          {currentIntervals &&
+            currentIntervals?.map((interval) => {
+              return (
+                <div
+                  key={interval?.id - interval?.chart_id}
+                  className="intervalInfoContain"
+                >
+                  <div
+                    className="intervalHeader"
+                    style={{
+                      borderColor: returnColor(
+                        interval?.interval_rating,
+                        "whole"
+                      ),
+                    }}
+                  >
+                    <label>
+                      Interval Time: {interval?.start_interval} -{" "}
+                      {interval?.end_interval}
+                    </label>{" "}
+                    |<label> Activity: {interval?.activity} </label>|
+                    <label> Interval Rating: {interval?.interval_rating}</label>
+                  </div>
+                  <p>
+                    <label>Interval Notes:</label> {interval?.interval_notes}
+                  </p>
+                  <label>Problem Behaviors: </label>
+
+                  {Object.keys(interval?.interval_tags ?? {}).length ? (
+                    <div className="behaviorsTag">
+                      {Object.entries(interval?.interval_tags || {}).map(
+                        ([behavior, count]) => (
+                          <div key={behavior}>
+                            <div>
+                              {<strong>{behavior}</strong>}: {count}
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  ) : (
+                    "None."
+                  )}
+                  <div className="intervalCrudBtns">
+                    <button onClick={() => handleCrudClick(interval, "delete")}>
+                      Delete Interval
+                    </button>
+
+                    <button onClick={() => handleCrudClick(interval, "edit")}>
+                      Edit Interval
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          <div className="chartDetailHeader">
             <div>
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
-              {clientInfo?.first_name}'s Detail Page
+              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
             </div>
-          </NavLink>
+            <div>
+              <NavLink
+                to={`/client/${clientInfo?.id}`}
+                className="navLinkStyle"
+                style={{ fontWeight: "bold" }}
+              >
+                <div>
+                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+                  {clientInfo?.first_name}'s Detail Page
+                </div>
+              </NavLink>
+            </div>
+          </div>{" "}
         </div>
-      </div>{" "}
-    </div>
+      ) : (
+        <h2
+          style={{
+            textAlign: "center",
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "15px",
+            padding: "10px 0",
+          }}
+        >
+          {message}
+        </h2>
+      )}
+    </>
   );
 };
 

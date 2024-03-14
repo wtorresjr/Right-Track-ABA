@@ -22,10 +22,8 @@ function LoginFormModal() {
     );
 
     if (serverResponse) {
-      console.log("Errors Found");
       setErrors(serverResponse);
     } else {
-      console.log("No Errors");
       closeModal();
     }
   };
