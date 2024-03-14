@@ -9,6 +9,14 @@ const GET_ALL_INTERVALS = "charts/getAllIntervals";
 const GET_INTERVAL = "charts/getInterval";
 const DELETE_INTERVAL = "charts/deleteInterval";
 const EDIT_AN_INTERVAL = "charts/editAnInterval";
+const SHOW_ERROR = "SHOW_ERROR";
+
+export const showError = (errorMessage) => {
+  return {
+    type: SHOW_ERROR,
+    payload: errorMessage,
+  };
+};
 
 const deleteInterval = (intervalToDelete) => {
   return {
@@ -132,17 +140,34 @@ export const createNewChartThunk = (chartData) => async (dispatch) => {
 };
 
 export const getChartByIdThunk = (chart_id) => async (dispatch) => {
-  const response = await fetch(`/api/my-daily-charts/${chart_id}`, { 
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-  if (response.ok) {
-    const chart = await response.json();
-    dispatch(getChart(chart));
-    return chart;
-  } else {
-    throw new Error("Error finding chart");
+  try {
+    const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.ok) {
+      const chart = await response.json();
+      dispatch(getChart(chart));
+      return chart;
+    } else {
+      const errorResponse = await response.json();
+      const errorMessage = errorResponse.message;
+      dispatch(showError(errorMessage));
+    }
+  } catch (error) {
+    dispatch(showError("An error occurred")); 
   }
+  // const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
+  //   method: "GET",
+  //   headers: { "Content-Type": "application/json" },
+  // });
+  // if (response.ok) {
+  //   const chart = await response.json();
+  //   dispatch(getChart(chart));
+  //   return chart;
+  // } else {
+  //   throw new Error("Error finding chart");
+  // }
 };
 
 export const addIntervalToChart = (userIntervalInput) => async (dispatch) => {
@@ -255,10 +280,16 @@ const initialState = {
   },
   allCharts: [],
   allClientIntervals: [],
+  error: null,
 };
 
 function chartsReducer(state = initialState, action) {
   switch (action.type) {
+    case SHOW_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case EDIT_AN_INTERVAL:
       return {
         ...state,

@@ -25,6 +25,7 @@ const DiscreetTrialDetail = () => {
   const [trialCount, setTrialCount] = useState(0);
   const [trialScore, setTrialScore] = useState(0);
   const [passOrFail, setPassOrFail] = useState("red");
+  const errorObject = useSelector((state) => state?.chart?.error);
 
   let client = useSelector((state) => state?.clients?.client_by_id);
   let data;
@@ -33,6 +34,10 @@ const DiscreetTrialDetail = () => {
     setLoaded(false);
     const getData = async () => {
       data = await dispatch(getDiscreetTrialThunk(+dt_id));
+      if (errorObject) {
+        setLoaded(false);
+        setMessage(errorObject);
+      }
       if (data) {
         setLoaded(true);
         setDtData(data?.Discreet_Trial);
@@ -40,7 +45,7 @@ const DiscreetTrialDetail = () => {
       }
     };
     getData();
-  }, [client?.id, message, dt_id, client]);
+  }, [client?.id, message, dt_id, client, errorObject]);
 
   useEffect(() => {
     if (trialsData) {

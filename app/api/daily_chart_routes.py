@@ -59,7 +59,7 @@ def get_chart_by_id(chart_id):
     intervals = [interval.to_dict() for interval in all_chart_intervals]
 
     if not chart_found:
-        return jsonify({"message": "No chart found by that ID"}), 404
+        return jsonify({"message": "No chart by that ID"}), 404
 
     chart_data = chart_found.to_dict()
 

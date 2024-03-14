@@ -83,9 +83,14 @@ const ClientDetails = () => {
               Delete Client
             </button>
           </div>
-          <DailyCharts clientCharts={client} />
+
+            <DailyCharts clientCharts={client} />
+       
+
           <h1></h1>
-          <DiscreetTrials clientDT={client} />
+         
+            <DiscreetTrials clientDT={client} />
+ 
           <h1>
             {client?.last_name}, {client?.first_name}
             <NavLink to="/manage-clients" className="navLinkStyle">
