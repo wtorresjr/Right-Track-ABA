@@ -36,11 +36,12 @@ const DailyChartDetail = () => {
           getClientByIDThunk(currentChart?.client_id)
         );
 
+        if (errorObject) {
+          setLoaded(false);
+          setMessage(errorObject);
+        }
         if (data && clientData) {
           setLoaded(true);
-        }
-        if (errorObject) {
-          setMessage(errorObject);
         }
       } catch (error) {
         setMessage(errorObject);
@@ -62,6 +63,7 @@ const DailyChartDetail = () => {
     ratingColor,
     currentChart?.Chart_Avg_Rating,
     refresh,
+    errorObject,
   ]);
 
   useEffect(() => {

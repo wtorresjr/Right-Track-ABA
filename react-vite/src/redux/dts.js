@@ -1,4 +1,5 @@
 import { getClientByIDThunk } from "./clients";
+import { showError } from "./charts";
 
 const GET_DT = "dt/getDT";
 const GET_ALL_DTS = "dt/getAllDts";
@@ -31,9 +32,13 @@ export const getDiscreetTrialThunk = (dt_id) => async (dispatch) => {
       const foundTrial = await response.json();
       await dispatch(getDiscreetTrial(foundTrial));
       return foundTrial;
+    } else {
+      const errorResponse = await response.json();
+      const errorMessage = errorResponse.message;
+      dispatch(showError(errorMessage));
     }
   } catch (error) {
-    throw new Error(error);
+    dispatch(showError("An error occurred"));
   }
 };
 

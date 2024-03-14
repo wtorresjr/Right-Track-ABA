@@ -155,7 +155,7 @@ export const getChartByIdThunk = (chart_id) => async (dispatch) => {
       dispatch(showError(errorMessage));
     }
   } catch (error) {
-    dispatch(showError("An error occurred"));
+    dispatch(showError("An error occurred")); 
   }
   // const response = await fetch(`/api/my-daily-charts/${chart_id}`, {
   //   method: "GET",

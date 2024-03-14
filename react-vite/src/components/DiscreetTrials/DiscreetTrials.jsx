@@ -62,7 +62,7 @@ const DiscreetTrials = () => {
   };
 
   return (
-    <div className="chartsContain">
+    <>
       <h1>
         Discreet Trials
         <button id="createNewChartBtn" onClick={openCreateDTModal}>
@@ -71,82 +71,102 @@ const DiscreetTrials = () => {
           <i className="fa-solid fa-puzzle-piece fa-xl"></i>
         </button>
       </h1>
+      {dtCount > 0 ? (
+        <div className="chartsContain">
+          <div className="paginationDiv">
+            <label>Page:</label>
 
-      <div className="paginationDiv">
-        <label>Page:</label>
+            <Paginator
+              numOfCharts={totalDTs}
+              perPage={perPage}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
 
-        <Paginator
-          numOfCharts={totalDTs}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
+            <label>Discreet Trials Per Page:</label>
+            <input
+              className="perPageInput"
+              type="number"
+              value={perPage}
+              onChange={(e) => setPerPage(e.target.value)}
+            />
+          </div>
+          <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
 
-        <label>Discreet Trials Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
-      <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
-
-      {pagLoaded ? (
-        clientDT && clientDT.length ? (
-          clientDT.map((dt) => (
-            <div key={dt.id} className="dtItemsDiv">
-              <NavLink
-                to={`/discreet-trial/${dt.id}`}
-                className="navLinkStyleDC"
-              >
-                <div
-                  className="dcButtons"
-                  style={{
-                    border: `3px solid ${returnPercentColor(dt?.trials_avg)}`,
-                  }}
-                >
-                  <div>{dt?.trial_date}</div>
-                  <div>{dt?.program_name}</div>
-                  <div>Mastery: {dt?.trials_avg}%</div>
-                  View Trial(s)
+          {pagLoaded ? (
+            clientDT && clientDT.length ? (
+              clientDT.map((dt) => (
+                <div key={dt.id} className="dtItemsDiv">
+                  <NavLink
+                    to={`/discreet-trial/${dt.id}`}
+                    className="navLinkStyleDC"
+                  >
+                    <div
+                      className="dcButtons"
+                      style={{
+                        border: `3px solid ${returnPercentColor(
+                          dt?.trials_avg
+                        )}`,
+                      }}
+                    >
+                      <div>{dt?.trial_date}</div>
+                      <div>{dt?.program_name}</div>
+                      <div>Mastery: {dt?.trials_avg}%</div>
+                      View Trial(s)
+                    </div>
+                  </NavLink>
+                  <div className="chartCrudBtns">
+                    <button onClick={() => openUpdateChartModal(dt)}>
+                      Edit DT
+                    </button>
+                    <button onClick={() => openDeleteModal(dt)}>
+                      Delete DT
+                    </button>
+                  </div>
                 </div>
-              </NavLink>
-              <div className="chartCrudBtns">
-                <button onClick={() => openUpdateChartModal(dt)}>
-                  Edit DT
-                </button>
-                <button onClick={() => openDeleteModal(dt)}>Delete DT</button>
-              </div>
+              ))
+            ) : (
+              "No Discreet Trials Yet"
+            )
+          ) : (
+            <div className="pagLoadingDiv">
+              <h2>Discreet Trials Loading...</h2>
             </div>
-          ))
-        ) : (
-          "No Discreet Trials Yet"
-        )
-      ) : (
-        <div className="pagLoadingDiv">
-          <h2>Discreet Trials Loading...</h2>
+          )}
+
+          <div className="paginationDiv">
+            <label>Page:</label>
+            <Paginator
+              numOfCharts={totalDTs}
+              perPage={perPage}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
+
+            <label>Discreet Trials Per Page:</label>
+            <input
+              className="perPageInput"
+              type="number"
+              value={perPage}
+              onChange={(e) => setPerPage(e.target.value)}
+            />
+          </div>
         </div>
+      ) : (
+        <h2
+          style={{
+            textAlign: "center",
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "15px",
+            padding: "10px 0",
+            width: "100%",
+          }}
+        >
+          No Discreet Trials Yet.
+        </h2>
       )}
-
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={totalDTs}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-
-        <label>Discreet Trials Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
