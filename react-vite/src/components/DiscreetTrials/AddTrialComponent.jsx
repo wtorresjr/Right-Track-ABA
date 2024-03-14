@@ -50,7 +50,6 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   }, [dtInfo]);
 
   useEffect(() => {
-    console.log(trialInfo, "trial info");
     const checkIfEditing = () => {
       setTargetItem(trialInfo.trial_target);
       setTrialCount(trialInfo.trial_count);

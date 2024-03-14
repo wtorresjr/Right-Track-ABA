@@ -177,6 +177,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  e.preventDefault();
                   newBehavior(currBehavior, "add");
                 }}
               >
@@ -195,6 +196,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
                           id="pbDeleteBtn"
                           className="addMinus"
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             newBehavior(behavior, "delete");
                           }}
@@ -205,6 +207,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
                           <button
                             className="addMinus"
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
                               newBehavior(behavior, "remove");
                             }}
@@ -216,6 +219,7 @@ const AddIntervalComp = ({ client, currentIntervals }) => {
                           <button
                             className="addMinus"
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
                               newBehavior(behavior, "add");
                             }}

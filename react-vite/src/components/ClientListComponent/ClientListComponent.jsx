@@ -44,7 +44,6 @@ const ClientListComponent = () => {
           }
         }
         if (chartDataPoint === "PB") {
-          // console.log("Selected PB");
           const getIntervals = await dispatch(
             getAllIntervalsThunk(+selectedClient)
           );
