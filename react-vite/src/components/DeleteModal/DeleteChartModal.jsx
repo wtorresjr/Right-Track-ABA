@@ -55,7 +55,6 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
     }
 
     if (successDelete) {
-      // console.log(chartInfo.dt_id, "DT ID");
       closeModal();
       openDeleteMessage();
       await dispatch(getClientByIDThunk(chartInfo?.client_id));
