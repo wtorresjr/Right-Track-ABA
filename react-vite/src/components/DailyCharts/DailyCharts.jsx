@@ -120,7 +120,7 @@ const DailyCharts = ({ clientCharts }) => {
   };
 
   return (
-    <div className="chartsContain">
+    <>
       <h1>
         Daily Performance Charts
         <button id="createNewChartBtn" onClick={openCreateChartModal}>
@@ -129,121 +129,137 @@ const DailyCharts = ({ clientCharts }) => {
           <i className="fa-solid fa-folder-plus fa-xl"></i>
         </button>
       </h1>
-
-      <div className="dcHeader">
-        <LegendComponent />
-      </div>
-
-      <input
-        type="text"
-        placeholder="Search Daily Charts (By Date)"
-        value={searchFilter}
-        onChange={(e) => setSearchFilter(e.target.value)}
-      />
-
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={numOfCharts}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-        <label>Charts Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
-
-      <InfoBar
-        clientCharts={clientCharts}
-        numOfCharts={numOfCharts}
-        searchFilter={searchFilter}
-        filteredAvg={filteredAvg}
-        filteredCharts={filteredCharts}
-        type={"dailyCharts"}
-      />
-      {pagLoading ? (
+      {numOfCharts > 0 ? (
         <div className="chartsContain">
-          {filteredCharts &&
-            filteredCharts?.map((dc) => {
-              dayColorRating = returnColor(dc?.avgForChart, "float");
+          <div className="dcHeader">
+            <LegendComponent />
+          </div>
 
-              if (dc) {
-                dc?.chart_complete === false
-                  ? (dayColorRating = "white")
-                  : null;
+          <input
+            type="text"
+            placeholder="Search Daily Charts (By Date)"
+            value={searchFilter}
+            onChange={(e) => setSearchFilter(e.target.value)}
+          />
 
-                return (
-                  <div key={dc?.id} className="clientDCdata">
-                    <Link
-                      to={`/daily-chart/${dc?.id}`}
-                      className="navLinkStyleDC"
-                    >
-                      <div
-                        className="dcButtons"
-                        style={{
-                          border: `5px solid ${dayColorRating}`,
-                        }}
-                      >
-                        <div className="folderText">
-                          <p>
-                            <label>Date: {dc?.chart_date}</label>
-                          </p>
-                          <div>Total Intervals: {dc?.interval_count}</div>
-                          <div>Avg Rating: {dc?.avgForChart}</div>
-                          <p>View Chart</p>
+          <div className="paginationDiv">
+            <label>Page:</label>
+            <Paginator
+              numOfCharts={numOfCharts}
+              perPage={perPage}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
+            <label>Charts Per Page:</label>
+            <input
+              className="perPageInput"
+              type="number"
+              value={perPage}
+              onChange={(e) => setPerPage(e.target.value)}
+            />
+          </div>
+
+          <InfoBar
+            clientCharts={clientCharts}
+            numOfCharts={numOfCharts}
+            searchFilter={searchFilter}
+            filteredAvg={filteredAvg}
+            filteredCharts={filteredCharts}
+            type={"dailyCharts"}
+          />
+          {pagLoading ? (
+            <div className="chartsContain">
+              {filteredCharts &&
+                filteredCharts?.map((dc) => {
+                  dayColorRating = returnColor(dc?.avgForChart, "float");
+
+                  if (dc) {
+                    dc?.chart_complete === false
+                      ? (dayColorRating = "white")
+                      : null;
+
+                    return (
+                      <div key={dc?.id} className="clientDCdata">
+                        <Link
+                          to={`/daily-chart/${dc?.id}`}
+                          className="navLinkStyleDC"
+                        >
+                          <div
+                            className="dcButtons"
+                            style={{
+                              border: `5px solid ${dayColorRating}`,
+                            }}
+                          >
+                            <div className="folderText">
+                              <p>
+                                <label>Date: {dc?.chart_date}</label>
+                              </p>
+                              <div>Total Intervals: {dc?.interval_count}</div>
+                              <div>Avg Rating: {dc?.avgForChart}</div>
+                              <p>View Chart</p>
+                            </div>
+                          </div>
+                        </Link>
+                        <div className="chartCrudBtns">
+                          <button
+                            onClick={() => {
+                              openUpdateChartModal(dc);
+                            }}
+                          >
+                            Edit Chart
+                          </button>
+                          <button
+                            onClick={() => {
+                              openDeleteModal(dc);
+                            }}
+                          >
+                            Delete Chart
+                          </button>
                         </div>
                       </div>
-                    </Link>
-                    <div className="chartCrudBtns">
-                      <button
-                        onClick={() => {
-                          openUpdateChartModal(dc);
-                        }}
-                      >
-                        Edit Chart
-                      </button>
-                      <button
-                        onClick={() => {
-                          openDeleteModal(dc);
-                        }}
-                      >
-                        Delete Chart
-                      </button>
-                    </div>
-                  </div>
-                );
-              }
+                    );
+                  }
 
-              return null;
-            })}
+                  return null;
+                })}
+            </div>
+          ) : (
+            <div className="pagLoadingDiv">
+              <h2>Loading Charts...</h2>
+            </div>
+          )}
+          <div className="paginationDiv">
+            <label>Page:</label>
+            <Paginator
+              numOfCharts={numOfCharts}
+              perPage={perPage}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
+            <label>Charts Per Page:</label>
+            <input
+              className="perPageInput"
+              type="number"
+              value={perPage}
+              onChange={(e) => setPerPage(e.target.value)}
+            />
+          </div>
         </div>
       ) : (
-        <div className="pagLoadingDiv">
-          <h2>Loading Charts...</h2>
-        </div>
+        <h2
+          style={{
+            textAlign: "center",
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "15px",
+            padding: "10px 0",
+            width: "100%",
+          }}
+        >
+          No Daily Charts Yet.
+        </h2>
       )}
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={numOfCharts}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-        <label>Charts Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
