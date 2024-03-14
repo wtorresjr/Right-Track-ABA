@@ -46,7 +46,6 @@ const GraphComponent = ({
     }
 
     if (chartDataPoint === "PB") {
-      // console.log(+selectedClient, "Selected Client");
       const getTheData = async () => {
         const behaviorData = await dispatch(
           getAllIntervalsThunk(+selectedClient)
@@ -55,7 +54,6 @@ const GraphComponent = ({
           dataPtLabels = "chart_date";
           dataPt1 = "behaviors";
           setChartData(behaviorData);
-          // console.log(behaviorData);
         }
       };
       getTheData();
@@ -69,10 +67,6 @@ const GraphComponent = ({
     dataPtLabels,
     chartType,
   ]);
-
-  // if (dataPtLabels) {
-  //   console.log(dataPtLabels, "<-----Chart Data for PB");
-  // }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {

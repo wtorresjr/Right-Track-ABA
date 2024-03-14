@@ -59,8 +59,8 @@ const ManageClients = () => {
       <div className="manageClientsHeader">
         <h1>Manage Clients</h1>
         <button id="addNewClientBtn" onClick={openCreateClientModal}>
-          <i class="fa-solid fa-person-circle-plus fa-xl"></i> Add New Client{" "}
-          <i class="fa-solid fa-person-circle-plus fa-xl"></i>
+          <i className="fa-solid fa-person-circle-plus fa-xl"></i> Add New
+          Client <i className="fa-solid fa-person-circle-plus fa-xl"></i>
         </button>
 
         <div
