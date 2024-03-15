@@ -36,6 +36,22 @@ const ManageClients = () => {
   }, [currentPage, perPage]);
 
   useEffect(() => {
+    // if (searchFilter) {
+    //   const getAllClients = async () => {
+    //     const allClients = await dispatch(getClientsThunk());
+    //     if (allClients) {
+    //       const results = allClients?.data?.filter((item) =>
+    //         Object.values(item).some(
+    //           (value) =>
+    //             typeof value === "string" &&
+    //             value.toLowerCase().includes(searchFilter.toLowerCase())
+    //         )
+    //       );
+    //       setFilteredClients(results);
+    //     }
+    //   };
+    //   getAllClients();
+    // } else {
     const results = clients?.filter((item) =>
       Object.values(item).some(
         (value) =>
@@ -44,6 +60,7 @@ const ManageClients = () => {
       )
     );
     setFilteredClients(results);
+    // }
   }, [clients, searchFilter]);
 
   const openCreateClientModal = () => {
@@ -69,7 +86,12 @@ const ManageClients = () => {
             border: `3px solid white`,
           }}
         >
-          <div>Total Clients: {totalClients}</div>
+          <div>
+            Total Clients: {totalClients}
+            {searchFilter && filteredClients
+              ? ` - (${filteredClients.length} Filtered)`
+              : ""}
+          </div>
         </div>
         <input
           type="text"
