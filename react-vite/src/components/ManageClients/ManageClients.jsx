@@ -41,6 +41,17 @@ const ManageClients = () => {
   }, [currentPage, perPage]);
 
   useEffect(() => {
+    const results = clients?.filter((item) =>
+      Object.values(item).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchFilter.toLowerCase())
+      )
+    );
+    setFilteredClients(results);
+  }, [clients]);
+
+  useEffect(() => {
     let allClients;
     const getClients = async () => {
       const fetchClients = await dispatch(getClientsThunk());
@@ -89,13 +100,13 @@ const ManageClients = () => {
               : ""}
           </div>
         </div>
-        {/* <input
+        <input
           type="text"
           placeholder="Search For A Client"
           value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
-        /> */}
-
+        />
+        {/* 
         <InputGroup className="mb-3">
           <Form.Control
             placeholder="Search For A Client"
@@ -103,7 +114,7 @@ const ManageClients = () => {
           />
           <Button variant="contained">Search</Button>
           <Button variant="contained">Clear</Button>
-        </InputGroup>
+        </InputGroup> */}
       </div>
 
       <div className="paginationDiv">
