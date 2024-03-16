@@ -115,8 +115,9 @@ const DailyCharts = ({ clientCharts }) => {
 
   let dayColorRating;
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber, rowsPerPage) => {
     setCurrentPage(pageNumber);
+    setPerPage(rowsPerPage);
   };
 
   return (
@@ -142,22 +143,22 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
 
-          <div className="paginationDiv">
-            <label>Page:</label>
+          {/* <div className="paginationDiv">
+            <label>Page:</label> */}
             <Paginator
               numOfCharts={numOfCharts}
               perPage={perPage}
               currentPage={currentPage}
               handlePageChange={handlePageChange}
             />
-            <label>Charts Per Page:</label>
+            {/* <label>Charts Per Page:</label>
             <input
               className="perPageInput"
               type="number"
               value={perPage}
               onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
 
           <InfoBar
             clientCharts={clientCharts}
