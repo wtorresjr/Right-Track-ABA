@@ -1,3 +1,8 @@
+import Button from "@mui/material/Button";
+import "../PaginationComp/bootstrap.css";
+// import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
@@ -5,7 +10,7 @@ import ClientInfo from "./ClientInfo";
 import CreateClient from "../CreateClientPage/CreateClientPage";
 import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
-import LegendComponent from "../DailyCharts/LegendComponent";
+// import LegendComponent from "../DailyCharts/LegendComponent";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
@@ -54,7 +59,6 @@ const ManageClients = () => {
     getClients();
   }, [searchFilter]);
 
-
   const openCreateClientModal = () => {
     setModalContent(<CreateClient />);
   };
@@ -85,12 +89,21 @@ const ManageClients = () => {
               : ""}
           </div>
         </div>
-        <input
+        {/* <input
           type="text"
           placeholder="Search For A Client"
           value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
-        />
+        /> */}
+
+        <InputGroup className="mb-3">
+          <Form.Control
+            placeholder="Search For A Client"
+            aria-label="Search For A Client"
+          />
+          <Button variant="contained">Search</Button>
+          <Button variant="contained">Clear</Button>
+        </InputGroup>
       </div>
 
       <div className="paginationDiv">
