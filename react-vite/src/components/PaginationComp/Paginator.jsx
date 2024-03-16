@@ -24,7 +24,8 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
   return (
     <TablePagination
       sx={{
-        // backgroundColor: "grey",
+        backgroundColor: "grey",
+        borderRadius:"10px",
         display: "flex",
         justifyContent: "center",
         width: "100%",

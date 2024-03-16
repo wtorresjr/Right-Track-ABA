@@ -57,8 +57,9 @@ const DiscreetTrials = () => {
     );
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber, rowsPerPage) => {
     setCurrentPage(pageNumber);
+    setPerPage(rowsPerPage);
   };
 
   return (
@@ -73,24 +74,13 @@ const DiscreetTrials = () => {
       </h1>
       {dtCount > 0 ? (
         <div className="chartsContain">
-          <div className="paginationDiv">
-            <label>Page:</label>
+          <Paginator
+            numOfCharts={totalDTs}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
 
-            <Paginator
-              numOfCharts={totalDTs}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-
-            <label>Discreet Trials Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
           <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
 
           {pagLoaded ? (
@@ -133,24 +123,6 @@ const DiscreetTrials = () => {
               <h2>Discreet Trials Loading...</h2>
             </div>
           )}
-
-          <div className="paginationDiv">
-            <label>Page:</label>
-            <Paginator
-              numOfCharts={totalDTs}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-
-            <label>Discreet Trials Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
         </div>
       ) : (
         <h2
