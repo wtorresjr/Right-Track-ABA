@@ -1,8 +1,3 @@
-import Button from "@mui/material/Button";
-import "../PaginationComp/bootstrap.css";
-// import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
@@ -10,7 +5,6 @@ import ClientInfo from "./ClientInfo";
 import CreateClient from "../CreateClientPage/CreateClientPage";
 import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
-// import LegendComponent from "../DailyCharts/LegendComponent";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
@@ -24,7 +18,6 @@ const ManageClients = () => {
   const totalClients = useSelector(
     (state) => state?.clients?.clients?.Total_Clients
   );
-  // const clientChartInfo = useSelector((state) => state?.clients?.client_by_id);
   const [filteredClients, setFilteredClients] = useState([]);
 
   const dispatch = useDispatch();
@@ -74,8 +67,9 @@ const ManageClients = () => {
     setModalContent(<CreateClient />);
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber, rowsPerPage) => {
     setCurrentPage(pageNumber);
+    setPerPage(rowsPerPage); // Update perPage when it changes in Paginator
   };
 
   return (
@@ -106,34 +100,18 @@ const ManageClients = () => {
           value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
         />
-        {/* 
-        <InputGroup className="mb-3">
-          <Form.Control
-            placeholder="Search For A Client"
-            aria-label="Search For A Client"
+      </div>
+
+      {filteredClients?.length > 0 && (
+        <div>
+          <Paginator
+            numOfCharts={totalClients || 0}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
           />
-          <Button variant="contained">Search</Button>
-          <Button variant="contained">Clear</Button>
-        </InputGroup> */}
-      </div>
-
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={totalClients}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-
-        <label>Clients Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
+        </div>
+      )}
 
       {isLoaded ? (
         filteredClients &&
@@ -153,22 +131,6 @@ const ManageClients = () => {
           Loading Clients...
         </h2>
       )}
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={totalClients}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-        <label>Clients Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
     </div>
   );
 };
