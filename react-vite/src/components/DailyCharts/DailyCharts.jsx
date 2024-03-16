@@ -143,22 +143,14 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
 
-          {/* <div className="paginationDiv">
-            <label>Page:</label> */}
+
             <Paginator
               numOfCharts={numOfCharts}
               perPage={perPage}
               currentPage={currentPage}
               handlePageChange={handlePageChange}
             />
-            {/* <label>Charts Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            /> */}
-          {/* </div> */}
+
 
           <InfoBar
             clientCharts={clientCharts}
@@ -229,22 +221,6 @@ const DailyCharts = ({ clientCharts }) => {
               <h2>Loading Charts...</h2>
             </div>
           )}
-          <div className="paginationDiv">
-            <label>Page:</label>
-            <Paginator
-              numOfCharts={numOfCharts}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-            <label>Charts Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
         </div>
       ) : (
         <h2
