@@ -24,9 +24,10 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
   return (
     <TablePagination
       sx={{
-        backgroundColor: "grey",
+        // backgroundColor: "grey",
         display: "flex",
         justifyContent: "center",
+        width: "100%",
       }}
       component="div"
       count={numOfCharts || 0}
