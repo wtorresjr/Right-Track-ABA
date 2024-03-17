@@ -26,7 +26,8 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        borderBottom:"1px solid grey"
+        borderBottom: "1px solid grey",
+        boxShadow:"0px 5px 10px black"
       }}
       component="div"
       count={numOfCharts || 0}
