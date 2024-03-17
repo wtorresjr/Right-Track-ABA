@@ -47,7 +47,9 @@ const ManageClients = () => {
   useEffect(() => {
     let allClients;
     const getClients = async () => {
-      const fetchClients = await dispatch(getClientsThunk());
+      const fetchClients = await dispatch(
+        getClientsThunk(currentPage, "undefined")
+      );
       if (fetchClients) {
         allClients = fetchClients.data.Clients;
         const results = allClients?.filter((item) =>
