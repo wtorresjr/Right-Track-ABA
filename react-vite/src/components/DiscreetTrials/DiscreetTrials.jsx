@@ -81,7 +81,7 @@ const DiscreetTrials = () => {
             handlePageChange={handlePageChange}
           />
 
-          <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} />
+          {/* <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} /> */}
 
           {pagLoaded ? (
             clientDT && clientDT.length ? (

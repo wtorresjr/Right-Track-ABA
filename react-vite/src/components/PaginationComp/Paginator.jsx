@@ -21,24 +21,21 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
 
   return (
     <TablePagination
-      sx={{
-        backgroundColor: "grey",
-        borderRadius: "10px",
+      style={{
+        color: "white",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
-        width: "100%",
       }}
       component="div"
       count={numOfCharts || 0}
       page={page}
       onPageChange={handleChangePage}
-      rowsPerPage={perPage} // Use perPage from props
+      rowsPerPage={perPage}
       onRowsPerPageChange={handleChangeRowsPerPage}
       rowsPerPageOptions={[1, 3, 5, 10, 25, 50, 100]}
-      style={{ color: "white" }}
       labelRowsPerPage="Items Per Page:"
-      // showLastButton={true}
-      // showFirstButton={true}
+      labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count}`}
     />
   );
 };

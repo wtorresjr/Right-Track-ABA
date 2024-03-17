@@ -83,7 +83,7 @@ const ManageClients = () => {
           Client <i className="fa-solid fa-person-circle-plus fa-xl"></i>
         </button>
 
-        <div
+        {/* <div
           className="chartTotalsContain"
           style={{
             border: `3px solid white`,
@@ -95,7 +95,7 @@ const ManageClients = () => {
               ? ` - (${filteredClients.length} Filtered)`
               : ""}
           </div>
-        </div>
+        </div> */}
         <input
           type="text"
           placeholder="Search For A Client"

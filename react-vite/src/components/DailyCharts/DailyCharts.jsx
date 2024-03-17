@@ -143,15 +143,12 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
 
-
-            <Paginator
-              numOfCharts={numOfCharts}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-
-
+          <Paginator
+            numOfCharts={numOfCharts}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
           <InfoBar
             clientCharts={clientCharts}
             numOfCharts={numOfCharts}
