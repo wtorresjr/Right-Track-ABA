@@ -143,12 +143,6 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
 
-          <Paginator
-            numOfCharts={numOfCharts}
-            perPage={perPage}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
-          />
           <InfoBar
             clientCharts={clientCharts}
             numOfCharts={numOfCharts}
@@ -156,6 +150,12 @@ const DailyCharts = ({ clientCharts }) => {
             filteredAvg={filteredAvg}
             filteredCharts={filteredCharts}
             type={"dailyCharts"}
+          />
+          <Paginator
+            numOfCharts={numOfCharts}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
           />
           {pagLoading ? (
             <div className="chartsContain">
