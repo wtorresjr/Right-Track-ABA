@@ -137,17 +137,19 @@ const ClientListComponent = () => {
             >
               Clear Date Filters
             </button>
-          <label>
-            Chart Type:
-            <div className="chartTypeContain">
-              <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
-              <button onClick={() => setSelectedChartType("Line")}>Line</button>
-              {/* <button onClick={() => setSelectedChartType("Scatter")}>
+            <label>
+              Chart Type:
+              <div className="chartTypeContain">
+                <button onClick={() => setSelectedChartType("Bar")}>Bar</button>
+                <button onClick={() => setSelectedChartType("Line")}>
+                  Line
+                </button>
+                {/* <button onClick={() => setSelectedChartType("Scatter")}>
             Scatter
             </button>
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button> */}
-            </div>
-          </label>
+              </div>
+            </label>
           </div>
         </div>{" "}
       </div>
@@ -169,9 +171,14 @@ const ClientListComponent = () => {
             />
           </div>
         ) : (
-          <div className="chartDisplayArea">
-            <p className="errorsPtag">Choose a client & Data Point</p>
-          </div>
+          <>
+            <div className="chartDisplayArea">
+              <p className="errorsPtag">Choose a client & Data Point</p>
+            </div>
+            <button id="createNewChartBtn" onClick={""}>
+              Add New Graph
+            </button>
+          </>
         )}
       </div>
     </>
