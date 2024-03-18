@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
@@ -6,6 +6,7 @@ import GraphComponentV2 from "../GraphComponent/GraphComponentV2";
 import { getAllIntervalsThunk } from "../../redux/charts";
 
 const ClientListComponent = ({ onRemove }) => {
+  const divToPrintRef = useRef(null);
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedChartType, setSelectedChartType] = useState("Line");
@@ -76,6 +77,18 @@ const ClientListComponent = ({ onRemove }) => {
       }
     }
   }, [startDay, endDay, clientCharts]);
+
+  const printGraph = () => {
+    const printContent = divToPrintRef.current.innerHTML;
+    const originalContent = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+  };
+
+  const exportGraph = () => {
+    console.log("Export Graph Clicked");
+  };
 
   return (
     <>
@@ -153,7 +166,7 @@ const ClientListComponent = ({ onRemove }) => {
           </label>
         </div>{" "}
       </div>
-      <div className="chartView">
+      <div className="chartView" ref={divToPrintRef}>
         {selectedClient &&
         chartDataPoint &&
         (filteredCharts || clientCharts) ? (
@@ -176,9 +189,21 @@ const ClientListComponent = ({ onRemove }) => {
           </div>
         )}
       </div>
-      <button id="createNewChartBtn" onClick={onRemove}>
-        Remove Graph
-      </button>
+      <div style={{ display: "flex", flexFlow: "row nowrap", gap: "10px" }}>
+        <button id="createNewChartBtn" onClick={onRemove}>
+          Remove Graph
+        </button>
+        {chartDataPoint && selectedClient && (
+          <>
+            <button id="createNewChartBtn" onClick={exportGraph}>
+              Export PDF
+            </button>
+            <button id="createNewChartBtn" onClick={printGraph}>
+              Print
+            </button>
+          </>
+        )}
+      </div>
     </>
   );
 };
