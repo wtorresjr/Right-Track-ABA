@@ -84,6 +84,7 @@ const DailyCharts = ({ clientCharts }) => {
         : setFilteredAvg(filtChartAvg);
 
       setFilteredCharts(dateResults);
+      setPagLoading(true);
     }
   }, [searchFilter, currentPage, perPage, clientCharts?.id, numOfCharts]);
 
