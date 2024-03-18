@@ -5,7 +5,6 @@ import ClientInfo from "./ClientInfo";
 import CreateClient from "../CreateClientPage/CreateClientPage";
 import { useModal } from "../../context/Modal";
 import "./manage-clients.css";
-import LegendComponent from "../DailyCharts/LegendComponent";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
@@ -19,7 +18,6 @@ const ManageClients = () => {
   const totalClients = useSelector(
     (state) => state?.clients?.clients?.Total_Clients
   );
-  // const clientChartInfo = useSelector((state) => state?.clients?.client_by_id);
   const [filteredClients, setFilteredClients] = useState([]);
 
   const dispatch = useDispatch();
@@ -44,14 +42,36 @@ const ManageClients = () => {
       )
     );
     setFilteredClients(results);
-  }, [clients, searchFilter]);
+  }, [clients]);
+
+  useEffect(() => {
+    let allClients;
+    const getClients = async () => {
+      const fetchClients = await dispatch(
+        getClientsThunk(currentPage, "undefined")
+      );
+      if (fetchClients) {
+        allClients = fetchClients.data.Clients;
+        const results = allClients?.filter((item) =>
+          Object.values(item).some(
+            (value) =>
+              typeof value === "string" &&
+              value.toLowerCase().includes(searchFilter.toLowerCase())
+          )
+        );
+        setFilteredClients(results);
+      }
+    };
+    getClients();
+  }, [searchFilter]);
 
   const openCreateClientModal = () => {
     setModalContent(<CreateClient />);
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber, rowsPerPage) => {
     setCurrentPage(pageNumber);
+    setPerPage(rowsPerPage); // Update perPage when it changes in Paginator
   };
 
   return (
@@ -63,14 +83,19 @@ const ManageClients = () => {
           Client <i className="fa-solid fa-person-circle-plus fa-xl"></i>
         </button>
 
-        <div
+        {/* <div
           className="chartTotalsContain"
           style={{
             border: `3px solid white`,
           }}
         >
-          <div>Total Clients: {totalClients}</div>
-        </div>
+          <div>
+            Total Clients: {totalClients}
+            {searchFilter && filteredClients
+              ? ` - (${filteredClients.length} Filtered)`
+              : ""}
+          </div>
+        </div> */}
         <input
           type="text"
           placeholder="Search For A Client"
@@ -79,23 +104,16 @@ const ManageClients = () => {
         />
       </div>
 
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={totalClients}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-
-        <label>Clients Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
+      {filteredClients?.length > 0 && (
+        <div>
+          <Paginator
+            numOfCharts={totalClients || 0}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        </div>
+      )}
 
       {isLoaded ? (
         filteredClients &&
@@ -115,22 +133,6 @@ const ManageClients = () => {
           Loading Clients...
         </h2>
       )}
-      <div className="paginationDiv">
-        <label>Page:</label>
-        <Paginator
-          numOfCharts={totalClients}
-          perPage={perPage}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-        <label>Clients Per Page:</label>
-        <input
-          className="perPageInput"
-          type="number"
-          value={perPage}
-          onChange={(e) => setPerPage(e.target.value)}
-        />
-      </div>
     </div>
   );
 };
