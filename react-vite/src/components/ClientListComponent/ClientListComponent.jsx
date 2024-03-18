@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import html2pdf from "html2pdf.js";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
 import "../CreateDailyChart/create-daily-chart.css";
@@ -6,6 +7,7 @@ import GraphComponentV2 from "../GraphComponent/GraphComponentV2";
 import { getAllIntervalsThunk } from "../../redux/charts";
 
 const ClientListComponent = ({ onRemove }) => {
+  const divToPrintRef = useRef(null);
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedChartType, setSelectedChartType] = useState("Line");
@@ -77,6 +79,35 @@ const ClientListComponent = ({ onRemove }) => {
     }
   }, [startDay, endDay, clientCharts]);
 
+  const printGraph = () => {
+    const printContent = divToPrintRef.current.innerHTML;
+    const printWindow = window.open("", "_blank");
+    printWindow.document.open();
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Graph</title>
+      </head>
+      <body>
+        ${printContent}
+      </body>
+    </html>
+  `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  };
+
+  const exportGraph = () => {
+    const printContent = divToPrintRef.current;
+    html2pdf().from(printContent).save();
+  };
+
+  const clearDates = () => {
+    setStartDay("");
+    setEndDay("");
+  };
+
   return (
     <>
       <div className="chartOptions">
@@ -130,9 +161,7 @@ const ClientListComponent = ({ onRemove }) => {
                 ></input>
               </label>
               <button
-                onClick={(e) => {
-                  setStartDay(""), setEndDay("");
-                }}
+                onClick={clearDates}
                 id="createChartBtn"
                 style={{ height: "50px" }}
               >
@@ -153,7 +182,7 @@ const ClientListComponent = ({ onRemove }) => {
           </label>
         </div>{" "}
       </div>
-      <div className="chartView">
+      <div className="chartView" ref={divToPrintRef}>
         {selectedClient &&
         chartDataPoint &&
         (filteredCharts || clientCharts) ? (
@@ -176,9 +205,21 @@ const ClientListComponent = ({ onRemove }) => {
           </div>
         )}
       </div>
-      <button id="createNewChartBtn" onClick={onRemove}>
-        Remove Graph
-      </button>
+      <div style={{ display: "flex", flexFlow: "row nowrap", gap: "10px" }}>
+        <button id="createNewChartBtn" onClick={onRemove}>
+          Remove Graph
+        </button>
+        {chartDataPoint && selectedClient && (
+          <>
+            <button id="createNewChartBtn" onClick={exportGraph}>
+              Export PDF
+            </button>
+            <button id="createNewChartBtn" onClick={printGraph}>
+              Print
+            </button>
+          </>
+        )}
+      </div>
     </>
   );
 };
