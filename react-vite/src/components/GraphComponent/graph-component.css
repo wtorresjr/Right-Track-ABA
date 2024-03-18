@@ -40,12 +40,12 @@
 }
 
 .chartView {
-  display: flex;
-  flex-flow: row-reverse nowrap;
+  /* display: flex; */
+  /* flex-flow: row-reverse nowrap; */
   gap: 10px;
   width: 100%;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
 }
 
 .custom-tooltip {

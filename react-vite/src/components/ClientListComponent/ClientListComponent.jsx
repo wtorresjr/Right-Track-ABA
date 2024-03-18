@@ -171,16 +171,14 @@ const ClientListComponent = () => {
             />
           </div>
         ) : (
-          <>
-            <div className="chartDisplayArea">
-              <p className="errorsPtag">Choose a client & Data Point</p>
-            </div>
-            <button id="createNewChartBtn" onClick={""}>
-              Add New Graph
-            </button>
-          </>
+          <div className="chartDisplayArea">
+            <p className="errorsPtag">Choose a client & Data Point</p>
+          </div>
         )}
       </div>
+      <button id="createNewChartBtn" onClick={""}>
+        Remove Graph
+      </button>
     </>
   );
 };
