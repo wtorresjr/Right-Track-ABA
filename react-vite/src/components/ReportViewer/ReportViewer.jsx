@@ -8,8 +8,17 @@ const ReportViewer = () => {
   const addGraph = () => {
     setGraphComponents((prevGraphs) => [
       ...prevGraphs,
-      <ClientListComponent key={prevGraphs.length} />,
+      <ClientListComponent
+        key={prevGraphs.length}
+        onRemove={() => removeGraph(prevGraphs.length)}
+      />,
     ]);
+  };
+
+  const removeGraph = (indexToRemove) => {
+    setGraphComponents((prevGraphs) =>
+      prevGraphs.filter((_, index) => index !== indexToRemove)
+    );
   };
 
   return (
