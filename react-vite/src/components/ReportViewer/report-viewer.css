@@ -6,14 +6,14 @@
 @media only screen and (min-width: 841px) {
 }
 
-.addGraphButton button {
+/* .addGraphButton button {
   background-color: #881600;
   color: white;
   height: 40px;
   border: 1px solid grey;
   border-radius: 10px;
   width: 40%;
-}
+} */
 
 .addGraphButton {
   display: flex;
