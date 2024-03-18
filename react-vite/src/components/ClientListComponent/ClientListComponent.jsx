@@ -1,3 +1,4 @@
+import html2pdf from "html2pdf.js";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk, getClientByIDThunk } from "../../redux/clients";
@@ -80,14 +81,31 @@ const ClientListComponent = ({ onRemove }) => {
 
   const printGraph = () => {
     const printContent = divToPrintRef.current.innerHTML;
-    const originalContent = document.body.innerHTML;
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalContent;
+    const printWindow = window.open("", "_blank");
+    printWindow.document.open();
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Graph</title>
+      </head>
+      <body>
+        ${printContent}
+      </body>
+    </html>
+  `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
   };
 
   const exportGraph = () => {
-    console.log("Export Graph Clicked");
+    const printContent = divToPrintRef.current;
+    html2pdf().from(printContent).save();
+  };
+
+  const clearDates = () => {
+    setStartDay("");
+    setEndDay("");
   };
 
   return (
@@ -143,9 +161,7 @@ const ClientListComponent = ({ onRemove }) => {
                 ></input>
               </label>
               <button
-                onClick={(e) => {
-                  setStartDay(""), setEndDay("");
-                }}
+                onClick={clearDates}
                 id="createChartBtn"
                 style={{ height: "50px" }}
               >
