@@ -9,7 +9,7 @@
     border-radius: 10px;
     /* display: flex;
     flex-flow: column wrap; */
-    gap: 20px;
+    /* gap: 20px; */
     color: white;
     width: 100%;
   }
@@ -26,7 +26,7 @@
     border-radius: 10px;
     /* display: flex;
     flex-flow: column wrap; */
-    gap: 20px;
+    /* gap: 20px; */
     color: white;
   }
 }

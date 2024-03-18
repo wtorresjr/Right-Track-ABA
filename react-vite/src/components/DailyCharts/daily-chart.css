@@ -1,6 +1,6 @@
 /* Extra small devices (phones) */
 @media only screen and (max-width: 840px) {
-  .paginationDiv {
+  /* .paginationDiv {
     display: flex;
     align-items: center;
     flex-flow: column wrap;
@@ -26,7 +26,7 @@
     justify-content: center;
     padding: 0;
     margin: 0;
-  }
+  } */
   .chartsContain {
     display: flex;
     justify-content: center;
@@ -151,17 +151,17 @@
 
 /* Small devices (tablets) */
 @media only screen and (min-width: 841px) {
-  .paginationDiv {
+  /* .paginationDiv {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-  }
+  } */
   .chartsContain {
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    padding: 20px 0 0 0;
+    /* padding: 20px 0 0 0; */
     justify-content: center;
   }
 
@@ -247,7 +247,7 @@
     cursor: pointer;
   }
   .dtItemsDiv {
-    margin: 30px 0 0 0;
+    /* margin: 30px 0 0 0; */
   }
 }
 
