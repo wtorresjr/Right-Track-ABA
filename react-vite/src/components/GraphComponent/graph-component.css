@@ -7,7 +7,7 @@
 }
 
 .chartOptions {
-  display: flex;
+  /* display: flex; */
   /* flex-flow: row wrap; */
   width: 100%;
   gap: 10px;
@@ -28,7 +28,6 @@
 }
 
 .clientNDp {
-  /* border: 1px solid white; */
   display: flex;
   flex-flow: column wrap;
 }
@@ -36,7 +35,6 @@
 .chartOptions .newChartMenu {
   display: flex;
   flex-flow: row wrap;
-  /* border: 1px solid red; */
 }
 
 .chartView {
@@ -70,6 +68,7 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  width:100%;
 }
 
 .dateDivider input {
