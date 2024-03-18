@@ -1,49 +1,44 @@
-import "./paginator.css";
-import Pagination from "react-bootstrap/Pagination";
-import "./bootstrap.css";
+import TablePagination from "@mui/material/TablePagination";
+import { useState, useEffect } from "react";
 
 const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
-  const totalPages = Math.ceil(numOfCharts / perPage);
-  const pageItems = [];
+  const [page, setPage] = useState(currentPage - 1);
 
-  const renderPageItems = () => {
-    const pagesToShow = 5;
-    const halfPagesToShow = Math.floor(pagesToShow / 2);
+  useEffect(() => {
+    setPage(currentPage - 1);
+  }, [currentPage]);
 
-    let startPage = Math.max(currentPage - halfPagesToShow, 1);
-    let endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    handlePageChange(newPage + 1, perPage); // Pass perPage from props
+  };
 
-    if (totalPages - endPage < halfPagesToShow) {
-      startPage = Math.max(endPage - pagesToShow + 1, 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageItems.push(
-        <Pagination.Item
-          key={i}
-          active={currentPage === i}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </Pagination.Item>
-      );
-    }
-
-    return pageItems;
+  const handleChangeRowsPerPage = (event) => {
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setPage(0);
+    handlePageChange(1, newRowsPerPage);
   };
 
   return (
-    <Pagination>
-      <Pagination.First onClick={() => handlePageChange(1)} />
-      <Pagination.Prev
-        onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
-      />
-      {renderPageItems()}
-      <Pagination.Next
-        onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
-      />
-      <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-    </Pagination>
+    <TablePagination
+      style={{
+        color: "white",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        borderBottom: "1px solid grey",
+        boxShadow:"0px 5px 10px black"
+      }}
+      component="div"
+      count={numOfCharts || 0}
+      page={page}
+      onPageChange={handleChangePage}
+      rowsPerPage={perPage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
+      rowsPerPageOptions={[1, 3, 5, 10, 25, 50, 100]}
+      labelRowsPerPage="Items Per Page:"
+      labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count}`}
+    />
   );
 };
 
