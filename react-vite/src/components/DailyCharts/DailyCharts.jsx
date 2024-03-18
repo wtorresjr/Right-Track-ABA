@@ -115,8 +115,9 @@ const DailyCharts = ({ clientCharts }) => {
 
   let dayColorRating;
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber, rowsPerPage) => {
     setCurrentPage(pageNumber);
+    setPerPage(rowsPerPage);
   };
 
   return (
@@ -142,23 +143,6 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
 
-          <div className="paginationDiv">
-            <label>Page:</label>
-            <Paginator
-              numOfCharts={numOfCharts}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-            <label>Charts Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
-
           <InfoBar
             clientCharts={clientCharts}
             numOfCharts={numOfCharts}
@@ -166,6 +150,12 @@ const DailyCharts = ({ clientCharts }) => {
             filteredAvg={filteredAvg}
             filteredCharts={filteredCharts}
             type={"dailyCharts"}
+          />
+          <Paginator
+            numOfCharts={numOfCharts}
+            perPage={perPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
           />
           {pagLoading ? (
             <div className="chartsContain">
@@ -228,22 +218,6 @@ const DailyCharts = ({ clientCharts }) => {
               <h2>Loading Charts...</h2>
             </div>
           )}
-          <div className="paginationDiv">
-            <label>Page:</label>
-            <Paginator
-              numOfCharts={numOfCharts}
-              perPage={perPage}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-            <label>Charts Per Page:</label>
-            <input
-              className="perPageInput"
-              type="number"
-              value={perPage}
-              onChange={(e) => setPerPage(e.target.value)}
-            />
-          </div>
         </div>
       ) : (
         <h2
