@@ -5,7 +5,7 @@ import "../CreateDailyChart/create-daily-chart.css";
 import GraphComponentV2 from "../GraphComponent/GraphComponentV2";
 import { getAllIntervalsThunk } from "../../redux/charts";
 
-const ClientListComponent = () => {
+const ClientListComponent = ({ onRemove }) => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedChartType, setSelectedChartType] = useState("Line");
@@ -111,32 +111,35 @@ const ClientListComponent = () => {
           </label>
         </div>
         <div className="newChartMenu">
-          <div className="dateDivider">
-            <label>
-              Start:
-              <input
-                type="date"
-                value={startDay}
-                onChange={(e) => setStartDay(e.target.value)}
-              ></input>
-            </label>
-            <label>
-              End:
-              <input
-                type="date"
-                value={endDay}
-                onChange={(e) => setEndDay(e.target.value)}
-              ></input>
-            </label>
-            <button
-              onClick={(e) => {
-                setStartDay(""), setEndDay("");
-              }}
-              id="createChartBtn"
-              style={{ height: "50px" }}
-            >
-              Clear Date Filters
-            </button>
+          {chartDataPoint && selectedClient && (
+            <div className="dateDivider">
+              <label>
+                Start:
+                <input
+                  type="date"
+                  value={startDay}
+                  onChange={(e) => setStartDay(e.target.value)}
+                ></input>
+              </label>
+              <label>
+                End:
+                <input
+                  type="date"
+                  value={endDay}
+                  onChange={(e) => setEndDay(e.target.value)}
+                ></input>
+              </label>
+              <button
+                onClick={(e) => {
+                  setStartDay(""), setEndDay("");
+                }}
+                id="createChartBtn"
+                style={{ height: "50px" }}
+              >
+                Clear Date Filters
+              </button>
+            </div>
+          )}
           <label>
             Chart Type:
             <div className="chartTypeContain">
@@ -148,7 +151,6 @@ const ClientListComponent = () => {
           <button onClick={() => setSelectedChartType("Pie")}>Pie</button> */}
             </div>
           </label>
-          </div>
         </div>{" "}
       </div>
       <div className="chartView">
@@ -174,6 +176,9 @@ const ClientListComponent = () => {
           </div>
         )}
       </div>
+      <button id="createNewChartBtn" onClick={onRemove}>
+        Remove Graph
+      </button>
     </>
   );
 };
