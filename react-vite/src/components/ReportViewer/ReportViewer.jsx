@@ -16,7 +16,9 @@ const ReportViewer = () => {
     <div className="mainDisplayContain">
       <div className="addGraphButton">
         <h1>Report Viewer</h1>
-        <button onClick={addGraph}>Add New Graph</button>
+        <button id="createNewChartBtn" onClick={addGraph}>
+          Add New Graph
+        </button>
       </div>
 
       {graphComponents.map((graph, index) => (
