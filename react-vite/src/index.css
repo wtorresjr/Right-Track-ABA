@@ -109,3 +109,7 @@ label {
   background-color: rgb(58, 58, 58);
   padding: 5px;
 }
+
+#root {
+  margin: 0 0 100px 0;
+}
