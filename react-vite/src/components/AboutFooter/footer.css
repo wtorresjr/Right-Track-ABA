@@ -1,0 +1,28 @@
+.footer {
+  color: white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  /* height: 50px; */
+  background-color: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 5px 25px 10px 25px;
+  box-sizing: border-box;
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.384);
+  gap: 0 20px;
+}
+
+.footer span {
+  color: rgb(185, 185, 185);
+}
+
+.identFoot {
+  width: 100%;
+  justify-content: space-between;
+  /* background-color: red; */
+  display: flex;
+  flex-flow: row wrap;
+}
