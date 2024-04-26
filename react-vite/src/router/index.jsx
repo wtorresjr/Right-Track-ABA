@@ -12,6 +12,7 @@ import CreateDailyChart from "../components/CreateDailyChart/CreateDailyChart";
 import { DailyCharts } from "../components/DailyCharts";
 import DailyChartAll from "../components/ReportViewer";
 import DiscreetTrialDetail from "../components/DiscreetTrials/DiscreetTrialDetail";
+import { AI_Suggest_Comp } from "../components/AI-Suggest-Comp";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MainDisplay />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/ai_suggest",
+        element: (
+          <PrivateRoute>
+            <AI_Suggest_Comp />
           </PrivateRoute>
         ),
       },
