@@ -17,7 +17,7 @@ import json
 
 
 def seed_clients():
-    for client_idx in range(1, 10):
+    for client_idx in range(1, 3):
         client = Client(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
