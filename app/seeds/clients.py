@@ -11,6 +11,7 @@ from .seeder_helper_arrays import (
     shape_choices,
     activities,
 )
+from .intervals import seed_intervals
 from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 import json
 
@@ -50,76 +51,76 @@ def seed_clients():
             db.session.commit()
             new_chart = chart.to_dict()
 
-            # def seed_intervals():
-            start_time = datetime(2023, 1, 1, 9, 15)
-            client_behavior_base = randint(1, 3)
-            client_behavior_max = randint(
-                client_behavior_base, client_behavior_base + client_behavior_base
-            )
+            seed_intervals()
+            # start_time = datetime(2023, 1, 1, 9, 15)
+            # client_behavior_base = randint(1, 3)
+            # client_behavior_max = randint(
+            #     client_behavior_base, client_behavior_base + client_behavior_base
+            # )
 
-            for _ in range(randint(8, 32)):
-                interval_tags = [choice(behaviors) for _ in range(randint(0, 4))]
+            # for _ in range(randint(8, 32)):
+            #     interval_tags = [choice(behaviors) for _ in range(randint(0, 4))]
 
-                int_tags = {}
-                for behavior in interval_tags:
-                    int_tags[behavior] = randint(
-                        client_behavior_base, client_behavior_max
-                    )
+            #     int_tags = {}
+            #     for behavior in interval_tags:
+            #         int_tags[behavior] = randint(
+            #             client_behavior_base, client_behavior_max
+            #         )
 
-                interval_rating = 5
+            #     interval_rating = 5
 
-                for [key, value] in int_tags.items():
-                    if (
-                        key == "Biting"
-                        or "Aggression"
-                        or "Kicking"
-                        or "Property Destruction"
-                        or "Spitting"
-                        or "Hitting"
-                        or "Throwing"
-                        or "Self-Injurious Behiavior"
-                        or "Tantrums"
-                        or "Elopement"
-                    ):
-                        interval_rating -= value * 0.50
+            #     for [key, value] in int_tags.items():
+            #         if (
+            #             key == "Biting"
+            #             or "Aggression"
+            #             or "Kicking"
+            #             or "Property Destruction"
+            #             or "Spitting"
+            #             or "Hitting"
+            #             or "Throwing"
+            #             or "Self-Injurious Behiavior"
+            #             or "Tantrums"
+            #             or "Elopement"
+            #         ):
+            #             interval_rating -= value * 0.50
 
-                    if (
-                        key == "Biting"
-                        or "Crying"
-                        or "Non-Compliance"
-                        or "Negative Statements"
-                        or "Inappropriate Language"
-                        or "PICA"
-                        or "Food Refusal"
-                        or "Task Refusal"
-                        or "Outburts"
-                    ):
-                        interval_rating -= value * 0.25
+            #         if (
+            #             key == "Biting"
+            #             or "Crying"
+            #             or "Non-Compliance"
+            #             or "Negative Statements"
+            #             or "Inappropriate Language"
+            #             or "PICA"
+            #             or "Food Refusal"
+            #             or "Task Refusal"
+            #             or "Outburts"
+            #         ):
+            #             interval_rating -= value * 0.25
 
-                    else:
-                        interval_rating -= value * 0.02
-                    if interval_rating <= 0:
-                        interval_rating = 0
-                        break
+            #         else:
+            #             interval_rating -= value * 0.02
+            #         if interval_rating <= 0:
+            #             interval_rating = 0
+            #             break
 
-                interval1 = Interval(
-                    start_interval=start_time.time(),
-                    end_interval=(start_time + timedelta(minutes=15)).time(),
-                    interval_notes=fake.text(),
-                    interval_tags=int_tags,
-                    interval_rating=interval_rating,
-                    therapist_id=new_client["therapist_id"],
-                    chart_id=new_chart["id"],
-                    activity=choice(activities),
-                )
-                db.session.add(interval1)
-                db.session.commit()
+            #     interval1 = Interval(
+            #         start_interval=start_time.time(),
+            #         end_interval=(start_time + timedelta(minutes=15)).time(),
+            #         interval_notes=fake.text(),
+            #         interval_tags=int_tags,
+            #         interval_rating=interval_rating,
+            #         therapist_id=new_client["therapist_id"],
+            #         chart_id=new_chart["id"],
+            #         activity=choice(activities),
+            #     )
+            #     db.session.add(interval1)
+            #     db.session.commit()
 
-                start_time += timedelta(minutes=randint(15, 30))
-                if start_time.minute == 45:
-                    start_time += timedelta(minutes=15)
-                elif start_time.minute == 60:
-                    start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
+            #     start_time += timedelta(minutes=randint(15, 30))
+            #     if start_time.minute == 45:
+            #         start_time += timedelta(minutes=15)
+            #     elif start_time.minute == 60:
+            #         start_time = start_time.replace(hour=start_time.hour + 1, minute=0)
 
     db.session.commit()
 
