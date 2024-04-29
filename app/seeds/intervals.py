@@ -2,38 +2,44 @@ import os
 import sys
 import json
 import sys
+import time
 
-# Add the project root directory to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-# Now you can import modules from the app package
+from app.seeds.ml_learning_seed import Interval_Data
 from app.models.db import db
 from app.models import Interval
-
 from datetime import date, timedelta, datetime
-from app.seeds.ml_learning_seed import Interval_Data
 
 
 
-
-
-def seed_intervals():
-# def seed_intervals(imported_chart_id, client_id):
-    
+# def seed_intervals():
+def seed_intervals(chart_id, therapist_id):
+    # with current_app.app_context():
     for interval in Interval_Data:
-        start_interval = interval["start_interval"]
-        end_interval = interval["end_interval"]
-        client_id = interval["client_id"]
-        # chart_id = interval["chart_id"]
-        activity = interval["activity"]
-        interval_tags = interval["interval_tags"]
-        interval_notes = interval["interval_notes"]
-        
-        
-        print(interval_notes)
 
-        
-        # print(new_int)
-        
+        start_strip = time.strptime(interval["start_interval"], "%H:%M:%S")
+        end_strip = time.strptime(interval["end_interval"], "%H:%M:%S")
 
-seed_intervals()
+        start_int = start_strip.tm_hour, start_strip.tm_min
+        end_int = end_strip.tm_hour, end_strip.tm_min
+
+        start_time = datetime(2023, 1, 1, start_int[0], start_int[1])
+        end_time = datetime(2023, 1, 1, end_int[0], end_int[1])
+
+        new_int = Interval(
+            start_interval=start_time.time(),
+            end_interval=end_time.time(),
+            activity=interval["activity"],
+            interval_tags=interval["interval_tags"],
+            interval_rating=interval["interval_rating"],
+            interval_notes=interval["interval_notes"],
+            therapist_id=therapist_id,
+            chart_id=chart_id,
+        )
+
+        db.session.add(new_int)
+    db.session.commit()
+
+
+# seed_intervals()
