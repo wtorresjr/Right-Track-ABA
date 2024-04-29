@@ -40,22 +40,36 @@ def seed_clients():
 
         seed_discreet_trials(new_client)
 
-        for _ in range(1, 4):
-            chart = Daily_Chart(
-                client_id=client_idx,
-                chart_date=fake.date_between(
-                    start_date=date(2023, 12, 1), end_date=date(2024, 1, 30)
-                ),
-                therapist_id=new_client["therapist_id"],
-                chart_complete=True,
-            )
-            db.session.add(chart)
-            db.session.commit()
-            new_chart = chart.to_dict()
+    for _ in range(6):
 
-            seed_intervals(new_chart["id"], new_chart["therapist_id"])
+        client_decode = 0
+        if _ + 1 == 1:
+            client_decode = 1
+        if _ + 1 == 2:
+            client_decode = 2
+        if _ + 1 == 3:
+            client_decode = 3
+        if _ + 1 == 4:
+            client_decode = 1
+        if _ + 1 == 5:
+            client_decode = 2
+        if _ + 1 == 6:
+            client_decode = 3
+
+        chart = Daily_Chart(
+            client_id=client_decode,
+            chart_date=fake.date_between(
+                start_date=date(2023, 12, 1), end_date=date(2024, 1, 30)
+            ),
+            therapist_id=new_client["therapist_id"],
+            chart_complete=True,
+        )
+        db.session.add(chart)
+        db.session.commit()
+        new_chart = chart.to_dict()
 
     db.session.commit()
+    seed_intervals()
 
 
 def undo_clients():

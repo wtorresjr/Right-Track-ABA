@@ -10,11 +10,11 @@ from app.seeds.ml_learning_seed import Interval_Data
 from app.models.db import db
 from app.models import Interval
 from datetime import date, timedelta, datetime
-
+from random import randint
 
 
 # def seed_intervals():
-def seed_intervals(chart_id, therapist_id):
+def seed_intervals():
     # with current_app.app_context():
     for interval in Interval_Data:
 
@@ -34,8 +34,8 @@ def seed_intervals(chart_id, therapist_id):
             interval_tags=interval["interval_tags"],
             interval_rating=interval["interval_rating"],
             interval_notes=interval["interval_notes"],
-            therapist_id=therapist_id,
-            chart_id=chart_id,
+            therapist_id=1,
+            chart_id=interval["chart_id"],
         )
 
         db.session.add(new_int)
