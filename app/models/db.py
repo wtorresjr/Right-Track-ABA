@@ -1,11 +1,14 @@
-from flask_sqlalchemy import SQLAlchemy
-from faker import Faker
-
-
 import os
-
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
+from faker import Faker
+from flask_sqlalchemy import SQLAlchemy
+
+
+
+
+
+
 
 
 fake = Faker()

@@ -1,5 +1,6 @@
 from app.models import db, Client, Daily_Chart, Interval, environment, SCHEMA
-from app.models.db import fake
+# from app.models.db import fake
+from faker import Faker
 from sqlalchemy.sql import text
 from datetime import date, timedelta, datetime
 from random import randint, choice
@@ -14,6 +15,7 @@ from .seeder_helper_arrays import (
 from .intervals import seed_intervals
 from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 import json
+fake = Faker()
 
 
 def seed_clients():
@@ -38,7 +40,7 @@ def seed_clients():
         seed_discreet_trials(new_client)
 
         # def seed_daily_charts():
-        for _ in range(randint(20, 55)):
+        for _ in range(1,3):
             chart = Daily_Chart(
                 client_id=client_idx,
                 chart_date=fake.date_between(
@@ -51,7 +53,7 @@ def seed_clients():
             db.session.commit()
             new_chart = chart.to_dict()
 
-            seed_intervals()
+            seed_intervals(new_chart.id)
             # start_time = datetime(2023, 1, 1, 9, 15)
             # client_behavior_base = randint(1, 3)
             # client_behavior_max = randint(
