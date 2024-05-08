@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .therapists import seed_therapists, undo_therapists
 from .clients import seed_clients, undo_clients
 
+
 # from .daily_charts import seed_daily_charts, undo_daily_charts
 # from .discreet_trials import seed_discreet_trials, undo_discreet_trials
 
