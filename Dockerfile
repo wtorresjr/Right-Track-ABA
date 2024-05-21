@@ -35,7 +35,7 @@ RUN apk add build-base postgresql-dev gcc python3-dev musl-dev
 
 # Set environment variables
 ARG FLASK_APP
-ARG FLASK_ENV
+ARG FLASK_DEBUG
 ARG DATABASE_URL
 ARG SCHEMA
 ARG SECRET_KEY
