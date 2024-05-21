@@ -21,8 +21,8 @@ COPY . .
 
 # CMD flask db upgrade && flask seed all && gunicorn app:app
 # RUN flask db downgrade
-RUN flask db upgrade
-RUN flask seed all
+# RUN flask db upgrade
+# RUN flask seed all
 
 # RUN flask seed therapists
 
