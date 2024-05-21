@@ -1,7 +1,7 @@
-instance/*
-instance
+# instance/*
+# instance
 node_modules
 .env
 .venv
-dev.db
+# dev.db
 .gitignore
