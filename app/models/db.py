@@ -1,5 +1,5 @@
 import os
-environment = os.getenv("FLASK_ENV")
+environment = os.getenv("FLASK_DEBUG")
 SCHEMA = os.environ.get("SCHEMA")
 from faker import Faker
 from flask_sqlalchemy import SQLAlchemy
