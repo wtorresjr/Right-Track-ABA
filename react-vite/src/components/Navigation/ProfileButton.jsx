@@ -79,7 +79,7 @@ function ProfileButton() {
                   View Reports
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/ai_suggest"
                   className="navLinks"
@@ -88,7 +88,7 @@ function ProfileButton() {
                   <i className="fa-solid fa-robot fa-2xl" />
                   AI Suggestions
                 </NavLink>
-              </li>
+              </li> */}
               {/* <li className="navLinks" onClick={openCreateChartModal}>
                 Create Daily Chart
               </li> */}
