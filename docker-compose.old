@@ -1,0 +1,18 @@
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    ports:
+      - "8000:8000"
+    depends_on:
+      - react
+
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    environment:
+      - BROWSER=none
+    ports:
+      - "5173:5173"
