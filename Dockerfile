@@ -1,18 +1,3 @@
-# Dockerfile for React
-# FROM node:16-alpine
-
-# WORKDIR /app
-
-# COPY react-vite/package.json react-vite/package-lock.json ./
-
-# RUN npm install
-
-# COPY react-vite ./
-
-# EXPOSE 3000
-
-# CMD ["npm", "start"]
-
 
 # Stage 1: Build React App
 FROM node:16-alpine AS react-build
