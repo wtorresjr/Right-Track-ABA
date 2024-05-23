@@ -1,0 +1,10 @@
+.recordBtn {
+  border-radius: 8px;
+  border: 0px;
+  cursor: pointer;
+}
+
+.suggestDropDown {
+  display: flex;
+  gap: 5px;
+}
