@@ -12,6 +12,7 @@ from .api.daily_chart_routes import daily_charts_bp
 from .api.chart_interval_routes import chart_interval_bp
 from .api.discreet_trials_routes import discreet_trials_bp
 from .api.trial_routes import trials_bp
+from .api.ai_suggest_routes import ai_suggest
 from .seeds import seed_commands
 from .config import Config
 
@@ -39,6 +40,7 @@ app.register_blueprint(daily_charts_bp, url_prefix="/api/my-daily-charts")
 app.register_blueprint(chart_interval_bp, url_prefix="/api/interval/")
 app.register_blueprint(trials_bp, url_prefix="/api/my-trials/")
 app.register_blueprint(discreet_trials_bp, url_prefix="/api/my-discreet-trials/")
+app.register_blueprint(ai_suggest, url_prefix="/api/ai-suggest")
 db.init_app(app)
 Migrate(app, db)
 
