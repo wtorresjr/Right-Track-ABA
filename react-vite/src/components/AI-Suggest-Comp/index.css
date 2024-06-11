@@ -8,3 +8,28 @@
   display: flex;
   gap: 5px;
 }
+
+.aiBtnContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.aiBtnContainer button {
+  flex-grow: 1;
+  height: 40px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.cleanDataDiv {
+  background-color: black;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#cleanDataText {
+  margin-top: 20px;
+}
