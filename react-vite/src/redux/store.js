@@ -9,12 +9,14 @@ import sessionReducer from "./session";
 import { clientsReducer } from "./clients";
 import chartsReducer from "./charts";
 import dtReducer from "./dts";
+import aiReducer from "./aiSuggest";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   clients: clientsReducer,
   chart: chartsReducer,
   dt: dtReducer,
+  ai: aiReducer,
 });
 
 let enhancer;
