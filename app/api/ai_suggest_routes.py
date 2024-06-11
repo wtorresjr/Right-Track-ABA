@@ -16,6 +16,7 @@ import subprocess
 
 # analysis_data_prompt = "You are an ABA Professional tasked with reviewing session interval data, identifying trends and recommending intervention strategies. The intervals are separated by || and different data points within the intervals are separated by :: if there are back to back :: :: like this that means there were no problem behaviors logged for the interval. Please provide an overall analysis of the provided data and suggest intervention strategies. Please identify any trends related to time of day, activity and behaviors exhibited."
 
+analysis_data_prompt = "Count the numbers in the array"
 
 # from ai_prompts import prompt1
 app = Flask(__name__)
@@ -30,7 +31,6 @@ def dict_to_string(d):
     return ", ".join([f"{k}: {v}" for k, v in d.items()])
 
 
-
 @ai_suggest_post.route("/", methods=["POST"])
 def suggest_treatment():
     # Define the URL of the Ollama server's API endpoint
@@ -39,8 +39,9 @@ def suggest_treatment():
     ollama_url = "http://localhost:11434/api/generate"
     # Define the JSON payload containing the input data
 
+    prompt = data.get("prompt", "")
     payload = {
-        "prompt": data.get("prompt",""),
+        "prompt": f'{analysis_data_prompt} = {prompt}',
         # "prompt":f'{analysis_data_prompt} = # #',
         "model": data.get("model", "phi3"),
         "stream": data.get("stream")
@@ -63,8 +64,7 @@ def suggest_treatment():
             # Check if the response contains the expected structure
             if response_data:
                 # Extract the response message from the data
-                response_message = response_data["response"]
-
+                response_message = response_data
             else:
                 # Handle the case where the expected structure is not present
                 response_message = {

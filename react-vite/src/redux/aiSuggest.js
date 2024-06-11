@@ -1,0 +1,39 @@
+const GET_CLIENT_DATA = "aiReducer/getClientData";
+
+export const getClientData = (cleanData) => {
+  return {
+    type: GET_CLIENT_DATA,
+    payload: cleanData,
+  };
+};
+
+export const getClientDataForAI = (client_id) => async (dispatch) => {
+  const response = await fetch(`/api/ai-suggest-post/${parseInt(client_id)}`, {
+    method: "GET",
+    header: { "Content-Type": "application/json" },
+  });
+
+  if (response.ok) {
+    const foundCleanData = await response.json();
+    dispatch(getClientData(foundCleanData));
+    return foundCleanData;
+  }
+};
+
+const initialState = {
+  cleanData: {},
+};
+
+function aiReducer(state = initialState, action) {
+  switch (action.type) {
+    case GET_CLIENT_DATA:
+      return {
+        ...state,
+        cleanData: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
+export default aiReducer;
