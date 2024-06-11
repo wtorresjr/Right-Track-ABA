@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
+import { getClientDataForAI } from "../../redux/aiSuggest";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
+  const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+
   useEffect(() => {
     dispatch(getClientsThunk());
   }, []);
 
-  const getRecords = () => {
-    console.log(selectedClient, "<---Client INFO");
+  const getRecords = async () => {
+    await dispatch(getClientDataForAI(selectedClient));
   };
 
   return (
