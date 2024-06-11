@@ -19,6 +19,16 @@ const AI_Suggest_Comp = () => {
     await dispatch(getClientDataForAI(selectedClient));
   };
 
+  const analyzeTrends = async () => {
+    console.log("Analyze Trends");
+  };
+  const suggestIntervention = async () => {
+    console.log("Suggest Intervention");
+  };
+  const graphData = async () => {
+    console.log("Graph Data");
+  };
+
   return (
     <div className="mainDisplayContain">
       <div className="manageClientsHeader">
@@ -52,10 +62,13 @@ const AI_Suggest_Comp = () => {
 
       {cleanDataStore.cleanData ? (
         <div className="cleanDataDiv">
+          <div className="manageClientsHeader">
+            <h1>Clean Interval Data</h1>
+          </div>
           <div className="aiBtnContainer">
-            <button>Analyze Trends</button>
-            <button>Suggest Intervention</button>
-            <button>Graph Data</button>
+            <button onClick={analyzeTrends}>Analyze Trends</button>
+            <button onClick={suggestIntervention}>Suggest Intervention</button>
+            <button onClick={graphData}>Graph Data</button>
           </div>
           <div id="cleanDataText">{cleanDataStore["cleanData"]}</div>
         </div>

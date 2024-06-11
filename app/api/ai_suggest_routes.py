@@ -33,51 +33,38 @@ def dict_to_string(d):
 
 @ai_suggest_post.route("/", methods=["POST"])
 def suggest_treatment():
-    # Define the URL of the Ollama server's API endpoint
-    # Get JSON data from the request
+
     data = request.get_json()
     ollama_url = "http://localhost:11434/api/generate"
-    # Define the JSON payload containing the input data
 
     prompt = data.get("prompt", "")
     payload = {
         "prompt": f'{analysis_data_prompt} = {prompt}',
-        # "prompt":f'{analysis_data_prompt} = # #',
         "model": data.get("model", "phi3"),
         "stream": data.get("stream")
     }
 
     print(f"Sending payload to Ollama API: {payload}")
 
-    # Send a POST request to the Ollama server's API endpoint with the JSON payload
     response = requests.post(ollama_url, json=payload)
 
     print(
         f"Received response from Ollama API: {response.status_code} - {response.text}")
 
-    # Check if the request was successful (status code 200)
     if response.status_code == 200:
-        # Parse the response JSON data
         try:
             response_data = response.json()
-
-            # Check if the response contains the expected structure
             if response_data:
-                # Extract the response message from the data
                 response_message = response_data
             else:
-                # Handle the case where the expected structure is not present
                 response_message = {
                     "error": "Unexpected response structure", "response_data": response_data}
 
-            # Return the response message as JSON
             return jsonify(response_message)
 
         except ValueError:
-            # Handle JSON decoding error
             return jsonify({"error": "Failed to decode JSON response from Ollama API", "response_text": response.text})
     else:
-        # Return an error message if the request failed
         return jsonify({"error": f"Request failed with status code {response.status_code}"}), response.status_code
 
 
@@ -117,7 +104,7 @@ def get_clean_records(client_id):
     text_only = ""
 
     for values in values_only:
-        text_only += f" || "
+        text_only += f"|| "
         for text in values:
             text_only += f"{text}:: "
 
