@@ -49,6 +49,17 @@ const AI_Suggest_Comp = () => {
           </button>
         )}
       </div>
+
+      {cleanDataStore.cleanData ? (
+        <div className="cleanDataDiv">
+          <div className="aiBtnContainer">
+            <button>Analyze Trends</button>
+            <button>Suggest Intervention</button>
+            <button>Graph Data</button>
+          </div>
+          <div id="cleanDataText">{cleanDataStore["cleanData"]}</div>
+        </div>
+      ) : null}
     </div>
   );
 };
