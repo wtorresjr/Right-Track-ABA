@@ -2,16 +2,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
-import { getClientDataForAI } from "../../redux/aiSuggest"; 
-
-
+import { getClientDataForAI } from "../../redux/aiSuggest";
+import { trend_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
-
-  let cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+  const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -22,10 +20,8 @@ const AI_Suggest_Comp = () => {
   };
 
   const analyzeTrends = async () => {
-    console.log("Analyze Trends");
-
-    
-
+    const prompt = `${trend_prompt}=${cleanDataStore.cleanData}`;
+    console.log(prompt);
   };
 
   const suggestIntervention = async () => {
@@ -35,7 +31,6 @@ const AI_Suggest_Comp = () => {
   const graphData = async () => {
     console.log("Graph Data");
   };
-
 
   return (
     <div className="mainDisplayContain">
