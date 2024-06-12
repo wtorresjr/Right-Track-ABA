@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
-import { getClientDataForAI } from "../../redux/aiSuggest";
+import { getClientDataForAI } from "../../redux/aiSuggest"; 
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
 
-  const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+  let cleanDataStore = useSelector((state) => state?.ai?.cleanData);
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -22,12 +22,15 @@ const AI_Suggest_Comp = () => {
   const analyzeTrends = async () => {
     console.log("Analyze Trends");
   };
+
   const suggestIntervention = async () => {
     console.log("Suggest Intervention");
   };
+
   const graphData = async () => {
     console.log("Graph Data");
   };
+
 
   return (
     <div className="mainDisplayContain">
@@ -59,20 +62,25 @@ const AI_Suggest_Comp = () => {
           </button>
         )}
       </div>
-
-      {cleanDataStore.cleanData ? (
-        <div className="cleanDataDiv">
-          <div className="manageClientsHeader">
-            <h1>Clean Interval Data</h1>
+      <>
+        {cleanDataStore.cleanData ? (
+          <div className="cleanDataDiv">
+            <div className="manageClientsHeader">
+              <h1>Clean Interval Data</h1>
+            </div>
+            <div className="aiBtnContainer">
+              <button onClick={() => analyzeTrends()}>Analyze Trends</button>
+              <button onClick={() => suggestIntervention()}>
+                Suggest Intervention
+              </button>
+              <button onClick={() => alert("Feature Coming Soon...")}>
+                Graph Data
+              </button>
+            </div>
+            <div id="cleanDataText">{cleanDataStore["cleanData"]}</div>
           </div>
-          <div className="aiBtnContainer">
-            <button onClick={analyzeTrends}>Analyze Trends</button>
-            <button onClick={suggestIntervention}>Suggest Intervention</button>
-            <button onClick={graphData}>Graph Data</button>
-          </div>
-          <div id="cleanDataText">{cleanDataStore["cleanData"]}</div>
-        </div>
-      ) : null}
+        ) : null}
+      </>
     </div>
   );
 };

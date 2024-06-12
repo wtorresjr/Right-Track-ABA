@@ -5,23 +5,16 @@ from flask import jsonify, Flask
 from collections import OrderedDict, defaultdict
 from flask import Blueprint, jsonify, request, Response
 from collections import OrderedDict
-from transformers import pipeline, AutoTokenizer
+# from transformers import pipeline, AutoTokenizer
 from flask_login import current_user, login_user, login_required
-from app.models import db
+# from app.models import db
 from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
-from datetime import date
-import subprocess
-# from api.ai_prompts import analysis_data_prompt
+# from datetime import date
+from .ai_prompts import trend_prompt
 
-# analysis_data_prompt = "You are an ABA Professional tasked with reviewing session interval data, identifying trends and recommending intervention strategies. The intervals are separated by || and different data points within the intervals are separated by :: if there are back to back :: :: like this that means there were no problem behaviors logged for the interval. Please provide an overall analysis of the provided data and suggest intervention strategies. Please identify any trends related to time of day, activity and behaviors exhibited."
 
-analysis_data_prompt = "Count the numbers in the array"
-
-# from ai_prompts import prompt1
 app = Flask(__name__)
-
-# ai_suggest = Blueprint("ai-suggest", __name__)
 
 ai_suggest_post = Blueprint("ai-suggest-post", __name__)
 
@@ -39,17 +32,17 @@ def suggest_treatment():
 
     prompt = data.get("prompt", "")
     payload = {
-        "prompt": f'{analysis_data_prompt} = {prompt}',
+        "prompt": f'{prompt}',
         "model": data.get("model", "phi3"),
         "stream": data.get("stream")
     }
 
-    print(f"Sending payload to Ollama API: {payload}")
+    # print(f"Sending payload to Ollama API: {payload}")
 
     response = requests.post(ollama_url, json=payload)
 
-    print(
-        f"Received response from Ollama API: {response.status_code} - {response.text}")
+    # print(
+    #     f"Received response from Ollama API: {response.status_code} - {response.text}")
 
     if response.status_code == 200:
         try:
