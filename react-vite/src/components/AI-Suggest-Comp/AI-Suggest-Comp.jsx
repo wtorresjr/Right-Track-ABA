@@ -4,6 +4,8 @@ import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
 import { getClientDataForAI } from "../../redux/aiSuggest"; 
 
+
+
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
   const [selectedClient, setSelectedClient] = useState(null);
@@ -21,6 +23,9 @@ const AI_Suggest_Comp = () => {
 
   const analyzeTrends = async () => {
     console.log("Analyze Trends");
+
+    
+
   };
 
   const suggestIntervention = async () => {
