@@ -1,6 +1,22 @@
 const GET_CLIENT_DATA = "aiReducer/getClientData";
+// const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
 
-export const getClientData = (cleanData) => {
+// const analyzedTrend = (trends) => {
+//   return {
+//     type: ANALYZE_TRENDS,
+//     payload: trends,
+//   };
+// };
+
+// export const analyzeTrendsByAi =
+//   (client_id, ai_request) => async (dispatch) => {
+//     const response = await fetch(`/api/ai-suggest-post/`, {
+//       method: "POST",
+//       header: { "Content-Type": "application/json" },
+//     });
+//   };
+
+const getClientData = (cleanData) => {
   return {
     type: GET_CLIENT_DATA,
     payload: cleanData,
