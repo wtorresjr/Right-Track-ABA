@@ -13,6 +13,7 @@ from .api.chart_interval_routes import chart_interval_bp
 from .api.discreet_trials_routes import discreet_trials_bp
 from .api.trial_routes import trials_bp
 from .api.ai_suggest_routes import ai_suggest_post
+# from .api.ai_prompts import trend_prompt
 from .seeds import seed_commands
 from .config import Config
 
