@@ -23,18 +23,22 @@ const getClientData = (cleanData) => {
   };
 };
 
-export const getClientDataForAI = (client_id) => async (dispatch) => {
-  const response = await fetch(`/api/ai-suggest-post/${parseInt(client_id)}`, {
-    method: "GET",
-    header: { "Content-Type": "application/json" },
-  });
+export const getClientDataForAI =
+  (client_id, startDate, endDate) => async (dispatch) => {
+    const response = await fetch(
+      `/api/ai-suggest-post/${parseInt(client_id)}?startDate=${startDate}&endDate=${endDate}`,
+      {
+        method: "GET",
+        header: { "Content-Type": "application/json" },
+      }
+    );
 
-  if (response.ok) {
-    const foundCleanData = await response.json();
-    dispatch(getClientData(foundCleanData));
-    return foundCleanData;
-  }
-};
+    if (response.ok) {
+      const foundCleanData = await response.json();
+      dispatch(getClientData(foundCleanData));
+      return foundCleanData;
+    }
+  };
 
 const initialState = {
   cleanData: {},
