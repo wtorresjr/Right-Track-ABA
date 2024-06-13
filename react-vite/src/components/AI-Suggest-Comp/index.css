@@ -32,4 +32,6 @@
 
 #cleanDataText {
   margin-top: 20px;
+  max-height: 75px;
+  overflow-y:scroll;
 }
