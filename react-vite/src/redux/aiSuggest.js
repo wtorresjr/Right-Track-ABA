@@ -8,13 +8,13 @@ const GET_CLIENT_DATA = "aiReducer/getClientData";
 //   };
 // };
 
-// export const analyzeTrendsByAi =
-//   (client_id, ai_request) => async (dispatch) => {
-//     const response = await fetch(`/api/ai-suggest-post/`, {
-//       method: "POST",
-//       header: { "Content-Type": "application/json" },
-//     });
-//   };
+// export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
+//   const response = await fetch(`/api/ai-suggest-post/`, {
+//     method: "POST",
+//     header: { "Content-Type": "application/json" },
+//     body: JSON.stringify(ai_request),
+//   });
+// };
 
 const getClientData = (cleanData) => {
   return {
