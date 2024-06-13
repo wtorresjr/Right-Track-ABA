@@ -34,12 +34,7 @@ def suggest_treatment():
         "stream": data.get("stream")
     }
 
-    # print(f"Sending payload to Ollama API: {payload}")
-
     response = requests.post(ollama_url, json=payload)
-
-    # print(
-    #     f"Received response from Ollama API: {response.status_code} - {response.text}")
 
     if response.status_code == 200:
         try:
@@ -66,6 +61,11 @@ if __name__ == "__main__":
 @ai_suggest_post.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_clean_records(client_id):
+
+    start_date = request.args.get("startDate")
+    end_date = request.args.get("endDate")
+
+
     client_records = (
         Interval.query.join(Daily_Chart)
         .filter(Daily_Chart.client_id == client_id)

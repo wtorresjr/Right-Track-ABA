@@ -10,17 +10,20 @@ const AI_Suggest_Comp = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     dispatch(getClientsThunk());
   }, []);
 
   const getRecords = async () => {
-    await dispatch(getClientDataForAI(selectedClient));
+    await dispatch(getClientDataForAI(selectedClient, startDate, endDate));
   };
 
   const analyzeTrends = async () => {
     const prompt = `${trend_prompt}=${cleanDataStore.cleanData}`;
+    // console.log(`Showing data from ${startDate} to ${endDate}.`);
     console.log(prompt);
   };
 
@@ -41,6 +44,20 @@ const AI_Suggest_Comp = () => {
       {/*Drop Down Menu*/}
 
       <div className="suggestDropDown">
+        <div>
+          <input
+            id="dateInput"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <input
+            id="dateInput"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
         <select
           id="dcClientSelect"
           onChange={(e) => setSelectedClient(e.target.value)}
