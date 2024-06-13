@@ -5,12 +5,9 @@ from flask import jsonify, Flask
 from collections import OrderedDict, defaultdict
 from flask import Blueprint, jsonify, request, Response
 from collections import OrderedDict
-# from transformers import pipeline, AutoTokenizer
 from flask_login import current_user, login_user, login_required
-# from app.models import db
 from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
-# from datetime import date
 from .ai_prompts import trend_prompt
 
 

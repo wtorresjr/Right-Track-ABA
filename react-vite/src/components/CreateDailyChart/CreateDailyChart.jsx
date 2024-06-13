@@ -62,21 +62,6 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
     }
   }, [dispatch, todaysDate]);
 
-  // useEffect(() => {
-  //   if (!isDT) {
-  //     const nameChanger = clientList?.filter((client) => {
-  //       return client?.id === +selectedClient;
-  //     });
-  //     const firstLastName =
-  //       nameChanger[0]?.first_name + " " + nameChanger[0]?.last_name;
-  //     setClientName(firstLastName);
-  //   } else {
-  //     const firstLastName =
-  //       currentClient.first_name + " " + currentClient.last_name;
-  //     setClientName(firstLastName);
-  //   }
-  // }, [selectedClient]);
-
   useEffect(() => {
     dispatch(getClientByIDThunk(client_id));
     dispatch(getClientsThunk());
