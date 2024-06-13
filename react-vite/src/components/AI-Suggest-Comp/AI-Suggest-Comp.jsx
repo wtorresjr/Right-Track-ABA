@@ -23,9 +23,8 @@ const AI_Suggest_Comp = () => {
   };
 
   const analyzeTrends = async () => {
-    const prompt = `${trend_prompt}=${cleanDataStore.cleanData}`;
+    const prompt = `${trend_prompt}=${cleanDataStore}`;
     // console.log(`Showing data from ${startDate} to ${endDate}.`);
-    console.log(prompt);
   };
 
   const suggestIntervention = async () => {
@@ -81,7 +80,7 @@ const AI_Suggest_Comp = () => {
         )}
       </div>
       <>
-        {cleanDataStore ? (
+        {cleanDataStore.cleanData ? (
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Clean Interval Data</h1>
@@ -100,7 +99,7 @@ const AI_Suggest_Comp = () => {
                 Graph Data
               </button>
             </div>
-            <div id="cleanDataText">{cleanDataStore}</div>
+            <div id="cleanDataText">{cleanDataStore.cleanData}</div>
           </div>
         ) : null}
         {cleanDataStore == "" ? <p>No Matching Data Found.</p> : null}
