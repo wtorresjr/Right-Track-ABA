@@ -85,6 +85,11 @@ const AI_Suggest_Comp = () => {
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Clean Interval Data</h1>
+              <p>
+                Showing Data for dates:{" "}
+                {startDate ? startDate : "Earliest Found"} to{" "}
+                {endDate ? endDate : "Newest Found"}
+              </p>
             </div>
             <div className="aiBtnContainer">
               <button onClick={() => analyzeTrends()}>Analyze Trends</button>
