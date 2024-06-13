@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
 import { getClientDataForAI } from "../../redux/aiSuggest";
-import { trend_prompt } from "../helpers/prompts";
+import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const AI_Suggest_Comp = () => {
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [clientName, setClientName] = useState("");
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -19,7 +20,6 @@ const AI_Suggest_Comp = () => {
 
   const getRecords = async () => {
     await dispatch(getClientDataForAI(selectedClient, startDate, endDate));
-    console.log(startDate, endDate);
   };
 
   const analyzeTrends = async () => {
@@ -28,7 +28,7 @@ const AI_Suggest_Comp = () => {
   };
 
   const suggestIntervention = async () => {
-    console.log("Suggest Intervention");
+    const prompt = `${analysis_data_prompt}=${cleanDataStore}`;
   };
 
   const graphData = async () => {
@@ -67,7 +67,7 @@ const AI_Suggest_Comp = () => {
             clientList.map((client) => {
               return (
                 <option key={client?.id} value={client?.id}>
-                  {client?.first_name} {client?.last_name} --- DOB:{" "}
+                  {client?.first_name} {client?.last_name} -- DOB --{" "}
                   {client?.dob}
                 </option>
               );
@@ -102,7 +102,7 @@ const AI_Suggest_Comp = () => {
             <div id="cleanDataText">{cleanDataStore.cleanData}</div>
           </div>
         ) : null}
-        {cleanDataStore == "" ? <p>No Matching Data Found.</p> : null}
+        {cleanDataStore.cleanData == "" ? <p>No Matching Data Found.</p> : null}
       </>
     </div>
   );
