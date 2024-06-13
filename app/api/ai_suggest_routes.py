@@ -9,6 +9,7 @@ from flask_login import current_user, login_user, login_required
 from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
 from .ai_prompts import trend_prompt
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -65,6 +66,11 @@ def get_clean_records(client_id):
     start_date = request.args.get("startDate")
     end_date = request.args.get("endDate")
 
+    if start_date:
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+
+    if end_date:
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
 
     client_records = (
         Interval.query.join(Daily_Chart)
@@ -76,17 +82,57 @@ def get_clean_records(client_id):
     if not client_records:
         return jsonify({"message": f"No records found."})
 
-    found_intervals = [
-        OrderedDict([
-            ("date", record.chart.to_dict().get("chart_date")),
-            ("start_time", record.to_dict().get("start_interval")),
-            ("activity", record.to_dict().get("activity")),
-            ("behaviors", dict_to_string(record.to_dict().get("interval_tags"))),
-            ("interval_notes", record.to_dict().get("interval_notes")),
-            ("end_time", record.to_dict().get("end_interval"))
-        ])
-        for record in client_records
-    ]
+    found_intervals = []
+
+    if start_date or end_date:
+        for record in client_records:
+            chart_date_str = record.chart.to_dict().get("chart_date")
+            chart_date = datetime.strptime(chart_date_str, "%Y-%m-%d").date()
+
+            # Check if chart_date falls between start_date and end_date
+            if start_date and end_date:
+                if start_date <= chart_date <= end_date:
+                    found_intervals.append(OrderedDict([
+                        ("date", chart_date),
+                        ("start_time", record.to_dict().get("start_interval")),
+                        ("activity", record.to_dict().get("activity")),
+                        ("behaviors", dict_to_string(
+                            record.to_dict().get("interval_tags"))),
+                        ("interval_notes", record.to_dict().get("interval_notes")),
+                        ("end_time", record.to_dict().get("end_interval"))
+                    ]))
+            elif start_date and chart_date >= start_date:
+                found_intervals.append(OrderedDict([
+                    ("date", chart_date),
+                    ("start_time", record.to_dict().get("start_interval")),
+                    ("activity", record.to_dict().get("activity")),
+                    ("behaviors", dict_to_string(
+                        record.to_dict().get("interval_tags"))),
+                    ("interval_notes", record.to_dict().get("interval_notes")),
+                    ("end_time", record.to_dict().get("end_interval"))
+                ]))
+            elif end_date and chart_date <= end_date:
+                found_intervals.append(OrderedDict([
+                    ("date", chart_date),
+                    ("start_time", record.to_dict().get("start_interval")),
+                    ("activity", record.to_dict().get("activity")),
+                    ("behaviors", dict_to_string(
+                        record.to_dict().get("interval_tags"))),
+                    ("interval_notes", record.to_dict().get("interval_notes")),
+                    ("end_time", record.to_dict().get("end_interval"))
+                ]))
+    else:
+        found_intervals = [
+            OrderedDict([
+                ("date", record.chart.to_dict().get("chart_date")),
+                ("start_time", record.to_dict().get("start_interval")),
+                ("activity", record.to_dict().get("activity")),
+                ("behaviors", dict_to_string(record.to_dict().get("interval_tags"))),
+                ("interval_notes", record.to_dict().get("interval_notes")),
+                ("end_time", record.to_dict().get("end_interval"))
+            ])
+            for record in client_records
+        ]
 
     values_only = [list(interval.values())
                    for interval in found_intervals]
