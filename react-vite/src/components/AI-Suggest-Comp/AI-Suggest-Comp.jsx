@@ -19,6 +19,7 @@ const AI_Suggest_Comp = () => {
 
   const getRecords = async () => {
     await dispatch(getClientDataForAI(selectedClient, startDate, endDate));
+    console.log(startDate, endDate);
   };
 
   const analyzeTrends = async () => {
@@ -80,7 +81,7 @@ const AI_Suggest_Comp = () => {
         )}
       </div>
       <>
-        {cleanDataStore.cleanData ? (
+        {cleanDataStore ? (
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Clean Interval Data</h1>
@@ -94,9 +95,10 @@ const AI_Suggest_Comp = () => {
                 Graph Data
               </button>
             </div>
-            <div id="cleanDataText">{cleanDataStore["cleanData"]}</div>
+            <div id="cleanDataText">{cleanDataStore}</div>
           </div>
         ) : null}
+        {cleanDataStore == "" ? <p>No Matching Data Found.</p> : null}
       </>
     </div>
   );

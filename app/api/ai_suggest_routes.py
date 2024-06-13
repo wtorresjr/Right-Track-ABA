@@ -144,4 +144,4 @@ def get_clean_records(client_id):
         for text in values:
             text_only += f"{text}:: "
 
-    return jsonify({"cleanData": text_only})
+    return jsonify(text_only)

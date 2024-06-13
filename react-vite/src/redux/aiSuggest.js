@@ -26,7 +26,9 @@ const getClientData = (cleanData) => {
 export const getClientDataForAI =
   (client_id, startDate, endDate) => async (dispatch) => {
     const response = await fetch(
-      `/api/ai-suggest-post/${parseInt(client_id)}?startDate=${startDate}&endDate=${endDate}`,
+      `/api/ai-suggest-post/${parseInt(
+        client_id
+      )}?startDate=${startDate}&endDate=${endDate}`,
       {
         method: "GET",
         header: { "Content-Type": "application/json" },
