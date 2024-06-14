@@ -1,20 +1,26 @@
 const GET_CLIENT_DATA = "aiReducer/getClientData";
-// const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
+const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
 
-// const analyzedTrend = (trends) => {
-//   return {
-//     type: ANALYZE_TRENDS,
-//     payload: trends,
-//   };
-// };
+const analyzedTrend = (trends) => {
+  return {
+    type: ANALYZE_TRENDS,
+    payload: trends,
+  };
+};
 
-// export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
-//   const response = await fetch(`/api/ai-suggest-post/`, {
-//     method: "POST",
-//     header: { "Content-Type": "application/json" },
-//     body: JSON.stringify(ai_request),
-//   });
-// };
+export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
+  const response = await fetch(`/api/ai-suggest-post/`, {
+    method: "POST",
+    header: { "Content-Type": "application/json" },
+    body: JSON.stringify(ai_request),
+  });
+
+  if (response.ok) {
+    const trendRequest = await response.json();
+    dispatch(analyzedTrend(trendRequest));
+    return trendRequest;
+  }
+};
 
 const getClientData = (cleanData) => {
   return {
