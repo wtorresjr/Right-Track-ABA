@@ -10,6 +10,7 @@ const AI_Suggest_Comp = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+  const aiTrend = useSelector((state) => state?.ai?.ai_suggestion);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [clientName, setClientName] = useState("");
@@ -111,6 +112,18 @@ const AI_Suggest_Comp = () => {
           </div>
         ) : null}
         {cleanDataStore.cleanData == "" ? <p>No Matching Data Found.</p> : null}
+      </>
+      <>
+        {aiTrend ? (
+          <div className="cleanDataDiv">
+            <div>
+              <h1>Trend Analysis</h1>
+            </div>
+            {aiTrend}
+          </div>
+        ) : (
+          ""
+        )}
       </>
     </div>
   );

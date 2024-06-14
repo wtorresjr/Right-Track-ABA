@@ -11,14 +11,17 @@ const analyzedTrend = (trends) => {
 export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
   const response = await fetch(`/api/ai-suggest-post/`, {
     method: "POST",
-    header: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ai_request),
   });
 
+  console.log(response, "Response data");
   if (response.ok) {
     const trendRequest = await response.json();
     dispatch(analyzedTrend(trendRequest));
     return trendRequest;
+  } else {
+    throw new Error("Error getting AI Trends");
   }
 };
 
@@ -50,6 +53,7 @@ export const getClientDataForAI =
 
 const initialState = {
   cleanData: {},
+  ai_suggestion: {},
 };
 
 function aiReducer(state = initialState, action) {
@@ -58,6 +62,11 @@ function aiReducer(state = initialState, action) {
       return {
         ...state,
         cleanData: action.payload,
+      };
+    case ANALYZE_TRENDS:
+      return {
+        ...state,
+        ai_suggestion: action.payload,
       };
     default:
       return state;
