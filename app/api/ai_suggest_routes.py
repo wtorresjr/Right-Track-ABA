@@ -32,7 +32,7 @@ def suggest_treatment():
     payload = {
         "prompt": f'{prompt}',
         "model": data.get("model", "phi3"),
-        "stream": data.get("stream")
+        "stream": data.get("stream", False)
     }
 
     response = requests.post(ollama_url, json=payload)
@@ -46,7 +46,7 @@ def suggest_treatment():
                 response_message = {
                     "error": "Unexpected response structure", "response_data": response_data}
 
-            return jsonify(response_message)
+            return jsonify(response_message["response"])
 
         except ValueError:
             return jsonify({"error": "Failed to decode JSON response from Ollama API", "response_text": response.text})

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
-import { getClientDataForAI } from "../../redux/aiSuggest";
+import { analyzeTrendsByAi, getClientDataForAI } from "../../redux/aiSuggest";
 import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
@@ -23,8 +23,16 @@ const AI_Suggest_Comp = () => {
   };
 
   const analyzeTrends = async () => {
-    const prompt = `${trend_prompt}=${cleanDataStore}`;
-    // console.log(`Showing data from ${startDate} to ${endDate}.`);
+    const userPrompt = {
+      prompt: `${trend_prompt}=${cleanDataStore.cleanData}`,
+      model: "phi3",
+      stream: false,
+    };
+    try {
+      await dispatch(analyzeTrendsByAi(userPrompt));
+    } catch (errors) {
+      console.error("Error Occurred Finding Trends:", errors);
+    }
   };
 
   const suggestIntervention = async () => {
