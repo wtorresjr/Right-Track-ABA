@@ -10,7 +10,7 @@ const AI_Suggest_Comp = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
-  const aiTrend = useSelector((state) => state?.ai?.ai_suggestion);
+  const aiTrend = useSelector((state) => state?.ai?.ai_trend);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [clientName, setClientName] = useState("");
@@ -25,7 +25,7 @@ const AI_Suggest_Comp = () => {
 
   const analyzeTrends = async () => {
     const userPrompt = {
-      prompt: `${trend_prompt}=${cleanDataStore.cleanData}`,
+      prompt: `${trend_prompt}=${cleanDataStore?.cleanData}`,
       model: "phi3",
       stream: false,
     };
@@ -37,7 +37,7 @@ const AI_Suggest_Comp = () => {
   };
 
   const suggestIntervention = async () => {
-    const prompt = `${analysis_data_prompt}=${cleanDataStore}`;
+    // const prompt = `${analysis_data_prompt}=${cleanDataStore}`;
   };
 
   const graphData = async () => {
@@ -89,7 +89,7 @@ const AI_Suggest_Comp = () => {
         )}
       </div>
       <>
-        {cleanDataStore.cleanData ? (
+        {cleanDataStore?.cleanData ? (
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Clean Interval Data</h1>
@@ -108,10 +108,12 @@ const AI_Suggest_Comp = () => {
                 Graph Data
               </button>
             </div>
-            <div id="cleanDataText">{cleanDataStore.cleanData}</div>
+            <div id="cleanDataText">{cleanDataStore?.cleanData}</div>
           </div>
         ) : null}
-        {cleanDataStore.cleanData == "" ? <p>No Matching Data Found.</p> : null}
+        {cleanDataStore?.cleanData == "" ? (
+          <p>No Matching Data Found.</p>
+        ) : null}
       </>
       <>
         {aiTrend ? (
@@ -119,7 +121,7 @@ const AI_Suggest_Comp = () => {
             <div>
               <h1>Trend Analysis</h1>
             </div>
-            {aiTrend}
+            {aiTrend[0]}
           </div>
         ) : (
           ""
