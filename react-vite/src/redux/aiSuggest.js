@@ -53,7 +53,7 @@ export const getClientDataForAI =
 
 const initialState = {
   cleanData: {},
-  ai_suggestion: {},
+  ai_trend: [],
 };
 
 function aiReducer(state = initialState, action) {
@@ -66,7 +66,7 @@ function aiReducer(state = initialState, action) {
     case ANALYZE_TRENDS:
       return {
         ...state,
-        ai_suggestion: action.payload,
+        ai_trend: action.payload,
       };
     default:
       return state;
