@@ -1,20 +1,29 @@
 const GET_CLIENT_DATA = "aiReducer/getClientData";
-// const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
+const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
 
-// const analyzedTrend = (trends) => {
-//   return {
-//     type: ANALYZE_TRENDS,
-//     payload: trends,
-//   };
-// };
+const analyzedTrend = (trends) => {
+  return {
+    type: ANALYZE_TRENDS,
+    payload: trends,
+  };
+};
 
-// export const analyzeTrendsByAi =
-//   (client_id, ai_request) => async (dispatch) => {
-//     const response = await fetch(`/api/ai-suggest-post/`, {
-//       method: "POST",
-//       header: { "Content-Type": "application/json" },
-//     });
-//   };
+export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
+  const response = await fetch(`/api/ai-suggest-post/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ai_request),
+  });
+
+  console.log(response, "Response data");
+  if (response.ok) {
+    const trendRequest = await response.json();
+    dispatch(analyzedTrend(trendRequest));
+    return trendRequest;
+  } else {
+    throw new Error("Error getting AI Trends");
+  }
+};
 
 const getClientData = (cleanData) => {
   return {
@@ -23,21 +32,28 @@ const getClientData = (cleanData) => {
   };
 };
 
-export const getClientDataForAI = (client_id) => async (dispatch) => {
-  const response = await fetch(`/api/ai-suggest-post/${parseInt(client_id)}`, {
-    method: "GET",
-    header: { "Content-Type": "application/json" },
-  });
+export const getClientDataForAI =
+  (client_id, startDate, endDate) => async (dispatch) => {
+    const response = await fetch(
+      `/api/ai-suggest-post/${parseInt(
+        client_id
+      )}?startDate=${startDate}&endDate=${endDate}`,
+      {
+        method: "GET",
+        header: { "Content-Type": "application/json" },
+      }
+    );
 
-  if (response.ok) {
-    const foundCleanData = await response.json();
-    dispatch(getClientData(foundCleanData));
-    return foundCleanData;
-  }
-};
+    if (response.ok) {
+      const foundCleanData = await response.json();
+      dispatch(getClientData(foundCleanData));
+      return foundCleanData;
+    }
+  };
 
 const initialState = {
   cleanData: {},
+  ai_trend: [],
 };
 
 function aiReducer(state = initialState, action) {
@@ -46,6 +62,11 @@ function aiReducer(state = initialState, action) {
       return {
         ...state,
         cleanData: action.payload,
+      };
+    case ANALYZE_TRENDS:
+      return {
+        ...state,
+        ai_trend: action.payload,
       };
     default:
       return state;
