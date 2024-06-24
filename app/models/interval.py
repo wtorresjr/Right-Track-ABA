@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
 from datetime import datetime
+from collections import OrderedDict
 
 
 class Interval(db.Model, UserMixin):
@@ -20,7 +21,7 @@ class Interval(db.Model, UserMixin):
         db.Integer,
         db.ForeignKey(add_prefix_for_prod("daily_charts.id")),
         nullable=False,
-    )    
+    )
 
     therapist_id = db.Column(db.Integer, nullable=False)
 
@@ -35,15 +36,30 @@ class Interval(db.Model, UserMixin):
     # )
 
     def to_dict(self):
-        return {
-            "id": self.id,
-            "activity": self.activity,
-            "start_interval": self.start_interval.strftime("%H:%M"),
-            "end_interval": self.end_interval.strftime("%H:%M"),
-            "interval_tags": self.interval_tags,
-            "interval_notes": self.interval_notes,
-            "interval_rating": self.interval_rating,
-            "therapist_id": self.therapist_id,
-            "chart_id": self.chart_id,
-            "client_id": self.chart.client_id,  
-        }
+        return OrderedDict([
+
+            ("start_interval", self.start_interval.strftime("%H:%M")),
+            ("client_id", self.chart.client_id),
+            ("chart_id", self.chart_id),
+            ("id", self.id),
+            ("therapist_id", self.therapist_id),
+            ("activity", self.activity),
+            ("interval_tags", self.interval_tags),
+            ("interval_notes", self.interval_notes),
+            ("interval_rating", self.interval_rating),
+            ("end_interval", self.end_interval.strftime("%H:%M")),
+        ])
+
+    # def to_dict(self):
+    #     return {
+    #         "id": self.id,
+    #         "activity": self.activity,
+    #         "start_interval": self.start_interval.strftime("%H:%M"),
+    #         "end_interval": self.end_interval.strftime("%H:%M"),
+    #         "interval_tags": self.interval_tags,
+    #         "interval_notes": self.interval_notes,
+    #         "interval_rating": self.interval_rating,
+    #         "therapist_id": self.therapist_id,
+    #         "chart_id": self.chart_id,
+    #         "client_id": self.chart.client_id,
+    #     }
