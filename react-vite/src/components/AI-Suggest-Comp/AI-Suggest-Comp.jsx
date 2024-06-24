@@ -121,7 +121,7 @@ const AI_Suggest_Comp = () => {
             <div>
               <h1>Trend Analysis</h1>
             </div>
-            {aiTrend[0]}
+            {aiTrend}
           </div>
         ) : (
           ""
