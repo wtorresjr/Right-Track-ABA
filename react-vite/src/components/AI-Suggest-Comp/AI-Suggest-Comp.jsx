@@ -25,9 +25,7 @@ const AI_Suggest_Comp = () => {
 
   const analyzeTrends = async () => {
     const userPrompt = {
-      prompt: `${trend_prompt}=${cleanDataStore?.cleanData}`,
-      model: "phi3",
-      stream: false,
+      prompt: `${cleanDataStore?.cleanData}`,
     };
     try {
       await dispatch(analyzeTrendsByAi(userPrompt));
@@ -101,10 +99,13 @@ const AI_Suggest_Comp = () => {
             </div>
             <div className="aiBtnContainer">
               <button onClick={() => analyzeTrends()}>Analyze Trends</button>
-              <button onClick={() => suggestIntervention()}>
+              <button disabled={"true"} onClick={() => suggestIntervention()}>
                 Suggest Intervention
               </button>
-              <button onClick={() => alert("Feature Coming Soon...")}>
+              <button
+                disabled={"true"}
+                onClick={() => alert("Feature Coming Soon...")}
+              >
                 Graph Data
               </button>
             </div>
