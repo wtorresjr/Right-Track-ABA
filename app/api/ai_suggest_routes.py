@@ -53,11 +53,6 @@ def suggest_treatment():
         return jsonify({"error": f"Request failed with status code {response.status_code}"}), response.status_code
 
 
-# if __name__ == "__main__":
-#     app.register_blueprint(ai_suggest_post, url_prefix="/api/ai-suggest-post")
-#     app.run(debug=True)
-
-
 @ai_suggest_post.route("/<int:client_id>", methods=["GET"])
 @login_required
 def get_clean_records(client_id):
