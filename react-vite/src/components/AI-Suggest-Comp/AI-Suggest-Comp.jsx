@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
 import { analyzeTrendsByAi, getClientDataForAI } from "../../redux/aiSuggest";
-import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
+// import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const AI_Suggest_Comp = () => {
   const aiTrend = useSelector((state) => state?.ai?.ai_trend);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [clientName, setClientName] = useState("");
+  // const [clientName, setClientName] = useState("");
 
   useEffect(() => {
     dispatch(getClientsThunk());
