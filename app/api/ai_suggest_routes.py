@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import Flask, jsonify, request, Blueprint
 from flask import Flask, jsonify, request
 from flask import jsonify, Flask
@@ -10,6 +11,7 @@ from app.models import Client, Daily_Chart, Interval
 from sqlalchemy.orm import joinedload
 from .ai_prompts import trend_prompt
 from datetime import datetime
+MAKEWEBHOOK = os.environ.get("MAKEWEBHOOK")
 
 
 app = Flask(__name__)
@@ -25,17 +27,14 @@ def dict_to_string(d):
 @ai_suggest_post.route("/", methods=["POST"])
 def suggest_treatment():
 
+    open_ai_api_url = MAKEWEBHOOK
     data = request.get_json()
-    ollama_url = "http://localhost:11434/api/generate"
-
-    prompt = data.get("prompt", "")
+    prompt = data.get("prompt")
     payload = {
         "prompt": f'{prompt}',
-        "model": data.get("model", "phi3"),
-        "stream": data.get("stream", False)
     }
 
-    response = requests.post(ollama_url, json=payload)
+    response = requests.post(open_ai_api_url, json=payload)
 
     if response.status_code == 200:
         try:
@@ -46,17 +45,17 @@ def suggest_treatment():
                 response_message = {
                     "error": "Unexpected response structure", "response_data": response_data}
 
-            return jsonify(response_message["response"])
+            return jsonify(response_message["ai-trend-response"])
 
         except ValueError:
-            return jsonify({"error": "Failed to decode JSON response from Ollama API", "response_text": response.text})
+            return jsonify({"error": "Failed to decode JSON response from API", "response_text": response.text})
     else:
         return jsonify({"error": f"Request failed with status code {response.status_code}"}), response.status_code
 
 
-if __name__ == "__main__":
-    app.register_blueprint(ai_suggest_post, url_prefix="/api/ai-suggest-post")
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.register_blueprint(ai_suggest_post, url_prefix="/api/ai-suggest-post")
+#     app.run(debug=True)
 
 
 @ai_suggest_post.route("/<int:client_id>", methods=["GET"])
