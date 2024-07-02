@@ -10,10 +10,10 @@ const AI_Suggest_Comp = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const clientList = useSelector((state) => state?.clients?.clients?.Clients);
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
+  const showData = useSelector((state) => state?.ai?.cleanData);
   const aiTrend = useSelector((state) => state?.ai?.ai_trend);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -91,7 +91,7 @@ const AI_Suggest_Comp = () => {
         cleanDataStore?.cleanData ? (
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
-              <h1>Clean Interval Data</h1>
+              <h1>Interval Data</h1>
               <p>
                 Showing Data for dates:{" "}
                 {startDate ? startDate : "Earliest Found"} to{" "}
@@ -110,7 +110,15 @@ const AI_Suggest_Comp = () => {
                 Graph Data
               </button>
             </div>
-            <div id="cleanDataText">{cleanDataStore?.cleanData}</div>
+            <div id="cleanDataText">
+              <p>Total Intervals: {showData?.showData.length}</p>
+              <p>
+                Behavior Totals :{" "}
+                {Object.entries(showData?.behavior_totals).map((behavior) => {
+                  return `${behavior[0]} : ${behavior[1]} -- `;
+                })}
+              </p>
+            </div>
           </div>
         ) : null}
         {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
@@ -118,7 +126,8 @@ const AI_Suggest_Comp = () => {
         ) : null}
       </>
       <>
-        {parseInt(selectedClient) === cleanDataStore.client_id && aiTrend.length > 0 ? (
+        {parseInt(selectedClient) === cleanDataStore.client_id &&
+        aiTrend.length > 0 ? (
           <div className="cleanDataDiv">
             <div>
               <h1>Trend Analysis</h1>

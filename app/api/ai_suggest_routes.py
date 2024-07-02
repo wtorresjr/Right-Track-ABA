@@ -128,6 +128,19 @@ def get_clean_records(client_id):
             for record in client_records
         ]
 
+    # behavior_total = [record["behaviors"]
+    #                   for record in found_intervals]
+
+    behavior_total = {}
+
+    for record in client_records:
+        for behavior, value in record.interval_tags.items():
+            if behavior in behavior_total:
+                behavior_total[behavior] += int(value)
+            else:
+                behavior_total[behavior] = int(value)
+
+
     values_only = [list(interval.values())
                    for interval in found_intervals]
 
@@ -138,4 +151,4 @@ def get_clean_records(client_id):
         for text in values:
             text_only += f"{text}:: "
 
-    return jsonify({"cleanData": text_only, "client_id": client_id})
+    return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total})
