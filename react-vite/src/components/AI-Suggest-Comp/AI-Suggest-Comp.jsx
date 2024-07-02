@@ -13,7 +13,7 @@ const AI_Suggest_Comp = () => {
   const aiTrend = useSelector((state) => state?.ai?.ai_trend);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  // const [clientName, setClientName] = useState("");
+
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -87,7 +87,8 @@ const AI_Suggest_Comp = () => {
         )}
       </div>
       <>
-        {cleanDataStore?.cleanData ? (
+        {parseInt(selectedClient) === cleanDataStore?.client_id &&
+        cleanDataStore?.cleanData ? (
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Clean Interval Data</h1>
@@ -112,12 +113,12 @@ const AI_Suggest_Comp = () => {
             <div id="cleanDataText">{cleanDataStore?.cleanData}</div>
           </div>
         ) : null}
-        {cleanDataStore?.cleanData == "" ? (
+        {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
           <p>No Matching Data Found.</p>
         ) : null}
       </>
       <>
-        {aiTrend ? (
+        {parseInt(selectedClient) === cleanDataStore.client_id && aiTrend.length > 0 ? (
           <div className="cleanDataDiv">
             <div>
               <h1>Trend Analysis</h1>
