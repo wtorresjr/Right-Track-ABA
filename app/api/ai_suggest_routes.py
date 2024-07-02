@@ -78,6 +78,8 @@ def get_clean_records(client_id):
 
     found_intervals = []
 
+    found_dates = {}
+
     if start_date or end_date:
         for record in client_records:
             chart_date_str = record.chart.to_dict().get("chart_date")
@@ -128,9 +130,6 @@ def get_clean_records(client_id):
             for record in client_records
         ]
 
-    # behavior_total = [record["behaviors"]
-    #                   for record in found_intervals]
-
     behavior_total = {}
 
     for record in client_records:
@@ -139,7 +138,6 @@ def get_clean_records(client_id):
                 behavior_total[behavior] += int(value)
             else:
                 behavior_total[behavior] = int(value)
-
 
     values_only = [list(interval.values())
                    for interval in found_intervals]
@@ -151,4 +149,4 @@ def get_clean_records(client_id):
         for text in values:
             text_only += f"{text}:: "
 
-    return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total})
+    return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total, "found_dates": found_dates})

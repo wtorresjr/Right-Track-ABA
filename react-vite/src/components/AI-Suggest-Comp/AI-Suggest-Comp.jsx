@@ -113,7 +113,7 @@ const AI_Suggest_Comp = () => {
             <div id="cleanDataText">
               <p>Total Intervals: {showData?.showData.length}</p>
               <p>
-                Behavior Totals :{" "}
+                Behavior Totals ({Object.keys(showData?.behavior_totals).length}) :{" "}
                 {Object.entries(showData?.behavior_totals).map((behavior) => {
                   return `${behavior[0]} : ${behavior[1]} -- `;
                 })}
