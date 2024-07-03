@@ -92,11 +92,6 @@ const AI_Suggest_Comp = () => {
           <div className="cleanDataDiv">
             <div className="manageClientsHeader">
               <h1>Interval Data</h1>
-              <p>
-                Showing Data for dates:{" "}
-                {startDate ? startDate : "Earliest Found"} to{" "}
-                {endDate ? endDate : "Newest Found"}
-              </p>
             </div>
             <div className="aiBtnContainer">
               <button onClick={() => analyzeTrends()}>Analyze Trends</button>
@@ -113,7 +108,12 @@ const AI_Suggest_Comp = () => {
             <div id="cleanDataText">
               <p>Total Intervals: {showData?.showData.length}</p>
               <p>
-                Behavior Totals ({Object.keys(showData?.behavior_totals).length}) :{" "}
+                Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
+                {endDate ? endDate : "Latest"}
+              </p>
+              <p>
+                Behavior Totals ({Object.keys(showData?.behavior_totals).length}
+                ) :{" "}
                 {Object.entries(showData?.behavior_totals).map((behavior) => {
                   return `${behavior[0]} : ${behavior[1]} -- `;
                 })}
