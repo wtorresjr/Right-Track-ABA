@@ -78,8 +78,6 @@ def get_clean_records(client_id):
 
     found_intervals = []
 
-    found_dates = {}
-
     if start_date or end_date:
         for record in client_records:
             chart_date_str = record.chart.to_dict().get("chart_date")
@@ -131,6 +129,7 @@ def get_clean_records(client_id):
         ]
 
     behavior_total = {}
+    found_dates = {}
 
     for record in found_intervals:
         behaviors = record.get("behaviors").split(",")
@@ -141,8 +140,14 @@ def get_clean_records(client_id):
                     behavior_total[keyVal[0].strip()] += int(keyVal[1])
                 else:
                     behavior_total[keyVal[0].strip()] = int(keyVal[1])
-                    
-                    
+
+    for record in found_intervals:
+        date = record.get("date")
+        if date not in found_dates:
+            found_dates[date] = 1
+        else:
+            found_dates[date] += 1
+        # print(date, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
     values_only = [list(interval.values())
                    for interval in found_intervals]
