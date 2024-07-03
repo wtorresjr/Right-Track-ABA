@@ -106,14 +106,20 @@ const AI_Suggest_Comp = () => {
               </button>
             </div>
             <div id="cleanDataText">
-              <p>Total Intervals: {showData?.showData.length}</p>
               <p>
                 Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
                 {endDate ? endDate : "Latest"}
               </p>
+              <p>Total Intervals: {showData?.showData.length}</p>
               <p>
-                Behavior Totals ({Object.keys(showData?.behavior_totals).length}
-                ) :{" "}
+                Date (Interval Count):{" "}
+                {Object.entries(showData?.found_dates).map((date) => {
+                  return `${date[0]} (${date[1]}) -- `;
+                })}
+              </p>
+              <p>
+                Behaviors Exhibited: (
+                {Object.keys(showData?.behavior_totals).length}) :{" "}
                 {Object.entries(showData?.behavior_totals).map((behavior) => {
                   return `${behavior[0]} : ${behavior[1]} -- `;
                 })}
