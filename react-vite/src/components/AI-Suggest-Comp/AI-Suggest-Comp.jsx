@@ -114,14 +114,14 @@ const AI_Suggest_Comp = () => {
               <p>
                 Date (Interval Count):{" "}
                 {Object.entries(showData?.found_dates).map((date) => {
-                  return `${date[0]} (${date[1]}) -- `;
+                  return `- ${date[0]} (${date[1]}) -`;
                 })}
               </p>
               <p>
                 Behaviors Exhibited: (
                 {Object.keys(showData?.behavior_totals).length}) :{" "}
                 {Object.entries(showData?.behavior_totals).map((behavior) => {
-                  return `${behavior[0]} : ${behavior[1]} -- `;
+                  return `- ${behavior[0]} : ${behavior[1]} - `;
                 })}
               </p>
             </div>
