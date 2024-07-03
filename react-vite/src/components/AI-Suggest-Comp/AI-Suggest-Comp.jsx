@@ -121,7 +121,7 @@ const AI_Suggest_Comp = () => {
                 Behaviors Exhibited: (
                 {Object.keys(showData?.behavior_totals).length}) :{" "}
                 {Object.entries(showData?.behavior_totals).map((behavior) => {
-                  return `- ${behavior[0]} : ${behavior[1]} - `;
+                  return `- ${behavior[0]} : ${behavior[1]} -`;
                 })}
               </p>
             </div>
