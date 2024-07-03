@@ -128,6 +128,27 @@ def get_clean_records(client_id):
             for record in client_records
         ]
 
+    behavior_total = {}
+    found_dates = {}
+
+    for record in found_intervals:
+        behaviors = record.get("behaviors").split(",")
+        for behave in behaviors:
+            keyVal = behave.split(":")
+            if keyVal[0] != "":
+                if keyVal[0] in behavior_total:
+                    behavior_total[keyVal[0].strip()] += int(keyVal[1])
+                else:
+                    behavior_total[keyVal[0].strip()] = int(keyVal[1])
+
+    for record in found_intervals:
+        date = record.get("date")
+        if date not in found_dates:
+            found_dates[date] = 1
+        else:
+            found_dates[date] += 1
+        # print(date, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+
     values_only = [list(interval.values())
                    for interval in found_intervals]
 
@@ -138,4 +159,4 @@ def get_clean_records(client_id):
         for text in values:
             text_only += f"{text}:: "
 
-    return jsonify({"cleanData": text_only, "client_id": client_id})
+    return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total, "found_dates": found_dates})
