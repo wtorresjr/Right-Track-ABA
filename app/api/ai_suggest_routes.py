@@ -132,12 +132,17 @@ def get_clean_records(client_id):
 
     behavior_total = {}
 
-    for record in client_records:
-        for behavior, value in record.interval_tags.items():
-            if behavior in behavior_total:
-                behavior_total[behavior] += int(value)
-            else:
-                behavior_total[behavior] = int(value)
+    for record in found_intervals:
+        behaviors = record.get("behaviors").split(",")
+        for behave in behaviors:
+            keyVal = behave.split(":")
+            if keyVal[0] != "":
+                if keyVal[0] in behavior_total:
+                    behavior_total[keyVal[0].strip()] += int(keyVal[1])
+                else:
+                    behavior_total[keyVal[0].strip()] = int(keyVal[1])
+                    
+                    
 
     values_only = [list(interval.values())
                    for interval in found_intervals]
