@@ -85,7 +85,8 @@ def get_client_by_id(client_id):
     )
 
     page = int(request.args.get("page", default=1))
-    per_page = int(request.args.get("per_page", default=len(clients_intervals)))
+    per_page = int(request.args.get(
+        "per_page", default=len(clients_intervals)))
 
     if not found_client:
         return jsonify({"message": f"No client found with ID {client_id}"}), 404
@@ -126,7 +127,8 @@ def get_client_by_id(client_id):
         for dc in paginated_charts:
             total_rating = 0
             chart_dict = dc.to_dict()
-            chart_dict["intervals"] = [interval.to_dict() for interval in dc.intervals]
+            chart_dict["intervals"] = [interval.to_dict()
+                                       for interval in dc.intervals]
             chart_dict["interval_count"] = len(chart_dict["intervals"])
 
             total_rating = sum(
@@ -153,7 +155,8 @@ def get_client_by_id(client_id):
             for incChart in found_client.daily_charts
             if not incChart.chart_complete
         ]
-        valid_client["Num_Of_Charts"] = total_charts  # Display total number of charts
+        # Display total number of charts
+        valid_client["Num_Of_Charts"] = total_charts
 
         if total_charts != 0:
             valid_client["Paginated_Charts_Avg"] = round(
@@ -196,7 +199,8 @@ def delete_client_by_id(client_id):
         return jsonify({"message": f"Successfully Deleted Client ID {client_id}"})
     else:
         return (
-            jsonify({"message": "Forbidden client does not belong to logged in user"}),
+            jsonify(
+                {"message": "Forbidden client does not belong to logged in user"}),
             403,
         )
 
@@ -233,8 +237,6 @@ def create_new_client():
 
 # Edit client
 
-
-from datetime import date
 
 # ...
 

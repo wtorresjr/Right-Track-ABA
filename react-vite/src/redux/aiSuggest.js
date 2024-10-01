@@ -9,7 +9,7 @@ const analyzedTrend = (trends) => {
 };
 
 export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
-  console.log(ai_request, "<------ AI Request");
+  // console.log(ai_request, "<------ AI Request");
   const response = await fetch(`/api/ai-suggest-post/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

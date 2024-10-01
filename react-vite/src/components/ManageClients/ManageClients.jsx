@@ -48,7 +48,7 @@ const ManageClients = () => {
     let allClients;
     const getClients = async () => {
       const fetchClients = await dispatch(
-        getClientsThunk(currentPage, "undefined")
+        getClientsThunk(currentPage, undefined)
       );
       if (fetchClients) {
         allClients = fetchClients.data.Clients;
