@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, Navigate } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
-import { LegendComponent } from "../DailyCharts";
+import { useNavigate } from "react-router-dom";
+// import { LegendComponent } from "../DailyCharts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Box, Divider, Typography, Card } from "@mui/material";
+
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 
 const DailyChartDetail = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { chart_id } = useParams();
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
@@ -71,6 +75,10 @@ const DailyChartDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleNavBack = () => {
+    navigate(`/client/${clientInfo?.id}`);
+  };
+
   const openDeleteModal = (interval) => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
   };
@@ -103,44 +111,51 @@ const DailyChartDetail = () => {
     <>
       {loaded ? (
         <div className="mainDisplayContain">
-          <div className="chartDetailHeader">
-            <div>
-              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-            </div>
-            <div>
-              <NavLink
-                to={`/client/${clientInfo?.id}`}
-                className="navLinkStyle"
-                style={{ fontWeight: "bold" }}
+          <Card
+            variant="outlined"
+            sx={{ backgroundColor: "black", color: "white" }}
+          >
+            <Box sx={{ p: 2 }}>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
               >
-                <div>
-                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+                <Typography variant="h6" component="div">
+                  Daily Chart Detail - {currentChart?.chart_date}
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  size="small"
+                  onClick={handleNavBack}
+                >
                   {clientInfo?.first_name}'s Detail Page
-                </div>
-              </NavLink>
-            </div>
-          </div>{" "}
-          <div id="chartOptionsDiv">
-            <h2>
-              Client: {clientInfo?.first_name} {clientInfo?.last_name}
-            </h2>
+                </Button>
+              </Stack>
+              <Divider />
+              <Typography variant="h6" component="div">
+                Client: {clientInfo?.first_name} {clientInfo?.last_name}
+              </Typography>
 
-            <h2
-              style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
-              id="ratingBg"
-            >
-              <div>
-                Number of Intervals:{" "}
-                {currentChart?.Num_Intervals ? currentChart?.Num_Intervals : 0}
-              </div>
-              Average Interval Rating:{" "}
-              {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-            </h2>
-
-            {/* <div className="dcHeader">
-              <LegendComponent />
-            </div> */}
-          </div>
+              <Divider />
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6" component="div">
+                  Number of Intervals:{" "}
+                  {currentChart?.Num_Intervals
+                    ? currentChart?.Num_Intervals
+                    : 0}
+                </Typography>
+                <Typography variant="h6">
+                  Avg Interval Rating:{" "}
+                  {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+                </Typography>
+              </Stack>
+            </Box>
+          </Card>
           <div
             style={{
               display: "flex",
