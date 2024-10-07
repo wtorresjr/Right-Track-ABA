@@ -6,13 +6,15 @@ import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
 import { useNavigate } from "react-router-dom";
-// import { LegendComponent } from "../DailyCharts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
 import { Button, Stack, Box, Divider, Typography, Card } from "@mui/material";
 
+import PrintIcon from "@mui/icons-material/Print";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import AddIcon from "@mui/icons-material/Add";
 import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 
 const DailyChartDetail = () => {
@@ -133,12 +135,11 @@ const DailyChartDetail = () => {
                   {clientInfo?.first_name}'s Detail Page
                 </Button>
               </Stack>
-              <Divider />
               <Typography variant="h6" component="div">
                 Client: {clientInfo?.first_name} {clientInfo?.last_name}
               </Typography>
 
-              <Divider />
+              <Divider sx={{ backgroundColor: "white" }} />
               <Stack
                 direction="row"
                 sx={{ justifyContent: "space-between", alignItems: "center" }}
@@ -164,9 +165,26 @@ const DailyChartDetail = () => {
             }}
           >
             <Stack spacing={2} direction="row">
-              <Button variant="contained">Print Chart Data</Button>
-              <Button variant="contained">Email Chart Data</Button>
-              <Button variant="contained" onClick={openAddIntModal}>
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<PrintIcon />}
+              >
+                Print Chart Data
+              </Button>
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<AttachEmailIcon />}
+              >
+                Email Chart Data
+              </Button>
+              <Button
+                variant="contained"
+                color="warning"
+                onClick={openAddIntModal}
+                startIcon={<AddIcon />}
+              >
                 Add New Interval
               </Button>
             </Stack>
@@ -226,23 +244,82 @@ const DailyChartDetail = () => {
                 </div>
               );
             })}
-          <div className="chartDetailHeader">
-            <div>
-              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-            </div>
-            <div>
-              <NavLink
-                to={`/client/${clientInfo?.id}`}
-                className="navLinkStyle"
-                style={{ fontWeight: "bold" }}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "10px 0 0 0",
+            }}
+          >
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<PrintIcon />}
               >
-                <div>
-                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+                Print Chart Data
+              </Button>
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<AttachEmailIcon />}
+              >
+                Email Chart Data
+              </Button>
+              <Button
+                variant="contained"
+                color="warning"
+                onClick={openAddIntModal}
+                startIcon={<AddIcon />}
+              >
+                Add New Interval
+              </Button>
+            </Stack>
+          </div>
+          <Card
+            variant="outlined"
+            sx={{ backgroundColor: "black", color: "white", marginTop: "10px" }}
+          >
+            <Box sx={{ p: 2 }}>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6" component="div">
+                  Daily Chart Detail - {currentChart?.chart_date}
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  size="small"
+                  onClick={handleNavBack}
+                >
                   {clientInfo?.first_name}'s Detail Page
-                </div>
-              </NavLink>
-            </div>
-          </div>{" "}
+                </Button>
+              </Stack>
+              <Typography variant="h6" component="div">
+                Client: {clientInfo?.first_name} {clientInfo?.last_name}
+              </Typography>
+
+              <Divider sx={{ backgroundColor: "white" }} />
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6" component="div">
+                  Number of Intervals:{" "}
+                  {currentChart?.Num_Intervals
+                    ? currentChart?.Num_Intervals
+                    : 0}
+                </Typography>
+                <Typography variant="h6">
+                  Avg Interval Rating:{" "}
+                  {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+                </Typography>
+              </Stack>
+            </Box>
+          </Card>
         </div>
       ) : (
         <h2
