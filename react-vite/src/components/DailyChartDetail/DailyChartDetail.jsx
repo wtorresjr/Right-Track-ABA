@@ -10,6 +10,7 @@ import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
+import { Button, Stack } from "@mui/material";
 
 const DailyChartDetail = () => {
   const dispatch = useDispatch();
@@ -136,16 +137,24 @@ const DailyChartDetail = () => {
               {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
             </h2>
 
-            <div className="dcHeader">
+            {/* <div className="dcHeader">
               <LegendComponent />
-            </div>
+            </div> */}
           </div>
-          <div style={{ display: "flex", justifyContent: "right" }}>
-            <button id="createNewChartBtn" onClick={openAddIntModal}>
-              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-              Add New Interval
-              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-            </button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "10px 0 0 0",
+            }}
+          >
+            <Stack spacing={2} direction="row">
+              <Button variant="contained">Print Chart Data</Button>
+              <Button variant="contained">Email Chart Data</Button>
+              <Button variant="contained" onClick={openAddIntModal}>
+                Add New Interval
+              </Button>
+            </Stack>
           </div>
           {currentIntervals &&
             currentIntervals?.map((interval) => {
