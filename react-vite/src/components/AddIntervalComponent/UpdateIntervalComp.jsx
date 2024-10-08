@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
-import { LegendComponent } from "../DailyCharts";
 import { editIntervalThunk } from "../../redux/charts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { behaviors } from "../helpers/dropdown-data";
 import { activities } from "../helpers/dropdown-data";
+
+import { Button, Stack } from "@mui/material";
 
 const UpdateIntervalComp = ({ intervalToEdit }) => {
   const [startTime, setStartTime] = useState(intervalToEdit.start_interval);
@@ -139,8 +140,8 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
           </label>
         </div>
 
-        <h2>Problem Behaviors</h2>
-        <div className="behaviorsDiv">
+        <h2>Behaviors</h2>
+        <Stack spacing={2} direction="row">
           <select onChange={(e) => setCurrBehavior(e.target.value)}>
             {behaviors &&
               behaviors?.map((behavior) => {
@@ -151,15 +152,18 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
                 );
               })}
           </select>
-          <button
+
+          <Button
             onClick={(e) => {
               e.stopPropagation();
               newBehavior(currBehavior, "add");
             }}
+            variant="contained"
+            color="primary"
           >
             Add Behavior
-          </button>
-        </div>
+          </Button>
+        </Stack>
 
         {Object.keys(currIntervalBehaviors).length ? (
           <div className="behaviorCountItem">
@@ -256,7 +260,7 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
             <p className="errorsPtag">{errors?.intervalNotes}</p>
           )}
         </div>
-        <LegendComponent />
+
         <div id="intervalRatingLabel">
           <div className="behaviorsDiv">
             <label>Interval Rating:</label>
@@ -294,19 +298,34 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
           )}
         </div>
       </div>
-      <div className="createBtnsDiv">
-        <button
+      <Stack
+        direction="row"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "20px",
+        }}
+      >
+        <Button
           type="Submit"
           disabled={isDisabled}
           onClick={handleSubmit}
-          id="createChartBtn"
+          variant="contained"
+          color="warning"
+          size="large"
         >
           Update Interval
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+
+        <Button
+          onClick={closeModal}
+          variant="contained"
+          color="secondary"
+          size="large"
+        >
           Cancel
-        </button>
-      </div>
+        </Button>
+      </Stack>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import DeleteMessage from "./DeletingMessage";
 import { deleteIntervalThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
+import { Button, Stack } from "@mui/material";
 
 const DeleteIntervalModal = ({ interval }) => {
   const dispatch = useDispatch();
@@ -60,18 +61,29 @@ const DeleteIntervalModal = ({ interval }) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <div className="createBtnsDiv">
-        <button
+      <Stack
+        direction="row"
+        spacing={10}
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Button
           disabled={isDisabled}
           onClick={deleteInterval}
-          id="createChartBtn"
+          variant="contained"
+          color="error"
+          size="large"
         >
           Delete
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button
+          onClick={closeModal}
+          variant="contained"
+          color="secondary"
+          size="large"
+        >
           Cancel
-        </button>
-      </div>
+        </Button>
+      </Stack>
     </div>
   );
 };
