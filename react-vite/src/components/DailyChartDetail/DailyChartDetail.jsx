@@ -232,15 +232,24 @@ const DailyChartDetail = () => {
                   ) : (
                     "None."
                   )}
-                  <div className="intervalCrudBtns">
-                    <button onClick={() => handleCrudClick(interval, "delete")}>
+                  <Stack spacing={2} direction="row" sx={{ marginTop: "10px" }}>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleCrudClick(interval, "delete")}
+                    >
                       Delete Interval
-                    </button>
-
-                    <button onClick={() => handleCrudClick(interval, "edit")}>
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="warning"
+                      onClick={() => handleCrudClick(interval, "edit")}
+                    >
                       Edit Interval
-                    </button>
-                  </div>
+                    </Button>
+                  </Stack>
                 </div>
               );
             })}
