@@ -16,6 +16,8 @@ import PrintIcon from "@mui/icons-material/Print";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const DailyChartDetail = () => {
   const navigate = useNavigate();
@@ -238,6 +240,7 @@ const DailyChartDetail = () => {
                       variant="outlined"
                       color="error"
                       onClick={() => handleCrudClick(interval, "delete")}
+                      startIcon={<DeleteForeverIcon size="large" />}
                     >
                       Delete Interval
                     </Button>
@@ -246,6 +249,7 @@ const DailyChartDetail = () => {
                       variant="outlined"
                       color="warning"
                       onClick={() => handleCrudClick(interval, "edit")}
+                      startIcon={<EditNoteIcon size="large" />}
                     >
                       Edit Interval
                     </Button>
