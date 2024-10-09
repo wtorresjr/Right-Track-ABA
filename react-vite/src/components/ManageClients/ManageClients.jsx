@@ -8,6 +8,9 @@ import "./manage-clients.css";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
+import { Button, Stack } from "@mui/material";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+
 const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const [perPage, setPerPage] = useState(5);
@@ -76,12 +79,23 @@ const ManageClients = () => {
 
   return (
     <div className="mainDisplayContain">
-      <div className="manageClientsHeader">
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        marginBottom="10px"
+      >
         <h1>Manage Clients</h1>
-        <button id="addNewClientBtn" onClick={openCreateClientModal}>
-          <i className="fa-solid fa-person-circle-plus fa-xl"></i> Add New
-          Client <i className="fa-solid fa-person-circle-plus fa-xl"></i>
-        </button>
+
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={openCreateClientModal}
+          startIcon={<PersonAddIcon />}
+          endIcon={<PersonAddIcon />}
+        >
+          Add New Client
+        </Button>
 
         {/* <div
           className="chartTotalsContain"
@@ -96,13 +110,13 @@ const ManageClients = () => {
               : ""}
           </div>
         </div> */}
-        <input
-          type="text"
-          placeholder="Search For A Client"
-          value={searchFilter}
-          onChange={(e) => setSearchFilter(e.target.value)}
-        />
-      </div>
+      </Stack>
+      <input
+        type="text"
+        placeholder="Search For A Client"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+      />
 
       {filteredClients?.length > 0 && (
         <div>
