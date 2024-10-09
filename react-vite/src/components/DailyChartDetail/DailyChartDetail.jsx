@@ -10,7 +10,16 @@ import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
-import { Button, Stack, Box, Divider, Typography, Card } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Box,
+  Divider,
+  Typography,
+  Card,
+  Chip,
+  Rating,
+} from "@mui/material";
 
 import PrintIcon from "@mui/icons-material/Print";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
@@ -194,47 +203,80 @@ const DailyChartDetail = () => {
           {currentIntervals &&
             currentIntervals?.map((interval) => {
               return (
-                <div
-                  key={interval?.id - interval?.chart_id}
-                  className="intervalInfoContain"
-                >
-                  <div
-                    className="intervalHeader"
-                    style={{
-                      borderColor: returnColor(
-                        interval?.interval_rating,
-                        "whole"
-                      ),
+                <>
+                  <Stack
+                    sx={{
+                      backgroundColor: "black",
+                      borderRadius: "10px 10px 0 0",
+                      padding: "15px",
+                      marginTop: "10px",
+                    }}
+                    direction="row"
+                    justifyContent="space-between"
+                  >
+                    <Stack>
+                      <Typography>{`Time: ${interval?.start_interval} -${" "}
+                       ${interval?.end_interval}`}</Typography>
+                      <Typography>{`Activity: ${interval?.activity}`}</Typography>
+                    </Stack>
+
+                    <Stack direction="column" alignItems="center">
+                      <Typography>Interval Rating:</Typography>
+                      <Rating
+                        readOnly
+                        value={interval?.interval_rating}
+                        sx={{
+                          color: returnColor(
+                            interval?.interval_rating,
+                            "whole"
+                          ),
+                        }}
+                      />
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    sx={{ backgroundColor: "black", padding: "0 15px 10px" }}
+                  >
+                    {interval?.interval_notes}
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    padding="0 15px 10px 15px"
+                    spacing={1}
+                    backgroundColor="black"
+                  >
+                    <Chip
+                      label="BEHAVIORS :"
+                      variant="outlined"
+                      sx={{ color: "white" }}
+                    />
+                    {Object.keys(interval?.interval_tags ?? {}).length ? (
+                      <div className="behaviorsTag">
+                        {Object.entries(interval?.interval_tags || {}).map(
+                          ([behavior, count]) => (
+                            <div key={behavior}>
+                              <div>
+                                {<strong>{behavior}</strong>}: {count}
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    ) : (
+                      <Stack>No Recorded Behaviors</Stack>
+                    )}
+                  </Stack>
+
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{
+                      backgroundColor: "black",
+                      padding: "0 15px 15px",
+                      borderRadius: "0 0 10px 10px",
                     }}
                   >
-                    <label>
-                      Interval Time: {interval?.start_interval} -{" "}
-                      {interval?.end_interval}
-                    </label>{" "}
-                    |<label> Activity: {interval?.activity} </label>|
-                    <label> Interval Rating: {interval?.interval_rating}</label>
-                  </div>
-                  <p>
-                    <label>Interval Notes:</label> {interval?.interval_notes}
-                  </p>
-                  <label>Problem Behaviors: </label>
-
-                  {Object.keys(interval?.interval_tags ?? {}).length ? (
-                    <div className="behaviorsTag">
-                      {Object.entries(interval?.interval_tags || {}).map(
-                        ([behavior, count]) => (
-                          <div key={behavior}>
-                            <div>
-                              {<strong>{behavior}</strong>}: {count}
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  ) : (
-                    "None."
-                  )}
-                  <Stack spacing={2} direction="row" sx={{ marginTop: "10px" }}>
                     <Button
                       size="small"
                       variant="outlined"
@@ -254,9 +296,74 @@ const DailyChartDetail = () => {
                       Edit Interval
                     </Button>
                   </Stack>
-                </div>
+                </>
+
+                // <div
+                //   key={interval?.id - interval?.chart_id}
+                //   className="intervalInfoContain"
+                // >
+                //   <div
+                //     className="intervalHeader"
+                //     style={{
+                //       borderColor: returnColor(
+                //         interval?.interval_rating,
+                //         "whole"
+                //       ),
+                //     }}
+                //   >
+                //     <label>
+                //       Interval Time: {interval?.start_interval} -{" "}
+                //       {interval?.end_interval}
+                //     </label>{" "}
+                //     |<label> Activity: {interval?.activity} </label>|
+                //     <label> Interval Rating: {interval?.interval_rating}</label>
+                //   </div>
+                //   <p>
+                //     <label>Interval Notes:</label> {interval?.interval_notes}
+                //   </p>
+                //   <label>Problem Behaviors: </label>
+
+                //   {Object.keys(interval?.interval_tags ?? {}).length ? (
+                //     <div className="behaviorsTag">
+                //       {Object.entries(interval?.interval_tags || {}).map(
+                //         ([behavior, count]) => (
+                //           <div key={behavior}>
+                //             <div>
+                //               {<strong>{behavior}</strong>}: {count}
+                //             </div>
+                //           </div>
+                //         )
+                //       )}
+                //     </div>
+                //   ) : (
+                //     "None."
+                //   )}
+                //   <Stack spacing={2} direction="row" sx={{ marginTop: "10px" }}>
+                //     <Button
+                //       size="small"
+                //       variant="outlined"
+                //       color="error"
+                //       onClick={() => handleCrudClick(interval, "delete")}
+                //       startIcon={<DeleteForeverIcon size="large" />}
+                //     >
+                //       Delete Interval
+                //     </Button>
+                //     <Button
+                //       size="small"
+                //       variant="outlined"
+                //       color="warning"
+                //       onClick={() => handleCrudClick(interval, "edit")}
+                //       startIcon={<EditNoteIcon size="large" />}
+                //     >
+                //       Edit Interval
+                //     </Button>
+                //   </Stack>
+                // </div>
               );
             })}
+
+          {/* Lower control buttons */}
+
           <div
             style={{
               display: "flex",
@@ -289,6 +396,9 @@ const DailyChartDetail = () => {
               </Button>
             </Stack>
           </div>
+
+          {/* Footer Info Section */}
+
           <Card
             variant="outlined"
             sx={{ backgroundColor: "black", color: "white", marginTop: "10px" }}
