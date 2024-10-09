@@ -208,8 +208,12 @@ const DailyChartDetail = () => {
                     sx={{
                       backgroundColor: "black",
                       borderRadius: "10px 10px 0 0",
-                      padding: "15px",
+                      padding: "15px 15px 5px 15px",
                       marginTop: "10px",
+                      borderTop: `2px solid ${returnColor(
+                        interval?.interval_rating,
+                        "whole"
+                      )}`,
                     }}
                     direction="row"
                     justifyContent="space-between"
@@ -297,68 +301,6 @@ const DailyChartDetail = () => {
                     </Button>
                   </Stack>
                 </>
-
-                // <div
-                //   key={interval?.id - interval?.chart_id}
-                //   className="intervalInfoContain"
-                // >
-                //   <div
-                //     className="intervalHeader"
-                //     style={{
-                //       borderColor: returnColor(
-                //         interval?.interval_rating,
-                //         "whole"
-                //       ),
-                //     }}
-                //   >
-                //     <label>
-                //       Interval Time: {interval?.start_interval} -{" "}
-                //       {interval?.end_interval}
-                //     </label>{" "}
-                //     |<label> Activity: {interval?.activity} </label>|
-                //     <label> Interval Rating: {interval?.interval_rating}</label>
-                //   </div>
-                //   <p>
-                //     <label>Interval Notes:</label> {interval?.interval_notes}
-                //   </p>
-                //   <label>Problem Behaviors: </label>
-
-                //   {Object.keys(interval?.interval_tags ?? {}).length ? (
-                //     <div className="behaviorsTag">
-                //       {Object.entries(interval?.interval_tags || {}).map(
-                //         ([behavior, count]) => (
-                //           <div key={behavior}>
-                //             <div>
-                //               {<strong>{behavior}</strong>}: {count}
-                //             </div>
-                //           </div>
-                //         )
-                //       )}
-                //     </div>
-                //   ) : (
-                //     "None."
-                //   )}
-                //   <Stack spacing={2} direction="row" sx={{ marginTop: "10px" }}>
-                //     <Button
-                //       size="small"
-                //       variant="outlined"
-                //       color="error"
-                //       onClick={() => handleCrudClick(interval, "delete")}
-                //       startIcon={<DeleteForeverIcon size="large" />}
-                //     >
-                //       Delete Interval
-                //     </Button>
-                //     <Button
-                //       size="small"
-                //       variant="outlined"
-                //       color="warning"
-                //       onClick={() => handleCrudClick(interval, "edit")}
-                //       startIcon={<EditNoteIcon size="large" />}
-                //     >
-                //       Edit Interval
-                //     </Button>
-                //   </Stack>
-                // </div>
               );
             })}
 
