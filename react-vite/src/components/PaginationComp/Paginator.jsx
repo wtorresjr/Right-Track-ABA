@@ -21,6 +21,11 @@ const Paginator = ({ numOfCharts, perPage, currentPage, handlePageChange }) => {
 
   return (
     <TablePagination
+      sx={{
+        ".MuiTablePagination-actions svg": {
+          color: "white", // This targets the arrow icons and sets them to white
+        },
+      }}
       style={{
         color: "white",
         width: "100%",

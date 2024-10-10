@@ -10,8 +10,20 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Stack,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ClientDetails = () => {
   const navigate = useNavigate();
@@ -62,8 +74,18 @@ const ClientDetails = () => {
     <>
       {loaded && client ? (
         <div className="mainDisplayContain" id="clientDetails">
-          <h1>
-            {client?.last_name}, {client?.first_name}
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
             <Button
               variant="contained"
               startIcon={<KeyboardBackspaceTwoToneIcon />}
@@ -72,34 +94,68 @@ const ClientDetails = () => {
             >
               Back To Manage Clients
             </Button>
-          </h1>
+          </Stack>
 
-          <div className="clientDetailsContain">
-            <div>
-              <label className="detailsLabels">Guardian Email:</label>
-              {client?.guardian_email}
-            </div>
-            <div>
-              <label className="detailsLabels">DOB:</label>
-              {client?.dob}
-            </div>
-            <div>
-              <label className="detailsLabels">Notes:</label>
-              {client?.client_notes}
-            </div>
-          </div>
-          <div className="btnsContain">
-            <button id="editBtn" onClick={openEditModal}>
-              Edit Client Data
-            </button>
-            <button id="delBtn" onClick={openDeleteModal}>
-              Delete Client
-            </button>
-          </div>
+          <Accordion
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "10px",
+              margin: "10px 0",
+            }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+            >
+              Client Details
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>Client Notes: {client?.client_notes}</Typography>
+              <Typography>Guardian Email: {client?.guardian_email}</Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={openEditModal}
+              startIcon={<EditNoteIcon />}
+            >
+              EDIT CLIENT INFO
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={openDeleteModal}
+              startIcon={<DeleteForeverIcon />}
+            >
+              DELETE CLIENT
+            </Button>
+          </Stack>
+          <Divider
+            sx={{
+              width: "100%",
+              paddingBottom:"10px",
+              borderColor: "white",
+              "&::before, &::after": {
+                borderColor: "white",
+              
+              },
+            }}
+          ></Divider>
 
           <DailyCharts clientCharts={client} />
 
-          <h1></h1>
+          <Divider
+            sx={{
+              width: "100%",
+              borderColor: "white",
+              "&::before, &::after": {
+                borderColor: "white",
+              },
+            }}
+          ></Divider>
 
           <DiscreetTrials clientDT={client} />
 

@@ -10,7 +10,8 @@ import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
-import InfoBar from "../InfoBarComponent";
+import { Button, Stack, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const DiscreetTrials = () => {
   const { setModalContent } = useModal();
@@ -64,14 +65,26 @@ const DiscreetTrials = () => {
 
   return (
     <>
-      <h1>
-        Discreet Trials
-        <button id="createNewChartBtn" onClick={openCreateDTModal}>
-          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
-          Create Discreet Trial
-          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
-        </button>
-      </h1>
+      <Stack
+        direction="row"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          alignItems: "center",
+          marginTop: "10px",
+        }}
+      >
+        <Typography variant="h5">Discreet Trials</Typography>
+        <Button
+          color="warning"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={openCreateDTModal}
+        >
+          Create New Trial
+        </Button>
+      </Stack>
       {dtCount > 0 ? (
         <div className="chartsContain">
           <Paginator

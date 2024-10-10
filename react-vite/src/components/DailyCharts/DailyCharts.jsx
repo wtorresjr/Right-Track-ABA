@@ -128,7 +128,13 @@ const DailyCharts = ({ clientCharts }) => {
     <>
       <Stack
         direction="row"
-        sx={{ display: "flex", justifyContent: "space-between", width: "100%", alignItems:"center", marginBottom:"10px" }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          alignItems: "center",
+          margin: "10px 0",
+        }}
       >
         <Typography variant="h5">Daily Performance Charts</Typography>
         <Button
