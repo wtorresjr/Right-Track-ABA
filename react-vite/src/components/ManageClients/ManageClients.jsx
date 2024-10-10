@@ -10,6 +10,8 @@ import "../PaginationComp/bootstrap.css";
 
 import { Button, Stack } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 const ManageClients = () => {
   const [searchFilter, setSearchFilter] = useState("");
@@ -111,11 +113,30 @@ const ManageClients = () => {
           </div>
         </div> */}
       </Stack>
-      <input
-        type="text"
-        placeholder="Search For A Client"
+
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        // label="Outlined"
+        variant="outlined"
+        placeholder="Search Clients"
         value={searchFilter}
         onChange={(e) => setSearchFilter(e.target.value)}
+        sx={{
+          input: { color: "white" }, // Change input text color to white
+          "& .MuiInputLabel-root": { color: "white" }, // Change label color
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white", // Change border color
+            },
+            "&:hover fieldset": {
+              borderColor: "white", // Border color on hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white", // Border color when focused
+            },
+          },
+        }}
       />
 
       {filteredClients?.length > 0 && (

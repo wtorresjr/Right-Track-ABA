@@ -12,6 +12,9 @@ import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 import InfoBar from "../InfoBarComponent";
 
+import { Button, Stack, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
 const DailyCharts = ({ clientCharts }) => {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
@@ -123,19 +126,25 @@ const DailyCharts = ({ clientCharts }) => {
 
   return (
     <>
-      <h1>
-        Daily Performance Charts
-        <button id="createNewChartBtn" onClick={openCreateChartModal}>
-          <i className="fa-solid fa-folder-plus fa-xl"></i>
+      <Stack
+        direction="row"
+        sx={{ display: "flex", justifyContent: "space-between", width: "100%", alignItems:"center", marginBottom:"10px" }}
+      >
+        <Typography variant="h5">Daily Performance Charts</Typography>
+        <Button
+          color="warning"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={openCreateChartModal}
+        >
           Create New Chart
-          <i className="fa-solid fa-folder-plus fa-xl"></i>
-        </button>
-      </h1>
+        </Button>
+      </Stack>
       {numOfCharts > 0 ? (
         <div className="chartsContain">
-          <div className="dcHeader">
+          {/* <div className="dcHeader">
             <LegendComponent />
-          </div>
+          </div> */}
 
           <input
             type="text"

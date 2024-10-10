@@ -8,8 +8,13 @@ import { DailyCharts } from "../DailyCharts";
 import { DiscreetTrials } from "../DiscreetTrials";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "@mui/material";
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 
 const ClientDetails = () => {
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -49,16 +54,24 @@ const ClientDetails = () => {
     );
   };
 
+  const handleNavBack = () => {
+    navigate("/manage-clients");
+  };
+
   return (
     <>
       {loaded && client ? (
         <div className="mainDisplayContain" id="clientDetails">
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
-            </NavLink>
+            <Button
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              size="small"
+              onClick={handleNavBack}
+            >
+              Back To Manage Clients
+            </Button>
           </h1>
 
           <div className="clientDetailsContain">
@@ -84,19 +97,22 @@ const ClientDetails = () => {
             </button>
           </div>
 
-            <DailyCharts clientCharts={client} />
-       
+          <DailyCharts clientCharts={client} />
 
           <h1></h1>
-         
-            <DiscreetTrials clientDT={client} />
- 
+
+          <DiscreetTrials clientDT={client} />
+
           <h1>
             {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
-            </NavLink>
+            <Button
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              size="small"
+              onClick={handleNavBack}
+            >
+              Back To Manage Clients
+            </Button>
           </h1>
         </div>
       ) : (
