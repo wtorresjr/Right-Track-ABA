@@ -10,6 +10,8 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import PreviewIcon from "@mui/icons-material/Preview";
 // import { returnColor, returnPercentColor } from "../helpers/returnColor";
 
+import { Typography } from "@mui/material";
+
 import { styled } from "@mui/material/styles";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -77,9 +79,9 @@ const ClientInfo = ({ client }) => {
       }}
     >
       <Stack direction="column" justifyContent="space-between">
-        <h2 style={{ margin: "0px" }}>
+        <Typography variant="h5">
           {client?.first_name} {client?.last_name}
-        </h2>
+        </Typography>
         <Item sx={{ padding: "0px" }}>
           Guardian Email: {client?.guardian_email}
         </Item>

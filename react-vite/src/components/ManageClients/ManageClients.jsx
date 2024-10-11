@@ -8,7 +8,7 @@ import "./manage-clients.css";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -87,7 +87,7 @@ const ManageClients = () => {
         alignItems="center"
         marginBottom="10px"
       >
-        <h1>Manage Clients</h1>
+        <Typography variant="h4">Manage Clients</Typography>
 
         <Button
           variant="contained"
@@ -98,20 +98,6 @@ const ManageClients = () => {
         >
           Add New Client
         </Button>
-
-        {/* <div
-          className="chartTotalsContain"
-          style={{
-            border: `3px solid white`,
-          }}
-        >
-          <div>
-            Total Clients: {totalClients}
-            {searchFilter && filteredClients
-              ? ` - (${filteredClients.length} Filtered)`
-              : ""}
-          </div>
-        </div> */}
       </Stack>
 
       <TextField
