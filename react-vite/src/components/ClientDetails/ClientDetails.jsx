@@ -102,6 +102,7 @@ const ClientDetails = () => {
               color: "white",
               borderRadius: "10px",
               margin: "10px 0",
+              width: "100%",
             }}
           >
             <AccordionSummary
@@ -136,11 +137,10 @@ const ClientDetails = () => {
           <Divider
             sx={{
               width: "100%",
-              paddingBottom:"10px",
+              paddingBottom: "10px",
               borderColor: "white",
               "&::before, &::after": {
                 borderColor: "white",
-              
               },
             }}
           ></Divider>

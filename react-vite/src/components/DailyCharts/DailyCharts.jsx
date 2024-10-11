@@ -164,7 +164,7 @@ const DailyCharts = ({ clientCharts }) => {
         <div className="chartsContain">
           {/* <div className="dcHeader">
             <LegendComponent />
-          </div> */}
+            </div> */}
 
           <TextField
             fullWidth
@@ -296,47 +296,8 @@ const DailyCharts = ({ clientCharts }) => {
                           View Chart
                         </Button>
                       </Box>
-                      // <div key={dc?.id} className="clientDCdata">
-                      //   <Link
-                      //     to={`/daily-chart/${dc?.id}`}
-                      //     className="navLinkStyleDC"
-                      //   >
-                      //     <div
-                      //       className="dcButtons"
-                      //       style={{
-                      //         border: `5px solid ${dayColorRating}`,
-                      //       }}
-                      //     >
-                      //       <div className="folderText">
-                      //         <p>
-                      //           <label>Date: {dc?.chart_date}</label>
-                      //         </p>
-                      //         <div>Total Intervals: {dc?.interval_count}</div>
-                      //         <div>Avg Rating: {dc?.avgForChart}</div>
-                      //         <p>View Chart</p>
-                      //       </div>
-                      //     </div>
-                      //   </Link>
-                      //   <div className="chartCrudBtns">
-                      //     <button
-                      //       onClick={() => {
-                      //         openUpdateChartModal(dc);
-                      //       }}
-                      //     >
-                      //       Edit Chart
-                      //     </button>
-                      //     <button
-                      //       onClick={() => {
-                      //         openDeleteModal(dc);
-                      //       }}
-                      //     >
-                      //       Delete Chart
-                      //     </button>
-                      //   </div>
-                      // </div>
                     );
                   }
-
                   return null;
                 })}
             </Stack>

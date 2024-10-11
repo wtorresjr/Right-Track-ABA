@@ -218,10 +218,18 @@ const DailyChartDetail = () => {
                     direction="row"
                     justifyContent="space-between"
                   >
-                    <Stack>
-                      <Typography>{`Time: ${interval?.start_interval} -${" "}
-                       ${interval?.end_interval}`}</Typography>
-                      <Typography>{`Activity: ${interval?.activity}`}</Typography>
+                    <Stack spacing={1}>
+                      <Chip
+                        label={`Time: ${interval?.start_interval} - ${interval?.end_interval}`}
+                        variant="filled"
+                        color="primary"
+                      />
+                      <Chip
+                        label={`Activity: ${interval?.activity}`}
+                        variant="filled"
+                        color="primary"
+                        sx={{ justifyContent: "space-between" }}
+                      />
                     </Stack>
 
                     <Stack direction="column" alignItems="center">
@@ -239,9 +247,17 @@ const DailyChartDetail = () => {
                     </Stack>
                   </Stack>
                   <Stack
-                    sx={{ backgroundColor: "black", padding: "0 15px 10px" }}
+                    sx={{
+                      backgroundColor: "black",
+                      padding: "3px 15px 10px",
+                      alignItems: "center",
+                      // border: "1px solid white",
+                    }}
+                    direction="row"
+                    spacing={1}
                   >
-                    {interval?.interval_notes}
+                    <Chip label={`Notes:`} variant="filled" color="primary" />
+                    <Typography>{interval?.interval_notes}</Typography>
                   </Stack>
                   <Stack
                     direction="row"
@@ -252,8 +268,9 @@ const DailyChartDetail = () => {
                   >
                     <Chip
                       label="BEHAVIORS :"
-                      variant="outlined"
-                      sx={{ color: "white" }}
+                      variant="filled"
+                      color="primary"
+                      // sx={{ color: "white" }}
                     />
                     {Object.keys(interval?.interval_tags ?? {}).length ? (
                       <div className="behaviorsTag">
@@ -268,7 +285,7 @@ const DailyChartDetail = () => {
                         )}
                       </div>
                     ) : (
-                      <Stack>No Recorded Behaviors</Stack>
+                      <Typography>No Recorded Behaviors</Typography>
                     )}
                   </Stack>
 
@@ -306,85 +323,92 @@ const DailyChartDetail = () => {
 
           {/* Lower control buttons */}
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "10px 0 0 0",
-            }}
-          >
-            <Stack spacing={2} direction="row">
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<PrintIcon />}
-              >
-                Print Chart Data
-              </Button>
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<AttachEmailIcon />}
-              >
-                Email Chart Data
-              </Button>
-              <Button
-                variant="contained"
-                color="warning"
-                onClick={openAddIntModal}
-                startIcon={<AddIcon />}
-              >
-                Add New Interval
-              </Button>
-            </Stack>
-          </div>
-
-          {/* Footer Info Section */}
-
-          <Card
-            variant="outlined"
-            sx={{ backgroundColor: "black", color: "white", marginTop: "10px" }}
-          >
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                sx={{ justifyContent: "space-between", alignItems: "center" }}
-              >
-                <Typography variant="h6" component="div">
-                  Daily Chart Detail - {currentChart?.chart_date}
-                </Typography>
-
+          {currentChart?.Num_Intervals ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "10px 0 0 0",
+              }}
+            >
+              <Stack spacing={2} direction="row">
                 <Button
                   variant="contained"
-                  startIcon={<KeyboardBackspaceTwoToneIcon />}
-                  size="small"
-                  onClick={handleNavBack}
+                  color="secondary"
+                  startIcon={<PrintIcon />}
                 >
-                  {clientInfo?.first_name}'s Detail Page
+                  Print Chart Data
+                </Button>
+                <Button
+                  variant="contained"
+                  color="success"
+                  startIcon={<AttachEmailIcon />}
+                >
+                  Email Chart Data
+                </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={openAddIntModal}
+                  startIcon={<AddIcon />}
+                >
+                  Add New Interval
                 </Button>
               </Stack>
-              <Typography variant="h6" component="div">
-                Client: {clientInfo?.first_name} {clientInfo?.last_name}
-              </Typography>
+            </div>
+          ) : null}
 
-              <Divider sx={{ backgroundColor: "white" }} />
-              <Stack
-                direction="row"
-                sx={{ justifyContent: "space-between", alignItems: "center" }}
-              >
+          {/* Footer Info Section */}
+          {currentChart?.Num_Intervals ? (
+            <Card
+              variant="outlined"
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+                marginTop: "10px",
+              }}
+            >
+              <Box sx={{ p: 2 }}>
+                <Stack
+                  direction="row"
+                  sx={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <Typography variant="h6" component="div">
+                    Daily Chart Detail - {currentChart?.chart_date}
+                  </Typography>
+
+                  <Button
+                    variant="contained"
+                    startIcon={<KeyboardBackspaceTwoToneIcon />}
+                    size="small"
+                    onClick={handleNavBack}
+                  >
+                    {clientInfo?.first_name}'s Detail Page
+                  </Button>
+                </Stack>
                 <Typography variant="h6" component="div">
-                  Number of Intervals:{" "}
-                  {currentChart?.Num_Intervals
-                    ? currentChart?.Num_Intervals
-                    : 0}
+                  Client: {clientInfo?.first_name} {clientInfo?.last_name}
                 </Typography>
-                <Typography variant="h6">
-                  Avg Interval Rating:{" "}
-                  {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-                </Typography>
-              </Stack>
-            </Box>
-          </Card>
+
+                <Divider sx={{ backgroundColor: "white" }} />
+                <Stack
+                  direction="row"
+                  sx={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <Typography variant="h6" component="div">
+                    Number of Intervals:{" "}
+                    {currentChart?.Num_Intervals
+                      ? currentChart?.Num_Intervals
+                      : 0}
+                  </Typography>
+                  <Typography variant="h6">
+                    Avg Interval Rating:{" "}
+                    {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+                  </Typography>
+                </Stack>
+              </Box>
+            </Card>
+          ) : null}
         </div>
       ) : (
         <h2
