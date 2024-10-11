@@ -12,7 +12,7 @@ import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 import InfoBar from "../InfoBarComponent";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 const DailyCharts = ({ clientCharts }) => {
@@ -152,11 +152,29 @@ const DailyCharts = ({ clientCharts }) => {
             <LegendComponent />
           </div> */}
 
-          <input
-            type="text"
-            placeholder="Search Daily Charts (By Date)"
+          <TextField
+            fullWidth
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Search Daily Charts"
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
+            sx={{
+              marginBottom: "10px",
+              input: { color: "white" }, // Change input text color to white
+              "& .MuiInputLabel-root": { color: "white" }, // Change label color
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white", // Change border color
+                },
+                "&:hover fieldset": {
+                  borderColor: "white", // Border color on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "white", // Border color when focused
+                },
+              },
+            }}
           />
 
           <InfoBar
