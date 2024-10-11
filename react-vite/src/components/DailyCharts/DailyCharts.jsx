@@ -11,8 +11,17 @@ import { getClientByIDThunk } from "../../redux/clients";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 import InfoBar from "../InfoBarComponent";
+import { useNavigate } from "react-router-dom";
 
-import { Button, Stack, Typography, TextField } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  TextField,
+  Box,
+  Divider,
+} from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
 
 const DailyCharts = ({ clientCharts }) => {
@@ -25,10 +34,15 @@ const DailyCharts = ({ clientCharts }) => {
   const [filteredAvg, setFilteredAvg] = useState();
   const [allCharts, setAllCharts] = useState();
   const [pagLoading, setPagLoading] = useState(false);
+  const navigate = useNavigate();
 
   const numOfCharts = useSelector(
     (state) => state?.clients?.client_by_id?.Num_Of_Charts
   );
+
+  const handleNav = (chartId) => {
+    navigate(`/daily-chart/${chartId}`);
+  };
 
   useEffect(() => {
     setPagLoading(false);
@@ -192,7 +206,7 @@ const DailyCharts = ({ clientCharts }) => {
             handlePageChange={handlePageChange}
           />
           {pagLoading ? (
-            <div className="chartsContain">
+            <Stack direction="column">
               {filteredCharts &&
                 filteredCharts?.map((dc) => {
                   dayColorRating = returnColor(dc?.avgForChart, "float");
@@ -203,50 +217,129 @@ const DailyCharts = ({ clientCharts }) => {
                       : null;
 
                     return (
-                      <div key={dc?.id} className="clientDCdata">
-                        <Link
-                          to={`/daily-chart/${dc?.id}`}
-                          className="navLinkStyleDC"
+                      <Box
+                        key={dc?.id}
+                        sx={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          border: "2px solid",
+                          borderColor: "gray",
+                          borderRadius: 2,
+                          bgcolor: "black",
+                          color: "white",
+                          marginBottom: "10px",
+                          "& svg": {
+                            m: 1,
+                          },
+                        }}
+                      >
+                        <Button
+                          color="error"
+                          onClick={() => {
+                            openDeleteModal(dc);
+                          }}
                         >
-                          <div
-                            className="dcButtons"
-                            style={{
-                              border: `5px solid ${dayColorRating}`,
-                            }}
-                          >
-                            <div className="folderText">
-                              <p>
-                                <label>Date: {dc?.chart_date}</label>
-                              </p>
-                              <div>Total Intervals: {dc?.interval_count}</div>
-                              <div>Avg Rating: {dc?.avgForChart}</div>
-                              <p>View Chart</p>
-                            </div>
-                          </div>
-                        </Link>
-                        <div className="chartCrudBtns">
-                          <button
-                            onClick={() => {
-                              openUpdateChartModal(dc);
-                            }}
-                          >
-                            Edit Chart
-                          </button>
-                          <button
-                            onClick={() => {
-                              openDeleteModal(dc);
-                            }}
-                          >
-                            Delete Chart
-                          </button>
-                        </div>
-                      </div>
+                          Delete
+                        </Button>
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Button
+                          color="warning"
+                          onClick={() => {
+                            openUpdateChartModal(dc);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Typography sx={{ padding: "5px" }}>
+                          Date: {dc?.chart_date}
+                        </Typography>
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Typography sx={{ padding: "5px" }}>
+                          Total Intervals: {dc?.interval_count}
+                        </Typography>
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Typography sx={{ padding: "5px" }}>
+                          Rating: {dc?.avgForChart.toFixed(1)}
+                        </Typography>
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Button
+                          onClick={() => {
+                            handleNav(dc?.id);
+                          }}
+                        >
+                          View Chart
+                        </Button>
+                      </Box>
+                      // <div key={dc?.id} className="clientDCdata">
+                      //   <Link
+                      //     to={`/daily-chart/${dc?.id}`}
+                      //     className="navLinkStyleDC"
+                      //   >
+                      //     <div
+                      //       className="dcButtons"
+                      //       style={{
+                      //         border: `5px solid ${dayColorRating}`,
+                      //       }}
+                      //     >
+                      //       <div className="folderText">
+                      //         <p>
+                      //           <label>Date: {dc?.chart_date}</label>
+                      //         </p>
+                      //         <div>Total Intervals: {dc?.interval_count}</div>
+                      //         <div>Avg Rating: {dc?.avgForChart}</div>
+                      //         <p>View Chart</p>
+                      //       </div>
+                      //     </div>
+                      //   </Link>
+                      //   <div className="chartCrudBtns">
+                      //     <button
+                      //       onClick={() => {
+                      //         openUpdateChartModal(dc);
+                      //       }}
+                      //     >
+                      //       Edit Chart
+                      //     </button>
+                      //     <button
+                      //       onClick={() => {
+                      //         openDeleteModal(dc);
+                      //       }}
+                      //     >
+                      //       Delete Chart
+                      //     </button>
+                      //   </div>
+                      // </div>
                     );
                   }
 
                   return null;
                 })}
-            </div>
+            </Stack>
           ) : (
             <div className="pagLoadingDiv">
               <h2>Loading Charts...</h2>
