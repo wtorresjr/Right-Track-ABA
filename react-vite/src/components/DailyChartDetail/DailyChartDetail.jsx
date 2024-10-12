@@ -221,12 +221,12 @@ const DailyChartDetail = () => {
                     <Stack spacing={1}>
                       <Chip
                         label={`Time: ${interval?.start_interval} - ${interval?.end_interval}`}
-                        variant="filled"
+                        variant="outlined"
                         color="primary"
                       />
                       <Chip
                         label={`Activity: ${interval?.activity}`}
-                        variant="filled"
+                        variant="outlined"
                         color="primary"
                         sx={{ justifyContent: "space-between" }}
                       />
@@ -251,12 +251,11 @@ const DailyChartDetail = () => {
                       backgroundColor: "black",
                       padding: "3px 15px 10px",
                       alignItems: "center",
-                      // border: "1px solid white",
                     }}
                     direction="row"
                     spacing={1}
                   >
-                    <Chip label={`Notes:`} variant="filled" color="primary" />
+                    <Chip label={`Notes:`} variant="outlined" color="primary" />
                     <Typography>{interval?.interval_notes}</Typography>
                   </Stack>
                   <Stack
@@ -268,7 +267,7 @@ const DailyChartDetail = () => {
                   >
                     <Chip
                       label="BEHAVIORS :"
-                      variant="filled"
+                      variant="outlined"
                       color="primary"
                       // sx={{ color: "white" }}
                     />
