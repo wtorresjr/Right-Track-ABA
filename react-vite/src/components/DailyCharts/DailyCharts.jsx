@@ -162,10 +162,6 @@ const DailyCharts = ({ clientCharts }) => {
       </Stack>
       {numOfCharts > 0 ? (
         <div className="chartsContain">
-          {/* <div className="dcHeader">
-            <LegendComponent />
-            </div> */}
-
           <TextField
             fullWidth
             id="outlined-basic"
@@ -250,7 +246,7 @@ const DailyCharts = ({ clientCharts }) => {
                         <Button
                           color="warning"
                           onClick={() => {
-                            openUpdateChartModal(dc);
+                            openUpdateChartModal(dc); 
                           }}
                         >
                           Edit
