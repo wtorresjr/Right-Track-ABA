@@ -158,9 +158,18 @@ const ClientDetails = () => {
           ></Divider>
 
           <DiscreetTrials clientDT={client} />
-
-          <h1>
-            {client?.last_name}, {client?.first_name}
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
             <Button
               variant="contained"
               startIcon={<KeyboardBackspaceTwoToneIcon />}
@@ -169,7 +178,7 @@ const ClientDetails = () => {
             >
               Back To Manage Clients
             </Button>
-          </h1>
+          </Stack>
         </div>
       ) : (
         <h2
