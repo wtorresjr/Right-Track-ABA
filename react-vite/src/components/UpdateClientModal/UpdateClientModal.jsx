@@ -6,6 +6,9 @@ import { getClientByIDThunk, updateClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 import { DeleteMessage } from "../DeleteModal";
 
+import { Stack, Typography, Button, TextField, Box } from "@mui/material";
+
+
 const UpdateClientModal = ({ client }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate = useNavigate();
@@ -72,11 +75,12 @@ const UpdateClientModal = ({ client }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let extracted_dob = `${dob.$y}-${dob.$M + 1}-${dob.$D}`;
     const updatedClientInput = {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
-      dob: new Date(dob),
+      dob: new Date(extracted_dob),
       client_notes: clientNotes,
     };
 
@@ -99,87 +103,99 @@ const UpdateClientModal = ({ client }) => {
   };
 
   return (
-    <div className="createClient">
-      <div className="mainDisplayContain">
-        <form onSubmit={handleSubmit} className="newClientForm">
-          <div className="modalHeading">
-            <h1>Update Client Info</h1>
-            <i
-              className="fa-solid fa-circle-xmark fa-2xl"
-              onClick={closeModal}
-            ></i>
-          </div>
-          <label>
-            First Name:
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            {errors.firstName && (
-              <div className="formErrors">{errors.firstName}</div>
-            )}
-          </label>
-          <label>
-            Last Name:
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            {errors.lastName && (
-              <div className="formErrors">{errors.lastName}</div>
-            )}
-          </label>
-          <label>
-            Guardian Email:
-            <input
-              type="text"
-              value={guardianEmail}
-              onChange={(e) => setGuardianEmail(e.target.value)}
-            />
-            {errors.guardianEmail && (
-              <div className="formErrors">{errors.guardianEmail}</div>
-            )}
-          </label>
-          <label>
-            Date of Birth:
-            <input
-              type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-            />
-            {errors.dob && <div className="formErrors">{errors.dob}</div>}
-            {errors.dobTooGreat && (
-              <div className="formErrors">{errors.dobTooGreat}</div>
-            )}
-          </label>
-          <label>
-            Notes:
-            <textarea
-              rows="6"
-              id="clientNotes"
-              value={clientNotes}
-              onChange={(e) => setClientNotes(e.target.value)}
-              placeholder="Optional"
-            ></textarea>
-          </label>
-          <div className="createBtnsDiv">
-            <button
-              type="submit"
-              id="createChartBtn"
-              // id={isDisabled ? "submitBtnDisabled" : "submitBtn"}
-              disabled={isDisabled}
-            >
-              Update
-            </button>
-            <button onClick={closeModal} id="cancelBtn">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Box
+      component="form"
+      sx={{ "& > :not(style)": { m: 1, width: "40ch", padding: "10px" } }}
+      noValidate
+      autoComplete="off"
+    >
+      <Stack direction="column" spacing={2}>
+        <Typography variant="h6">Update Client Info</Typography>
+        <TextField
+          value={firstName}
+          label="First Name"
+          multiline
+          maxRows={1}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        {errors.firstName && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.firstName}
+          </Typography>
+        )}
+        <TextField
+          value={lastName}
+          label="Last Name"
+          multiline
+          maxRows={1}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        {errors.lastName && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.lastName}
+          </Typography>
+        )}
+        <TextField
+          value={guardianEmail}
+          label="Guardian's Email"
+          multiline
+          maxRows={1}
+          onChange={(e) => setGuardianEmail(e.target.value)}
+        />
+        {errors.guardianEmail && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.guardianEmail}
+          </Typography>
+        )}
+
+        <Stack direction="column" spacing={1}>
+          <Typography>Date Of Birth:</Typography>
+          <input
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+        </Stack>
+        {errors.dob && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.dob}
+          </Typography>
+        )}
+        {errors.dobTooGreat && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.dobTooGreat}
+          </Typography>
+        )}
+
+        <TextField
+          value={clientNotes}
+          label="Client Notes"
+          multiline
+          maxRows={5}
+        />
+      </Stack>
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+          disabled={isDisabled}
+        >
+          Update Client
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 

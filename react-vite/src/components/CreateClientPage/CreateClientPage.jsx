@@ -5,10 +5,7 @@ import { useDispatch } from "react-redux";
 import { createNewClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 
-import { Stack, Typography, Button, TextField, Box } from "@mui/material";
-import { DatePicker, DatePickerToolbar } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // Import the Day.js adapter
+import { Stack, Typography, Button, TextField, Box } from "@mui/material";r
 
 const CreateClient = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,13 +69,12 @@ const CreateClient = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let extracted_dob = `${dob.$y}-${dob.$M + 1}-${dob.$D}`;
 
     const newClient = {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
-      dob: extracted_dob,
+      dob: dob,
       client_notes: clientNotes,
     };
 
@@ -133,15 +129,14 @@ const CreateClient = () => {
             {errors.guardianEmail}
           </Typography>
         )}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Date Of Birth"
+        <Stack direction="column" spacing={1}>
+          <Typography>Date Of Birth:</Typography>
+          <input
+            type="date"
             value={dob}
-            onChange={(newValue) => {
-              setDob(newValue);
-            }}
+            onChange={(e) => setDob(e.target.value)}
           />
-        </LocalizationProvider>
+        </Stack>
 
         {errors.dob && (
           <Typography sx={{ color: "red", textAlign: "center" }}>

@@ -47,7 +47,7 @@ const DeleteModal = ({ client }) => {
 
   return (
     <Stack
-      sx={{ padding: "10px", width: "50ch", textAlign: "center" }}
+      sx={{ padding: "10px", width: "40ch", textAlign: "center" }}
       spacing={2}
     >
       <Typography variant="h5">
@@ -79,36 +79,6 @@ const DeleteModal = ({ client }) => {
         </Button>
       </Stack>
     </Stack>
-    // <div className="deleteModalContain">
-    //   <h1>
-    //     Delete Client {client?.first_name} {client?.last_name}?
-    //   </h1>
-    //   <p>
-    //     To delete {client?.first_name} {client?.last_name} and all their related
-    //     data, please enter the text below into the input:
-    //   </p>
-    //   <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
-    //     {confirmDelText}
-    //   </p>
-    //   <input
-    //     id="confirmInput"
-    //     type="text"
-    //     value={userInput}
-    //     onChange={(e) => setUserInput(e.target.value)}
-    //   />
-    //   <div className="createBtnsDiv">
-    //     <button
-    //       disabled={isDisabled}
-    //       onClick={deleteClient}
-    //       id="createChartBtn"
-    //     >
-    //       Delete
-    //     </button>
-    //     <button onClick={closeModal} id="cancelBtn">
-    //       Cancel
-    //     </button>
-    //   </div>
-    // </div>
   );
 };
 
