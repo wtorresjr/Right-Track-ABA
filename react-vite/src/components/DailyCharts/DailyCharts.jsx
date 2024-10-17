@@ -246,7 +246,7 @@ const DailyCharts = ({ clientCharts }) => {
                         <Button
                           color="warning"
                           onClick={() => {
-                            openUpdateChartModal(dc); 
+                            openUpdateChartModal(dc);
                           }}
                         >
                           Edit
@@ -304,18 +304,19 @@ const DailyCharts = ({ clientCharts }) => {
           )}
         </div>
       ) : (
-        <h2
+        <Typography
           style={{
             textAlign: "center",
             backgroundColor: "black",
             color: "white",
             borderRadius: "15px",
             padding: "10px 0",
-            width: "100%",
+              width: "100%",
+            marginBottom:"10px"
           }}
         >
           No Daily Charts Yet.
-        </h2>
+        </Typography>
       )}
     </>
   );

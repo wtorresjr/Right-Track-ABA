@@ -200,7 +200,7 @@ const DiscreetTrials = () => {
           )}
         </div>
       ) : (
-        <h2
+        <Typography
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -208,10 +208,11 @@ const DiscreetTrials = () => {
             borderRadius: "15px",
             padding: "10px 0",
             width: "100%",
+            marginBottom: "5px",
           }}
         >
           No Discreet Trials Yet.
-        </h2>
+        </Typography>
       )}
       {/* <Stack
         direction="row"
