@@ -39,7 +39,7 @@ label {
   padding: 10px;
   font-weight: bolder;
   font-size: 18px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 .loginFormModal button {

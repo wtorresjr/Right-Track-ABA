@@ -5,6 +5,11 @@ import { useDispatch } from "react-redux";
 import { createNewClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 
+import { Stack, Typography, Button, TextField, Box } from "@mui/material";
+import { DatePicker, DatePickerToolbar } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // Import the Day.js adapter
+
 const CreateClient = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate = useNavigate();
@@ -13,7 +18,7 @@ const CreateClient = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [guardianEmail, setGuardianEmail] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState(null);
   const [clientNotes, setClientNotes] = useState("");
   const { closeModal } = useModal();
   const [errors, setErrors] = useState({});
@@ -42,7 +47,8 @@ const CreateClient = () => {
     if (!guardianEmail.match(emailRegex) || guardianEmail.trim() === "") {
       errorCollector.guardianEmail = "Invalid email address";
     }
-    if (!dob.length) {
+
+    if (!dob) {
       errorCollector.dob = "Date of birth is required";
     }
 
@@ -65,11 +71,14 @@ const CreateClient = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let extracted_dob = `${dob.$y}-${dob.$M + 1}-${dob.$D}`;
+
     const newClient = {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
-      dob: dob,
+      dob: extracted_dob,
       client_notes: clientNotes,
     };
 
@@ -83,83 +92,92 @@ const CreateClient = () => {
   };
 
   return (
-    <div className="createClient">
-      <div className="mainDisplayContain">
-        <form onSubmit={handleSubmit} className="newClientForm">
-          <div className="modalHeading">
-            <h1>Create A New Client</h1>
-            <i
-              className="fa-solid fa-circle-xmark fa-2xl"
-              // id="closeBtn"
-              onClick={closeModal}
-            ></i>
-          </div>
-          <label>
-            First Name:
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            {errors.firstName && (
-              <div className="formErrors">{errors.firstName}</div>
-            )}
-          </label>
-          <label>
-            Last Name:
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            {errors.lastName && (
-              <div className="formErrors">{errors.lastName}</div>
-            )}
-          </label>
-          <label>
-            Guardian Email:
-            <input
-              type="text"
-              value={guardianEmail}
-              onChange={(e) => setGuardianEmail(e.target.value)}
-            />
-            {errors.guardianEmail && (
-              <div className="formErrors">{errors.guardianEmail}</div>
-            )}
-          </label>
-          <label>
-            Date of Birth:
-            <input
-              type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-            />
-            {errors.dob && <div className="formErrors">{errors.dob}</div>}
-            {errors.dobTooGreat && (
-              <div className="formErrors">{errors.dobTooGreat}</div>
-            )}
-          </label>
-          <label>
-            Notes:
-            <textarea
-              rows="6"
-              id="clientNotes"
-              value={clientNotes}
-              onChange={(e) => setClientNotes(e.target.value)}
-              placeholder="Optional"
-            ></textarea>
-          </label>
-          <div className="createBtnsDiv">
-            <button onClick={closeModal} id="cancelBtn">
-              Cancel
-            </button>
-            <button type="submit" id="createChartBtn" disabled={isDisabled}>
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Box
+      component="form"
+      sx={{ "& > :not(style)": { m: 1, width: "40ch", padding: "10px" } }}
+      noValidate
+      autoComplete="off"
+    >
+      <Stack direction="column" spacing={2}>
+        <Typography variant="h6">Create New Client</Typography>
+        <TextField
+          label="First Name"
+          multiline
+          maxRows={1}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        {errors.firstName && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.firstName}
+          </Typography>
+        )}
+        <TextField
+          label="Last Name"
+          multiline
+          maxRows={1}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        {errors.lastName && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.lastName}
+          </Typography>
+        )}
+        <TextField
+          label="Guardian's Email"
+          multiline
+          maxRows={1}
+          onChange={(e) => setGuardianEmail(e.target.value)}
+        />
+        {errors.guardianEmail && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.guardianEmail}
+          </Typography>
+        )}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Date Of Birth"
+            value={dob}
+            onChange={(newValue) => {
+              setDob(newValue);
+            }}
+          />
+        </LocalizationProvider>
+
+        {errors.dob && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.dob}
+          </Typography>
+        )}
+        {errors.dobTooGreat && (
+          <Typography sx={{ color: "red", textAlign: "center" }}>
+            {errors.dobTooGreat}
+          </Typography>
+        )}
+
+        <TextField label="Client Notes" multiline maxRows={5} />
+      </Stack>
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+          disabled={isDisabled}
+        >
+          Add Client
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
