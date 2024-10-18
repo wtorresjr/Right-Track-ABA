@@ -14,6 +14,18 @@ import {
 } from "../../redux/dts";
 import { DeleteMessage } from "../DeleteModal";
 
+import {
+  Typography,
+  Stack,
+  Button,
+  Box,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  TextField,
+} from "@mui/material";
+
 const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   const { setModalContent } = useModal();
   const navigate = useNavigate();
@@ -132,99 +144,106 @@ const CreateDailyChart = ({ isDT, isDTupdate, dtInfo }) => {
   }, [newChartCompleted, navigate]);
 
   return (
-    <div className="newChartModal">
-      <h1>
+    <Stack padding={2} spacing={1}>
+      <Typography variant="h5" textAlign="center">
         {isDTupdate ? "Update" : "Create"}{" "}
         {isDT ? "Discreet Trial" : "Daily Chart"}
-      </h1>
-      {currentClient?.Incomplete_Charts &&
-        currentClient?.Incomplete_Charts?.map((incChart) => {
-          return (
-            <div key={incChart?.id}>
-              <label>Incomplete Charts for {currentClient?.first_name}: </label>
-              <NavLink
-                to={`/daily-chart/${incChart?.id}`}
-                className="navLinkStyle"
-                onClick={() => closeModal()}
-              >
-                {incChart?.chart_date}
-              </NavLink>
-            </div>
-          );
-        })}
+      </Typography>
 
       {currentClient && !currentClient?.message ? (
         <div>
-          <div className="newChartMenu">
-            <form onSubmit={handleSubmit}>
-              <input
-                id="dateInput"
-                type="date"
-                value={todaysDate}
-                onChange={(e) => setTodaysDate(e.target.value)}
-              />
-
-              {isDT || isDTupdate ? (
-                <>
-                  <select
-                    id="clientSelector"
-                    value={selectedProgram || "Select Program"}
-                    onChange={(e) => setProgram(e.target.value)}
+          <Stack direction="column" spacing={2}>
+            <input
+              id="dateInput"
+              type="date"
+              value={todaysDate}
+              onChange={(e) => setTodaysDate(e.target.value)}
+            />
+            {errors && errors.date && (
+              <Typography sx={{ color: "red" }}>{errors.date} </Typography>
+            )}
+            {isDT || isDTupdate ? (
+              <>
+                <Box sx={{ marginBottom: "10px" }} width="40ch">
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Programs
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={selectedProgram || "Select Program"}
+                      label="Programs"
+                      onChange={(e) => setProgram(e.target.value)}
+                    >
+                      {dt_programs &&
+                        dt_programs?.map((program) => {
+                          return (
+                            <MenuItem key={program} value={program}>
+                              {program}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <TextField
+                  inputProps={{ min: 1 }}
+                  sx={{ marginBottom: "10px" }}
+                  label="In A Field Of"
+                  fullWidth
+                  type="number"
+                  value={programNotes}
+                  onChange={(e) => setProgramNotes(e.target.value)}
+                ></TextField>
+              </>
+            ) : (
+              <Box sx={{ marginBottom: "10px" }} width="40ch">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Client</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedClient || "Select Client"}
+                    label="Client"
+                    onChange={(e) => setSelectedClient(e.target.value)}
                   >
-                    {dt_programs &&
-                      dt_programs?.map((program) => {
+                    {clientList &&
+                      clientList?.map((client) => {
                         return (
-                          <option key={program} value={program}>
-                            {program}
-                          </option>
+                          <MenuItem key={client?.id} value={client?.id}>
+                            {client?.first_name} {client?.last_name} --- DOB:{" "}
+                            {client?.dob}
+                          </MenuItem>
                         );
                       })}
-                  </select>
-                  <p>{"In a field of"}</p>
-                  <input
-                    id="dateInput"
-                    type="Number"
-                    value={programNotes}
-                    onChange={(e) => setProgramNotes(e.target.value)}
-                  />
-                </>
-              ) : (
-                <select
-                  id="clientSelector"
-                  value={selectedClient || "Select Client"}
-                  onChange={(e) => setSelectedClient(e.target.value)}
-                >
-                  {clientList &&
-                    clientList?.map((client) => {
-                      return (
-                        <option key={client?.id} value={client?.id}>
-                          {client?.first_name} {client?.last_name} --- DOB:{" "}
-                          {client?.dob}
-                        </option>
-                      );
-                    })}
-                </select>
-              )}
-              <div className="createBtnsDiv">
-                <button id="createChartBtn" disabled={isDisabled}>
-                  {isDTupdate
-                    ? "Update DT"
-                    : isDT
-                    ? "Create DT"
-                    : "Create Chart"}
-                </button>
-                <button id="cancelBtn" onClick={() => closeModal()}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-          {errors && errors.date && <p className="errorsPtag">{errors.date}</p>}
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
+            <Stack direction="row" justifyContent="space-between">
+              <Button
+                disabled={isDisabled}
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                {isDTupdate ? "Update DT" : isDT ? "Create DT" : "Create Chart"}
+              </Button>
+              <Button
+                onClick={() => closeModal()}
+                variant="contained"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
         </div>
       ) : (
         <h1>{currentClient?.message}</h1>
       )}
-    </div>
+    </Stack>
   );
 };
 

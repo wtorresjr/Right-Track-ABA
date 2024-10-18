@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { createNewClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 
-import { Stack, Typography, Button, TextField, Box } from "@mui/material";r
+import { Stack, Typography, Button, TextField, Box } from "@mui/material";
 
 const CreateClient = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,7 +15,7 @@ const CreateClient = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [guardianEmail, setGuardianEmail] = useState("");
-  const [dob, setDob] = useState(null);
+  const [dob, setDob] = useState("");
   const [clientNotes, setClientNotes] = useState("");
   const { closeModal } = useModal();
   const [errors, setErrors] = useState({});
@@ -68,7 +68,6 @@ const CreateClient = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const newClient = {
       first_name: firstName,
