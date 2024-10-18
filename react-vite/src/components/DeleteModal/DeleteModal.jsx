@@ -53,7 +53,7 @@ const DeleteModal = ({ client }) => {
       <Typography variant="h5">
         Delete Client: {client?.first_name} {client?.last_name}?
       </Typography>
-      <Typography variant="p">
+      <Typography>
         To delete {client?.first_name} {client?.last_name} and all their related
         data, please enter the text below into the input:
       </Typography>
@@ -66,9 +66,6 @@ const DeleteModal = ({ client }) => {
         onChange={(e) => setUserInput(e.target.value)}
       ></TextField>
       <Stack direction="row" justifyContent="space-between">
-        <Button variant="contained" color="secondary" onClick={closeModal}>
-          Cancel
-        </Button>
         <Button
           variant="contained"
           color="error"
@@ -76,6 +73,9 @@ const DeleteModal = ({ client }) => {
           onClick={deleteClient}
         >
           Delete
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
+          Cancel
         </Button>
       </Stack>
     </Stack>

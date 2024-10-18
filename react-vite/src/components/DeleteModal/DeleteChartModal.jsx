@@ -11,6 +11,18 @@ import {
   getDiscreetTrialThunk,
 } from "../../redux/dts";
 
+import {
+  Typography,
+  Stack,
+  Button,
+  Box,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  TextField,
+} from "@mui/material";
+
 const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
@@ -64,30 +76,33 @@ const DeleteChartModal = ({ chartInfo, typeToDelete }) => {
   };
 
   return (
-    <div className="deleteModalContain">
-      <h1>Delete This Chart ?</h1>
-      <p>
+    <Stack width="40ch" padding={2} textAlign="center" spacing={2}>
+      <Typography variant="h5">Delete This Chart?</Typography>
+      <Typography>
         To delete {typeToDelete || "Chart"} number {chartInfo?.id} and all
         related data, please enter the text below into the input:
-      </p>
-      <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
+      </Typography>
+      <Typography sx={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
         {confirmDelText}
-      </p>
-      <input
-        id="confirmInput"
-        type="text"
+      </Typography>
+      <TextField
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <div className="createBtnsDiv">
-        <button disabled={isDisabled} onClick={deleteChart} id="createChartBtn">
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          color="error"
+          disabled={isDisabled}
+          onClick={deleteChart}
+        >
           Delete
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
           Cancel
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 

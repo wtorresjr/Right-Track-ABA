@@ -202,7 +202,7 @@ const DailyCharts = ({ clientCharts }) => {
             handlePageChange={handlePageChange}
           />
           {pagLoading ? (
-            <Stack direction="column">
+            <Stack direction="column" fullWidth>
               {filteredCharts &&
                 filteredCharts?.map((dc) => {
                   dayColorRating = returnColor(dc?.avgForChart, "float");
@@ -215,6 +215,7 @@ const DailyCharts = ({ clientCharts }) => {
                     return (
                       <Box
                         key={dc?.id}
+                        fullWidth
                         sx={{
                           display: "inline-flex",
                           alignItems: "center",
@@ -311,8 +312,8 @@ const DailyCharts = ({ clientCharts }) => {
             color: "white",
             borderRadius: "15px",
             padding: "10px 0",
-              width: "100%",
-            marginBottom:"10px"
+            width: "100%",
+            marginBottom: "10px",
           }}
         >
           No Daily Charts Yet.
