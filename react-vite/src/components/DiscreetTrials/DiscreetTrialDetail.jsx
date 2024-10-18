@@ -10,6 +10,11 @@ import { returnPercentColor } from "../helpers/returnColor";
 import { LegendComponent } from "../DailyCharts";
 import { getClientByIDThunk } from "../../redux/clients";
 import AddTrialComponent from "./AddTrialComponent";
+
+import { Button, Stack, Typography } from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+
 // import DeleteModal from "../DeleteModal/DeleteModal";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
@@ -115,16 +120,23 @@ const DiscreetTrialDetail = () => {
               </div>
             </div>
           </div>
-          <LegendComponent legendType={"Performance Legend"} />
-
-          <h1>
-            Trials
-            <button id="createNewChartBtn" onClick={openAddTrialModal}>
-              <i className="fa-solid fa-circle-plus fa-xl"></i>
+          {/* <LegendComponent legendType={"Performance Legend"} /> */}
+          <Stack
+            direction="row"
+            sx={{ justifyContent: "space-between", marginTop: "20px" }}
+          >
+            <Typography variant="h5">Trials</Typography>
+            <Button
+              color="warning"
+              variant="contained"
+              startIcon={<AddIcon />}
+              endIcon={<AddIcon />}
+              onClick={openAddTrialModal}
+            >
               Add New Trial
-              <i className="fa-solid fa-circle-plus fa-xl"></i>
-            </button>
-          </h1>
+            </Button>
+          </Stack>
+
           {trialsData && trialsData.length ? (
             trialsData?.map((trial) => {
               return (

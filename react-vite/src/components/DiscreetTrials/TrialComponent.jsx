@@ -5,6 +5,12 @@ import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import AddTrialComponent from "./AddTrialComponent";
 
+import { Button, Typography, Stack } from "@mui/material";
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import AddIcon from "@mui/icons-material/Add";
+
 const TrialComponent = ({ trial, dtInfo }) => {
   const { setModalContent } = useModal();
   const [trialPercent, setTrialPercent] = useState(0);
@@ -44,30 +50,28 @@ const TrialComponent = ({ trial, dtInfo }) => {
           {trial.trial_notes}
         </div>
 
-        <div
-          className="chartCrudBtns"
-          // style={{
-          //   display: "flex",
-          //   justifyContent: "left",
-          //   margin: "15px 0 0 0",
-          // }}
-        >
-          <button
-            style={{ padding: "0 5px" }}
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="outlined"
+            color="error"
             onClick={() => {
               openDeleteModal(trial);
             }}
+            startIcon={<DeleteForeverIcon />}
           >
             Delete Trial
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outlined"
+            color="warning"
             onClick={() => {
               openUpdateTrialModal(trial);
             }}
+            startIcon={<EditNoteIcon />}
           >
             Edit Trial
-          </button>
-        </div>
+          </Button>
+        </Stack>
       </div>
       <div
         className="trialScoreDiv"
