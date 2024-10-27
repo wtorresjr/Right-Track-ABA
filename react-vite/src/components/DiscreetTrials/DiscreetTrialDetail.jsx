@@ -7,11 +7,13 @@ import "../ClientDetails/client-details.css";
 import { getDiscreetTrialThunk } from "../../redux/dts";
 import TrialComponent from "./TrialComponent";
 import { returnPercentColor } from "../helpers/returnColor";
-import { LegendComponent } from "../DailyCharts";
 import { getClientByIDThunk } from "../../redux/clients";
 import AddTrialComponent from "./AddTrialComponent";
 
+import { useNavigate } from "react-router-dom";
+
 import { Button, Stack, Typography } from "@mui/material";
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -19,6 +21,7 @@ import AddIcon from "@mui/icons-material/Add";
 // import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
 const DiscreetTrialDetail = () => {
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const { dt_id } = useParams();
@@ -34,6 +37,10 @@ const DiscreetTrialDetail = () => {
 
   let client = useSelector((state) => state?.clients?.client_by_id);
   let data;
+
+  const handleNavBack = () => {
+    navigate(`/client/${client?.id}`);
+  };
 
   useEffect(() => {
     setLoaded(false);
@@ -91,13 +98,27 @@ const DiscreetTrialDetail = () => {
     <>
       {loaded ? (
         <div className="mainDisplayContain" id="clientDetails">
-          <h1>
-            {client?.last_name}, {client?.first_name}
-            <NavLink to={`/client/${client?.id}`} className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i>
-              {` Back To ${client?.first_name}'s Detail Page`}
-            </NavLink>
-          </h1>
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              size="small"
+              onClick={handleNavBack}
+            >
+              {`Back To ${client?.first_name}'s Detail Page`}
+            </Button>
+          </Stack>
 
           <div className="trialDeets" style={{ border: `3px solid white` }}>
             <div className="trialInfo">
@@ -120,10 +141,14 @@ const DiscreetTrialDetail = () => {
               </div>
             </div>
           </div>
-          {/* <LegendComponent legendType={"Performance Legend"} /> */}
           <Stack
             direction="row"
-            sx={{ justifyContent: "space-between", marginTop: "20px" }}
+            sx={{
+              justifyContent: "space-between",
+              marginTop: "20px",
+              alignItems: "center",
+            }}
+            width="100%"
           >
             <Typography variant="h5">Trials</Typography>
             <Button
@@ -148,13 +173,27 @@ const DiscreetTrialDetail = () => {
           )}
 
           <div className="clientDetailsContain"></div>
-          <h1>
-            {client?.last_name}, {client?.first_name}
-            <NavLink to={`/client/${client?.id}`} className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i>
-              {` Back To ${client?.first_name}'s Detail Page`}
-            </NavLink>
-          </h1>
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              size="small"
+              onClick={handleNavBack}
+            >
+              {`Back To ${client?.first_name}'s Detail Page`}
+            </Button>
+          </Stack>
         </div>
       ) : (
         <h2
