@@ -202,7 +202,7 @@ const DailyCharts = ({ clientCharts }) => {
             handlePageChange={handlePageChange}
           />
           {pagLoading ? (
-            <Stack direction="column" fullWidth>
+            <Stack direction="column" width="100%">
               {filteredCharts &&
                 filteredCharts?.map((dc) => {
                   dayColorRating = returnColor(dc?.avgForChart, "float");
@@ -215,9 +215,10 @@ const DailyCharts = ({ clientCharts }) => {
                     return (
                       <Box
                         key={dc?.id}
-                        fullWidth
+                        width="100%"
                         sx={{
-                          display: "inline-flex",
+                          justifyContent: "space-between",
+                          display: "flex",
                           alignItems: "center",
                           border: "2px solid",
                           borderColor: "gray",
