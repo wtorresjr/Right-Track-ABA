@@ -260,7 +260,7 @@ const DailyCharts = ({ clientCharts }) => {
                           sx={{ backgroundColor: "grey" }}
                         />
                         <Typography sx={{ padding: "5px" }}>
-                          Date: {dc?.chart_date}
+                          {dc?.chart_date}
                         </Typography>
                         <Divider
                           orientation="vertical"

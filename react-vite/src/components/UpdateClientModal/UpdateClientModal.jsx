@@ -8,7 +8,6 @@ import { DeleteMessage } from "../DeleteModal";
 
 import { Stack, Typography, Button, TextField, Box } from "@mui/material";
 
-
 const UpdateClientModal = ({ client }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate = useNavigate();
@@ -75,16 +74,13 @@ const UpdateClientModal = ({ client }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let extracted_dob = `${dob.$y}-${dob.$M + 1}-${dob.$D}`;
     const updatedClientInput = {
       first_name: firstName,
       last_name: lastName,
       guardian_email: guardianEmail,
-      dob: new Date(extracted_dob),
+      dob: dob,
       client_notes: clientNotes,
     };
-
-    updatedClientInput.dob = updatedClientInput.dob.toISOString().slice(0, 10);
 
     const updatedClient = await dispatch(
       updateClientThunk(client?.id, updatedClientInput)

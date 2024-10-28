@@ -109,7 +109,7 @@ const DiscreetTrials = () => {
             handlePageChange={handlePageChange}
           />
           {pagLoaded ? (
-            <Stack direction="column">
+            <Stack direction="column" width="100%">
               {clientDT &&
                 clientDT.map((dt) => (
                   <Box
@@ -123,6 +123,7 @@ const DiscreetTrials = () => {
                       bgcolor: "black",
                       color: "white",
                       marginBottom: "10px",
+                      justifyContent:"space-between",
                       "& svg": {
                         m: 1,
                       },
@@ -157,7 +158,7 @@ const DiscreetTrials = () => {
                       sx={{ backgroundColor: "grey" }}
                     />
                     <Typography sx={{ padding: "5px" }}>
-                      Date: {dt?.trial_date}
+                      {dt?.trial_date}
                     </Typography>
                     <Divider
                       orientation="vertical"
@@ -166,7 +167,7 @@ const DiscreetTrials = () => {
                       sx={{ backgroundColor: "grey" }}
                     />
                     <Typography sx={{ padding: "5px" }}>
-                      Program: {dt?.program_name}
+                      {dt?.program_name}
                     </Typography>
                     <Divider
                       orientation="vertical"
@@ -214,90 +215,6 @@ const DiscreetTrials = () => {
           No Discreet Trials Yet.
         </Typography>
       )}
-      {/* <Stack
-        direction="row"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-          alignItems: "center",
-          marginTop: "10px",
-        }}
-      >
-        <Typography variant="h5">Discreet Trials</Typography>
-        <Button
-          color="warning"
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={openCreateDTModal}
-        >
-          Create New Trial
-        </Button>
-      </Stack>
-      {dtCount > 0 ? (
-        <div className="chartsContain">
-          <Paginator
-            numOfCharts={totalDTs}
-            perPage={perPage}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
-          />
-
-          {pagLoaded ? (
-            clientDT && clientDT.length ? (
-              clientDT.map((dt) => (
-                <div key={dt.id} className="dtItemsDiv">
-                  <NavLink
-                    to={`/discreet-trial/${dt.id}`}
-                    className="navLinkStyleDC"
-                  >
-                    <div
-                      className="dcButtons"
-                      style={{
-                        border: `3px solid ${returnPercentColor(
-                          dt?.trials_avg
-                        )}`,
-                      }}
-                    >
-                      <div>{dt?.trial_date}</div>
-                      <div>{dt?.program_name}</div>
-                      <div>Mastery: {dt?.trials_avg}%</div>
-                      View Trial(s)
-                    </div>
-                  </NavLink>
-                  <div className="chartCrudBtns">
-                    <button onClick={() => openUpdateChartModal(dt)}>
-                      Edit DT
-                    </button>
-                    <button onClick={() => openDeleteModal(dt)}>
-                      Delete DT
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              "No Discreet Trials Yet"
-            )
-          ) : (
-            <div className="pagLoadingDiv">
-              <h2>Discreet Trials Loading...</h2>
-            </div>
-          )}
-        </div>
-      ) : (
-        <h2
-          style={{
-            textAlign: "center",
-            backgroundColor: "black",
-            color: "white",
-            borderRadius: "15px",
-            padding: "10px 0",
-            width: "100%",
-          }}
-        >
-          No Discreet Trials Yet.
-        </h2>
-      )}  */}
     </>
   );
 };
