@@ -12,13 +12,19 @@ import AddTrialComponent from "./AddTrialComponent";
 
 import { useNavigate } from "react-router-dom";
 
-import { Button, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  Card,
+  Box,
+  Divider,
+  Chip,
+} from "@mui/material";
 import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 
 import AddIcon from "@mui/icons-material/Add";
 
-// import DeleteModal from "../DeleteModal/DeleteModal";
-// import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 
 const DiscreetTrialDetail = () => {
   const navigate = useNavigate();
@@ -98,55 +104,70 @@ const DiscreetTrialDetail = () => {
     <>
       {loaded ? (
         <div className="mainDisplayContain" id="clientDetails">
-          <Stack
-            direction="row"
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              alignItems: "center",
-            }}
+          <Card
+            variant="outlined"
+            sx={{ backgroundColor: "black", color: "white", width: "100%" }}
           >
-            <Typography variant="h4">
-              {client?.last_name}, {client?.first_name}
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={<KeyboardBackspaceTwoToneIcon />}
-              size="small"
-              onClick={handleNavBack}
-            >
-              {`Back To ${client?.first_name}'s Detail Page`}
-            </Button>
-          </Stack>
+            <Box sx={{ p: 2 }}>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6" component="div">
+                  Trial Detail - {dtData?.trial_date}
+                </Typography>
 
-          <div className="trialDeets" style={{ border: `3px solid white` }}>
-            <div className="trialInfo">
-              <h1>Discreet Trial</h1>
-              <div>{dtData?.program_name}</div>
-              <div>{dtData?.program_notes}</div>
-              <div>{dtData?.trial_date}</div>
-            </div>
-            <div
-              className="trialScoreDiv"
-              style={{ border: `5px solid ${passOrFail}` }}
-            >
-              <div className="trialAttempts">
-                Mastery:
-                <br></br>
-                {trialScore} / {trialCount}
-              </div>
-              <div className="percent">
-                {isNaN(percentMastered) ? 0 : percentMastered}%
-              </div>
-            </div>
-          </div>
+                <Button
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  size="small"
+                  onClick={handleNavBack}
+                >
+                  {client?.first_name}'s Detail Page
+                </Button>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="h6" component="div">
+                  Client: {client?.first_name} {client?.last_name}
+                </Typography>
+                <Typography variant="h6">
+                  Program Name: {dtData?.program_name}
+                </Typography>
+              </Stack>
+              <Divider sx={{ backgroundColor: "white" }} />
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography variant="h6">Total Mastery: </Typography>
+                  <Chip
+                    label={`${trialScore} out of ${trialCount} = ${
+                      isNaN(percentMastered) ? 0 : percentMastered
+                    }%`}
+                    variant="contained"
+                    sx={{
+                      backgroundColor: passOrFail,
+                      color: "black",
+                      fontWeight: "bolder",
+                      fontSize: "20px",
+                    }}
+                  />
+                </Stack>
+              </Stack>
+            </Box>
+          </Card>
           <Stack
             direction="row"
             sx={{
               justifyContent: "space-between",
-              marginTop: "20px",
+              marginTop: "10px",
               alignItems: "center",
+              padding: "0 15px",
             }}
             width="100%"
           >
@@ -169,31 +190,79 @@ const DiscreetTrialDetail = () => {
               );
             })
           ) : (
-            <>{"No Trials Yet."}</>
+            <Stack
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+                width: "100%",
+                textAlign: "center",
+                padding: "10px",
+                marginTop: "10px",
+                borderRadius: "10px",
+              }}
+            >
+              {"No Trials Yet."}
+            </Stack>
           )}
 
           <div className="clientDetailsContain"></div>
-          <Stack
-            direction="row"
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              alignItems: "center",
-            }}
+          <Card
+            variant="outlined"
+            sx={{ backgroundColor: "black", color: "white", width: "100%" }}
           >
-            <Typography variant="h4">
-              {client?.last_name}, {client?.first_name}
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={<KeyboardBackspaceTwoToneIcon />}
-              size="small"
-              onClick={handleNavBack}
-            >
-              {`Back To ${client?.first_name}'s Detail Page`}
-            </Button>
-          </Stack>
+            <Box sx={{ p: 2 }}>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6" component="div">
+                  Trial Detail - {dtData?.trial_date}
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  size="small"
+                  onClick={handleNavBack}
+                >
+                  {client?.first_name}'s Detail Page
+                </Button>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="h6" component="div">
+                  Client: {client?.first_name} {client?.last_name}
+                </Typography>
+                <Typography variant="h6">
+                  Program Name: {dtData?.program_name}
+                </Typography>
+              </Stack>
+              <Divider sx={{ backgroundColor: "white" }} />
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography variant="h6">Total Mastery: </Typography>
+                  <Chip
+                    label={`${trialScore} out of ${trialCount} = ${
+                      isNaN(percentMastered) ? 0 : percentMastered
+                    }%`}
+                    variant="contained"
+                    sx={{
+                      backgroundColor: passOrFail,
+                      color: "black",
+                      fontWeight: "bolder",
+                      fontSize: "20px",
+                    }}
+                  />
+                </Stack>
+              </Stack>
+            </Box>
+          </Card>
         </div>
       ) : (
         <h2

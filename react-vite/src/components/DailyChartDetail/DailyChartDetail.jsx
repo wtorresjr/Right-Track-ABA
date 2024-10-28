@@ -269,7 +269,6 @@ const DailyChartDetail = () => {
                       label="BEHAVIORS :"
                       variant="outlined"
                       color="primary"
-                      // sx={{ color: "white" }}
                     />
                     {Object.keys(interval?.interval_tags ?? {}).length ? (
                       <div className="behaviorsTag">
