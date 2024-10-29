@@ -239,6 +239,4 @@ As an ABA therapist I wanted to create a specialized application tailored for be
   </tbody>
 </table>
 
-<h4 id="acknowledgments-section">Acknowledgments</h4>
-
-- Icons by [_Font Awesome_](https://fontawesome.com/icons)
+<!-- <h4 id="acknowledgments-section">Acknowledgments</h4> -->

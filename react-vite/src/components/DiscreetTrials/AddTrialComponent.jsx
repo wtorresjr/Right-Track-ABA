@@ -159,6 +159,7 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
           label="Trial Count"
           onChange={(e) => setTrialCount(e.target.value)}
           sx={{ flex: 1 }}
+          inputProps={{ min: 1 }}
         />
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
@@ -167,6 +168,7 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
           onChange={(e) => setTrialScore(e.target.value)}
           label="Score"
           type="number"
+          inputProps={{ min: 0 }}
         ></TextField>
         <Typography textAlign="center">Out Of</Typography>
         <TextField

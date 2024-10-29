@@ -37,7 +37,6 @@ const DiscreetTrials = () => {
   const [perPage, setPerPage] = useState(5);
 
   useEffect(() => {
-    console.log(clientDT);
     setPagLoaded(false);
     const getDTdata = async () => {
       const thunkLoaded = await dispatch(
