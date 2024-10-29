@@ -173,15 +173,6 @@ const UpdateClientModal = ({ client }) => {
       <Stack direction="row" justifyContent="space-between">
         <Button
           variant="contained"
-          color="secondary"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
           color="primary"
           onClick={(e) => {
             handleSubmit(e);
@@ -189,6 +180,15 @@ const UpdateClientModal = ({ client }) => {
           disabled={isDisabled}
         >
           Update Client
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          Cancel
         </Button>
       </Stack>
     </Box>

@@ -30,10 +30,10 @@ import {
 const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   const { dt_id } = useParams();
   const [isDisabled, setDisabled] = useState(true);
-  const [programDD, setProgramDD] = useState([]);
+  const [programDD, setProgramDD] = useState();
   const [targetItem, setTargetItem] = useState("");
   const [trialCount, setTrialCount] = useState(1);
-  const [trialScore, setTrialScore] = useState(0);
+  const [trialScore, setTrialScore] = useState();
   const [trialNotes, setTrialNotes] = useState();
 
   const dispatch = useDispatch();
@@ -45,25 +45,27 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   useEffect(() => {
     if (dtInfo?.program_name === "Identify Shapes")
       setProgramDD(trial_target_shapes);
-    else if (dtInfo?.program_name === "Identify Colors")
+    if (dtInfo?.program_name === "Identify Colors")
       setProgramDD(trial_target_colors);
-    else if (dtInfo?.program_name === "Identify Sizes")
+    if (dtInfo?.program_name === "Identify Sizes")
       setProgramDD(trial_target_sizes);
-    else if (dtInfo?.program_name === "Sorting Sizes")
+    if (dtInfo?.program_name === "Sorting Sizes")
       setProgramDD(trial_target_sorting_sizes);
-    else if (dtInfo?.program_name === "Identify Letters")
+    if (dtInfo?.program_name === "Identify Letters")
       setProgramDD(trial_target_letters);
   }, [dtInfo]);
 
   useEffect(() => {
-    if (programDD.length > 0 && trialInfo) {
-      const isTargetInProgramDD = programDD.includes(trialInfo.trial_target);
-      setTargetItem(isTargetInProgramDD ? trialInfo.trial_target : "");
+    const checkIfEditing = () => {
+      setTargetItem(trialInfo.trial_target);
       setTrialCount(trialInfo.trial_count);
       setTrialScore(trialInfo.trial_score);
       setTrialNotes(trialInfo.trial_notes);
+    };
+    if (trialInfo) {
+      checkIfEditing();
     }
-  }, [programDD, trialInfo]);
+  }, [trialInfo]);
 
   useEffect(() => {
     setErrors();
