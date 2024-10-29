@@ -142,7 +142,8 @@ const ManageClients = () => {
           return <ClientInfo key={client.id} client={client} />;
         })
       ) : (
-        <h2
+        <Typography
+          variant="h5"
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -152,7 +153,7 @@ const ManageClients = () => {
           }}
         >
           Loading Clients...
-        </h2>
+        </Typography>
       )}
     </div>
   );

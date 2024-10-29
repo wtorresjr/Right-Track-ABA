@@ -181,7 +181,7 @@ const ClientDetails = () => {
           </Stack>
         </div>
       ) : (
-        <h2
+        <Typography
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -189,9 +189,10 @@ const ClientDetails = () => {
             borderRadius: "15px",
             padding: "10px 0",
           }}
+          variant="h5"
         >
           {message}
-        </h2>
+        </Typography>
       )}
     </>
   );

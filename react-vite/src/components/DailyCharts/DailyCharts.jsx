@@ -301,7 +301,7 @@ const DailyCharts = ({ clientCharts }) => {
             </Stack>
           ) : (
             <div className="pagLoadingDiv">
-              <h2>Loading Charts...</h2>
+              <Typography variant="h5">Loading Charts...</Typography>
             </div>
           )}
         </div>

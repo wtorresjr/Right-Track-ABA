@@ -3,7 +3,6 @@ import "../DailyCharts/daily-chart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
 import { getAllDTsThunk } from "../../redux/dts";
-import { returnPercentColor } from "../helpers/returnColor";
 import { useNavigate } from "react-router-dom";
 import { DeleteChartModal } from "../DeleteModal";
 import { useModal } from "../../context/Modal";
@@ -11,14 +10,7 @@ import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
-import {
-  Button,
-  Stack,
-  Typography,
-  TextField,
-  Box,
-  Divider,
-} from "@mui/material";
+import { Button, Stack, Typography, Box, Divider } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -122,7 +114,7 @@ const DiscreetTrials = () => {
                       bgcolor: "black",
                       color: "white",
                       marginBottom: "10px",
-                      justifyContent:"space-between",
+                      justifyContent: "space-between",
                       "& svg": {
                         m: 1,
                       },
@@ -195,7 +187,7 @@ const DiscreetTrials = () => {
             </Stack>
           ) : (
             <div className="pagLoadingDiv">
-              <h2>Loading Trials...</h2>
+              <Typography variant="h5">Loading Trials...</Typography>
             </div>
           )}
         </div>
