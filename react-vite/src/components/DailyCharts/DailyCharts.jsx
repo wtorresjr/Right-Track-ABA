@@ -20,11 +20,13 @@ import {
   TextField,
   Box,
   Divider,
+  useMediaQuery,
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
 const DailyCharts = ({ clientCharts }) => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
@@ -141,7 +143,7 @@ const DailyCharts = ({ clientCharts }) => {
   return (
     <>
       <Stack
-        direction="row"
+        direction={isSmallScreen ? "column" : "row"}
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -171,17 +173,17 @@ const DailyCharts = ({ clientCharts }) => {
             onChange={(e) => setSearchFilter(e.target.value)}
             sx={{
               marginBottom: "10px",
-              input: { color: "white" }, // Change input text color to white
-              "& .MuiInputLabel-root": { color: "white" }, // Change label color
+              input: { color: "white" },
+              "& .MuiInputLabel-root": { color: "white" },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white", // Change border color
+                  borderColor: "white",
                 },
                 "&:hover fieldset": {
-                  borderColor: "white", // Border color on hover
+                  borderColor: "white",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white", // Border color when focused
+                  borderColor: "white",
                 },
               },
             }}
@@ -213,19 +215,22 @@ const DailyCharts = ({ clientCharts }) => {
                       : null;
 
                     return (
-                      <Box
+                      <Stack
                         key={dc?.id}
                         width="100%"
+                        direction={isSmallScreen ? "column" : "row"}
                         sx={{
                           justifyContent: "space-between",
-                          display: "flex",
-                          alignItems: "center",
                           border: "2px solid",
                           borderColor: "gray",
                           borderRadius: 2,
                           bgcolor: "black",
                           color: "white",
                           marginBottom: "10px",
+                          padding: "5px",
+                          textAlign: "center",
+                          alignItems: "center",
+
                           "& svg": {
                             m: 1,
                           },
@@ -240,7 +245,9 @@ const DailyCharts = ({ clientCharts }) => {
                           Delete
                         </Button>
                         <Divider
-                          orientation="vertical"
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
                           variant="middle"
                           flexItem
                           sx={{ backgroundColor: "grey" }}
@@ -254,7 +261,9 @@ const DailyCharts = ({ clientCharts }) => {
                           Edit
                         </Button>
                         <Divider
-                          orientation="vertical"
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
                           variant="middle"
                           flexItem
                           sx={{ backgroundColor: "grey" }}
@@ -263,7 +272,9 @@ const DailyCharts = ({ clientCharts }) => {
                           {dc?.chart_date}
                         </Typography>
                         <Divider
-                          orientation="vertical"
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
                           variant="middle"
                           flexItem
                           sx={{ backgroundColor: "grey" }}
@@ -272,7 +283,9 @@ const DailyCharts = ({ clientCharts }) => {
                           Total Intervals: {dc?.interval_count}
                         </Typography>
                         <Divider
-                          orientation="vertical"
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
                           variant="middle"
                           flexItem
                           sx={{ backgroundColor: "grey" }}
@@ -281,7 +294,9 @@ const DailyCharts = ({ clientCharts }) => {
                           Rating: {dc?.avgForChart.toFixed(1)}
                         </Typography>
                         <Divider
-                          orientation="vertical"
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
                           variant="middle"
                           flexItem
                           sx={{ backgroundColor: "grey" }}
@@ -293,7 +308,7 @@ const DailyCharts = ({ clientCharts }) => {
                         >
                           View Chart
                         </Button>
-                      </Box>
+                      </Stack>
                     );
                   }
                   return null;

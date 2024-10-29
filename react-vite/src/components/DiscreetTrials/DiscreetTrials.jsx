@@ -10,11 +10,19 @@ import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
-import { Button, Stack, Typography, Box, Divider } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  Box,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
 const DiscreetTrials = () => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const { setModalContent } = useModal();
   const { client_id } = useParams();
@@ -72,7 +80,7 @@ const DiscreetTrials = () => {
   return (
     <>
       <Stack
-        direction="row"
+        direction={isSmallScreen ? "column" : "row"}
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -103,10 +111,11 @@ const DiscreetTrials = () => {
             <Stack direction="column" width="100%">
               {clientDT &&
                 clientDT.map((dt) => (
-                  <Box
+                  <Stack
                     key={dt?.id}
+                    direction={isSmallScreen ? "column" : "row"}
                     sx={{
-                      display: "inline-flex",
+                      display: "flex",
                       alignItems: "center",
                       border: "2px solid",
                       borderColor: "gray",
@@ -129,7 +138,7 @@ const DiscreetTrials = () => {
                       Delete
                     </Button>
                     <Divider
-                      orientation="vertical"
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
                       variant="middle"
                       flexItem
                       sx={{ backgroundColor: "grey" }}
@@ -143,7 +152,7 @@ const DiscreetTrials = () => {
                       Edit
                     </Button>
                     <Divider
-                      orientation="vertical"
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
                       variant="middle"
                       flexItem
                       sx={{ backgroundColor: "grey" }}
@@ -152,7 +161,7 @@ const DiscreetTrials = () => {
                       {dt?.trial_date}
                     </Typography>
                     <Divider
-                      orientation="vertical"
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
                       variant="middle"
                       flexItem
                       sx={{ backgroundColor: "grey" }}
@@ -161,7 +170,7 @@ const DiscreetTrials = () => {
                       {dt?.program_name}
                     </Typography>
                     <Divider
-                      orientation="vertical"
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
                       variant="middle"
                       flexItem
                       sx={{ backgroundColor: "grey" }}
@@ -170,7 +179,7 @@ const DiscreetTrials = () => {
                       Mastery: {dt?.trials_avg.toFixed(1)}
                     </Typography>
                     <Divider
-                      orientation="vertical"
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
                       variant="middle"
                       flexItem
                       sx={{ backgroundColor: "grey" }}
@@ -182,7 +191,7 @@ const DiscreetTrials = () => {
                     >
                       View Chart
                     </Button>
-                  </Box>
+                  </Stack>
                 ))}
             </Stack>
           ) : (

@@ -103,7 +103,6 @@ const ManageClients = () => {
       <TextField
         fullWidth
         id="outlined-basic"
-        // label="Outlined"
         variant="outlined"
         placeholder="Search Clients"
         value={searchFilter}

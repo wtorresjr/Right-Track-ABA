@@ -165,7 +165,7 @@ const UpdateClientModal = ({ client }) => {
 
         <TextField
           value={clientNotes}
-          label="Client Notes"
+          label="Client Notes (Optional)"
           multiline
           maxRows={5}
         />

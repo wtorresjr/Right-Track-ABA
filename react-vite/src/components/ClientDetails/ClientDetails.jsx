@@ -119,19 +119,19 @@ const ClientDetails = () => {
           <Stack direction="row" spacing={2}>
             <Button
               variant="contained"
-              color="secondary"
-              onClick={openEditModal}
-              startIcon={<EditNoteIcon />}
-            >
-              EDIT CLIENT INFO
-            </Button>
-            <Button
-              variant="contained"
               color="error"
               onClick={openDeleteModal}
               startIcon={<DeleteForeverIcon />}
             >
               DELETE CLIENT
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={openEditModal}
+              startIcon={<EditNoteIcon />}
+            >
+              EDIT CLIENT INFO
             </Button>
           </Stack>
           <Divider

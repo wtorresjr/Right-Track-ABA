@@ -148,7 +148,7 @@ const CreateClient = () => {
           </Typography>
         )}
 
-        <TextField label="Client Notes" multiline maxRows={5} />
+        <TextField label="Client Notes (Optional)" multiline maxRows={5} />
       </Stack>
       <Stack direction="row" justifyContent="space-between">
         <Button

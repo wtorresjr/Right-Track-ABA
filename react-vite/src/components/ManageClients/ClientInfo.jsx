@@ -3,12 +3,17 @@ import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
-import { Button, ButtonGroup, Stack, Paper, Divider } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  Stack,
+  Paper,
+  useMediaQuery,
+} from "@mui/material";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import PreviewIcon from "@mui/icons-material/Preview";
-// import { returnColor, returnPercentColor } from "../helpers/returnColor";
 
 import { Typography } from "@mui/material";
 
@@ -22,6 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ClientInfo = ({ client }) => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const { setModalContent } = useModal();
   const navigate = useNavigate();
 
@@ -78,27 +84,24 @@ const ClientInfo = ({ client }) => {
         marginBottom: "10px",
       }}
     >
-      <Stack direction="column" justifyContent="space-between">
+      <Stack direction="column" justifyContent="center">
         <Typography variant="h5">
           {client?.first_name} {client?.last_name}
         </Typography>
         <Item sx={{ padding: "0px" }}>
           Guardian Email: {client?.guardian_email}
         </Item>
-        {/* <Item sx={{ padding: "0px" }}>Client Notes: {client?.client_notes}</Item> */}
       </Stack>
 
-      <Stack direction="row" justifyContent="right">
+      <Stack direction="row" justifyContent="center">
         <Item>Total Daily Charts: {client?.Daily_Chart_Count}</Item>
         <Item>Total Discreet Trials: {client?.Discreet_Trial_Count}</Item>
       </Stack>
 
-      <Stack direction="row">
+      <Stack>
         <ButtonGroup
-          orientation="horizontal"
-          aria-label="Vertical button group"
-          variant="outlined"
           fullWidth
+          orientation={isSmallScreen ? "vertical" : "horizontal"}
         >
           {buttons}
         </ButtonGroup>
