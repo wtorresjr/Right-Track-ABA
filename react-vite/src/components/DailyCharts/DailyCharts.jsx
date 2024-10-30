@@ -274,7 +274,7 @@ const DailyCharts = ({ clientCharts }) => {
                               name="simple-controlled"
                               value={dc?.avgForChart.toFixed(1)}
                             />
-                          ) || "No Intervals Yet"}
+                          ) || "0"}
                           <Typography
                             sx={{ padding: "5px", alignContent: "center" }}
                           >

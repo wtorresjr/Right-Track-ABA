@@ -168,7 +168,7 @@ const DailyChartDetail = () => {
                 >
                   <Typography variant="h6">Avg Interval Rating: </Typography>
                   <Typography variant="h6">
-                    {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+                    {currentChart?.Chart_Avg_Rating || "0"}
                   </Typography>
                   {(
                     <Rating
@@ -181,7 +181,7 @@ const DailyChartDetail = () => {
                       name="simple-controlled"
                       value={currentChart?.Chart_Avg_Rating}
                     />
-                  ) || "No Intervals Yet"}
+                  ) || "0"}
                 </Stack>
               </Stack>
             </Box>
