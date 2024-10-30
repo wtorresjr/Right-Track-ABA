@@ -12,7 +12,14 @@ import InfoBar from "../InfoBarComponent";
 import { useNavigate } from "react-router-dom";
 import { useIsSmallScreen } from "../helpers";
 
-import { Button, Stack, Typography, TextField, Divider } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  TextField,
+  Divider,
+  Rating,
+} from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -145,11 +152,7 @@ const DailyCharts = ({ clientCharts }) => {
       >
         <Typography variant="h5">Daily Performance Charts</Typography>
         <Button
-          sx={
-            isSmallScreen
-              ? { width: "100%", marginTop: "5px" }
-              : {}
-          }
+          sx={isSmallScreen ? { width: "100%", marginTop: "5px" } : {}}
           color="warning"
           variant="contained"
           startIcon={<AddIcon />}
@@ -254,9 +257,30 @@ const DailyCharts = ({ clientCharts }) => {
                           flexItem
                           sx={{ backgroundColor: "grey" }}
                         />
-                        <Typography sx={{ padding: "5px" }}>
-                          Rating: {dc?.avgForChart.toFixed(1)}
-                        </Typography>
+                        <Stack
+                          direction={isSmallScreen ? "row" : "column"}
+                          justifyContent="center"
+                        >
+                          {(
+                            <Rating
+                              sx={{
+                                color: `${returnColor(
+                                  dc?.avgForChart.toFixed(1)
+                                )}`,
+                              }}
+                              size="small"
+                              readOnly
+                              precision={0.1}
+                              name="simple-controlled"
+                              value={dc?.avgForChart.toFixed(1)}
+                            />
+                          ) || "No Intervals Yet"}
+                          <Typography
+                            sx={{ padding: "5px", alignContent: "center" }}
+                          >
+                            {dc?.avgForChart.toFixed(1)}
+                          </Typography>
+                        </Stack>
                         <Divider
                           orientation={
                             isSmallScreen ? "horizontal" : "vertical"

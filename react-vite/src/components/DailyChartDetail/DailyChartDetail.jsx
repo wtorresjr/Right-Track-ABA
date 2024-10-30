@@ -160,8 +160,16 @@ const DailyChartDetail = () => {
                     ? currentChart?.Num_Intervals
                     : 0}
                 </Typography>
-                <Stack direction="row" spacing={1} alignItems="center">
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignContent="center"
+                  alignItems="center"
+                >
                   <Typography variant="h6">Avg Interval Rating: </Typography>
+                  <Typography variant="h6">
+                    {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
+                  </Typography>
                   {(
                     <Rating
                       sx={{
@@ -382,22 +390,6 @@ const DailyChartDetail = () => {
                   Client: {clientInfo?.first_name} {clientInfo?.last_name}
                 </Typography>
 
-                <Divider sx={{ backgroundColor: "white" }} />
-                <Stack
-                  direction="row"
-                  sx={{ justifyContent: "space-between", alignItems: "center" }}
-                >
-                  <Typography variant="h6" component="div">
-                    Number of Intervals:{" "}
-                    {currentChart?.Num_Intervals
-                      ? currentChart?.Num_Intervals
-                      : 0}
-                  </Typography>
-                  <Typography variant="h6">
-                    Avg Interval Rating:{" "}
-                    {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-                  </Typography>
-                </Stack>
                 <Button
                   fullWidth
                   margin="10px"
