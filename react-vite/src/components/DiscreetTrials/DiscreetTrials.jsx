@@ -9,20 +9,14 @@ import { useModal } from "../../context/Modal";
 import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
+import { useIsSmallScreen } from "../helpers";
 
-import {
-  Button,
-  Stack,
-  Typography,
-  Box,
-  Divider,
-  useMediaQuery,
-} from "@mui/material";
+import { Button, Stack, Typography, Divider } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
 const DiscreetTrials = () => {
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSmallScreen = useIsSmallScreen();
   const navigate = useNavigate();
   const { setModalContent } = useModal();
   const { client_id } = useParams();
@@ -91,16 +85,17 @@ const DiscreetTrials = () => {
       >
         <Typography variant="h5">Discreet Trials</Typography>
         <Button
+          sx={isSmallScreen ? { width: "100%", marginTop: "5px" } : {}}
           color="warning"
           variant="contained"
           startIcon={<AddIcon />}
           onClick={openCreateDTModal}
         >
-          Create New Trial
+          New Trial
         </Button>
       </Stack>
       {dtCount > 0 ? (
-        <div className="chartsContain">
+        <Stack>
           <Paginator
             numOfCharts={totalDTs}
             perPage={perPage}
@@ -129,34 +124,6 @@ const DiscreetTrials = () => {
                       },
                     }}
                   >
-                    <Button
-                      color="error"
-                      onClick={() => {
-                        openDeleteModal(dt);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <Divider
-                      orientation={isSmallScreen ? "horizontal" : "vertical"}
-                      variant="middle"
-                      flexItem
-                      sx={{ backgroundColor: "grey" }}
-                    />
-                    <Button
-                      color="warning"
-                      onClick={() => {
-                        openUpdateChartModal(dt);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Divider
-                      orientation={isSmallScreen ? "horizontal" : "vertical"}
-                      variant="middle"
-                      flexItem
-                      sx={{ backgroundColor: "grey" }}
-                    />
                     <Typography sx={{ padding: "5px" }}>
                       {dt?.trial_date}
                     </Typography>
@@ -185,11 +152,39 @@ const DiscreetTrials = () => {
                       sx={{ backgroundColor: "grey" }}
                     />
                     <Button
+                      color="error"
+                      onClick={() => {
+                        openDeleteModal(dt);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Button
+                      color="warning"
+                      onClick={() => {
+                        openUpdateChartModal(dt);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Button
                       onClick={() => {
                         handleNav(dt?.id);
                       }}
                     >
-                      View Chart
+                      View Trials
                     </Button>
                   </Stack>
                 ))}
@@ -199,7 +194,7 @@ const DiscreetTrials = () => {
               <Typography variant="h5">Loading Trials...</Typography>
             </div>
           )}
-        </div>
+        </Stack>
       ) : (
         <Typography
           style={{

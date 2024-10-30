@@ -11,9 +11,11 @@ import "../PaginationComp/bootstrap.css";
 import { Button, Stack, Typography } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+
+import { useIsSmallScreen } from "../helpers";
 
 const ManageClients = () => {
+  const isSmallScreen = useIsSmallScreen();
   const [searchFilter, setSearchFilter] = useState("");
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +84,7 @@ const ManageClients = () => {
   return (
     <div className="mainDisplayContain">
       <Stack
-        direction="row"
+        direction={isSmallScreen ? "column" : "row"}
         justifyContent="space-between"
         alignItems="center"
         marginBottom="10px"
@@ -90,13 +92,14 @@ const ManageClients = () => {
         <Typography variant="h4">Manage Clients</Typography>
 
         <Button
+          sx={isSmallScreen ? { width: "100%", marginTop: "5px" } : {}}
           variant="contained"
           color="warning"
           onClick={openCreateClientModal}
           startIcon={<PersonAddIcon />}
           endIcon={<PersonAddIcon />}
         >
-          Add New Client
+          New Client
         </Button>
       </Stack>
 

@@ -153,15 +153,6 @@ const CreateClient = () => {
       <Stack direction="row" justifyContent="space-between">
         <Button
           variant="contained"
-          color="secondary"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
           color="primary"
           onClick={(e) => {
             handleSubmit(e);
@@ -169,6 +160,15 @@ const CreateClient = () => {
           disabled={isDisabled}
         >
           Add Client
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          Cancel
         </Button>
       </Stack>
     </Box>

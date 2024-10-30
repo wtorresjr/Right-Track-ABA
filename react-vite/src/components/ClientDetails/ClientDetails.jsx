@@ -10,6 +10,8 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
 import { useNavigate } from "react-router-dom";
 
+import { useIsSmallScreen } from "../helpers";
+
 import {
   Button,
   Divider,
@@ -26,6 +28,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ClientDetails = () => {
+  const isSmallScreen = useIsSmallScreen();
   const navigate = useNavigate();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
@@ -75,7 +78,7 @@ const ClientDetails = () => {
       {loaded && client ? (
         <div className="mainDisplayContain" id="clientDetails">
           <Stack
-            direction="row"
+            direction={isSmallScreen ? "column" : "row"}
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -87,12 +90,12 @@ const ClientDetails = () => {
               {client?.last_name}, {client?.first_name}
             </Typography>
             <Button
+              sx={isSmallScreen ? { width: "100%", marginTop: "10px" } : {}}
               variant="contained"
               startIcon={<KeyboardBackspaceTwoToneIcon />}
-              size="small"
               onClick={handleNavBack}
             >
-              Back To Manage Clients
+              Manage Clients
             </Button>
           </Stack>
 
@@ -108,7 +111,7 @@ const ClientDetails = () => {
             <AccordionSummary
               expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
             >
-              Client Details
+              {`${client?.first_name}'s Details`}
             </AccordionSummary>
             <AccordionDetails>
               <Typography>Client Notes: {client?.client_notes}</Typography>
@@ -116,7 +119,12 @@ const ClientDetails = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Stack direction="row" spacing={2}>
+          <Stack
+            width="100%"
+            spacing={2}
+            direction={isSmallScreen ? "column" : "row"}
+            // alignItems={isSmallScreen ? "center" : "left"}
+          >
             <Button
               variant="contained"
               color="error"
@@ -159,7 +167,7 @@ const ClientDetails = () => {
 
           <DiscreetTrials clientDT={client} />
           <Stack
-            direction="row"
+            direction={isSmallScreen ? "column" : "row"}
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -171,12 +179,12 @@ const ClientDetails = () => {
               {client?.last_name}, {client?.first_name}
             </Typography>
             <Button
+              sx={isSmallScreen ? { width: "100%", marginTop: "10px" } : {}}
               variant="contained"
               startIcon={<KeyboardBackspaceTwoToneIcon />}
-              size="small"
               onClick={handleNavBack}
             >
-              Back To Manage Clients
+              Manage Clients
             </Button>
           </Stack>
         </div>

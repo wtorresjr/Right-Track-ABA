@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./daily-chart.css";
-import LegendComponent from "./LegendComponent";
 import { useModal } from "../../context/Modal";
 import { DeleteChartModal } from "../DeleteModal";
 import { CreateDailyChart, UpdateDailyChart } from "../CreateDailyChart";
@@ -12,21 +10,14 @@ import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 import InfoBar from "../InfoBarComponent";
 import { useNavigate } from "react-router-dom";
+import { useIsSmallScreen } from "../helpers";
 
-import {
-  Button,
-  Stack,
-  Typography,
-  TextField,
-  Box,
-  Divider,
-  useMediaQuery,
-} from "@mui/material";
+import { Button, Stack, Typography, TextField, Divider } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 
 const DailyCharts = ({ clientCharts }) => {
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSmallScreen = useIsSmallScreen();
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const [searchFilter, setSearchFilter] = useState("");
@@ -154,16 +145,21 @@ const DailyCharts = ({ clientCharts }) => {
       >
         <Typography variant="h5">Daily Performance Charts</Typography>
         <Button
+          sx={
+            isSmallScreen
+              ? { width: "100%", marginTop: "5px" }
+              : {}
+          }
           color="warning"
           variant="contained"
           startIcon={<AddIcon />}
           onClick={openCreateChartModal}
         >
-          Create New Chart
+          New Chart
         </Button>
       </Stack>
       {numOfCharts > 0 ? (
-        <div className="chartsContain">
+        <Stack>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -236,38 +232,6 @@ const DailyCharts = ({ clientCharts }) => {
                           },
                         }}
                       >
-                        <Button
-                          color="error"
-                          onClick={() => {
-                            openDeleteModal(dc);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                        <Divider
-                          orientation={
-                            isSmallScreen ? "horizontal" : "vertical"
-                          }
-                          variant="middle"
-                          flexItem
-                          sx={{ backgroundColor: "grey" }}
-                        />
-                        <Button
-                          color="warning"
-                          onClick={() => {
-                            openUpdateChartModal(dc);
-                          }}
-                        >
-                          Edit
-                        </Button>
-                        <Divider
-                          orientation={
-                            isSmallScreen ? "horizontal" : "vertical"
-                          }
-                          variant="middle"
-                          flexItem
-                          sx={{ backgroundColor: "grey" }}
-                        />
                         <Typography sx={{ padding: "5px" }}>
                           {dc?.chart_date}
                         </Typography>
@@ -302,6 +266,38 @@ const DailyCharts = ({ clientCharts }) => {
                           sx={{ backgroundColor: "grey" }}
                         />
                         <Button
+                          color="error"
+                          onClick={() => {
+                            openDeleteModal(dc);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                        <Divider
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Button
+                          color="warning"
+                          onClick={() => {
+                            openUpdateChartModal(dc);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Divider
+                          orientation={
+                            isSmallScreen ? "horizontal" : "vertical"
+                          }
+                          variant="middle"
+                          flexItem
+                          sx={{ backgroundColor: "grey" }}
+                        />
+                        <Button
                           onClick={() => {
                             handleNav(dc?.id);
                           }}
@@ -319,7 +315,7 @@ const DailyCharts = ({ clientCharts }) => {
               <Typography variant="h5">Loading Charts...</Typography>
             </div>
           )}
-        </div>
+        </Stack>
       ) : (
         <Typography
           style={{

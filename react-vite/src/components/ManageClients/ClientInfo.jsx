@@ -3,13 +3,9 @@ import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
-import {
-  Button,
-  ButtonGroup,
-  Stack,
-  Paper,
-  useMediaQuery,
-} from "@mui/material";
+import { Button, ButtonGroup, Stack, Paper } from "@mui/material";
+
+import { useIsSmallScreen } from "../helpers";
 
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -27,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ClientInfo = ({ client }) => {
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSmallScreen = useIsSmallScreen();
   const { setModalContent } = useModal();
   const navigate = useNavigate();
 
