@@ -27,8 +27,10 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { useIsSmallScreen } from "../helpers";
 
 const DailyChartDetail = () => {
+  const isSmallScreen = useIsSmallScreen();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { chart_id } = useParams();
@@ -129,67 +131,74 @@ const DailyChartDetail = () => {
             sx={{ backgroundColor: "black", color: "white" }}
           >
             <Box sx={{ p: 2 }}>
+              <Button
+                fullWidth
+                margin="10px"
+                variant="contained"
+                startIcon={<KeyboardBackspaceTwoToneIcon />}
+                onClick={handleNavBack}
+              >
+                {clientInfo?.first_name}'s Detail Page
+              </Button>
               <Stack
                 direction="row"
                 sx={{ justifyContent: "space-between", alignItems: "center" }}
               >
-                <Typography variant="h6" component="div">
+                <Typography variant="h6">
                   Daily Chart Detail - {currentChart?.chart_date}
                 </Typography>
-
-                <Button
-                  variant="contained"
-                  startIcon={<KeyboardBackspaceTwoToneIcon />}
-                  size="small"
-                  onClick={handleNavBack}
-                >
-                  {clientInfo?.first_name}'s Detail Page
-                </Button>
               </Stack>
               <Typography variant="h6" component="div">
                 Client: {clientInfo?.first_name} {clientInfo?.last_name}
               </Typography>
 
               <Divider sx={{ backgroundColor: "white" }} />
-              <Stack
-                direction="row"
-                sx={{ justifyContent: "space-between", alignItems: "center" }}
-              >
+              <Stack direction="column">
                 <Typography variant="h6" component="div">
                   Number of Intervals:{" "}
                   {currentChart?.Num_Intervals
                     ? currentChart?.Num_Intervals
                     : 0}
                 </Typography>
-                <Typography variant="h6">
-                  Avg Interval Rating:{" "}
-                  {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-                </Typography>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography variant="h6">Avg Interval Rating: </Typography>
+                  {(
+                    <Rating
+                      sx={{
+                        color: `${returnColor(currentChart?.Chart_Avg_Rating)}`,
+                      }}
+                      size="large"
+                      readOnly
+                      precision={0.1}
+                      name="simple-controlled"
+                      value={currentChart?.Chart_Avg_Rating}
+                    />
+                  ) || "No Intervals Yet"}
+                </Stack>
               </Stack>
             </Box>
           </Card>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "10px 0 0 0",
-            }}
-          >
-            <Stack spacing={2} direction="row">
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<PrintIcon />}
-              >
-                Print Chart Data
-              </Button>
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<AttachEmailIcon />}
-              >
-                Email Chart Data
-              </Button>
+
+          <Stack margin="10px">
+            <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
+              {currentChart?.Num_Intervals ? (
+                <>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<PrintIcon />}
+                  >
+                    Print Chart Data
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    startIcon={<AttachEmailIcon />}
+                  >
+                    Email Chart Data
+                  </Button>
+                </>
+              ) : null}
               <Button
                 variant="contained"
                 color="warning"
@@ -199,7 +208,7 @@ const DailyChartDetail = () => {
                 Add New Interval
               </Button>
             </Stack>
-          </div>
+          </Stack>
           {currentIntervals &&
             currentIntervals?.map((interval) => {
               return (
@@ -322,14 +331,8 @@ const DailyChartDetail = () => {
           {/* Lower control buttons */}
 
           {currentChart?.Num_Intervals ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "10px 0 0 0",
-              }}
-            >
-              <Stack spacing={2} direction="row">
+            <Stack margin="10px">
+              <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
                 <Button
                   variant="contained"
                   color="secondary"
@@ -353,7 +356,7 @@ const DailyChartDetail = () => {
                   Add New Interval
                 </Button>
               </Stack>
-            </div>
+            </Stack>
           ) : null}
 
           {/* Footer Info Section */}
@@ -374,15 +377,6 @@ const DailyChartDetail = () => {
                   <Typography variant="h6" component="div">
                     Daily Chart Detail - {currentChart?.chart_date}
                   </Typography>
-
-                  <Button
-                    variant="contained"
-                    startIcon={<KeyboardBackspaceTwoToneIcon />}
-                    size="small"
-                    onClick={handleNavBack}
-                  >
-                    {clientInfo?.first_name}'s Detail Page
-                  </Button>
                 </Stack>
                 <Typography variant="h6" component="div">
                   Client: {clientInfo?.first_name} {clientInfo?.last_name}
@@ -404,6 +398,15 @@ const DailyChartDetail = () => {
                     {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
                   </Typography>
                 </Stack>
+                <Button
+                  fullWidth
+                  margin="10px"
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  onClick={handleNavBack}
+                >
+                  {clientInfo?.first_name}'s Detail Page
+                </Button>
               </Box>
             </Card>
           ) : null}

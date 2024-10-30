@@ -120,7 +120,6 @@ const DiscreetTrialDetail = () => {
                 <Button
                   variant="contained"
                   startIcon={<KeyboardBackspaceTwoToneIcon />}
-                  size="small"
                   onClick={handleNavBack}
                 >
                   {client?.first_name}'s Detail Page
@@ -222,7 +221,6 @@ const DiscreetTrialDetail = () => {
                 <Button
                   variant="contained"
                   startIcon={<KeyboardBackspaceTwoToneIcon />}
-                  size="small"
                   onClick={handleNavBack}
                 >
                   {client?.first_name}'s Detail Page
