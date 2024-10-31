@@ -41,6 +41,7 @@ const TrialComponent = ({ trial, dtInfo }) => {
           borderRadius: "10px",
           padding: "15px",
           marginTop: "10px",
+          marginBottom: "10px",
           borderTop: `2px solid ${passOrFail}`,
         }}
         // direction="row"

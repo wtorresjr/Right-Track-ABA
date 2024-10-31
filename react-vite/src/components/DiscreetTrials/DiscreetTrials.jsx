@@ -124,7 +124,9 @@ const DiscreetTrials = () => {
                       },
                     }}
                   >
-                    <Typography sx={{ padding: "5px" }}>
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
                       {dt?.trial_date}
                     </Typography>
                     <Divider
@@ -133,7 +135,9 @@ const DiscreetTrials = () => {
                       flexItem
                       sx={{ backgroundColor: "grey" }}
                     />
-                    <Typography sx={{ padding: "5px" }}>
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
                       {dt?.program_name}
                     </Typography>
                     <Divider
@@ -142,7 +146,9 @@ const DiscreetTrials = () => {
                       flexItem
                       sx={{ backgroundColor: "grey" }}
                     />
-                    <Typography sx={{ padding: "5px" }}>
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
                       Mastery: {dt?.trials_avg.toFixed(1)}
                     </Typography>
                     <Divider
@@ -179,6 +185,7 @@ const DiscreetTrials = () => {
                       flexItem
                       sx={{ backgroundColor: "grey" }}
                     />
+
                     <Button
                       onClick={() => {
                         handleNav(dt?.id);
