@@ -8,8 +8,28 @@ import { DailyCharts } from "../DailyCharts";
 import { DiscreetTrials } from "../DiscreetTrials";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
+import { useNavigate } from "react-router-dom";
+
+import { useIsSmallScreen } from "../helpers";
+
+import {
+  Button,
+  Divider,
+  Stack,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ClientDetails = () => {
+  const isSmallScreen = useIsSmallScreen();
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -49,58 +69,127 @@ const ClientDetails = () => {
     );
   };
 
+  const handleNavBack = () => {
+    navigate("/manage-clients");
+  };
+
   return (
     <>
       {loaded && client ? (
         <div className="mainDisplayContain" id="clientDetails">
-          <h1>
-            {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
-            </NavLink>
-          </h1>
+          <Stack
+            direction={isSmallScreen ? "column" : "row"}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
+            <Button
+              sx={isSmallScreen ? { width: "100%", marginTop: "10px" } : {}}
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              onClick={handleNavBack}
+            >
+              Manage Clients
+            </Button>
+          </Stack>
 
-          <div className="clientDetailsContain">
-            <div>
-              <label className="detailsLabels">Guardian Email:</label>
-              {client?.guardian_email}
-            </div>
-            <div>
-              <label className="detailsLabels">DOB:</label>
-              {client?.dob}
-            </div>
-            <div>
-              <label className="detailsLabels">Notes:</label>
-              {client?.client_notes}
-            </div>
-          </div>
-          <div className="btnsContain">
-            <button id="editBtn" onClick={openEditModal}>
-              Edit Client Data
-            </button>
-            <button id="delBtn" onClick={openDeleteModal}>
-              Delete Client
-            </button>
-          </div>
+          <Accordion
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "10px",
+              margin: "10px 0",
+              width: "100%",
+            }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+            >
+              {`${client?.first_name}'s Details`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>Client Notes: {client?.client_notes}</Typography>
+              <Typography>Guardian Email: {client?.guardian_email}</Typography>
+            </AccordionDetails>
+          </Accordion>
 
-            <DailyCharts clientCharts={client} />
-       
+          <Stack
+            width="100%"
+            spacing={2}
+            direction={isSmallScreen ? "column" : "row"}
+            // alignItems={isSmallScreen ? "center" : "left"}
+          >
+            <Button
+              variant="contained"
+              color="error"
+              onClick={openDeleteModal}
+              startIcon={<DeleteForeverIcon />}
+            >
+              DELETE CLIENT
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={openEditModal}
+              startIcon={<EditNoteIcon />}
+            >
+              EDIT CLIENT INFO
+            </Button>
+          </Stack>
+          <Divider
+            sx={{
+              width: "100%",
+              paddingBottom: "10px",
+              borderColor: "white",
+              "&::before, &::after": {
+                borderColor: "white",
+              },
+            }}
+          ></Divider>
 
-          <h1></h1>
-         
-            <DiscreetTrials clientDT={client} />
- 
-          <h1>
-            {client?.last_name}, {client?.first_name}
-            <NavLink to="/manage-clients" className="navLinkStyle">
-              <i className="fa-solid fa-arrow-left fa-xl"></i> Back To Manage
-              Clients
-            </NavLink>
-          </h1>
+          <DailyCharts clientCharts={client} />
+
+          <Divider
+            sx={{
+              width: "100%",
+              borderColor: "white",
+              "&::before, &::after": {
+                borderColor: "white",
+              },
+            }}
+          ></Divider>
+
+          <DiscreetTrials clientDT={client} />
+          <Stack
+            direction={isSmallScreen ? "column" : "row"}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">
+              {client?.last_name}, {client?.first_name}
+            </Typography>
+            <Button
+              sx={isSmallScreen ? { width: "100%", marginTop: "10px" } : {}}
+              variant="contained"
+              startIcon={<KeyboardBackspaceTwoToneIcon />}
+              onClick={handleNavBack}
+            >
+              Manage Clients
+            </Button>
+          </Stack>
         </div>
       ) : (
-        <h2
+        <Typography
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -108,9 +197,10 @@ const ClientDetails = () => {
             borderRadius: "15px",
             padding: "10px 0",
           }}
+          variant="h5"
         >
           {message}
-        </h2>
+        </Typography>
       )}
     </>
   );

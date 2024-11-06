@@ -16,7 +16,7 @@ export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
     body: JSON.stringify(ai_request),
   });
 
-  console.log(response, "Response data");
+  // console.log(response, "Response data");
   if (response.ok) {
     const trendRequest = await response.json();
     dispatch(analyzedTrend(trendRequest));

@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./add-interval.css";
-import { LegendComponent } from "../DailyCharts";
 import { editIntervalThunk } from "../../redux/charts";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import { DeleteMessage } from "../DeleteModal";
 import { behaviors } from "../helpers/dropdown-data";
 import { activities } from "../helpers/dropdown-data";
+
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+
+import {
+  Button,
+  Stack,
+  Typography,
+  Box,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  Chip,
+  TextField,
+  Rating,
+} from "@mui/material";
 
 const UpdateIntervalComp = ({ intervalToEdit }) => {
   const [startTime, setStartTime] = useState(intervalToEdit.start_interval);
@@ -107,207 +123,199 @@ const UpdateIntervalComp = ({ intervalToEdit }) => {
   };
 
   return (
-    <div
-      id="outerCompContain"
-      style={{ border: `10px solid ${currentRatingColor}` }}
-    >
-      <div className="intervalCompContain">
-        <h1>Update Interval</h1>
-        <div className="timeDiv">
-          <label>
-            Start Time*
-            <input
-              type="time"
-              onChange={(e) => setStartTime(e.target.value)}
-              value={startTime}
-            />
-            {errors?.startTime && (
-              <p className="errorsPtag">{errors?.startTime}</p>
-            )}
-          </label>
-          <label>
-            End Time*
-            <input
-              type="time"
-              onChange={(e) => setEndTime(e.target.value)}
-              value={endTime}
-            />
-            {errors?.endTime && <p className="errorsPtag">{errors?.endTime}</p>}
-            {errors?.invalidDate && (
-              <p className="errorsPtag">{errors?.invalidDate}</p>
-            )}
-          </label>
-        </div>
+    <Stack padding={2} width="40ch">
+      <Typography variant="h5" marginBottom="20px">
+        New Interval
+      </Typography>
+      <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack>
+          <Typography>Start Time:</Typography>
+          <input
+            type="time"
+            onChange={(e) => setStartTime(e.target.value)}
+            value={startTime}
+          />
+          {errors?.startTime && (
+            <Typography color="red">{errors?.startTime}</Typography>
+          )}
+        </Stack>
+        <Stack>
+          <Typography>End Time:</Typography>
+          <input
+            type="time"
+            onChange={(e) => setEndTime(e.target.value)}
+            value={endTime}
+          />
+          {errors?.endTime && (
+            <Typography color="red">{errors?.endTime}</Typography>
+          )}
+        </Stack>
+      </Stack>
+      <Stack textAlign="center">
+        {errors?.invalidDate && (
+          <Typography color="red">{errors?.invalidDate}</Typography>
+        )}
+        {errors?.timeOverlap && (
+          <Typography color="red">{errors?.timeOverlap}</Typography>
+        )}
+      </Stack>
 
-        <h2>Problem Behaviors</h2>
-        <div className="behaviorsDiv">
-          <select onChange={(e) => setCurrBehavior(e.target.value)}>
-            {behaviors &&
-              behaviors?.map((behavior) => {
+      <Box margin="20px 0 10px 0">
+        <FormControl fullWidth>
+          <InputLabel>Activity</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={currActivity}
+            label="Activity"
+            onChange={(e) => setCurrActivity(e.target.value)}
+          >
+            {activities &&
+              activities?.map((activity) => {
                 return (
-                  <option key={behavior} value={behavior}>
-                    {behavior}
-                  </option>
+                  <MenuItem key={activity} value={activity}>
+                    {activity}
+                  </MenuItem>
                 );
               })}
-          </select>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              newBehavior(currBehavior, "add");
-            }}
-          >
-            Add Behavior
-          </button>
-        </div>
+          </Select>
+        </FormControl>
+      </Box>
+      {errors?.activity && (
+        <Typography color="red" textAlign="center">
+          {errors?.activity}
+        </Typography>
+      )}
 
-        {Object.keys(currIntervalBehaviors).length ? (
-          <div className="behaviorCountItem">
-            {Object.entries(currIntervalBehaviors || {}).map(
-              ([behavior, count]) => (
-                <div key={behavior} className="countItem">
-                  {behavior}:
-                  <div id="delAddMinusBtn">
-                    <button
-                      id="pbDeleteBtn"
-                      className="addMinus"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        newBehavior(behavior, "delete");
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <div className="addMinusBtns">
-                      <button
-                        className="addMinus"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          newBehavior(behavior, "remove");
-                        }}
-                      >
-                        -
-                      </button>
-                      <div className="countBox">{count}</div>
+      <Typography
+        variant="h6"
+        marginTop="10px"
+        borderTop="1px solid lightgray"
+        paddingTop="10px"
+      >
+        Problem Behaviors
+      </Typography>
+      <Stack direction="row" justifyContent="space-between">
+        <Box width="65%">
+          <FormControl fullWidth>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={currBehavior}
+              onChange={(e) => setCurrBehavior(e.target.value)}
+            >
+              {behaviors &&
+                behaviors?.map((behavior) => {
+                  return (
+                    <MenuItem key={behavior} value={behavior}>
+                      {behavior}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+          </FormControl>
+        </Box>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            newBehavior(currBehavior, "add");
+          }}
+        >
+          Add Behavior
+        </Button>
+      </Stack>
 
-                      <button
-                        className="addMinus"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          newBehavior(behavior, "add");
-                        }}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className="noteActivityRating">
-        <div className="activityRating">
-          <div className="activityDiv">
-            <label>Activity*</label>
-            <div className="behaviorsDiv">
-              <div id="activitySelect">
-                <select
-                  onChange={(e) => setCurrActivity(e.target.value)}
-                  defaultValue="Choose an Activity"
-                  value={currActivity}
+      {Object.keys(currIntervalBehaviors).length ? (
+        <Stack marginTop={2} spacing={2}>
+          {Object.entries(currIntervalBehaviors || {}).map(
+            ([behavior, count]) => (
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    newBehavior(behavior, "delete");
+                  }}
                 >
-                  <option value="">Choose an Activity</option>
-                  {activities &&
-                    activities?.map((activity) => {
-                      return <option key={activity}>{activity}</option>;
-                    })}
-                </select>
-                <div className="narWrap">
-                  {errors?.activity && (
-                    <p className="errorsPtag">{errors?.activity}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="currIntervalDiv">
-            <label>Current Interval Rating:</label>
-            <div
-              className="irDisplay"
-              style={{ color: `${currentRatingColor}` }}
-            >
-              {intervalRating}
-            </div>
-          </div>
-        </div>
-        <div className="intervalNotesDiv">
-          <label>Interval Notes*</label>
-          <textarea
-            className="intervalNotes"
-            rows="7"
-            value={currIntNotes}
-            onChange={(e) => setCurrIntNotes(e.target.value)}
-          ></textarea>
-          {errors?.intervalNotes && (
-            <p className="errorsPtag">{errors?.intervalNotes}</p>
+                  Delete
+                </Button>
+                <Typography textAlign="left">{behavior}</Typography>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <RemoveCircleIcon
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      newBehavior(behavior, "remove");
+                    }}
+                  >
+                    -
+                  </RemoveCircleIcon>
+                  <Chip label={count}>{count}</Chip>
+                  <AddCircleIcon
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      newBehavior(behavior, "add");
+                    }}
+                  ></AddCircleIcon>
+                </Stack>
+              </Stack>
+            )
           )}
-        </div>
-        <LegendComponent />
-        <div id="intervalRatingLabel">
-          <div className="behaviorsDiv">
-            <label>Interval Rating:</label>
-            <select
-              value={intervalRating}
-              onChange={(e) => {
-                setIntervalRating(e.target.value);
-                setCurrentRatingColor(returnColor(e.target.value));
-              }}
-              className="ratingDropDown"
-            >
-              <option value={""}>Select a rating</option>
-              <option value={0} style={{ backgroundColor: "red" }}>
-                0
-              </option>
-              <option value={1} style={{ backgroundColor: "red" }}>
-                1
-              </option>
-              <option value={2} style={{ backgroundColor: "orange" }}>
-                2
-              </option>
-              <option value={3} style={{ backgroundColor: "yellow" }}>
-                3
-              </option>
-              <option value={4} style={{ backgroundColor: "yellowgreen" }}>
-                4
-              </option>
-              <option value={5} style={{ backgroundColor: "green" }}>
-                5
-              </option>
-            </select>
-          </div>
-          {errors?.intervalRating && (
-            <p className="errorsPtag">{errors?.intervalRating}</p>
-          )}
-        </div>
-      </div>
-      <div className="createBtnsDiv">
-        <button
-          type="Submit"
+        </Stack>
+      ) : (
+        ""
+      )}
+      <Stack marginTop="10px">
+        <Typography variant="h6">Interval Notes</Typography>
+        <TextField
+          multiline
+          value={currIntNotes}
+          onChange={(e) => setCurrIntNotes(e.target.value)}
+          maxRows={4}
+        ></TextField>
+        {errors?.intervalNotes && (
+          <Typography color="red">{errors?.intervalNotes}</Typography>
+        )}
+      </Stack>
+      <Stack marginTop="10px">
+        <Typography variant="h6">Interval Rating</Typography>
+        <Rating
+          fullWidth
+          sx={{
+            color: `${returnColor(intervalRating)}`,
+          }}
+          size="large"
+          name="simple-controlled"
+          value={intervalRating}
+          onChange={(event, newValue) => {
+            setIntervalRating(newValue);
+          }}
+        />
+      </Stack>
+      <Stack direction="row" justifyContent="space-between" marginTop="20px">
+        <Button
+          variant="contained"
           disabled={isDisabled}
           onClick={handleSubmit}
-          id="createChartBtn"
         >
           Update Interval
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
           Cancel
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 

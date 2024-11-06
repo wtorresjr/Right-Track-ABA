@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import DeleteMessage from "./DeletingMessage";
 import { deleteIntervalThunk, getChartByIdThunk } from "../../redux/charts";
 import { useNavigate } from "react-router-dom";
+import { Button, Stack, Typography } from "@mui/material";
 
 const DeleteIntervalModal = ({ interval }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const DeleteIntervalModal = ({ interval }) => {
   const [userInput, setUserInput] = useState("");
   const [chart, setChart] = useState();
   const { setModalContent } = useModal();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     setConfirmDelText(`YES DELETE`);
@@ -45,34 +46,45 @@ const DeleteIntervalModal = ({ interval }) => {
   };
 
   return (
-    <div className="deleteModalContain">
-      <h1>Delete This Interval ?</h1>
-      <p>
+    <Stack width="40ch" padding={2} textAlign="center" spacing={2}>
+      <Typography variant="h5">Delete This Interval ?</Typography>
+      <Typography>
         To delete this interval and all of it's related data, please enter the
         text below in the input:
-      </p>
-      <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
-        {confirmDelText}
-      </p>
+      </Typography>
+      <Typography color="red">{confirmDelText}</Typography>
       <input
         id="confirmInput"
         type="text"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <div className="createBtnsDiv">
-        <button
+      <Stack
+        direction="row"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
           disabled={isDisabled}
           onClick={deleteInterval}
-          id="createChartBtn"
+          variant="contained"
+          color="error"
+          size="large"
         >
           Delete
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button
+          onClick={closeModal}
+          variant="contained"
+          color="secondary"
+          size="large"
+        >
           Cancel
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 

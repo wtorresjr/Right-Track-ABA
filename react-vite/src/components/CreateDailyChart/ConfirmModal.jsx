@@ -6,6 +6,8 @@ import DeleteMessage from "../DeleteModal/DeletingMessage";
 import { useNavigate } from "react-router-dom";
 import { getChartByIdThunk, updateTheChartThunk } from "../../redux/charts";
 
+import { Stack, Button, Typography } from "@mui/material";
+
 const ConfirmModal = ({ infoToUpdate, dc, clientList }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,21 +43,27 @@ const ConfirmModal = ({ infoToUpdate, dc, clientList }) => {
   };
 
   return (
-    <div className="deleteModalContain">
-      <h1>Confirm Chart Changes...</h1>
+    <Stack padding={2} textAlign="center" width="40ch" spacing={1}>
+      <Typography variant="h5">Confirm Chart Changes...</Typography>
 
-      <p>Please confirm the changes below are correct</p>
-      <p>Updated Date: {infoToUpdate.chart_date}</p>
-      <p>For Client: {clientName}</p>
-      <div className="createBtnsDiv">
-        <button id="createChartBtn" onClick={handleConfirm}>
+      <Typography>Please confirm the changes below are correct:</Typography>
+      <Stack spacing={-1} sx={{ paddingBottom: "10px" }}>
+        <Typography variant="h6" color="red">
+          Updated Date: {infoToUpdate.chart_date}
+        </Typography>
+        <Typography variant="h6" color="red">
+          For Client: {clientName}
+        </Typography>
+      </Stack>
+      <Stack direction="row" justifyContent="space-between">
+        <Button variant="contained" onClick={handleConfirm}>
           Confirm
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
           Cancel
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 

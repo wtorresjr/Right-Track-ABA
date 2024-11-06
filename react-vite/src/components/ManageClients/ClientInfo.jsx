@@ -3,9 +3,27 @@ import "./manage-clients.css";
 import { useModal } from "../../context/Modal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import UpdateClientModal from "../UpdateClientModal/UpdateClientModal";
-// import { returnColor, returnPercentColor } from "../helpers/returnColor";
+import { Button, ButtonGroup, Stack, Paper } from "@mui/material";
+
+import { useIsSmallScreen } from "../helpers";
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import PreviewIcon from "@mui/icons-material/Preview";
+
+import { Typography } from "@mui/material";
+
+import { styled } from "@mui/material/styles";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#000",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  color: "white",
+}));
 
 const ClientInfo = ({ client }) => {
+  const isSmallScreen = useIsSmallScreen();
   const { setModalContent } = useModal();
   const navigate = useNavigate();
 
@@ -20,67 +38,71 @@ const ClientInfo = ({ client }) => {
     setModalContent(<UpdateClientModal client={client} />);
   };
 
+  const buttons = [
+    <Button
+      key="delete"
+      onClick={openDeleteModal}
+      color="error"
+      startIcon={<DeleteForeverIcon />}
+      size="medium"
+    >
+      DELETE
+    </Button>,
+    <Button
+      key="edit"
+      onClick={openEditModal}
+      color="warning"
+      startIcon={<EditNoteIcon />}
+      size="medium"
+    >
+      EDIT
+    </Button>,
+    <Button
+      key="view"
+      onClick={() => {
+        handleClick(client?.id);
+      }}
+      color="secondary"
+      startIcon={<PreviewIcon />}
+      size="medium"
+    >
+      VIEW CLIENT DATA
+    </Button>,
+  ];
+
   return (
-    <div className="clientInfoContain" key={client?.id}>
-      <div className="clientData">
-        <div>
-          <label className="detailsLabels">First Name:</label>
-          {client?.first_name}
-        </div>
-        <div>
-          <label className="detailsLabels">Last Name:</label>
-          {client?.last_name}
-        </div>
-        <div>
-          <label className="detailsLabels">Guardian Email:</label>
-          {client?.guardian_email}
-        </div>
-        <div>
-          <label className="detailsLabels">DOB:</label>
-          {client?.dob}
-        </div>
-        <div className="manageClientInfoBar">
-          <div
-            className="infoBoxes"
-            style={{
-              border: `5px solid white`,
-            }}
-          >
-            <div>
-              <label className="detailsLabels">Total Daily Charts:</label>
-              {client?.Daily_Chart_Count}
-            </div>
-          </div>
-          <div
-            className="infoBoxes"
-            style={{
-              border: `5px solid white`,
-            }}
-          >
-            <div>
-              <label className="detailsLabels">Total Discreet Trials:</label>
-              {client?.Discreet_Trial_Count}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="btnsContain">
-        <button id="delBtn" onClick={openDeleteModal}>
-          Delete
-        </button>
-        <button id="editBtn" onClick={openEditModal}>
-          Edit
-        </button>
-        <button
-          id="viewBtn"
-          onClick={() => {
-            handleClick(client.id);
-          }}
+    <Stack
+      key={client?.id}
+      sx={{
+        backgroundColor: "black",
+        padding: "10px",
+        borderRadius: "10px",
+        marginBottom: "10px",
+      }}
+    >
+      <Stack direction="column" justifyContent="center">
+        <Typography variant="h5">
+          {client?.first_name} {client?.last_name}
+        </Typography>
+        <Item sx={{ padding: "0px" }}>
+          Guardian Email: {client?.guardian_email}
+        </Item>
+      </Stack>
+
+      <Stack direction="row" justifyContent="center">
+        <Item>Total Daily Charts: {client?.Daily_Chart_Count}</Item>
+        <Item>Total Discreet Trials: {client?.Discreet_Trial_Count}</Item>
+      </Stack>
+
+      <Stack>
+        <ButtonGroup
+          fullWidth
+          orientation={isSmallScreen ? "vertical" : "horizontal"}
         >
-          Chart & Trial Data
-        </button>
-      </div>
-    </div>
+          {buttons}
+        </ButtonGroup>
+      </Stack>
+    </Stack>
   );
 };
 

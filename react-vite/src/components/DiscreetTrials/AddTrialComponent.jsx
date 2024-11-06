@@ -16,12 +16,23 @@ import {
 import { addTrialThunk, editTrialThunk } from "../../redux/dts";
 import { getClientByIDThunk } from "../../redux/clients";
 
+import {
+  Stack,
+  TextField,
+  Button,
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
+
 const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   const { dt_id } = useParams();
   const [isDisabled, setDisabled] = useState(true);
   const [programDD, setProgramDD] = useState();
-  const [targetItem, setTargetItem] = useState();
-  const [trialCount, setTrialCount] = useState();
+  const [targetItem, setTargetItem] = useState("");
+  const [trialCount, setTrialCount] = useState(1);
   const [trialScore, setTrialScore] = useState();
   const [trialNotes, setTrialNotes] = useState();
 
@@ -32,21 +43,16 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   const errorCollector = {};
 
   useEffect(() => {
-    if (dtInfo?.program_name === "Identify Shapes") {
+    if (dtInfo?.program_name === "Identify Shapes")
       setProgramDD(trial_target_shapes);
-    }
-    if (dtInfo?.program_name === "Identify Colors") {
+    if (dtInfo?.program_name === "Identify Colors")
       setProgramDD(trial_target_colors);
-    }
-    if (dtInfo?.program_name === "Identify Sizes") {
+    if (dtInfo?.program_name === "Identify Sizes")
       setProgramDD(trial_target_sizes);
-    }
-    if (dtInfo?.program_name === "Sorting Sizes") {
+    if (dtInfo?.program_name === "Sorting Sizes")
       setProgramDD(trial_target_sorting_sizes);
-    }
-    if (dtInfo?.program_name === "Identify Letters") {
+    if (dtInfo?.program_name === "Identify Letters")
       setProgramDD(trial_target_letters);
-    }
   }, [dtInfo]);
 
   useEffect(() => {
@@ -59,10 +65,14 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
     if (trialInfo) {
       checkIfEditing();
     }
-  }, []);
+  }, [trialInfo]);
 
   useEffect(() => {
     setErrors();
+
+    if (!targetItem) {
+      errorCollector.targetItemMissing = "Please select a target";
+    }
     if (!trialScore) {
       errorCollector.trialScoreMissing = "Trial score required";
     }
@@ -80,7 +90,7 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
     } else {
       setDisabled(false);
     }
-  }, [trialCount, trialScore]);
+  }, [trialCount, trialScore, targetItem]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,94 +126,88 @@ const AddTrialComponent = ({ dtInfo, trialInfo, isEdit }) => {
   };
 
   return (
-    <div id="outerCompContain">
-      <div className="intervalCompContain">
-        <div className="modalHeading">
-          <h1>
-            {isEdit ? "Edit" : "Add New"} Trial for {dtInfo.program_name}
-          </h1>
-        </div>
-        <>
-          <div className="dividedDivs">
-            <label>Target *</label>
-            <select
-              id="clientSelector"
-              style={{ height: "40px" }}
-              onChange={(e) => setTargetItem(e.target.value)}
-              value={targetItem}
-            >
-              {programDD
-                ? programDD?.map((progOption) => (
-                    <option key={progOption} value={progOption}>
-                      {progOption}
-                    </option>
-                  ))
-                : [...Array(11).keys()].map((number) => (
-                    <option key={number} value={number}>
-                      {number}
-                    </option>
-                  ))}
-            </select>
-          </div>
-          <div className="dividedDivs">
-            <label>Trial Count * </label>
-            <label className="errorsPtag">
-              {errors && errors.trialCountMissing && errors.trialCountMissing}
-            </label>
-            <input
-              type="Number"
-              value={trialCount}
-              onChange={(e) => setTrialCount(e.target.value)}
-            />
-          </div>
-          <div
-            style={{ display: "flex", justifyContent: "space-evenly" }}
-          ></div>
-          <div className="dividedDivs">
-            <label>Trial Score *</label>
-            <label className="errorsPtag">
-              {errors && errors.trialScoreMissing && errors.trialScoreMissing}
-              {errors && errors.trialCountError && errors.trialCountError}
-            </label>
-            <div id="trialScoreDiv">
-              <input
-                type="Number"
-                value={trialScore}
-                onChange={(e) => setTrialScore(e.target.value)}
-              />
-              <div>Out Of</div>
-              <div>
-                <label>Trial Count</label>
-                <input type="Number" value={trialCount} />
-              </div>
-            </div>
-          </div>
-          <div className="dividedDivs">
-            <label>Trial Notes</label>(Optional)
-            <textarea
-              className="intervalNotes"
-              rows="7"
-              value={trialNotes}
-              onChange={(e) => setTrialNotes(e.target.value)}
-            ></textarea>
-          </div>
-        </>
-
-        <div className="createBtnsDiv">
-          <button
-            type="Submit"
-            disabled={isDisabled}
-            onClick={handleSubmit}
-            id="createChartBtn"
+    <Stack width="40ch" padding={2} spacing={2}>
+      <Typography variant="h5" paddingBottom={2} textAlign="center">
+        {isEdit ? "Edit" : "Add New"} Trial for {dtInfo.program_name}
+      </Typography>
+      <Stack direction="row" spacing={2}>
+        <FormControl sx={{ flex: 1 }}>
+          <InputLabel id="demo-simple-select-label">Target</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Target"
+            onChange={(e) => setTargetItem(e.target.value)}
+            value={targetItem}
           >
-            {trialInfo ? "Update Trial" : "Add Trial"}
-          </button>
-          <button onClick={closeModal} id="cancelBtn">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
+            {programDD
+              ? programDD.map((progOption) => (
+                  <MenuItem key={progOption} value={progOption}>
+                    {progOption}
+                  </MenuItem>
+                ))
+              : [...Array(11).keys()].map((number) => (
+                  <MenuItem key={number} value={number}>
+                    {number}
+                  </MenuItem>
+                ))}
+          </Select>
+        </FormControl>
+        <TextField
+          type="number"
+          value={trialCount}
+          label="Trial Count"
+          onChange={(e) => setTrialCount(e.target.value)}
+          sx={{ flex: 1 }}
+          inputProps={{ min: 1 }}
+        />
+      </Stack>
+      <Stack direction="row" spacing={2} alignItems="center">
+        <TextField
+          value={trialScore}
+          onChange={(e) => setTrialScore(e.target.value)}
+          label="Score"
+          type="number"
+          inputProps={{ min: 0 }}
+        ></TextField>
+        <Typography textAlign="center">Out Of</Typography>
+        <TextField
+          value={trialCount}
+          onChange={(e) => setTrialScore(e.target.value)}
+          label="Attempt(s)"
+          type="number"
+        ></TextField>
+      </Stack>
+      <TextField
+        multiline
+        maxRows={5}
+        label="Trial Notes (Optional)"
+        value={trialNotes}
+        onChange={(e) => setTrialNotes(e.target.value)}
+      ></TextField>
+
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={isDisabled}
+        >
+          {trialInfo ? "Update Trial" : "Add Trial"}
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
+          {"Cancel"}
+        </Button>
+      </Stack>
+
+      {errors &&
+        Object.values(errors).map((error) => {
+          return (
+            <Typography textAlign="center" color="red" key={error}>
+              {error}
+            </Typography>
+          );
+        })}
+    </Stack>
   );
 };
 

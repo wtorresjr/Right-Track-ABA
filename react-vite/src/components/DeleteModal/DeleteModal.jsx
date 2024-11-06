@@ -7,6 +7,8 @@ import { deleteAClientThunk } from "../../redux/clients";
 import { useNavigate } from "react-router-dom";
 import DeleteMessage from "./DeletingMessage";
 
+import { Stack, Typography, TextField, Button } from "@mui/material";
+
 const DeleteModal = ({ client }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,36 +46,39 @@ const DeleteModal = ({ client }) => {
   };
 
   return (
-    <div className="deleteModalContain">
-      <h1>
-        Delete Client {client?.first_name} {client?.last_name}?
-      </h1>
-      <p>
+    <Stack
+      sx={{ padding: "10px", width: "40ch", textAlign: "center" }}
+      spacing={2}
+    >
+      <Typography variant="h5">
+        Delete Client: {client?.first_name} {client?.last_name}?
+      </Typography>
+      <Typography>
         To delete {client?.first_name} {client?.last_name} and all their related
         data, please enter the text below into the input:
-      </p>
-      <p style={{ fontWeight: "bolder", color: "red", fontSize: "18px" }}>
+      </Typography>
+      <Typography variant="h6" sx={{ textAlign: "center", color: "red" }}>
         {confirmDelText}
-      </p>
-      <input
-        id="confirmInput"
-        type="text"
+      </Typography>
+      <TextField
+        fullWidth
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-      />
-      <div className="createBtnsDiv">
-        <button
+      ></TextField>
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          color="error"
           disabled={isDisabled}
           onClick={deleteClient}
-          id="createChartBtn"
         >
           Delete
-        </button>
-        <button onClick={closeModal} id="cancelBtn">
+        </Button>
+        <Button variant="contained" color="secondary" onClick={closeModal}>
           Cancel
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 
