@@ -9,14 +9,14 @@ const analyzedTrend = (trends) => {
 };
 
 export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
-  console.log(ai_request, "<------ AI Request");
+  // console.log(ai_request, "<------ AI Request");
   const response = await fetch(`/api/ai-suggest-post/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ai_request),
   });
 
-  console.log(response, "Response data");
+  // console.log(response, "Response data");
   if (response.ok) {
     const trendRequest = await response.json();
     dispatch(analyzedTrend(trendRequest));

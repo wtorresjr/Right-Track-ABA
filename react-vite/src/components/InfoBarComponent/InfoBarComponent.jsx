@@ -1,6 +1,9 @@
 import { returnColor } from "../helpers/returnColor";
 import { useEffect, useState } from "react";
 
+import { Stack, Chip, Typography } from "@mui/material";
+import { useIsSmallScreen } from "../helpers";
+
 const InfoBar = ({
   clientCharts,
   numOfCharts,
@@ -9,6 +12,7 @@ const InfoBar = ({
   filteredCharts,
   type,
 }) => {
+  const isSmallScreen = useIsSmallScreen();
   const [barType, setBarType] = useState();
   const [allAvg, setAllAvg] = useState();
   const [filteredAvgType, setFilteredAvgType] = useState();
@@ -27,35 +31,44 @@ const InfoBar = ({
   }, []);
 
   return (
-    <div
-      className="chartTotalsContain"
+    <Stack
+      direction={isSmallScreen ? "column" : "row"}
+      justifyContent={isSmallScreen ? "center" : "space-between"}
+      textAlign="center"
       style={{
-        border: `3px solid ${
+        padding: "10px",
+        backgroundColor: "black",
+        borderRadius: "10px",
+        border: `2px solid ${
           type === "dailyCharts"
             ? returnColor(clientCharts?.All_Charts_Avg)
             : "white"
         }`,
       }}
     >
-      <div>
+      <Typography>
         {barType} {numOfCharts}
         {searchFilter ? ` (${filteredCharts?.length} - Filtered)` : ""}
-      </div>
+      </Typography>
       {type === "dailyCharts" ? (
-        <div style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}>
+        <Typography
+          style={{ color: returnColor(clientCharts?.All_Charts_Avg) }}
+        >
           {allAvg} {clientCharts?.All_Charts_Avg}
-        </div>
+        </Typography>
       ) : (
         ""
       )}
       {type === "dailyCharts" ? (
-        <div style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}>
+        <Typography
+          style={{ color: returnColor(clientCharts?.Paginated_Charts_Avg) }}
+        >
           {filteredAvgType} {filteredAvg || clientCharts?.Paginated_Charts_Avg}
-        </div>
+        </Typography>
       ) : (
         ""
       )}
-    </div>
+    </Stack>
   );
 };
 

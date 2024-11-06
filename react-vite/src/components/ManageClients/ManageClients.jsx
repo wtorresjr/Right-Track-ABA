@@ -8,7 +8,14 @@ import "./manage-clients.css";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
 
+import { Button, Stack, Typography } from "@mui/material";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import TextField from "@mui/material/TextField";
+
+import { useIsSmallScreen } from "../helpers";
+
 const ManageClients = () => {
+  const isSmallScreen = useIsSmallScreen();
   const [searchFilter, setSearchFilter] = useState("");
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +55,7 @@ const ManageClients = () => {
     let allClients;
     const getClients = async () => {
       const fetchClients = await dispatch(
-        getClientsThunk(currentPage, "undefined")
+        getClientsThunk(currentPage, undefined)
       );
       if (fetchClients) {
         allClients = fetchClients.data.Clients;
@@ -76,33 +83,49 @@ const ManageClients = () => {
 
   return (
     <div className="mainDisplayContain">
-      <div className="manageClientsHeader">
-        <h1>Manage Clients</h1>
-        <button id="addNewClientBtn" onClick={openCreateClientModal}>
-          <i className="fa-solid fa-person-circle-plus fa-xl"></i> Add New
-          Client <i className="fa-solid fa-person-circle-plus fa-xl"></i>
-        </button>
+      <Stack
+        direction={isSmallScreen ? "column" : "row"}
+        justifyContent="space-between"
+        alignItems="center"
+        marginBottom="10px"
+      >
+        <Typography variant="h4">Manage Clients</Typography>
 
-        {/* <div
-          className="chartTotalsContain"
-          style={{
-            border: `3px solid white`,
-          }}
+        <Button
+          sx={isSmallScreen ? { width: "100%", marginTop: "5px" } : {}}
+          variant="contained"
+          color="warning"
+          onClick={openCreateClientModal}
+          startIcon={<PersonAddIcon />}
+          endIcon={<PersonAddIcon />}
         >
-          <div>
-            Total Clients: {totalClients}
-            {searchFilter && filteredClients
-              ? ` - (${filteredClients.length} Filtered)`
-              : ""}
-          </div>
-        </div> */}
-        <input
-          type="text"
-          placeholder="Search For A Client"
-          value={searchFilter}
-          onChange={(e) => setSearchFilter(e.target.value)}
-        />
-      </div>
+          New Client
+        </Button>
+      </Stack>
+
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        variant="outlined"
+        placeholder="Search Clients"
+        value={searchFilter}
+        onChange={(e) => setSearchFilter(e.target.value)}
+        sx={{
+          input: { color: "white" }, // Change input text color to white
+          "& .MuiInputLabel-root": { color: "white" }, // Change label color
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white", // Change border color
+            },
+            "&:hover fieldset": {
+              borderColor: "white", // Border color on hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white", // Border color when focused
+            },
+          },
+        }}
+      />
 
       {filteredClients?.length > 0 && (
         <div>
@@ -121,7 +144,8 @@ const ManageClients = () => {
           return <ClientInfo key={client.id} client={client} />;
         })
       ) : (
-        <h2
+        <Typography
+          variant="h5"
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -131,7 +155,7 @@ const ManageClients = () => {
           }}
         >
           Loading Clients...
-        </h2>
+        </Typography>
       )}
     </div>
   );

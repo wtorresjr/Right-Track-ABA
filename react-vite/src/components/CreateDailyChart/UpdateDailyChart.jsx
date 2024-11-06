@@ -1,12 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./create-daily-chart.css";
-// import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-// import { DeleteMessage } from "../DeleteModal";
 import ConfirmModal from "./ConfirmModal";
+
+import {
+  Typography,
+  Stack,
+  Button,
+  Box,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 const UpdateDailyChart = ({ dc }) => {
   // const navigate = useNavigate();
@@ -64,69 +74,129 @@ const UpdateDailyChart = ({ dc }) => {
     );
   };
 
-  // const openMessageDiag = () => {
-  //   setModalContent(<DeleteMessage message={"Updated Chart Data"} />);
-  // };
-
   return (
-    <div className="newChartModal">
-      <h1>Update Daily Chart</h1>
-      {currentClient?.Incomplete_Charts &&
-        currentClient?.Incomplete_Charts?.map((incChart) => {
-          return (
-            <div key={incChart?.id}>
-              <label>Incomplete Charts for {currentClient?.first_name}: </label>
-              <NavLink
-                to={`/daily-chart/${incChart?.id}`}
-                className="navLinkStyle"
-              >
-                {incChart?.chart_date}
-              </NavLink>
-            </div>
-          );
-        })}
+    <Stack padding={2} spacing={1}>
+      <Typography variant="h5" textAlign="center">
+        Update Daily Chart
+      </Typography>
 
       {currentClient && !currentClient?.message ? (
         <div>
-          <div className="newChartMenu">
-            <form onSubmit={handleSubmit}>
-              <input
-                id="dateInput"
-                type="date"
-                value={todaysDate}
-                onChange={(e) => setTodaysDate(e.target.value)}
-              />
-              <select
-                id="clientSelector"
-                value={selectedClient || "Select Client"}
-                onChange={(e) => setSelectedClient(e.target.value)}
+          <Stack direction="column" spacing={2}>
+            <input
+              id="dateInput"
+              type="date"
+              value={todaysDate}
+              onChange={(e) => setTodaysDate(e.target.value)}
+            />
+            {errors && errors.date && (
+              <Typography sx={{ color: "red" }}>{errors.date} </Typography>
+            )}
+
+            <Box sx={{ marginBottom: "10px" }} width="40ch">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Client</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedClient || "Select Client"}
+                  label="Client"
+                  onChange={(e) => setSelectedClient(e.target.value)}
+                >
+                  {clientList &&
+                    clientList?.map((client) => {
+                      return (
+                        <MenuItem key={client?.id} value={client?.id}>
+                          {client?.first_name} {client?.last_name} --- DOB:{" "}
+                          {client?.dob}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Stack direction="row" justifyContent="space-between">
+              <Button
+                disabled={isDisabled}
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
               >
-                {clientList &&
-                  clientList.map((client) => {
-                    return (
-                      <option key={client?.id} value={client?.id}>
-                        {client?.first_name} {client?.last_name} --- DOB:{" "}
-                        {client?.dob}
-                      </option>
-                    );
-                  })}
-              </select>
-              <div className="createBtnsDiv">
-                <button id="createChartBtn" disabled={isDisabled}>
-                  Update Chart
-                </button>
-                <button id="cancelBtn" onClick={() => closeModal()}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-          {errors && errors.date && <p className="errorsPtag">{errors.date}</p>}
+                Update Chart
+              </Button>
+              <Button
+                onClick={() => closeModal()}
+                variant="contained"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
         </div>
       ) : (
         <h1>{currentClient?.message}</h1>
       )}
-    </div>
+    </Stack>
+    // <div className="newChartModal">
+    //   <h1>Update Daily Chart</h1>
+    //   {currentClient?.Incomplete_Charts &&
+    //     currentClient?.Incomplete_Charts?.map((incChart) => {
+    //       return (
+    //         <div key={incChart?.id}>
+    //           <label>Incomplete Charts for {currentClient?.first_name}: </label>
+    //           <NavLink
+    //             to={`/daily-chart/${incChart?.id}`}
+    //             className="navLinkStyle"
+    //           >
+    //             {incChart?.chart_date}
+    //           </NavLink>
+    //         </div>
+    //       );
+    //     })}
+
+    //   {currentClient && !currentClient?.message ? (
+    //     <div>
+    //       <div className="newChartMenu">
+    //         <form onSubmit={handleSubmit}>
+    //           <input
+    //             id="dateInput"
+    //             type="date"
+    //             value={todaysDate}
+    //             onChange={(e) => setTodaysDate(e.target.value)}
+    //           />
+    //           <select
+    //             id="clientSelector"
+    //             value={selectedClient || "Select Client"}
+    //             onChange={(e) => setSelectedClient(e.target.value)}
+    //           >
+    //             {clientList &&
+    //               clientList.map((client) => {
+    //                 return (
+    //                   <option key={client?.id} value={client?.id}>
+    //                     {client?.first_name} {client?.last_name} --- DOB:{" "}
+    //                     {client?.dob}
+    //                   </option>
+    //                 );
+    //               })}
+    //           </select>
+    //           <div className="createBtnsDiv">
+    //             <button id="createChartBtn" disabled={isDisabled}>
+    //               Update Chart
+    //             </button>
+    //             <button id="cancelBtn" onClick={() => closeModal()}>
+    //               Cancel
+    //             </button>
+    //           </div>
+    //         </form>
+    //       </div>
+    //       {errors && errors.date && <p className="errorsPtag">{errors.date}</p>}
+    //     </div>
+    //   ) : (
+    //     <h1>{currentClient?.message}</h1>
+    //   )}
+    // </div>
   );
 };
 

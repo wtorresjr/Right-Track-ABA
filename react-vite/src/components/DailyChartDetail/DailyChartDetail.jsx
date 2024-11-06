@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChartByIdThunk } from "../../redux/charts";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, Navigate } from "react-router-dom";
 import { getClientByIDThunk } from "../../redux/clients";
 import "./daily-chart-detail.css";
 import AddIntervalComp from "../AddIntervalComponent/AddIntervalComp";
-import { LegendComponent } from "../DailyCharts";
+import { useNavigate } from "react-router-dom";
 import { returnColor } from "../helpers/returnColor";
 import { useModal } from "../../context/Modal";
 import DeleteIntervalModal from "../DeleteModal/DeleteIntervalModal";
 import UpdateIntervalComp from "../AddIntervalComponent/UpdateIntervalComp";
+import {
+  Button,
+  Stack,
+  Box,
+  Divider,
+  Typography,
+  Card,
+  Chip,
+  Rating,
+} from "@mui/material";
+
+import PrintIcon from "@mui/icons-material/Print";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import AddIcon from "@mui/icons-material/Add";
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import { useIsSmallScreen } from "../helpers";
 
 const DailyChartDetail = () => {
+  const isSmallScreen = useIsSmallScreen();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { chart_id } = useParams();
   const clientInfo = useSelector((state) => state?.clients?.client_by_id);
@@ -70,6 +90,10 @@ const DailyChartDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleNavBack = () => {
+    navigate(`/client/${clientInfo?.id}`);
+  };
+
   const openDeleteModal = (interval) => {
     setModalContent(<DeleteIntervalModal interval={interval} />);
   };
@@ -102,123 +126,282 @@ const DailyChartDetail = () => {
     <>
       {loaded ? (
         <div className="mainDisplayContain">
-          <div className="chartDetailHeader">
-            <div>
-              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-            </div>
-            <div>
-              <NavLink
-                to={`/client/${clientInfo?.id}`}
-                className="navLinkStyle"
-                style={{ fontWeight: "bold" }}
+          <Card
+            variant="outlined"
+            sx={{ backgroundColor: "black", color: "white" }}
+          >
+            <Box sx={{ p: 2 }}>
+              <Button
+                fullWidth
+                margin="10px"
+                variant="contained"
+                startIcon={<KeyboardBackspaceTwoToneIcon />}
+                onClick={handleNavBack}
               >
-                <div>
-                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
-                  {clientInfo?.first_name}'s Detail Page
-                </div>
-              </NavLink>
-            </div>
-          </div>{" "}
-          <div id="chartOptionsDiv">
-            <h2>
-              Client: {clientInfo?.first_name} {clientInfo?.last_name}
-            </h2>
+                {clientInfo?.first_name}'s Detail Page
+              </Button>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h6">
+                  Daily Chart Detail - {currentChart?.chart_date}
+                </Typography>
+              </Stack>
+              <Typography variant="h6" component="div">
+                Client: {clientInfo?.first_name} {clientInfo?.last_name}
+              </Typography>
 
-            <h2
-              style={{ color: ratingColor, border: `2px solid ${ratingColor}` }}
-              id="ratingBg"
-            >
-              <div>
-                Number of Intervals:{" "}
-                {currentChart?.Num_Intervals ? currentChart?.Num_Intervals : 0}
-              </div>
-              Average Interval Rating:{" "}
-              {currentChart?.Chart_Avg_Rating || "No Intervals Yet"}
-            </h2>
+              <Divider sx={{ backgroundColor: "white" }} />
+              <Stack direction="column">
+                <Typography variant="h6" component="div">
+                  Number of Intervals:{" "}
+                  {currentChart?.Num_Intervals
+                    ? currentChart?.Num_Intervals
+                    : 0}
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignContent="center"
+                  alignItems="center"
+                >
+                  <Typography variant="h6">Avg Interval Rating: </Typography>
+                  <Typography variant="h6">
+                    {currentChart?.Chart_Avg_Rating || "0"}
+                  </Typography>
+                  {(
+                    <Rating
+                      sx={{
+                        color: `${returnColor(currentChart?.Chart_Avg_Rating)}`,
+                      }}
+                      size="large"
+                      readOnly
+                      precision={0.1}
+                      name="simple-controlled"
+                      value={currentChart?.Chart_Avg_Rating}
+                    />
+                  ) || "0"}
+                </Stack>
+              </Stack>
+            </Box>
+          </Card>
 
-            <div className="dcHeader">
-              <LegendComponent />
-            </div>
-          </div>
-          <div style={{ display: "flex", justifyContent: "right" }}>
-            <button id="createNewChartBtn" onClick={openAddIntModal}>
-              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-              Add New Interval
-              <i className="fa-solid fa-file-circle-plus fa-xl"></i>
-            </button>
-          </div>
+          <Stack margin="10px">
+            <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
+              {currentChart?.Num_Intervals ? (
+                <>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<PrintIcon />}
+                  >
+                    Print Chart Data
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    startIcon={<AttachEmailIcon />}
+                  >
+                    Email Chart Data
+                  </Button>
+                </>
+              ) : null}
+              <Button
+                variant="contained"
+                color="warning"
+                onClick={openAddIntModal}
+                startIcon={<AddIcon />}
+              >
+                Add New Interval
+              </Button>
+            </Stack>
+          </Stack>
           {currentIntervals &&
             currentIntervals?.map((interval) => {
               return (
-                <div
-                  key={interval?.id - interval?.chart_id}
-                  className="intervalInfoContain"
-                >
-                  <div
-                    className="intervalHeader"
-                    style={{
-                      borderColor: returnColor(
+                <>
+                  <Stack
+                    sx={{
+                      backgroundColor: "black",
+                      borderRadius: "10px 10px 0 0",
+                      padding: "15px 15px 5px 15px",
+                      marginTop: "10px",
+                      borderTop: `2px solid ${returnColor(
                         interval?.interval_rating,
                         "whole"
-                      ),
+                      )}`,
+                    }}
+                    direction="row"
+                    justifyContent="space-between"
+                  >
+                    <Stack spacing={1}>
+                      <Chip
+                        label={`Time: ${interval?.start_interval} - ${interval?.end_interval}`}
+                        variant="outlined"
+                        color="primary"
+                      />
+                      <Chip
+                        label={`Activity: ${interval?.activity}`}
+                        variant="outlined"
+                        color="primary"
+                        sx={{ justifyContent: "space-between" }}
+                      />
+                    </Stack>
+
+                    <Stack direction="column" alignItems="center">
+                      <Typography>Interval Rating:</Typography>
+                      <Rating
+                        readOnly
+                        value={interval?.interval_rating}
+                        sx={{
+                          color: returnColor(
+                            interval?.interval_rating,
+                            "whole"
+                          ),
+                        }}
+                      />
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      backgroundColor: "black",
+                      padding: "3px 15px 10px",
+                      alignItems: "center",
+                    }}
+                    direction="row"
+                    spacing={1}
+                  >
+                    <Chip label={`Notes:`} variant="outlined" color="primary" />
+                    <Typography>{interval?.interval_notes}</Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    padding="0 15px 10px 15px"
+                    spacing={1}
+                    backgroundColor="black"
+                  >
+                    <Chip
+                      label="BEHAVIORS :"
+                      variant="outlined"
+                      color="primary"
+                    />
+                    {Object.keys(interval?.interval_tags ?? {}).length ? (
+                      <div className="behaviorsTag">
+                        {Object.entries(interval?.interval_tags || {}).map(
+                          ([behavior, count]) => (
+                            <div key={behavior}>
+                              <div>
+                                {<strong>{behavior}</strong>}: {count}
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    ) : (
+                      <Typography>No Recorded Behaviors</Typography>
+                    )}
+                  </Stack>
+
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{
+                      backgroundColor: "black",
+                      padding: "0 15px 15px",
+                      borderRadius: "0 0 10px 10px",
                     }}
                   >
-                    <label>
-                      Interval Time: {interval?.start_interval} -{" "}
-                      {interval?.end_interval}
-                    </label>{" "}
-                    |<label> Activity: {interval?.activity} </label>|
-                    <label> Interval Rating: {interval?.interval_rating}</label>
-                  </div>
-                  <p>
-                    <label>Interval Notes:</label> {interval?.interval_notes}
-                  </p>
-                  <label>Problem Behaviors: </label>
-
-                  {Object.keys(interval?.interval_tags ?? {}).length ? (
-                    <div className="behaviorsTag">
-                      {Object.entries(interval?.interval_tags || {}).map(
-                        ([behavior, count]) => (
-                          <div key={behavior}>
-                            <div>
-                              {<strong>{behavior}</strong>}: {count}
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  ) : (
-                    "None."
-                  )}
-                  <div className="intervalCrudBtns">
-                    <button onClick={() => handleCrudClick(interval, "delete")}>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleCrudClick(interval, "delete")}
+                      startIcon={<DeleteForeverIcon size="large" />}
+                    >
                       Delete Interval
-                    </button>
-
-                    <button onClick={() => handleCrudClick(interval, "edit")}>
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="warning"
+                      onClick={() => handleCrudClick(interval, "edit")}
+                      startIcon={<EditNoteIcon size="large" />}
+                    >
                       Edit Interval
-                    </button>
-                  </div>
-                </div>
+                    </Button>
+                  </Stack>
+                </>
               );
             })}
-          <div className="chartDetailHeader">
-            <div>
-              <h1>Daily Chart Detail - {currentChart?.chart_date} </h1>
-            </div>
-            <div>
-              <NavLink
-                to={`/client/${clientInfo?.id}`}
-                className="navLinkStyle"
-                style={{ fontWeight: "bold" }}
-              >
-                <div>
-                  <i className="fa-solid fa-arrow-left fa-xl"></i> Back To{" "}
+
+          {/* Lower control buttons */}
+
+          {currentChart?.Num_Intervals ? (
+            <Stack margin="10px">
+              <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<PrintIcon />}
+                >
+                  Print Chart Data
+                </Button>
+                <Button
+                  variant="contained"
+                  color="success"
+                  startIcon={<AttachEmailIcon />}
+                >
+                  Email Chart Data
+                </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={openAddIntModal}
+                  startIcon={<AddIcon />}
+                >
+                  Add New Interval
+                </Button>
+              </Stack>
+            </Stack>
+          ) : null}
+
+          {/* Footer Info Section */}
+          {currentChart?.Num_Intervals ? (
+            <Card
+              variant="outlined"
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+                marginTop: "10px",
+              }}
+            >
+              <Box sx={{ p: 2 }}>
+                <Stack
+                  direction="row"
+                  sx={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <Typography variant="h6" component="div">
+                    Daily Chart Detail - {currentChart?.chart_date}
+                  </Typography>
+                </Stack>
+                <Typography variant="h6" component="div">
+                  Client: {clientInfo?.first_name} {clientInfo?.last_name}
+                </Typography>
+
+                <Button
+                  fullWidth
+                  margin="10px"
+                  variant="contained"
+                  startIcon={<KeyboardBackspaceTwoToneIcon />}
+                  onClick={handleNavBack}
+                >
                   {clientInfo?.first_name}'s Detail Page
-                </div>
-              </NavLink>
-            </div>
-          </div>{" "}
+                </Button>
+              </Box>
+            </Card>
+          ) : null}
         </div>
       ) : (
         <h2

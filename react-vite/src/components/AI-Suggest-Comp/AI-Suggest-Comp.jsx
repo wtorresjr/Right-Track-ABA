@@ -65,26 +65,29 @@ const AI_Suggest_Comp = () => {
             onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
-        <select
-          id="dcClientSelect"
-          onChange={(e) => setSelectedClient(e.target.value)}
-        >
-          <option>Get AI Suggestions For...</option>
-          {clientList &&
-            clientList.map((client) => {
-              return (
-                <option key={client?.id} value={client?.id}>
-                  {client?.first_name} {client?.last_name} -- DOB --{" "}
-                  {client?.dob}
-                </option>
-              );
-            })}
-        </select>
-        {selectedClient && (
-          <button className="recordBtn" onClick={getRecords}>
-            Get Records
-          </button>
-        )}
+        <div style={{display:"flex",flexFlow:"column nowrap",gap:"12px"}}>
+          Optional: Choose dates to analyze session data for those dates only or all available session data will be analyzed which may affect response time.
+          <select
+            id="dcClientSelect"
+            onChange={(e) => setSelectedClient(e.target.value)}
+          >
+            <option>Get AI Suggestions For...</option>
+            {clientList &&
+              clientList.map((client) => {
+                return (
+                  <option key={client?.id} value={client?.id}>
+                    {client?.first_name} {client?.last_name} -- DOB --{" "}
+                    {client?.dob}
+                  </option>
+                );
+              })}
+          </select>
+          {selectedClient && (
+            <button className="recordBtn" onClick={getRecords}>
+              Get Records
+            </button>
+          )}
+        </div>
       </div>
       <>
         {parseInt(selectedClient) === cleanDataStore?.client_id &&

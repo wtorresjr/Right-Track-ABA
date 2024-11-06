@@ -1,18 +1,23 @@
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../DailyCharts/daily-chart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
 import { getAllDTsThunk } from "../../redux/dts";
-import { returnPercentColor } from "../helpers/returnColor";
+import { useNavigate } from "react-router-dom";
 import { DeleteChartModal } from "../DeleteModal";
 import { useModal } from "../../context/Modal";
 import CreateDailyChart from "../CreateDailyChart/CreateDailyChart";
 import Paginator from "../PaginationComp/Paginator";
 import "../PaginationComp/bootstrap.css";
+import { useIsSmallScreen } from "../helpers";
 
-import InfoBar from "../InfoBarComponent";
+import { Button, Stack, Typography, Divider } from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
 
 const DiscreetTrials = () => {
+  const isSmallScreen = useIsSmallScreen();
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
   const { client_id } = useParams();
   const dispatch = useDispatch();
@@ -62,70 +67,143 @@ const DiscreetTrials = () => {
     setPerPage(rowsPerPage);
   };
 
+  const handleNav = (dtId) => {
+    navigate(`/discreet-trial/${dtId}`);
+  };
+
   return (
     <>
-      <h1>
-        Discreet Trials
-        <button id="createNewChartBtn" onClick={openCreateDTModal}>
-          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
-          Create Discreet Trial
-          <i className="fa-solid fa-puzzle-piece fa-xl"></i>
-        </button>
-      </h1>
+      <Stack
+        direction={isSmallScreen ? "column" : "row"}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          alignItems: "center",
+          margin: "10px 0",
+        }}
+      >
+        <Typography variant="h5">Discreet Trials</Typography>
+        <Button
+          sx={isSmallScreen ? { width: "100%", marginTop: "5px" } : {}}
+          color="warning"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={openCreateDTModal}
+        >
+          New Trial
+        </Button>
+      </Stack>
       {dtCount > 0 ? (
-        <div className="chartsContain">
+        <Stack>
           <Paginator
             numOfCharts={totalDTs}
             perPage={perPage}
             currentPage={currentPage}
             handlePageChange={handlePageChange}
           />
-
-          {/* <InfoBar numOfCharts={totalDTs} type={"discreetTrials"} /> */}
-
           {pagLoaded ? (
-            clientDT && clientDT.length ? (
-              clientDT.map((dt) => (
-                <div key={dt.id} className="dtItemsDiv">
-                  <NavLink
-                    to={`/discreet-trial/${dt.id}`}
-                    className="navLinkStyleDC"
+            <Stack direction="column" width="100%">
+              {clientDT &&
+                clientDT.map((dt) => (
+                  <Stack
+                    key={dt?.id}
+                    direction={isSmallScreen ? "column" : "row"}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      border: "2px solid",
+                      borderColor: "gray",
+                      borderRadius: 2,
+                      bgcolor: "black",
+                      color: "white",
+                      marginBottom: "10px",
+                      justifyContent: "space-between",
+                      "& svg": {
+                        m: 1,
+                      },
+                    }}
                   >
-                    <div
-                      className="dcButtons"
-                      style={{
-                        border: `3px solid ${returnPercentColor(
-                          dt?.trials_avg
-                        )}`,
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
+                      {dt?.trial_date}
+                    </Typography>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
+                      {dt?.program_name}
+                    </Typography>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Typography
+                      sx={{ padding: "5px", width: "16%", textAlign: "center" }}
+                    >
+                      Mastery: {dt?.trials_avg.toFixed(1)}
+                    </Typography>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Button
+                      color="error"
+                      onClick={() => {
+                        openDeleteModal(dt);
                       }}
                     >
-                      <div>{dt?.trial_date}</div>
-                      <div>{dt?.program_name}</div>
-                      <div>Mastery: {dt?.trials_avg}%</div>
-                      View Trial(s)
-                    </div>
-                  </NavLink>
-                  <div className="chartCrudBtns">
-                    <button onClick={() => openUpdateChartModal(dt)}>
-                      Edit DT
-                    </button>
-                    <button onClick={() => openDeleteModal(dt)}>
-                      Delete DT
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              "No Discreet Trials Yet"
-            )
+                      Delete
+                    </Button>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+                    <Button
+                      color="warning"
+                      onClick={() => {
+                        openUpdateChartModal(dt);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Divider
+                      orientation={isSmallScreen ? "horizontal" : "vertical"}
+                      variant="middle"
+                      flexItem
+                      sx={{ backgroundColor: "grey" }}
+                    />
+
+                    <Button
+                      onClick={() => {
+                        handleNav(dt?.id);
+                      }}
+                    >
+                      View Trials
+                    </Button>
+                  </Stack>
+                ))}
+            </Stack>
           ) : (
             <div className="pagLoadingDiv">
-              <h2>Discreet Trials Loading...</h2>
+              <Typography variant="h5">Loading Trials...</Typography>
             </div>
           )}
-        </div>
+        </Stack>
       ) : (
-        <h2
+        <Typography
           style={{
             textAlign: "center",
             backgroundColor: "black",
@@ -133,10 +211,11 @@ const DiscreetTrials = () => {
             borderRadius: "15px",
             padding: "10px 0",
             width: "100%",
+            marginBottom: "5px",
           }}
         >
           No Discreet Trials Yet.
-        </h2>
+        </Typography>
       )}
     </>
   );

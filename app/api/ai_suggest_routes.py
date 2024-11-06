@@ -79,6 +79,7 @@ def get_clean_records(client_id):
     found_intervals = []
 
     if start_date or end_date:
+
         for record in client_records:
             chart_date_str = record.chart.to_dict().get("chart_date")
             chart_date = datetime.strptime(chart_date_str, "%Y-%m-%d").date()
@@ -115,6 +116,7 @@ def get_clean_records(client_id):
                     ("interval_notes", record.to_dict().get("interval_notes")),
                     ("end_time", record.to_dict().get("end_interval"))
                 ]))
+
     else:
         found_intervals = [
             OrderedDict([
@@ -147,7 +149,6 @@ def get_clean_records(client_id):
             found_dates[date] = 1
         else:
             found_dates[date] += 1
-        # print(date, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
     values_only = [list(interval.values())
                    for interval in found_intervals]
@@ -159,4 +160,15 @@ def get_clean_records(client_id):
         for text in values:
             text_only += f"{text}:: "
 
+    # print("DATE DATA AFTER SEARCH ++++++++++++======+++++++++========>",
+    #       start_date, end_date)
+
+    if start_date and end_date:
+        print("Found-Dates with Search Filter=======>", found_dates)
+        
+        
+        
+        return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total, "found_dates": {}})
+
+    print("Found-Dates No Filters", found_dates)
     return jsonify({"cleanData": text_only, "client_id": client_id, "showData": values_only, "behavior_totals": behavior_total, "found_dates": found_dates})
