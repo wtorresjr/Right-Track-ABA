@@ -3,6 +3,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
 import { analyzeTrendsByAi, getClientDataForAI } from "../../redux/aiSuggest";
+
+import {
+  Stack,
+  Button,
+  Typography,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 // import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
@@ -44,110 +55,168 @@ const AI_Suggest_Comp = () => {
 
   return (
     <div className="mainDisplayContain">
-      <div className="manageClientsHeader">
-        <h1>AI Suggestions</h1>
-      </div>
+      <Stack direction="column" spacing={2}>
+        <Typography variant="h4">AI Suggestions</Typography>
+        <Typography variant="subtitle" textAlign="center">
+          Optional: Choose dates to analyze session data for those dates only or
+          all available session data will be analyzed which may affect response
+          time.
+        </Typography>
+        <input
+          id="dateInput"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input
+          id="dateInput"
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
 
-      {/*Drop Down Menu*/}
-
-      <div className="suggestDropDown">
-        <div>
-          <input
-            id="dateInput"
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <input
-            id="dateInput"
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
-        <div style={{display:"flex",flexFlow:"column nowrap",gap:"12px"}}>
-          Optional: Choose dates to analyze session data for those dates only or all available session data will be analyzed which may affect response time.
-          <select
-            id="dcClientSelect"
-            onChange={(e) => setSelectedClient(e.target.value)}
-          >
-            <option>Get AI Suggestions For...</option>
-            {clientList &&
-              clientList.map((client) => {
-                return (
-                  <option key={client?.id} value={client?.id}>
-                    {client?.first_name} {client?.last_name} -- DOB --{" "}
-                    {client?.dob}
-                  </option>
-                );
-              })}
-          </select>
-          {selectedClient && (
-            <button className="recordBtn" onClick={getRecords}>
-              Get Records
-            </button>
-          )}
-        </div>
-      </div>
-      <>
-        {parseInt(selectedClient) === cleanDataStore?.client_id &&
-        cleanDataStore?.cleanData ? (
-          <div className="cleanDataDiv">
-            <div className="manageClientsHeader">
-              <h1>Interval Data</h1>
-            </div>
-            <div className="aiBtnContainer">
-              <button onClick={() => analyzeTrends()}>Analyze Trends</button>
-              <button disabled={"true"} onClick={() => suggestIntervention()}>
-                Suggest Intervention
-              </button>
-              <button
-                disabled={"true"}
-                onClick={() => alert("Feature Coming Soon...")}
-              >
-                Graph Data
-              </button>
-            </div>
-            <div id="cleanDataText">
-              <p>
-                Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
-                {endDate ? endDate : "Latest"}
-              </p>
-              <p>Total Intervals: {showData?.showData.length}</p>
-              <p>
-                Date (Interval Count):{" "}
-                {Object.entries(showData?.found_dates).map((date) => {
-                  return `- ${date[0]} (${date[1]}) -`;
+        <Box>
+          <FormControl fullWidth>
+            <InputLabel>Select Client</InputLabel>
+            <Select
+              label="Select Client"
+              onChange={(e) => setSelectedClient(e.target.value)}
+            >
+              {clientList &&
+                clientList.map((client) => {
+                  return (
+                    <MenuItem key={client?.id} value={client?.id}>
+                      {client?.first_name} {client?.last_name} -- DOB --{" "}
+                      {client?.dob}
+                    </MenuItem>
+                  );
                 })}
-              </p>
-              <p>
-                Behaviors Exhibited: (
-                {Object.keys(showData?.behavior_totals).length}) :{" "}
-                {Object.entries(showData?.behavior_totals).map((behavior) => {
-                  return `- ${behavior[0]} : ${behavior[1]} -`;
-                })}
-              </p>
-            </div>
-          </div>
-        ) : null}
-        {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
-          <p>No Matching Data Found.</p>
-        ) : null}
-      </>
-      <>
-        {parseInt(selectedClient) === cleanDataStore.client_id &&
-        aiTrend.length > 0 ? (
-          <div className="cleanDataDiv">
-            <div>
-              <h1>Trend Analysis</h1>
-            </div>
-            {aiTrend}
-          </div>
-        ) : (
-          ""
+            </Select>
+          </FormControl>
+        </Box>
+        {selectedClient && (
+          <Button variant="contained" onClick={getRecords}>
+            Get Records
+          </Button>
         )}
-      </>
+      </Stack>
     </div>
+    // <div className="mainDisplayContain">
+    //   <div className="manageClientsHeader">
+    //     <h1>AI Suggestions</h1>
+    //   </div>
+
+    //   {/*Drop Down Menu*/}
+
+    //   <div className="suggestDropDown">
+    //     <div>
+    //       <input
+    //         id="dateInput"
+    //         type="date"
+    //         value={startDate}
+    //         onChange={(e) => setStartDate(e.target.value)}
+    //       />
+    //       <input
+    //         id="dateInput"
+    //         type="date"
+    //         value={endDate}
+    //         onChange={(e) => setEndDate(e.target.value)}
+    //       />
+    //     </div>
+    //     <div
+    //       style={{ display: "flex", flexFlow: "column nowrap", gap: "12px" }}
+    //     >
+    //       Optional: Choose dates to analyze session data for those dates only or
+    //       all available session data will be analyzed which may affect response
+    //       time.
+    //       <select
+    //         id="dcClientSelect"
+    //         onChange={(e) => setSelectedClient(e.target.value)}
+    //       >
+    //         <option>Get AI Suggestions For...</option>
+    //         {clientList &&
+    //           clientList.map((client) => {
+    //             return (
+    //               <option key={client?.id} value={client?.id}>
+    //                 {client?.first_name} {client?.last_name} -- DOB --{" "}
+    //                 {client?.dob}
+    //               </option>
+    //             );
+    //           })}
+    //       </select>
+    //       {selectedClient && (
+    //         <Button variant="contained" onClick={getRecords}>
+    //           Get Records
+    //         </Button>
+    //       )}
+    //     </div>
+    //   </div>
+    //   <>
+    //     {parseInt(selectedClient) === cleanDataStore?.client_id &&
+    //     cleanDataStore?.cleanData ? (
+    //       <div className="cleanDataDiv">
+    //         <div className="manageClientsHeader">
+    //           <h1>Interval Data</h1>
+    //         </div>
+    //         <div className="aiBtnContainer">
+    //           <Button variant="contained" onClick={() => analyzeTrends()}>
+    //             Analyze Trends
+    //           </Button>
+    //           <Button
+    //             variant="contained"
+    //             disabled={"true"}
+    //             onClick={() => suggestIntervention()}
+    //           >
+    //             Suggest Intervention
+    //           </Button>
+    //           <Button
+    //             variant="contained"
+    //             disabled={"true"}
+    //             onClick={() => alert("Feature Coming Soon...")}
+    //           >
+    //             Graph Data
+    //           </Button>
+    //         </div>
+    //         <div id="cleanDataText">
+    //           <p>
+    //             Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
+    //             {endDate ? endDate : "Latest"}
+    //           </p>
+    //           <p>Total Intervals: {showData?.showData.length}</p>
+    //           <p>
+    //             Date (Interval Count):{" "}
+    //             {Object.entries(showData?.found_dates).map((date) => {
+    //               return `- ${date[0]} (${date[1]}) -`;
+    //             })}
+    //           </p>
+    //           <p>
+    //             Behaviors Exhibited: (
+    //             {Object.keys(showData?.behavior_totals).length}) :{" "}
+    //             {Object.entries(showData?.behavior_totals).map((behavior) => {
+    //               return `- ${behavior[0]} : ${behavior[1]} -`;
+    //             })}
+    //           </p>
+    //         </div>
+    //       </div>
+    //     ) : null}
+    //     {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
+    //       <p>No Matching Data Found.</p>
+    //     ) : null}
+    //   </>
+    //   <>
+    //     {parseInt(selectedClient) === cleanDataStore.client_id &&
+    //     aiTrend.length > 0 ? (
+    //       <div className="cleanDataDiv">
+    //         <div>
+    //           <h1>Trend Analysis</h1>
+    //         </div>
+    //         {aiTrend}
+    //       </div>
+    //     ) : (
+    //       ""
+    //     )}
+    //   </>
+    // </div>
   );
 };
 
