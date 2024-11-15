@@ -9,20 +9,21 @@ const analyzedTrend = (trends) => {
 };
 
 export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
-  console.log(ai_request, "<------ AI Request FROM THUNK");
-  // const response = await fetch(`/api/ai-suggest-post/`, {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(ai_request),
-  // });
+  // console.log(ai_request, "<------ AI Request FROM THUNK");
+  const response = await fetch(`/api/ai-suggest-post/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ai_request),
+  });
 
-  // if (response.ok) {
-  //   const trendRequest = await response.json();
-  //   dispatch(analyzedTrend(trendRequest));
-  //   return trendRequest;
-  // } else {
-  //   throw new Error("Error getting AI Trends");
-  // }
+  if (response.ok) {
+    const trendRequest = await response.json();
+    dispatch(analyzedTrend(trendRequest));
+    return trendRequest;
+  } else {
+    // console.log("Response Data", response);
+    throw new Error("Error getting AI Trends");
+  }
 };
 
 const getClientData = (cleanData) => {
@@ -34,7 +35,6 @@ const getClientData = (cleanData) => {
 
 export const getClientDataForAI =
   (client_id, startDate, endDate) => async (dispatch) => {
-
     const response = await fetch(
       `/api/ai-suggest-post/${parseInt(client_id)}?startDate=${
         startDate !== null ? startDate : ""

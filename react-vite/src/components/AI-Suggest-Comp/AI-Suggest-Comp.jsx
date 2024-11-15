@@ -13,8 +13,9 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
-import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
+// import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const AI_Suggest_Comp = () => {
   const aiTrend = useSelector((state) => state?.ai?.ai_trend);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -36,11 +38,13 @@ const AI_Suggest_Comp = () => {
 
   const analyzeTrends = async () => {
     // console.log("CLEAN DATA", cleanDataStore.cleanData);
+    setWaiting(true);
     const userPrompt = {
       prompt: `${cleanDataStore?.cleanData}`,
     };
     try {
-      await dispatch(analyzeTrendsByAi(userPrompt));
+      const gettingTrends = await dispatch(analyzeTrendsByAi(userPrompt));
+      gettingTrends ? setWaiting(false) : null;
     } catch (errors) {
       console.error("Error Occurred Finding Trends:", errors);
     }
@@ -169,16 +173,54 @@ const AI_Suggest_Comp = () => {
           <p>No Matching Data Found.</p>
         ) : null}
       </>
-      <>
+      {/* <>
         {" "}
         {parseInt(selectedClient) === cleanDataStore.client_id &&
-        aiTrend.length > 0 ? (
-          <Stack>
+        aiTrend.length == 0 ? (
+          <Stack
+            sx={{
+              backgroundColor: "black",
+              padding: "10px",
+              borderRadius: "10px",
+              marginTop: "10px",
+            }}
+          >
             <Typography variant="h4">Trend Analysis</Typography>
             {aiTrend}
+            Test
           </Stack>
         ) : (
           ""
+        )}
+      </> */}
+      <>
+        {parseInt(selectedClient) === cleanDataStore.client_id && waiting ? (
+          <Stack
+            sx={{
+              backgroundColor: "black",
+              padding: "10px",
+              borderRadius: "10px",
+              marginTop: "10px",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">Trend Analysis</Typography>
+            <CircularProgress color="inherit" />
+          </Stack>
+        ) : (
+          aiTrend.length > 0 && (
+            <Stack
+              sx={{
+                backgroundColor: "black",
+                padding: "10px",
+                borderRadius: "10px",
+                marginTop: "10px",
+              }}
+            >
+              <Typography variant="h4">Trend Analysis</Typography>
+              {aiTrend}
+            </Stack>
+          )
         )}
       </>
     </div>
