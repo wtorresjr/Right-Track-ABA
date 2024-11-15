@@ -1,5 +1,6 @@
 const GET_CLIENT_DATA = "aiReducer/getClientData";
-const ANALYZE_TRENDS = "aiReducer/analyzedTrend";
+const ANALYZE_TRENDS = "aiReducer/analyzeTrends";
+const CLEAR_AI_DATA = "aiReducer/clearData";
 
 const analyzedTrend = (trends) => {
   return {
@@ -8,8 +9,19 @@ const analyzedTrend = (trends) => {
   };
 };
 
+
+const clearAiData = () => {
+  return {
+    type: CLEAR_AI_DATA,
+  };
+};
+
+
+export const clearAiTrendData = () => (dispatch) => {
+  dispatch(clearAiData());
+};
+
 export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
-  // console.log(ai_request, "<------ AI Request FROM THUNK");
   const response = await fetch(`/api/ai-suggest-post/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -21,7 +33,6 @@ export const analyzeTrendsByAi = (ai_request) => async (dispatch) => {
     dispatch(analyzedTrend(trendRequest));
     return trendRequest;
   } else {
-    // console.log("Response Data", response);
     throw new Error("Error getting AI Trends");
   }
 };
@@ -42,7 +53,7 @@ export const getClientDataForAI =
 
       {
         method: "GET",
-        header: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
       }
     );
 
@@ -69,6 +80,11 @@ function aiReducer(state = initialState, action) {
       return {
         ...state,
         ai_trend: action.payload,
+      };
+    case CLEAR_AI_DATA:
+      return {
+        ...state,
+        ai_trend: [],
       };
     default:
       return state;

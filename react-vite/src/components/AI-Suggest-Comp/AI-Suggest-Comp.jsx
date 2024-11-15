@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
-import { analyzeTrendsByAi, getClientDataForAI } from "../../redux/aiSuggest";
+import {
+  analyzeTrendsByAi,
+  clearAiTrendData,
+  getClientDataForAI,
+} from "../../redux/aiSuggest";
 
 import {
   Stack,
@@ -31,6 +35,10 @@ const AI_Suggest_Comp = () => {
   useEffect(() => {
     dispatch(getClientsThunk());
   }, []);
+
+  useEffect(() => {
+    dispatch(clearAiTrendData());
+  }, [selectedClient]);
 
   const getRecords = async () => {
     await dispatch(getClientDataForAI(selectedClient, startDate, endDate));
