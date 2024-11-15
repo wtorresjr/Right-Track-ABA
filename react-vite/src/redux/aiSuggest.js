@@ -17,7 +17,7 @@ const clearAiData = () => {
 };
 
 
-export const clearAiTrendData = () => (dispatch) => {
+export const clearAiDataThunk = () => (dispatch) => {
   dispatch(clearAiData());
 };
 

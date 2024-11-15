@@ -4,7 +4,7 @@ import { getClientsThunk } from "../../redux/clients";
 import "./index.css";
 import {
   analyzeTrendsByAi,
-  clearAiTrendData,
+  clearAiDataThunk,
   getClientDataForAI,
 } from "../../redux/aiSuggest";
 
@@ -37,7 +37,7 @@ const AI_Suggest_Comp = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(clearAiTrendData());
+    dispatch(clearAiDataThunk());
   }, [selectedClient]);
 
   const getRecords = async () => {
