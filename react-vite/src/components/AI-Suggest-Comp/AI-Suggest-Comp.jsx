@@ -14,7 +14,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-// import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
+import { trend_prompt, analysis_data_prompt } from "../helpers/prompts";
 
 const AI_Suggest_Comp = () => {
   const dispatch = useDispatch();
@@ -23,8 +23,8 @@ const AI_Suggest_Comp = () => {
   const cleanDataStore = useSelector((state) => state?.ai?.cleanData);
   const showData = useSelector((state) => state?.ai?.cleanData);
   const aiTrend = useSelector((state) => state?.ai?.ai_trend);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     dispatch(getClientsThunk());
@@ -35,6 +35,7 @@ const AI_Suggest_Comp = () => {
   };
 
   const analyzeTrends = async () => {
+    // console.log("CLEAN DATA", cleanDataStore.cleanData);
     const userPrompt = {
       prompt: `${cleanDataStore?.cleanData}`,
     };
@@ -65,13 +66,13 @@ const AI_Suggest_Comp = () => {
         <input
           id="dateInput"
           type="date"
-          value={startDate}
+          value={startDate || ""}
           onChange={(e) => setStartDate(e.target.value)}
         />
         <input
           id="dateInput"
           type="date"
-          value={endDate}
+          value={endDate || ""}
           onChange={(e) => setEndDate(e.target.value)}
         />
 
@@ -79,8 +80,10 @@ const AI_Suggest_Comp = () => {
           <FormControl fullWidth>
             <InputLabel>Select Client</InputLabel>
             <Select
+              sx={{ backgroundColor: "white" }}
               label="Select Client"
               onChange={(e) => setSelectedClient(e.target.value)}
+              value={selectedClient || ""}
             >
               {clientList &&
                 clientList.map((client) => {
@@ -100,123 +103,85 @@ const AI_Suggest_Comp = () => {
           </Button>
         )}
       </Stack>
+      <>
+        {parseInt(selectedClient) === cleanDataStore?.client_id &&
+        cleanDataStore?.cleanData ? (
+          <Stack>
+            <Typography variant="h4" sx={{ marginTop: "10px" }}>
+              Interval Data
+            </Typography>
+
+            <Stack
+              direction="column"
+              spacing={1}
+              width="100%"
+              sx={{ margin: "10px 0 10px 0" }}
+            >
+              <Button variant="contained" onClick={() => analyzeTrends()}>
+                Analyze Trends
+              </Button>
+              {/* <Button
+                variant="contained"
+                disabled={"true"}
+                onClick={() => suggestIntervention()}
+              >
+                Suggest Intervention
+              </Button>
+              <Button
+                variant="contained"
+                disabled={"true"}
+                onClick={() => alert("Feature Coming Soon...")}
+              >
+                Graph Data
+              </Button> */}
+            </Stack>
+            <Stack
+              sx={{
+                backgroundColor: "black",
+                padding: "10px",
+                borderRadius: "10px",
+              }}
+            >
+              <Typography>
+                Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
+                {endDate ? endDate : "Latest"}
+              </Typography>
+              <Typography>
+                Total Intervals: {showData?.showData.length}
+              </Typography>
+              <Typography>
+                Date (Interval Count):{" "}
+                {Object.entries(showData?.found_dates).map((date) => {
+                  return `- ${date[0]} (${date[1]}) -`;
+                })}
+              </Typography>
+              <Typography>
+                Behaviors Exhibited: (
+                {Object.keys(showData?.behavior_totals).length}) :{" "}
+                {Object.entries(showData?.behavior_totals).map((behavior) => {
+                  return `- ${behavior[0]} : ${behavior[1]} -`;
+                })}
+              </Typography>
+            </Stack>
+          </Stack>
+        ) : null}
+        {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
+          <p>No Matching Data Found.</p>
+        ) : null}
+      </>
+      <>
+        {" "}
+        {parseInt(selectedClient) === cleanDataStore.client_id &&
+        aiTrend.length > 0 ? (
+          <Stack>
+            <Typography variant="h4">Trend Analysis</Typography>
+            {aiTrend}
+          </Stack>
+        ) : (
+          ""
+        )}
+      </>
     </div>
-    // <div className="mainDisplayContain">
-    //   <div className="manageClientsHeader">
-    //     <h1>AI Suggestions</h1>
-    //   </div>
-
-    //   {/*Drop Down Menu*/}
-
-    //   <div className="suggestDropDown">
-    //     <div>
-    //       <input
-    //         id="dateInput"
-    //         type="date"
-    //         value={startDate}
-    //         onChange={(e) => setStartDate(e.target.value)}
-    //       />
-    //       <input
-    //         id="dateInput"
-    //         type="date"
-    //         value={endDate}
-    //         onChange={(e) => setEndDate(e.target.value)}
-    //       />
-    //     </div>
-    //     <div
-    //       style={{ display: "flex", flexFlow: "column nowrap", gap: "12px" }}
-    //     >
-    //       Optional: Choose dates to analyze session data for those dates only or
-    //       all available session data will be analyzed which may affect response
-    //       time.
-    //       <select
-    //         id="dcClientSelect"
-    //         onChange={(e) => setSelectedClient(e.target.value)}
-    //       >
-    //         <option>Get AI Suggestions For...</option>
-    //         {clientList &&
-    //           clientList.map((client) => {
-    //             return (
-    //               <option key={client?.id} value={client?.id}>
-    //                 {client?.first_name} {client?.last_name} -- DOB --{" "}
-    //                 {client?.dob}
-    //               </option>
-    //             );
-    //           })}
-    //       </select>
-    //       {selectedClient && (
-    //         <Button variant="contained" onClick={getRecords}>
-    //           Get Records
-    //         </Button>
-    //       )}
-    //     </div>
-    //   </div>
-    //   <>
-    //     {parseInt(selectedClient) === cleanDataStore?.client_id &&
-    //     cleanDataStore?.cleanData ? (
-    //       <div className="cleanDataDiv">
-    //         <div className="manageClientsHeader">
-    //           <h1>Interval Data</h1>
-    //         </div>
-    //         <div className="aiBtnContainer">
-    //           <Button variant="contained" onClick={() => analyzeTrends()}>
-    //             Analyze Trends
-    //           </Button>
-    //           <Button
-    //             variant="contained"
-    //             disabled={"true"}
-    //             onClick={() => suggestIntervention()}
-    //           >
-    //             Suggest Intervention
-    //           </Button>
-    //           <Button
-    //             variant="contained"
-    //             disabled={"true"}
-    //             onClick={() => alert("Feature Coming Soon...")}
-    //           >
-    //             Graph Data
-    //           </Button>
-    //         </div>
-    //         <div id="cleanDataText">
-    //           <p>
-    //             Showing Data for dates: {startDate ? startDate : "Oldest"} to{" "}
-    //             {endDate ? endDate : "Latest"}
-    //           </p>
-    //           <p>Total Intervals: {showData?.showData.length}</p>
-    //           <p>
-    //             Date (Interval Count):{" "}
-    //             {Object.entries(showData?.found_dates).map((date) => {
-    //               return `- ${date[0]} (${date[1]}) -`;
-    //             })}
-    //           </p>
-    //           <p>
-    //             Behaviors Exhibited: (
-    //             {Object.keys(showData?.behavior_totals).length}) :{" "}
-    //             {Object.entries(showData?.behavior_totals).map((behavior) => {
-    //               return `- ${behavior[0]} : ${behavior[1]} -`;
-    //             })}
-    //           </p>
-    //         </div>
-    //       </div>
-    //     ) : null}
-    //     {parseInt(selectedClient) && cleanDataStore?.cleanData == "" ? (
-    //       <p>No Matching Data Found.</p>
-    //     ) : null}
-    //   </>
-    //   <>
-    //     {parseInt(selectedClient) === cleanDataStore.client_id &&
-    //     aiTrend.length > 0 ? (
-    //       <div className="cleanDataDiv">
-    //         <div>
-    //           <h1>Trend Analysis</h1>
-    //         </div>
-    //         {aiTrend}
-    //       </div>
-    //     ) : (
-    //       ""
-    //     )}
-    //   </>
-    // </div>
   );
 };
 
