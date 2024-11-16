@@ -28,6 +28,7 @@ import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceT
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useIsSmallScreen } from "../helpers";
+import DetailControlButtons from "./DetailControlButtons";
 
 const DailyChartDetail = () => {
   const isSmallScreen = useIsSmallScreen();
@@ -189,24 +190,7 @@ const DailyChartDetail = () => {
 
           <Stack margin="10px">
             <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
-              {currentChart?.Num_Intervals ? (
-                <>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<PrintIcon />}
-                  >
-                    Print Chart Data
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    startIcon={<AttachEmailIcon />}
-                  >
-                    Email Chart Data
-                  </Button>
-                </>
-              ) : null}
+              {currentChart?.Num_Intervals ? <DetailControlButtons /> : null}
               <Button
                 variant="contained"
                 color="warning"
@@ -341,20 +325,7 @@ const DailyChartDetail = () => {
           {currentChart?.Num_Intervals ? (
             <Stack margin="10px">
               <Stack spacing={1} direction={isSmallScreen ? "column" : "row"}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<PrintIcon />}
-                >
-                  Print Chart Data
-                </Button>
-                <Button
-                  variant="contained"
-                  color="success"
-                  startIcon={<AttachEmailIcon />}
-                >
-                  Email Chart Data
-                </Button>
+                <DetailControlButtons />
                 <Button
                   variant="contained"
                   color="warning"
